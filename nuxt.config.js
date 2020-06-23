@@ -50,6 +50,7 @@ export default {
   css: [
     'vant/lib/index.css',
     '~assets/css/reset.css',
+    '~assets/css/iconfont.css',
   ],
   /*
   ** Plugins to load before mounting the App
