@@ -1,0 +1,26 @@
+@import '../../assets/css/style.scss';
+.tarbar{
+    position: fixed;
+    bottom: 0;
+    height: 1.1rem;
+    width: 7.5rem;
+    padding-top: 0.145rem;
+    background-color: #fff;
+    font-size: 0.26rem;
+    display: flex;
+    box-shadow: 0 -0.03rem 0.1rem #ddd;
+    a{
+        flex: 1;
+        text-align: center;
+        color: #2F2E2B;
+        img{
+            display: block;
+            margin: 0 auto 0.05rem;
+            width: 0.4rem;
+            height: 0.4rem;
+        }
+    }
+    .nuxt-link-active{
+        color: $color;
+    }
+}

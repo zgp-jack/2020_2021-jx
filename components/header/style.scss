@@ -1,0 +1,16 @@
+.header{
+    position: fixed;
+    width: 7.5rem;
+    line-height:1.01rem;
+    text-align: center;
+    font-size: 0.36rem;
+    color: #fff;
+    background-color: #FFAA26;
+    .header_lefticon{
+        position: absolute;
+        height: 0.8rem;
+        font-size: 0.4rem;
+        top:calc((1.01rem - 0.8rem)/2);
+        left:0.25rem;
+    }
+}
