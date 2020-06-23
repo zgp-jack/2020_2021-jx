@@ -1,0 +1,56 @@
+.container{
+  width: 100%;
+  height: auto;
+  #head{
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+    margin-bottom: 0.25rem;
+    height: 0.62rem;
+    .left_dom{
+      h1{
+        padding-top: 0.1rem;
+        height:0.62rem;
+        img{
+          height: 0.5rem;
+          width: 1.45rem;
+        }
+      }
+      .position{
+        width: 1.4rem;
+        height: 0.62rem;
+        line-height: 0.62rem;
+        font-size: 0.3rem;
+        margin-left: 0.25rem;
+        i{
+          font-size: 0.30rem;
+        }
+        strong{
+          font-size: 0.30rem;
+        }
+       }
+    }
+    .right_dom{
+      width: 2.34rem;
+      a{
+        display: block;
+        width: 2.34rem;
+        height: 0.62rem;
+
+        background-size: cover;
+        background-image: url(http://statics.zhaogongdi.com/common/loadApp.png)
+      }
+    }
+  }
+  .banner{
+    height: 2.56rem;
+    width: 100%;
+    background: red;
+  }
+  .menus{
+    height: 3.6rem;
+    width: 100%;
+    border-top-left-radius: 0.23rem;
+    border-top-right-radius: 0.23rem;
+    background: green;
+  }
+}
