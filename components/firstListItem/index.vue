@@ -10,7 +10,7 @@
          <p class="userTel">18384374***</p>
          <p class="tel-icon"></p>
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -28,6 +28,6 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped="scoped">
   @import './style.scss';
 </style>
