@@ -64,7 +64,7 @@
     </div>
     <div class="list_content">
       <div v-for="(item,index) in title_data" v-if="title_active == index">
-        {{index}}
+        <firstListItem />
       </div>
     </div>
     <Tarbar />
@@ -73,6 +73,7 @@
 
 <script>
 import Tarbar from '../../components/tarbar'
+import firstListItem from '../../components/firstListItem/index.vue'
 import { Swipe , SwipeItem } from 'vant';
 
 export default {
@@ -86,6 +87,7 @@ export default {
     Tarbar: Tarbar,
     "van-swipe": Swipe,
     "van-swipe-item" : SwipeItem,
+    'firstListItem':firstListItem
   },
   mounted(){
     // 轮播图重新获取上一级的尺寸
