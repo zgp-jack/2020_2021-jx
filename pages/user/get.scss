@@ -58,5 +58,32 @@
                             }
                     }
                 }
+                .rule_two{
+                    margin-top:0.2rem;
+                    padding: 0.1rem 0.18rem;
+                    background: #fff;
+                    border-radius:0.08rem;
+                    box-shadow: 0 0.03rem 0.1rem #eee;
+                        .title{
+                            border-bottom: 1px dashed #ddd;
+                            line-height:0.8rem;
+                            font-weight: bold;
+                            font-size:0.37rem;
+                            color: #555;
+                        }
+                        .item{
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            line-height:0.5rem;
+                            font-size: 0.35rem;
+                            padding: 0.1rem;
+                                .info{
+                                    p:first-child{
+                                        color: #555;
+                                    }
+                                }
+                        }
+                }
         }
 }

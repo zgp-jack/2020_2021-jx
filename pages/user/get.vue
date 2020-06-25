@@ -17,6 +17,17 @@
                       <div class="op" v-text="item.btn_text"></div>
                   </div>
               </div>
+              <div class="rule_two">
+                  <div class="title">
+                      鱼泡币消耗规则
+                  </div>
+                  <div class="item">
+                      <div class="info">
+                          <p>查看信息 -3 鱼泡币</p>
+                          <p>(获取信息联系方式)</p>
+                      </div>
+                  </div>
+              </div>
           </div>
       </div>
   </div>
