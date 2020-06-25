@@ -1,7 +1,8 @@
 $color: #FFAA26;
 $width:7.5rem;
 $font-color:#7D7D7D;
-
+$white:#FFFFFF;
+$black:#282828;
 @mixin box_inner($top:1.01rem){ 
     position: fixed;
 	top: $top;

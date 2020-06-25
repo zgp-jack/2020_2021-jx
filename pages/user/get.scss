@@ -1,0 +1,62 @@
+@import '../../assets/css/style.scss';
+*{
+    box-sizing:content-box;
+}
+.father{
+    @include box_inner();
+    color:$font-color;
+    overflow: hidden;
+        .head{
+            height:2.8rem;
+            background-size: cover;
+            background-image: url("http://statics.zhaogongdi.com/common/coin_get_bg.png");
+                img{
+                    width: 65%;
+                    height: 2.5rem;
+                    margin: auto;
+                    display:block;
+                }
+        }
+        .rule_list{
+            margin: -0.5rem auto 0;
+            width: 6.6rem;
+                .rule_one{
+                    background: #fff;
+                    border-radius: 0.08rem;
+                    box-shadow: 0 0.03rem 0.1rem #eee;
+                    [class='item']:not(:last-child){
+                        border-bottom: 1px dashed #ddd;
+                    }
+                    .title{
+                        line-height: 0.8rem;
+                        font-weight: bold;
+                        font-size:0.37rem;
+                        color: #555;
+                        padding:0.1rem 0.18rem;
+                        border-bottom: 1px dashed #ddd;
+                    }
+                    .item{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        line-height:0.5rem;
+                        font-size: 0.35rem;
+                        padding:0.1rem 0.18rem;
+                        border-bottom: 1px dashed #ddd;
+                            .info{
+                                p:first-child{
+                                    color: #555;
+                                }
+                            }
+                            .op{
+                                width: 1.5rem;
+                                background: #ffa926;
+                                text-align: center;
+                                color: #fff;
+                                line-height:0.6rem;
+                                border-radius:0.08rem;
+                            }
+                    }
+                }
+        }
+}

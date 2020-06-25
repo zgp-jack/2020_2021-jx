@@ -35,7 +35,7 @@
         </div>
         <!-- 鱼泡币获取 -->
         <div class="menus">
-            <div v-for="(item,i) in yupao_arr" :key='i'>
+            <div v-for="(item,i) in yupao_arr" :key='i' @click="menusGo(i)">
                 <img :src="item.src"/>
                 <p v-text="item.text"></p>
             </div>
@@ -49,7 +49,7 @@
                         <P v-text="item.title"></P>
                         <P v-text="item.detail"></P>
                     </div>
-                    <div class="main_textc main_bordc" @click="isGo(3)">查看详情</div>
+                    <div class="main_textc main_bordc" @click="isGo(i)">查看详情</div>
                 </div>
             </div>
         </div>
@@ -98,15 +98,26 @@ export default {
     },
     // 跳转
     isGo(i){
-      console.log(i)
       switch (i) {
-          case 3:
+          case 2:
+            this.$router.push('/user/welfare')
+          break;
+          case 4:
             this.$router.push('/user/personalSettings')
           break;
           default:
           break;
       }
-    }
+    },
+      menusGo(i){
+      switch (i) {
+          case 0:
+            this.$router.push('/user/get')
+          break;
+          default:
+          break;
+          }
+      }
   }
 }
 </script>
