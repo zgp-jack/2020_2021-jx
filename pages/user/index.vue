@@ -49,7 +49,7 @@
                         <P v-text="item.title"></P>
                         <P v-text="item.detail"></P>
                     </div>
-                    <div class="main_textc main_bordc">查看详情</div>
+                    <div class="main_textc main_bordc" @click="isGo(3)">查看详情</div>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@ export default {
           text:'鱼泡币来源'   
         },
       ],
-      my_list:[{src:"http://statics.zhaogongdi.com/common/user_collect.png",title:'我的收藏',detail:'收藏的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/user_release.png",title:'我的发布',detail:'发布的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/user_company.png",title:'我的企业',detail:'诚邀各大机械租赁企业入驻'},{src:"http://statics.zhaogongdi.com/common/user_set.png",title:'设置',detail:'意见建议、联系我们'},],
+      my_list:[{src:"http://statics.zhaogongdi.com/common/user_collect.png",title:'我的收藏',detail:'收藏的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/user_release.png",title:'我的发布',detail:'发布的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/my_welfare_coin.png",title:'我的福利',detail:'查看我的福利信息'},{src:"http://statics.zhaogongdi.com/common/user_company.png",title:'我的企业',detail:'诚邀各大机械租赁企业入驻'},{src:"http://statics.zhaogongdi.com/common/user_set.png",title:'设置',detail:'意见建议、联系我们'},],
 
     }
   },
@@ -97,11 +97,22 @@ export default {
   methods:{
     toInfo(){
       console.log(1);
+    },
+    // 跳转
+    isGo(i){
+      console.log(i)
+      switch (i) {
+          case 3:
+            this.$router.push('/user/personalSettings')
+          break;
+          default:
+          break;
+      }
     }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import './style.scss';
 </style>
