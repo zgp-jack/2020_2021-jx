@@ -1,31 +1,107 @@
 <!-- 个人中心 -->
 <template>
-  <div class="container">
-
-    <Tarbar />
-  </div>
+  <div class="father">
+    <!-- <Harbar :title="title"/> -->
+    <div class="container">
+        <div class="head">
+            <div class="title">
+              个人中心
+            </div>
+            <div class="user">
+                <div class="top">
+                    <img src="http://statics.zhaogongdi.com/images/wx-xcx/20200620/xY7U301592639800.jpeg"/>
+                    <div class="userinfo">
+                      <p>const</p>
+                      <p>
+                        <span>用户编号:</span>
+                        <span class="main_textc">
+                          123456
+                        </span>
+                      </p>
+                    </div>
+                    <div class="update" @click="toInfo">修改资料</div>
+                </div>
+                <div class="bottom">
+                    <div>
+                      <p class="main_textc">66279</p>
+                      <p>可用鱼泡币</p>
+                    </div>
+                    <div>
+                      <p class="main_textc">4815</p>
+                      <p>消耗鱼泡币</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 鱼泡币获取 -->
+        <div class="menus">
+            <div v-for="(item,i) in yupao_arr" :key='i'>
+                <img :src="item.src"/>
+                <p v-text="item.text"></p>
+            </div>
+        </div>
+        <!-- 我的信息 -->
+        <div class="list_menu">
+            <div class="desc" v-for="(item,i) in my_list" :key="i">
+                <img :src="item.src">
+                <div class="desc_main">
+                    <div>
+                        <P v-text="item.title"></P>
+                        <P v-text="item.detail"></P>
+                    </div>
+                    <div class="main_textc main_bordc">查看详情</div>
+                </div>
+            </div>
+        </div>
+        <!-- 客服电话 -->
+        <div class="server_tel">
+          客服电话:&nbsp;15608008605
+        </div>
+    </div>
+    <Tarbar/>
+ </div> 
 </template>
 
 <script>
 import Tarbar from '../../components/tarbar'
-import Vue from 'vue';
-Vue.component('Tarbar',Tarbar);
-
+import Harbar from '../../components/header'
 export default {
   data(){
     return{
+      title:'个人中心',
+      yupao_arr:[
+        {
+          id:0,
+          src:"http://statics.zhaogongdi.com/common/coin_get.png",
+          text:'获取鱼泡币'   
+        },
+        {
+          id:1,
+          src:"http://statics.zhaogongdi.com/common/coin_consume.png",
+          text:'鱼泡币消耗'   
+        },
+        {
+          id:2,
+          src:"http://statics.zhaogongdi.com/common/coin_source.png",
+          text:'鱼泡币来源'   
+        },
+      ],
+      my_list:[{src:"http://statics.zhaogongdi.com/common/user_collect.png",title:'我的收藏',detail:'收藏的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/user_release.png",title:'我的发布',detail:'发布的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/user_company.png",title:'我的企业',detail:'诚邀各大机械租赁企业入驻'},{src:"http://statics.zhaogongdi.com/common/user_set.png",title:'设置',detail:'意见建议、联系我们'},],
 
     }
   },
   components: {
-    
+    Tarbar,
+    Harbar
   },
   methods:{
-
+    toInfo(){
+      console.log(1);
+    }
   }
 }
 </script>
 
-<style>
-
+<style lang="scss">
+@import './style.scss';
 </style>
