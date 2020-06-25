@@ -1,1 +1,15 @@
 @import '../../assets/css/style.scss';
+*{
+    box-sizing:content-box;
+}
+.father{
+    @include box_inner();
+    color:$font-color;
+    overflow: hidden;
+    .con{
+        position: relative;
+        overflow: hidden;
+        margin-top: 0.45rem;
+        padding-bottom: 0.2rem;
+    }
+}

@@ -1,3 +1,17 @@
 $color: #FFAA26;
 $width:7.5rem;
 $font-color:#7D7D7D;
+
+@mixin box_inner($top:1.01rem){ 
+    position: fixed;
+	top: $top;
+	bottom: 1.1rem;
+	width: 7.5rem;
+}
+@mixin overflow_hiding($clamp: 1){
+    display: -webkit-box !important;
+　　text-overflow: ellipsis;
+　　overflow: hidden;
+　　-webkit-line-clamp: $clamp;
+　　-webkit-box-orient: vertical;
+}
