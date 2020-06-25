@@ -1,3 +1,4 @@
+@import '../../assets/css/style.scss';
 .list-item{
   width: 100%;
   padding: 0 0.29rem;
@@ -48,9 +49,7 @@
 
     }
     .type-class{
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
+      @include overflow_hiding()
       line-height: 0.71rem;
       width: 5.6rem;
       font-size: 0.2rem;
@@ -67,7 +66,7 @@
     .position-time{
       height: 0.58rem;
       width: 5.6rem;
-      
+
     }
   }
 }

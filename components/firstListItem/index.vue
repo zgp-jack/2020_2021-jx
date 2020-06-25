@@ -10,13 +10,13 @@
          <p class="userTel">18384374***</p>
          <p class="tel-icon"></p>
       </div>
-      <div class="type-class">
+      <div class="type-class overflow_hiding">
         <a href="javascript:;">123456</a>
         <a href="javascript:;">123456</a>
         <a href="javascript:;">123456</a>
       </div>
       <div class="position-time">
-        
+
       </div>
     </div>
   </div>
