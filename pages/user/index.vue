@@ -64,7 +64,6 @@
 
 <script>
 import Tarbar from '../../components/tarbar'
-import Harbar from '../../components/header'
 export default {
   data(){
     return{
@@ -92,7 +91,6 @@ export default {
   },
   components: {
     Tarbar,
-    Harbar
   },
   methods:{
     toInfo(){
