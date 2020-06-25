@@ -1,0 +1,41 @@
+.list-item{
+  width: 100%;
+  padding: 0 0.29rem;
+  .title{
+    height: 0.75rem;
+    border-bottom: 0.01rem solid #f7f6f6;
+    font-size: 0.25rem;
+    line-height: 0.75rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    margin-bottom: 0.17rem;
+  }
+  .left-img{
+    width: 1.14rem;
+    float: left;
+    img{
+      margin-top: 0.1rem;
+      width: 0.82rem;
+      height: 0.82rem;
+      border-radius: 50%;
+
+    }
+
+  }
+  .right-inner{
+    float: left;
+    .basic-info{
+      height: 0.4rem;
+      line-height: 0.4rem;
+      font-size: 0.23rem;
+      p{
+        float: left;
+        &:nth-of-type(1){
+          margin-right: 0.03rem;
+        }
+      }
+    }
+  }
+}
