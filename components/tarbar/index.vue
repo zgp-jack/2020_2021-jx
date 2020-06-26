@@ -1,5 +1,4 @@
 <!-- 底部导航 -->
-import defaultVue from '../../layouts/default.vue';
 
 <template>
     <div class="tarbar">

@@ -13,77 +13,53 @@
           <span class="search_text fr">搜索</span>
         </div>
         <div class="select_head">
-          <span class="select_inner">成都<i class="iconfont icon-down"/></span>
-          <span class="select_inner">所有机械<i class="iconfont icon-down"/></span>
-          <span class="select_inner">最新<img src="../../assets/img/list/sort.png" alt=""></span>
+          <span class="select_inner" @click="onisclose('isSelect_area')">成都<i class="iconfont icon-down" :class="{'rotate':isSelect_area}"/></span>
+          <span class="select_inner">所有机械<i class="iconfont icon-down" :class="{'rotate':isSelect_jixie}"/></span>
+          <span class="select_inner">最新<img src="../../assets/img/list/sort.png" alt="" :class="{'rotate':isSelect_sort}"></span>
         </div>
       </div>
-
-      <!-- <van-area :area-list="aa" :columns-num="2" /> -->
-
-      <!-- <div class="mask" v-show="isSelect_area">
-        <div class="modle">
-
-        </div>
-      </div> -->
     </div>
+
+    <!-- 地区选择 -->
+    <CustomArea :onSelect="onSelect" :isSelect_area="isSelect_area"/>
   </div>
 </template>
 
 <script>
-import store from '../../store/area.js';
-import { mapMutations,mapState } from 'vuex';
-import Tarbar from '../../components/tarbar'
-import { Search,Area } from 'vant';
+import Tarbar from "../../components/tarbar";
+import { Search } from "vant";
+import CustomArea from "../../components/customArea";
 
 export default {
-  data(){
-    return{
-      isSelect_area:true,
-      isSelect_jixie:false,
-      isSelect_sort:false,
-      aa:{
-  province_list: {
-    110000: '北京市',
-    120000: '天津市'
+  data() {
+    return {
+      isSelect_area: false,
+      isSelect_jixie: false,
+      isSelect_sort: false
+    };
   },
-  // city_list: {
-  //   110100: '北京市',
-  //   110200: '县',
-  //   120100: '天津市',
-  //   120200: '县'
-  // },
-  city_list: {
-    110101: '东城区',
-    110102: '西城区',
-    110105: '朝阳区',
-    110106: '丰台区',
-    120101: '和平区',
-    120102: '河东区',
-    120103: '河西区',
-    120104: '南开区',
-    120105: '河北区',
-  }
-}
-    }
-  },
-  store,
   components: {
     Tarbar,
-    'van-search':Search,
-    'van-area': Area
+    "van-search": Search,
+    CustomArea
   },
-  methods:{
-    isSelect(){
-
+  methods: {
+    //控制赛选框显示隐藏
+    onSelect(type, flag, cityData) {
+      this.$set(this, type, flag);
+      //关闭弹框请求接口
+      if (cityData) {
+        //接口请求
+      }
+    },
+    onisclose(type) {
+      let flag = this.isSelect_area ? false : true;
+      this.onSelect(type, flag);
     }
-  },
-  computed:{
-    ...mapState(['city','area'])
   }
-}
+};
 </script>
 
-<style lang='scss'>
-    @import './style.scss';
+<style lang='scss' scoped>
+@import "./style.scss";
 </style>
