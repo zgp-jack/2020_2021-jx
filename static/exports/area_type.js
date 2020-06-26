@@ -22,7 +22,7 @@ function StorageType(array,pid_zero='1'){
 
 function GetArea(){
     let result = StorageType(area.area, '1')
-    return { "area": [{ id: 1, name: "全国", pid: "0" }].concat(result.par), "city": [[]].concat(result.son) }
+    return { "area": [{ id: 1, name: "全国", pid: "0" }].concat(result.par), "city": [{ id: 1, name: "全国", pid: "0" }].concat(result.son) }
 }
 
 module.exports = {

@@ -1,0 +1,41 @@
+.model_mask{
+    .inner{
+        width: 7.5rem;
+        overflow-y: auto;
+        background: #fff;
+        position: absolute;
+        width: 100%;
+        font-size: 0.34rem;
+        height: 6rem;
+        overflow: hidden;
+        transition: height 0.4s;
+        .city , .area{
+            height: 6rem;
+            text-align: center;
+            width: 50%;
+            line-height: 0.92rem;
+            overflow-y: scroll;
+        }  
+        .item{
+            background: #f7f7f7;
+        }
+        .city>div,.area>div>div{
+            position: relative;
+            padding-left:0.3rem; 
+        }
+        .city>div:not(:last-child),.area>div>div:not(:last-child){
+            border-bottom:1px solid #e5e5e5;
+        }
+        .selectItem{
+            &::after{
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 0.09rem;
+                height: 0.92rem;
+                background-color: #fdc777;
+            }
+        }
+    }
+}
