@@ -8,6 +8,7 @@
         font-size: 0.34rem;
         height: 6rem;
         overflow: hidden;
+        transition: height 0.4s;
         .city , .area{
             height: 6rem;
             text-align: center;
@@ -16,10 +17,10 @@
             overflow-y: scroll;
         }  
         .item{
-            position: relative;
             background: #f7f7f7;
         }
         .city>div,.area>div>div{
+            position: relative;
             padding-left:0.3rem; 
         }
         .city>div:not(:last-child),.area>div>div:not(:last-child){

@@ -64,10 +64,9 @@ body , html{
 .model_mask{
 	position: fixed;
 	width: 7.5rem;
-	top: 1.91rem;
+	top: 0;
 	bottom: 0;
-	left: 0;
-	right: 0;
+	left: calc(50% - 7.5rem / 2);
 	background-color: rgba(0, 0, 0,.3);
 	overflow-y: auto;
 }
