@@ -10,11 +10,6 @@
          <p class="userTel">18384374***</p>
          <p class="tel-icon"  @click="callPhone" v-show="is_mine"></p>
       </div>
-      <div class="type-class">
-        <a href="javascript:;">123fda大发大打发打发456</a>
-        <a href="javascript:;">12发放大3456</a>
-        <a href="javascript:;">1234发的发大发打发打发大是打发打发的56</a>
-      </div>
       <div class="position-time">
         <div class="position fl">
           <i class="icon-dingwei iconfont"></i>
