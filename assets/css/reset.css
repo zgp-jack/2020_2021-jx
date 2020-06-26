@@ -60,3 +60,14 @@ textarea {
 body , html{
 	background-color: #f6f6f6;
 }
+
+.model_mask{
+	position: fixed;
+	width: 7.5rem;
+	top: 1.91rem;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0,.3);
+	overflow-y: auto;
+}

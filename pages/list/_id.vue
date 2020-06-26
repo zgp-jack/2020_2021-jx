@@ -18,23 +18,17 @@
           <span class="select_inner">最新<img src="../../assets/img/list/sort.png" alt=""></span>
         </div>
       </div>
-
-      <!-- <van-area :area-list="aa" :columns-num="2" /> -->
-
-      <!-- <div class="mask" v-show="isSelect_area">
-        <div class="modle">
-
-        </div>
-      </div> -->
     </div>
+
+    <!-- 地区选择 -->
+    <CustomArea />
   </div>
 </template>
 
 <script>
-import store from '../../store/area.js';
-import { mapMutations,mapState } from 'vuex';
 import Tarbar from '../../components/tarbar'
-import { Search,Area } from 'vant';
+import { Search } from 'vant';
+import CustomArea from '../../components/customArea';
 
 export default {
   data(){
@@ -42,45 +36,18 @@ export default {
       isSelect_area:true,
       isSelect_jixie:false,
       isSelect_sort:false,
-      aa:{
-  province_list: {
-    110000: '北京市',
-    120000: '天津市'
-  },
-  // city_list: {
-  //   110100: '北京市',
-  //   110200: '县',
-  //   120100: '天津市',
-  //   120200: '县'
-  // },
-  city_list: {
-    110101: '东城区',
-    110102: '西城区',
-    110105: '朝阳区',
-    110106: '丰台区',
-    120101: '和平区',
-    120102: '河东区',
-    120103: '河西区',
-    120104: '南开区',
-    120105: '河北区',
-  }
-}
     }
   },
-  store,
   components: {
     Tarbar,
     'van-search':Search,
-    'van-area': Area
+    CustomArea
   },
   methods:{
     isSelect(){
 
     }
   },
-  computed:{
-    ...mapState(['city','area'])
-  }
 }
 </script>
 
