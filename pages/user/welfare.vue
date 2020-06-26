@@ -1,5 +1,6 @@
 <template>
   <div>
+      <Headers :title="title"/>
       <div class="father">
         <div class="welfare">
             <div class="welfare-content">
@@ -60,10 +61,14 @@
 </template>
 
 <script>
+import Headers from '../../components/header'
 export default {
+    components:{
+        Headers
+    },
     data(){
         return{
-
+            title:'我的福利'
         }
     }
 }

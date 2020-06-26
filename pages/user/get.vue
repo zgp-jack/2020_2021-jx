@@ -1,5 +1,6 @@
 <template>
   <div>
+      <Headers :title="title"/>
       <div class="father">
           <div class="head">
               <img src="http://statics.zhaogongdi.com/xcx/get_coin_yupao.png">
@@ -34,7 +35,11 @@
 </template>
 
 <script>
+import Headers from '../../components/header'
 export default {
+    components:{
+        Headers
+    },
     data(){
         return{
             list:[
@@ -44,7 +49,8 @@ export default {
                 {title:'发布机械 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
                 {title:'发布出售 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
                 {title:'发布求购 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
-            ]
+            ],
+            title:'鱼泡机械-获取鱼泡币'
         }
     }
 }

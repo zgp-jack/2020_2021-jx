@@ -1,0 +1,115 @@
+@import '../../assets/css/style.scss';
+.father{
+    >div{
+        padding-left:0.1rem;
+    }
+    font-size: 0.28rem;
+    color:$colors;
+    @include box_inner($bottom:0rem,$padding-bottom:1rem,);
+        .from-row{
+            background-color:$white;
+        }
+        .f-red{
+            color: #ff7c15;
+        }
+        .corm-row{
+            font-size:0.3rem;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            padding: 0.1rem 0.1rem;
+              >div{
+                  display: inline-block;
+                  line-height: 0.7rem;
+              }
+              .row-left{
+                 width: 1.5rem;
+              }
+              .row-right{
+                  flex: 1;
+                  margin-left:0.5rem;
+                  position: relative;
+                    .textInput{
+                        width: calc(100% - 0.1rem);
+                        border: none;
+                        background: none;
+                        color: #666;
+                    }
+                    .file_mk{
+                        padding: 0.15rem 0.15rem;
+                        background-color: $color;
+                        color: #fff;
+                    }
+              }
+        }
+        .corm-row:not(:last-child){
+            border-bottom: 1px solid #ccc;
+        }
+        .id_card{
+            height: 3.6rem;
+            padding: 0.3rem 0.13rem 0 0.03rem;
+            display: flex;
+            justify-content: space-between;
+                >div{
+                    width: 48%;
+                    height: 70%;
+                }
+                .one>div{
+                    height: 100%;
+                    background-image: url('../../assets/img/apply-updata/id-card-front.png');
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                }
+                    .two>div{
+                    height: 100%;
+                    background-image: url('../../assets/img/apply-updata/id-card-contrary.png');
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                }
+                p{
+                    background-color:$color;
+                    border-radius: 0 0 0.1rem 0.1rem;
+                    text-align: center;
+                    color: #fff;
+                    font-size: 0.28rem;
+                    font-weight: 300;
+                    line-height:0.6rem;
+                }
+        }
+        .desc-row{
+            padding: 0.1rem 0.1rem;
+            padding-bottom:0.3rem;
+                .row-left{
+                    width:1.5rem;
+                    line-height:0.7rem;
+                }
+                .desc{
+                    display: block;
+                    padding: 0.1rem 0.1rem;
+                    width: calc(100% - 30px);
+                    min-height:1.6rem;
+                    margin: auto;
+                    border: none;
+                }
+        }
+        .msg{
+            line-height:0.5rem;
+            font-size:0.26rem;
+            font-weight: 400;
+            color: #414141;
+        }
+        .union-title{
+            line-height: 0.7rem;
+        }
+        .main_back{
+            background-color: $color;
+            margin: 0.3rem auto;
+            display: block;
+            width: calc(100% - 60px);
+            border: none;
+            border-radius: 0.1rem;
+            color: #fff;
+            text-align: center;
+            line-height:0.8rem;
+        }
+}
