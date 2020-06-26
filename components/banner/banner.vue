@@ -1,6 +1,6 @@
 <template>
     <van-swipe class="my-swipe"  indicator-color="white" width="7.5rem" :autoplay="3000" ref="resize">
-      <van-swipe-item>1</van-swipe-item>
+      <van-swipe-item v-for="(item,index) in banner_data ">{{item}}</van-swipe-item>
       <van-swipe-item>2</van-swipe-item>
       <van-swipe-item>3</van-swipe-item>
       <van-swipe-item>4</van-swipe-item>
@@ -12,7 +12,7 @@
   export default{
     data(){
       return{
-
+        banner_data:null,
       }
     },
     components:{
@@ -24,12 +24,23 @@
       setTimeout(()=>{
         this.$refs.resize.resize()
       },0)
-      console.log(this.$props)
+      this.banner_data = this.$props.obj.content
+
+    },
+    created(){
+    
     },
     props:['obj']
   }
 </script>
 
 <style lang="scss">
-
+  .my-swipe .van-swipe-item,.my-swipe .van-swipe__track {
+      color: #fff;
+      font-size: 20px;
+      line-height: 150px;
+      text-align: center;
+      background-color: #39a9ed;
+      width: 7.5rem !important;
+    }
 </style>

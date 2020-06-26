@@ -60,7 +60,7 @@
     top:calc(1.91rem + 2px);
     transition: all 0.3s;
     .selectd{
-        height: 0;
+        width: 0;
     }
 }
 #{'/deep/'}  .selectd_box{

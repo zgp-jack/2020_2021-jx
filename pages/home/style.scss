@@ -7,7 +7,7 @@
     box-sizing: border-box;
     margin-bottom: 0.25rem;
     height: 0.7rem;
-    padding-top:0.05rem;
+    padding-top:0.15rem;
     .left_dom{
       h1{
         padding-top: 0.1rem;
@@ -126,4 +126,46 @@
       margin-bottom: 0.5rem;
     }
   }
+  #{'/deep/'} .model_mask{
+      top:0.9rem;
+      z-index: 99;
+      .inner{
+          height:calc(100vh - 0.9rem);
+          .city,.area {
+            height:calc(100vh - 0.9rem);
+          }
+      }
+
+  }
+}
+
+// #{'/deep/'} .model_mask{
+//     top:calc(1.91rem + 2px);
+//     transition: all 0.3s;
+//     .selectd{
+//         width: ;
+//     }
+// }
+#{'/deep/'}  .selectd_box{
+    width: 0;
+    opacity: 0;
+}
+#{'/deep/'} .model_mask{
+  .inner {
+    font-size: 0.28rem;
+    width: 3.6rem;
+     .city,.area{
+       .selectItem{
+         background-color: #fdc777;
+         color: #fff;
+       }
+       div{
+         padding-left: 0;
+         div{
+           padding-left: 0;
+         }
+       }
+     }
+  }
+
 }

@@ -18,7 +18,7 @@ const rem = `(function (doc, win) {
 })(document, window);`
 
 export default {
-  
+
   /*
   ** Nuxt rendering mode
   ** See https://nuxtjs.org/api/configuration-mode
@@ -78,5 +78,5 @@ export default {
   router: {
     base: '/dist'
   },
-  
+
 }

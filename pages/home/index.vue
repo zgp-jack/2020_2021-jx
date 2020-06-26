@@ -1,14 +1,17 @@
 <!-- 首页 -->
 <template>
   <div class="container">
+    <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" />
 	  <div id="head">
+
       <div class="left_dom">
         <h1 class="fl">
           <img src="http://statics.zhaogongdi.com/common/logo_m.png" alt="">
         </h1>
         <div @click="chooseArea" class="position fl">
-          <i class="icon-dingwei iconfont" /><b>成都</b>
+          <i class="icon-dingwei iconfont" /><b>{{selectAreaData.name || '成都'}}</b>
           <strong class="iconfont icon-youjiantou"></strong>
+
         </div>
       </div>
       <div class="right_dom fr">
@@ -74,8 +77,18 @@ import firstListItem from '../../components/firstListItem/index.vue'
 import seccondListItem from '../../components/seccondListItem/index.vue'
 import { Swipe , SwipeItem } from 'vant';
 import Banner from '../../components/banner/banner.vue'
+import chooseArea from '../../components/customArea/index.vue'
 
 export default {
+  components: {
+    Tarbar: Tarbar,
+    "van-swipe": Swipe,
+    "van-swipe-item" : SwipeItem,
+    'firstListItem':firstListItem,
+    'seccondListItem':seccondListItem,
+    "Banner" :Banner,
+    chooseArea
+  },
   data(){
     return{
       title_data:[{name:"机械求租",type:1},{name:"机械出租",type:2},{name:"机械转让",type:3},{name:"机械求购",type:4}],
@@ -84,23 +97,16 @@ export default {
         "width" : "100%",
         "height" : "height: 2.56rem",
         "vertical":"false",
-        "click":()=>{}
-      }
+        "click":()=>{},
+        "content":[],
+      },
+      isSelect_area:false,
+      selectAreaData:{}
     }
   },
-  components: {
-    Tarbar: Tarbar,
-    "van-swipe": Swipe,
-    "van-swipe-item" : SwipeItem,
-    'firstListItem':firstListItem,
-    'seccondListItem':seccondListItem,
-    "Banner" :Banner
-  },
   mounted(){
-    // 轮播图重新获取上一级的尺寸
-    // setTimeout(()=>{
-    //   this.$refs.resize.resize()
-    // },0)
+
+
 
   },
   methods:{
@@ -109,13 +115,28 @@ export default {
     },
     // 选择城市
     chooseArea(){
+      this.isSelect_area = !this.isSelect_area;
+    },
+    onSelect(type, flag, cityData) {
+      this.isSelect_area = !this.isSelect_area;
+        this.$set(this, type, flag);
+        //关闭弹框请求接口
+        if (cityData) {
+          this.selectAreaData = {...cityData}
+          //接口请求
+        }
+      },
+      onisclose(type) {
+        let flag = this.isSelect_area ? false : true;
+        this.onSelect(type, flag);
+      }
 
-    }
   },
   created(){
     //banner数据
 
   }
+
 }
 </script>
 
