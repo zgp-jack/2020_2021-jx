@@ -29,7 +29,7 @@
 import Tarbar from "../../components/tarbar";
 import { Search } from "vant";
 import CustomArea from "../../components/customArea";
-
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -37,7 +37,7 @@ export default {
       isSelect_jixie: false,
       isSelect_sort: false,
 
-      selectAreaData:{},//选择的数据
+      selectAreaData: {} //选择的数据
     };
   },
   components: {
@@ -51,15 +51,24 @@ export default {
       this.$set(this, type, flag);
       //关闭弹框请求接口
       if (cityData) {
-        this.selectAreaData = {...cityData}
+        this.selectAreaData = { ...cityData };
         //接口请求
       }
     },
     onisclose(type) {
       let flag = this.isSelect_area ? false : true;
       this.onSelect(type, flag);
+    },
+  },
+  mounted() {
+      let params = {
+        source: "XCX",
+        area: 322
+      };
+      this.$axios.get("/index/home", {params}).then(res => {
+        // debugger;
+      });
     }
-  }
 };
 </script>
 

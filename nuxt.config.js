@@ -57,7 +57,8 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    '~/plugins/main.js'
+    '~/plugins/main.js',
+    '~/plugins/axios.js'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -68,7 +69,27 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
+  // axios: {
+  //   prefix: 'http://jxapi.kkbbi.com',        
+  //   proxy: true 
+  // },
+  axios: {
+    proxy: true,
+    prefix: '/api/',
+    credentials: true
+  },
+  proxy: {
+    '/api/': {
+      target: 'http://jxapi.kkbbi.com/', // 目标服务器ip
+      pathRewrite: {
+        '^/api/': '/',
+        changeOrigin: true
+      }
+    }
+  },
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/

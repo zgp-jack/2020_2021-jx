@@ -22,6 +22,7 @@ export default {
         background-color: rgba(0, 0, 0,0.01);
         .van-loading{
             position: absolute;
+            z-index: 1000;
             top: calc(50% - 15px);
             left: calc(50% - 15px);
             line-height: 30px;

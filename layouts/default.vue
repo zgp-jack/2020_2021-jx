@@ -1,33 +1,47 @@
 <template>
   <div class='layout'>
     <nuxt v-if="isShow"/>
-    <Loading v-else/>
+    <Loading v-else-if="!isShow || counter!==0"/>
   </div>
 </template>
 
 <script>
-import Loading from '../components/loading';
+import Loading from "../components/loading";
+import storeLoading from "../store/serverLoading.js";
+import { mapState } from "vuex";
 export default {
-  data(){
-    return{
-      isShow:false
-    }
+  data() {
+    return {
+      isShow: false
+    };
   },
-  components:{
+  storeLoading,
+  components: {
     Loading
   },
-  mounted(){
-    setTimeout(()=>{
+  mounted() {
+    setTimeout(() => {
       this.$set(this, "isShow", true);
-    },10)
+    }, 10);
+  },
+  computed: {
+    ...mapState(["counter"])
+  },
+  methods: {
+    increment() {
+      state.counter++;
+    },
+    reduce() {
+      state.counter--;
+    }
   }
-}
+};
 </script>
 
 
 <style scoped>
-  .model_mask{
-    width: 100%;
-    left:0;
-  }
+.model_mask {
+  width: 100%;
+  left: 0;
+}
 </style>
