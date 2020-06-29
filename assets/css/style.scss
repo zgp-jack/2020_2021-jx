@@ -4,6 +4,9 @@ $font-color:#7D7D7D;
 $white:#FFFFFF;
 $black:#282828;
 $colors:#555;
+.van-picker__confirm{
+  color:red !important;
+}
 @mixin box_inner($top:1.01rem,$bottom:1.1rem,$padding-bottom:0rem){
   position: fixed;
 	top: $top;

@@ -107,7 +107,7 @@ export default {
         Header
     },
     data(){
-        return{
+        return{ 
             title:'供应商申请'
         }
     }
