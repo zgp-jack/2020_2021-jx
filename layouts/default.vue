@@ -19,7 +19,7 @@ export default {
   mounted(){
     setTimeout(()=>{
       this.$set(this, "isShow", true);
-    },50)
+    },10)
   }
 }
 </script>
