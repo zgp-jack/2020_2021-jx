@@ -3,9 +3,8 @@
     box-sizing:content-box;
 }
 .father{
-    @include box_inner();
+    @include box_inner($bottom:0rem,$padding-bottom:1rem,$top:1rem);
     color:$font-color;
-    overflow: hidden;
         .head{
             height:2.8rem;
             background-size: cover;

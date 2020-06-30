@@ -3,13 +3,14 @@ $width:7.5rem;
 $font-color:#7D7D7D;
 $white:#FFFFFF;
 $black:#282828;
-
-@mixin box_inner($top:1.01rem,$bottom:1.1rem){
+$colors:#555;
+@mixin box_inner($top:1.01rem,$bottom:1.1rem,$padding-bottom:0rem){
   position: fixed;
 	top: $top;
 	bottom: $bottom;
 	width: 7.5rem;
   overflow-y: auto;
+  padding-bottom:$padding-bottom;
 }
 @mixin overflow_hiding($clamp: 1){
 　　text-overflow: ellipsis;
