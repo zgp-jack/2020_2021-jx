@@ -99,6 +99,9 @@ export default {
     // 跳转
     isGo(i){
       switch (i) {
+         case 0:
+            this.$router.push('/user/collection')
+          break;
           case 2:
             this.$router.push('/user/welfare')
           break;
