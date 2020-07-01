@@ -1,5 +1,5 @@
 <template>
-    <van-swipe class="my-swipe"  indicator-color="white" width="7.5rem" :autoplay="3000" ref="resize">
+    <van-swipe class="my-swipe"  indicator-color="white" width="7.5rem" :vertical="ture" :autoplay="3000" ref="resize">
       <van-swipe-item v-for="(item,index) in banner_data ">{{item}}</van-swipe-item>
       <van-swipe-item>2</van-swipe-item>
       <van-swipe-item>3</van-swipe-item>
@@ -8,7 +8,8 @@
 </template>
 
 <script>
-  import { Swipe , SwipeItem } from 'vant';
+  import { Swipe , SwipeItem } from 'vant'
+
   export default{
     data(){
       return{
@@ -28,7 +29,7 @@
 
     },
     created(){
-    
+
     },
     props:['obj']
   }
