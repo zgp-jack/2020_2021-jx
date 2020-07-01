@@ -8,9 +8,11 @@ const store =()=>new Vuex.Store({
         counter:10
     },
     mutations:{
-        increment(state,value){
-          console.log(state.counter=32);
-            state.counter = 50
+        onServers(state,data){
+            state.counter++
+            data.requestAxios().then(res=>{
+                this.commit('reduce')
+            })
         },
         reduce(state){
             state.counter--

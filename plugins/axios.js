@@ -1,20 +1,58 @@
-import serverLoading from '../store/serverLoading';
-export default function (aa) {
-  console.log(serverLoading().commit('increment',101))
-   // serverLoading.commit('increment',101)
-    debugger
+/* 
+    params.globalLoading === false//取消loading，默认不传展示
+*/
 
-    // serverLoading.mutations.increment()
+import {Toast} from 'vant';
+
+export default function ({$axios,redirect,store}) {
     // request拦截器
-    // $axios.onRequest(config => {
-    //     debugger
-    //     config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
-    // })
-    // $axios.onError(error => {
-    //     debugger
-    // })
-    // // response拦截器
-    // $axios.interceptors.response.use(response => {
-    //     return response
-    // })
+    let globalLoading = true;
+    $axios.onRequest(config => {
+        const {params} = config;
+        if(params.globalLoading === false){
+            globalLoading = false
+            delete params.globalLoading
+        }
+        config.params = {...params,source:'XCX'}
+        globalLoading && Toast.loading({
+            mask: true,
+            message: '加载中...',
+            duration: 0,
+        });
+        config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
+    })
+    $axios.onError(error => {
+        globalLoading && Toast.clear()
+        return {error:'error'}
+    })
+    // response拦截器
+    $axios.interceptors.response.use(response => {
+        globalLoading && Toast.clear()
+        if (response.status == 200) {
+            if (response.code==300){
+                Toast('账号异常')
+                // let error_data = response.data
+                // wx.showModal({
+                //     title: "账号异常",
+                //     content: error_data.msg,
+                //     success(res) {
+                //         if (res.confirm) {
+                //             wx.makePhoneCall({
+                //                 phoneNumber: error_data.content.contact
+                //             })
+                //         } else if (res.cancel) {
+                //             if (params.cancel) params.Cancel()
+                //         }
+                //     }
+                // })
+            } else if (response.code == 0) {
+                redirect({
+                    path: '/login',
+                })
+            }
+        } else {
+            Toast('网络请求失败')
+        }
+        return response
+    })
 }

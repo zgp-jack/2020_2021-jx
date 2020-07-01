@@ -117,6 +117,12 @@ export default {
           case 0:
             this.$router.push('/user/get')
           break;
+          case 1:
+            this.$router.push('/user/isget')
+          break;
+           case 2:
+            this.$router.push('/user/isget')
+          break;
           default:
           break;
           }
