@@ -1,11 +1,8 @@
 <template>
-   <div>
-       <Headers :title="title"/>
+  <div>
+      <Headers :title="title"/>
        <collHead :arr = 'arr'/>
-       <div class="father">
-           <div class="list_one">暂无此类信息</div>
-       </div>
-   </div>
+  </div>
 </template>
 
 <script>
@@ -18,12 +15,13 @@ export default {
     },
     data(){
         return{
-            title:'我的收藏',
-            arr:[{title:'求租'},{title:'出租'},{title:'转让'},{title:'求购'},]
+            title:'我的发布',
+            arr:[{title:'我的求租'},{title:'我的出租'},{title:'我的出售'},{title:'我的求购'},]
         }
     }
 }
 </script>
+
 <style lang='scss' scoped>
-@import './collection.scss'
+ @import './release.scss'
 </style>
