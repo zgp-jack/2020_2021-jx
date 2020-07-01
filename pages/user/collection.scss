@@ -1,1 +1,16 @@
 @import '../../assets/css/style.scss';
+.father{
+    @include box_inner($bottom:0rem,$padding-bottom:1rem,$top:2rem);
+        .list_one{
+            background-size: 4rem auto;
+            background-image: url('http: //statics.zhaogongdi.com/common/list_empty.png?v=10001');
+            background-repeat: no-repeat;
+            background-position: top;
+            padding-top: 4.5rem;
+            margin-top: 0.8rem;
+            line-height: 1rem;
+            font-size:0.37rem;
+            color: #888;
+            text-align: center;
+        }
+}
