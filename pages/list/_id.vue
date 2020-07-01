@@ -13,7 +13,7 @@
           <span class="search_text fr">搜索</span>
         </div>
         <div class="select_head">
-          <span class="select_inner" @click="onisclose('isSelect_area')">成都<i class="iconfont icon-down" :class="{'rotate':isSelect_area}"/></span>
+          <span class="select_inner" @click="onisclose('isSelect_area')">{{selectAreaData.name || '成都'}}<i class="iconfont icon-down" :class="{'rotate':isSelect_area}"/></span>
           <span class="select_inner">所有机械<i class="iconfont icon-down" :class="{'rotate':isSelect_jixie}"/></span>
           <span class="select_inner">最新<img src="../../assets/img/list/sort.png" alt="" :class="{'rotate':isSelect_sort}"></span>
         </div>
@@ -27,17 +27,20 @@
 
 <script>
 import Tarbar from "../../components/tarbar";
-import { Search } from "vant";
+import { Search,Uploader } from "vant";
 import CustomArea from "../../components/customArea";
-
+import serverLoading from "../../store/serverLoading.js";
 export default {
   data() {
     return {
       isSelect_area: false,
       isSelect_jixie: false,
-      isSelect_sort: false
+      isSelect_sort: false,
+
+      selectAreaData: {} //选择的数据
     };
   },
+  store:serverLoading,
   components: {
     Tarbar,
     "van-search": Search,
@@ -49,17 +52,18 @@ export default {
       this.$set(this, type, flag);
       //关闭弹框请求接口
       if (cityData) {
+        this.selectAreaData = { ...cityData };
         //接口请求
       }
     },
     onisclose(type) {
       let flag = this.isSelect_area ? false : true;
       this.onSelect(type, flag);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang='scss' scoped>
-@import "./style.scss";
+  @import "./style.scss";
 </style>
