@@ -1,0 +1,108 @@
+@import '../../assets/css/style.scss';
+.father{
+    @include box_inner($bottom:0rem,$padding-bottom:1rem,$top:1rem);
+
+    .border-btn{
+        border-bottom: 1px solid rgba(238,238,238,1);
+    }
+    .consume-title{
+        background:rgba(255,255,255,1);
+        box-shadow:0px 2px 0.21rem 0px rgba(192,191,190,0.3);
+        line-height:1.5rem;
+            .consume-one{
+                img{
+                    width: 0.36rem;
+                    height:0.36rem;
+                    vertical-align:sub;
+                }
+                padding: 0.26rem;
+                display: flex;
+                line-height: 0.74rem;
+                justify-content:space-between;
+                align-items: center;
+                >p:first-child{
+                    color: #303030;
+                    font-size: 0.25rem;
+                    font-weight: 550;
+                }  
+                >p:last-child{
+                    width: 1.8rem;
+                    height: 0.4rem;
+                    line-height:0.33rem;
+                    background:rgba(246,246,246,1);
+                    border-radius:3px;
+                    padding:0.02rem;
+                    color: #4F4F4F;
+                    font-size: 0.23rem;
+                    text-align: center;
+                }
+            }
+            .consume-two{
+                padding: 0.26rem;
+                display: flex;
+                line-height: 0.74rem;
+                font-size:0.26rem;
+                    >p>span{
+                        color:$color;
+                    }
+                    >p:nth-child(2){
+                        margin-left:0.97rem;
+                    }
+            }
+    }
+    .consume-content{
+        margin-top:0.18rem;
+        // line-height:3.4rem;
+        background:rgba(255,255,255,1);
+        box-shadow:0px 2px 0.21rem 0px rgba(192,191,190,0.3);
+        padding:0  0.27rem 0.27rem;
+        overflow: hidden;
+            .consume-content-one{
+                display:flex;
+                margin-top: 0.27rem;
+                    .consume-content-img{
+                        width: 0.6rem;
+                        height: 0.6rem;
+                        border-radius:50%;
+                        background: url('../../assets/img/consume/text.png') no-repeat;
+                        background-size: 80% 80%;
+                        background-position: center;
+                        background-color:rgba(255,169,38,1);;
+                    }
+                    .consume-center{
+                       margin-left:0.25rem;
+                       flex: 1;
+                       position: relative;
+                        .consume-content-text{
+                            display: inline-block;
+                            line-height:0.46rem;
+                              p{
+                                  font-size: 0.3rem;
+                                  color: #252529;
+                                  font-weight: 550;
+                              }
+                              span{
+                                  font-size: 0.26rem;
+                                  color: #9E9E9E;
+                                  display: block;
+                              }
+                        }
+                        .consume-content-right{
+                            float: right;
+                            p{
+                                font-size:0.26rem;
+                                color: #252529;
+                                font-weight:550;
+                            }
+                            img{
+                                position:absolute;
+                                top:35%;
+                                display: block;
+                                width: 0.32rem;
+                                height: 0.32rem;
+                            }
+                        }
+                    }
+            }
+    }
+}
