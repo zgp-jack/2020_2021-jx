@@ -22,8 +22,7 @@
 </style>
 
 <script>
-import store from "../../store/area.js";
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState,mapGetters } from "vuex";
 import Tarbar from "../../components/tarbar";
 import { Search } from "vant";
 import { constants } from "zlib";
@@ -33,9 +32,8 @@ export default {
     return {
       provinceChosedIndex: null,
       cityChosedIndex: null
-    };
+    }
   },
-  store,
   methods: {
     //大城市选择
     provinceChosed(index) {
@@ -54,12 +52,14 @@ export default {
         "isSelect_area",
         false,
         this.city[this.provinceChosedIndex][index]
-      );
+      )
+    },
+  },
+  computed:{
+    city(){
+      return window.$nuxt.$store.state.city
     }
   },
-  computed: {
-    ...mapState(["city"])
-  }
 };
 </script>
 

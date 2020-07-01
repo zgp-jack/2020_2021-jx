@@ -29,7 +29,6 @@
 import Tarbar from "../../components/tarbar";
 import { Search,Uploader } from "vant";
 import CustomArea from "../../components/customArea";
-import serverLoading from "../../store/serverLoading.js";
 export default {
   data() {
     return {
@@ -40,7 +39,6 @@ export default {
       selectAreaData: {} //选择的数据
     };
   },
-  store:serverLoading,
   components: {
     Tarbar,
     "van-search": Search,
