@@ -2,6 +2,7 @@
   <div class='layout'>
     <nuxt v-if="isShow"/>
     <Loading v-else-if="!isShow || counter!==0"/>
+    {{value}}
   </div>
 </template>
 
@@ -12,7 +13,8 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      isShow: false
+      isShow: false,
+      value1:0
     };
   },
   storeLoading,
@@ -25,7 +27,16 @@ export default {
     }, 10);
   },
   computed: {
-    ...mapState(["counter"])
+   value() {
+     return storeLoading().state.counter;
+    }
+
+    // ...mapState(["counter"])
+  },
+  created(){
+    console.log(this.$store.state)
+
+
   },
   methods: {
     increment() {
@@ -33,7 +44,8 @@ export default {
     },
     reduce() {
       state.counter--;
-    }
+    },
+
   }
 };
 </script>

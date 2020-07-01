@@ -1,7 +1,10 @@
 import serverLoading from '../store/serverLoading';
 export default function (aa) {
+  console.log(serverLoading().commit('increment',101))
+   // serverLoading.commit('increment',101)
     debugger
-    // serverLoading().mutations.increment()
+
+    // serverLoading.mutations.increment()
     // request拦截器
     // $axios.onRequest(config => {
     //     debugger
