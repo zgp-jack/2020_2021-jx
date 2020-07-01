@@ -8,7 +8,6 @@ export default function ({$axios,redirect,store}) {
     // request拦截器
     let globalLoading = true;
     $axios.onRequest(config => {
-        debugger
         const {params} = config;
         if(params.globalLoading === false){
             globalLoading = false
@@ -28,7 +27,6 @@ export default function ({$axios,redirect,store}) {
     })
     // response拦截器
     $axios.interceptors.response.use(response => {
-        debugger
         globalLoading && Toast.clear()
         if (response.status == 200) {
             if (response.code==300){

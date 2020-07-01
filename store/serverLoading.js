@@ -9,7 +9,6 @@ const store =()=>new Vuex.Store({
     },
     mutations:{
         onServers(state,data){
-            debugger
             state.counter++
             data.requestAxios().then(res=>{
                 this.commit('reduce')
