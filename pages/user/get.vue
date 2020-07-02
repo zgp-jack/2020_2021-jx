@@ -50,7 +50,7 @@ export default {
                 {title:'发布出售 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
                 {title:'发布求购 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
             ],
-            title:'鱼泡机械-获取鱼泡币'
+            title:'获取鱼泡币'
         }
     }
 }

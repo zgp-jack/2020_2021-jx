@@ -5,15 +5,11 @@
           <div class="form">
             <div class="form-row">
               <i class="iconfont"></i>
-              <input type="text"  placeholder="请输入你的姓名" autocomplete="off"  maxlength="10" >
+              <input type="text"  placeholder="请输入你的手机号" autocomplete="off" v-model="password" maxlength="11">
             </div>
             <div class="form-row">
               <i class="iconfont"></i>
-              <input type="text"  placeholder="请输入你的手机号" autocomplete="off" v-model="users"  maxlength="11">
-            </div>
-            <div class="form-row">
-              <i class="iconfont"></i>
-              <input type="text"  placeholder="请输入短信验证码" autocomplete="off" maxlength="6" id="yanzheng">
+              <input type="text"  placeholder="请输入短信验证码" autocomplete="off" v-model="password" maxlength="6" id="yanzheng">
               <div class="get-captcha">获取验证码</div>
             </div>
             <div class="form-row">
@@ -21,7 +17,7 @@
               <input type="password"  placeholder="请输入设置您的密码" autocomplete="off" v-model="password" maxlength="16">
             </div>
           </div>
-          <div class="submit">注册</div>
+          <div class="submit">提交</div>
           <div class="div-line">
             <span class="line-s">
                 <span>遇到问题?</span>
@@ -47,7 +43,7 @@ export default {
   },
     data(){
         return{
-          title:'用户注册_鱼泡机械',
+          title:'忘记密码_鱼泡机械',
           users:'',
           password:'',
           userright:false,

@@ -18,6 +18,21 @@
                     line-height: 0.35rem;
 
                 }
+                #yanzheng{
+                    width: 45%;
+                    height:0.35rem;
+                    line-height: 0.35rem;
+                }
+                .get-captcha{
+                    width: 35%;
+                    text-align: center;
+                    margin: 0.1rem 0;
+                    line-height: 0.6rem;
+                    height:0.6rem;
+                    font-size: 0.3rem;
+                    color:#fff;
+                    background-color: $color;
+                }
         }
     }
     .iconfont{
@@ -30,13 +45,15 @@
     color: transparent;
     }
     .submit{
-        margin: 0 0.35rem;
+        margin: 0 0.4rem;
         background-color: #eee;
         color: #888;
-        line-height:0.7rem;
+        line-height:0.77rem;
         border-radius:0.3rem;
         text-align: center;
-        font-size:0.25rem;
+        font-size:0.3rem;
+        background-color:$color;
+        color: #fff;
     }
     .containr-res{
         position: relative;
@@ -46,10 +63,6 @@
         border-radius:0.3rem;
         text-align: center;
         font-size:0.25rem;
-            >a:first-child{
-                display: inline-block;
-                width: 100%;
-            }
             .con-fr{
                 position: absolute;
                 top:0.8rem;
@@ -104,8 +117,5 @@
                 }
         }
     }
-    .active{
-        background-color:$color;
-        color: #fff;
-    }
+
 }

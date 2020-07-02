@@ -14,8 +14,8 @@
           </div>
           <div class="submit" :class="[userright&&pass?'active':'']" @click="Login()">登录</div>
           <div class="containr-res">
-            <router-link to=''>快速注册</router-link>
-            <router-link to='' class="con-fr">忘记密码?</router-link>
+            <router-link to='/register'>快速注册</router-link>
+            <router-link to='/reset' class="con-fr">忘记密码?</router-link>
           </div>
           <div class="div-line">
             <span class="line-s">
