@@ -6,6 +6,17 @@ export const stores = ()=>({
     state:{
         counter:0
     },
+    mutations:{
+        onServers(state,data){
+            state.counter++
+            data.requestAxios().then(res=>{
+                this.commit('reduce')
+            })
+        },
+        reduce(state){
+            state.counter--
+        }
+    }
   })
 export const mutations ={
     increment(stores){

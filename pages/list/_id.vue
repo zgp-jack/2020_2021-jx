@@ -27,9 +27,9 @@
 
 <script>
 import Tarbar from "../../components/tarbar";
-import { Search } from "vant";
+import { Search,Uploader } from "vant";
 import CustomArea from "../../components/customArea";
-import axios from 'axios';
+import serverLoading from "../../store/serverLoading.js";
 export default {
   data() {
     return {
@@ -40,6 +40,7 @@ export default {
       selectAreaData: {} //选择的数据
     };
   },
+  store:serverLoading,
   components: {
     Tarbar,
     "van-search": Search,
@@ -60,18 +61,9 @@ export default {
       this.onSelect(type, flag);
     },
   },
-  mounted() {
-      let params = {
-        source: "XCX",
-        area: 322
-      };
-      this.$axios.get("/index/home", {params}).then(res => {
-        // debugger;
-      });
-    }
 };
 </script>
 
 <style lang='scss' scoped>
-@import "./style.scss";
+  @import "./style.scss";
 </style>
