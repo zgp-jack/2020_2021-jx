@@ -13,7 +13,10 @@ const store =()=>new Vuex.Store({
         //机械类型
         type:[],
         clas:[],
-        num:0
+        //默认头像
+        default_portrait:{},
+        //当前地址
+        default_addr:{}
     },
     mutations:{
         //设置机械类型
@@ -21,15 +24,14 @@ const store =()=>new Vuex.Store({
             state.type = [...obj.type]
             state.clas = [...obj.clas]
         },
-        test(state,num){
-            state.num +=num
+        //设置默认头像
+        setPortrait(state,obj){
+            state.default_portrait = {...obj}
+        },
+        //当前地址
+        setDefaultAddr(state,obj){
+            state.default_addr = {...obj}
         }
     },
-    getters:{
-        //设置机械类型
-        getMechanics(state){
-            return {type:state.type,clas:state.clas}
-        }
-    }
   })
   export default store
