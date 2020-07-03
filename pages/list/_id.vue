@@ -22,6 +22,10 @@
 
     <!-- 地区选择 -->
     <CustomArea :onSelect="onSelect" :isSelect_area="isSelect_area"/>
+    <!-- 轮播图 -->
+    <div class="banner_notice" type="1">
+      <verticalBanner />
+    </div>
   </div>
 </template>
 
@@ -29,20 +33,22 @@
 import Tarbar from "../../components/tarbar";
 import { Search,Uploader } from "vant";
 import CustomArea from "../../components/customArea";
+import vertical_banner from "../../components/vertical_banner/vertical_banner.vue";
 export default {
   data() {
     return {
       isSelect_area: false,
       isSelect_jixie: false,
       isSelect_sort: false,
+      selectAreaData: {}, //选择的数据
 
-      selectAreaData: {} //选择的数据
     };
   },
   components: {
     Tarbar,
     "van-search": Search,
-    CustomArea
+    CustomArea,
+    verticalBanner:vertical_banner
   },
   methods: {
     //控制赛选框显示隐藏

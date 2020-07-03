@@ -1,19 +1,20 @@
 <template>
   <div class='layout'>
     <nuxt v-if="isShow"/>
-    <Loading v-else/>
+    <Loading v-else-if="!isShow || counter!==0"/>
   </div>
 </template>
 
 <script>
 import Loading from "../components/loading";
-import { mapMutations } from "vuex";
 import {StorageType} from '../static/exports/area_type.js';
 import {mapState} from 'vuex';
+
 export default {
   data() {
     return {
       isShow: false,
+      value1:0
     };
   },
   components: {
@@ -23,7 +24,8 @@ export default {
     setTimeout(() => {
       this.$set(this, "isShow", true);
     }, 10);
-
+  },
+  created(){
     //获取机械类型
     this.getMechanics()
   },
@@ -37,6 +39,8 @@ export default {
         window.$nuxt.$store.commit('setMechanics',types)
       })
     },
+  },
+  computed: {
   },
 };
 </script>
