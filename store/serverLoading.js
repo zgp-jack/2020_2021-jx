@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 const store =()=>new Vuex.Store({
     state:{
-        counter:0
+        counter:10
     },
     mutations:{
         onServers(state,data){
