@@ -9,12 +9,12 @@ export default function ({$axios,redirect,store}) {
     // request拦截器
     let globalLoading = true;
     $axios.onRequest(config => {
+        config.url += `?source=XCX`
         const {params} = config;
-        if(params.globalLoading === false){
+        if(params && params.globalLoading === false){
             globalLoading = false
             delete params.globalLoading
         }
-        config.params = {...params,source:'XCX'}
         globalLoading && Toast.loading({
             mask: true,
             message: '加载中...',

@@ -31,14 +31,12 @@ export default {
     //获取机械类型
     getMechanics(){
       const that = this;
-      this.$axios.get('/index/type-class',{params:{}}).then(res=>{///index/type-class
+      this.$axios.get('/index/type-class').then(res=>{///index/type-class
         let result = StorageType(res.content,'0')
         let types = { 'type': [{id: 0, name: "所有机械", pid: "0"}].concat(result.par), 'clas': [[]].concat(result.son)}
         window.$nuxt.$store.commit('setMechanics',types)
       })
     },
-    myfun(){
-    }
   },
 };
 </script>
