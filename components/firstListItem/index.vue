@@ -2,21 +2,21 @@
   <div class="list-item">
     <div class="title">123456</div>
     <div class="left-img">
-      <img :src="default_img" alt="">
+      <img :src="data.cover && data.cover!=''?data.cover:default_img" alt="">
     </div>
     <div class="right-inner">
       <div class="basic-info">
-         <p class="userName">张大dfadfd发到哪里看的积分卡建安费地方撒大家快来房间大炮</p>
-         <p class="userTel">18384374***</p>
+         <p class="userName">{{data.title}}</p>
+         <p class="userTel">{{data.tel}}</p>
          <p class="tel-icon"  @click="callPhone" v-show="is_mine"></p>
       </div>
       <div class="position-time">
         <div class="position fl">
           <i class="icon-dingwei iconfont"></i>
-           西藏 布达拉宫
+           {{data.area}}
         </div>
         <div class="time fr">
-          2020-05-26 10:00:00
+          {{data.time}}
         </div>
       </div>
     </div>
@@ -33,6 +33,7 @@
 <script>
   import { Dialog } from 'vant';
   export default{
+    props:['data'],
    components:{
       [Dialog.Component.name]: Dialog.Component,
    },
