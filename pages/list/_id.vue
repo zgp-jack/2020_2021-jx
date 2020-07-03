@@ -23,7 +23,9 @@
     <!-- 地区选择 -->
     <CustomArea :onSelect="onSelect" :isSelect_area="isSelect_area"/>
     <!-- 轮播图 -->
-    <verticalBanner />
+    <div class="banner_notice" type="1">
+      <verticalBanner />
+    </div>
   </div>
 </template>
 
@@ -39,8 +41,8 @@ export default {
       isSelect_area: false,
       isSelect_jixie: false,
       isSelect_sort: false,
+      selectAreaData: {}, //选择的数据
 
-      selectAreaData: {} //选择的数据
     };
   },
   store:serverLoading,
