@@ -28,6 +28,8 @@ export default {
   created(){
     //获取机械类型
     this.getMechanics()
+    //获取默认头像、地区
+    this.getDefaultData()
   },
   methods:{
     //获取机械类型
@@ -39,6 +41,18 @@ export default {
         window.$nuxt.$store.commit('setMechanics',types)
       })
     },
+    //获取默认头像、地区
+    getDefaultData(){
+      const that = this;
+      that.$axios.get('/').then(res=>{
+        const {default_cover,default_header,addr} = res.content
+        const default_portrait = {
+          default_cover,default_header
+        }
+        window.$nuxt.$store.commit('setPortrait',default_portrait)
+        window.$nuxt.$store.commit('setDefaultAddr',addr)
+      })
+    }
   },
   computed: {
   },
