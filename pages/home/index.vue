@@ -56,15 +56,19 @@
       </a>
     </div>
     <div class="list_title">
-      <div v-for="(itme,index) in title_data" v-on:click="changeTitle(index)">
+      <div v-for="(itme,index) in title_data" v-on:click="changeTitle(index)" :key="index">
          <span  :class="title_active == index ? 'active' : '' ">{{itme.name}}</span>
       </div>
     </div>
     <div class="list_content">
-      <div v-for="(item,index) in title_data" :data-type="item.type" v-if="title_active == index">
-        <firstListItem v-if="(item.type == 1 || item.type == 4)" />
-        <seccondListItem v-else />
-        <p class="more">查看更多机械求租信息</p>
+      <div v-for="(item,index) in title_data" :data-type="item.type" v-if="title_active == index" :key="index">
+        <div v-if="(item.type == 1 || item.type == 4) && list[title_data[title_active].key].length>0">
+          <firstListItem v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="item"/>
+        </div>
+        <div v-if="(item.type == 2 || item.type == 3) && list[title_data[title_active].key].length>0">
+          <seccondListItem v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="item"/>
+        </div>
+        <p class="more" :v-if="list[title_data[title_active].key].length>0">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
     <Tarbar />
@@ -91,8 +95,8 @@ export default {
   },
   data(){
     return{
-      title_data:[{name:"机械求租",type:1},{name:"机械出租",type:2},{name:"机械转让",type:3},{name:"机械求购",type:4}],
-      title_active:1,
+      title_data:[{name:"机械求租",type:1,key:'tenant'},{name:"机械出租",type:2,key:'machine'},{name:"机械转让",type:3,key:'ershou'},{name:"机械求购",type:4,key:'want'}],
+      title_active:0,
       banner_children:{
         "width" : "100%",
         "height" : "height: 2.56rem",
@@ -101,7 +105,13 @@ export default {
         "content":[],
       },
       isSelect_area:false,
-      selectAreaData:{}
+      selectAreaData:{},
+      list:{
+        tenant:[],
+        machine:[],
+        ershou:[],
+        want:[]
+      }
     }
   },
   mounted(){
@@ -129,12 +139,17 @@ export default {
       onisclose(type) {
         let flag = this.isSelect_area ? false : true;
         this.onSelect(type, flag);
+      },
+      //列表页数据
+      listData(){
+        const that = this;
+        that.$axios.get('/index/home',{params:{area:322}}).then(res=>{
+            that.$set(that, "list", {...res.content});
+        })
       }
-
   },
   created(){
-    //banner数据
-
+    this.listData()
   }
 
 }

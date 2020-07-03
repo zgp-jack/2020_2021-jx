@@ -1,22 +1,21 @@
 <template>
   <div class="list-item">
-    <div class="left-img fl" :style="'background-image:url('+default_img+')'">
+    <div class="left-img fl" :style="'background-image:url('+(data.cover && data.cover!=''?data.cover:default_img)+')'">
       <span></span>
     </div>
     <div class="right-inner fl">
-      <div class="title">大家发卡方交大附近的积分卡了放假的ad激发</div>
+      <div class="title">{{data.title}}</div>
       <div class="basic-info fl">
-         <p class="userName fl">张大dfadfd发到哪里看的积分卡建安费地方撒大家快来房间大炮</p>
-         <p class="userTel fl">18384374***</p>
+         <p class="userTel fl">{{data.tel}}</p>
          <p class="tel-icon fr"  @click="callPhone('123456')" v-show="is_mine"></p>
       </div>
       <div class="position-time">
         <div class="position fl">
           <i class="icon-dingwei iconfont"></i>
-           西藏 布达拉宫
+           {{data.area}}
         </div>
         <div class="time fr">
-          2020-05-26 10:00:00
+          {{data.time}}
         </div>
       </div>
     </div>
@@ -33,6 +32,7 @@
 <script>
   import { Dialog } from 'vant';
   export default{
+    props:['data'],
     components:{
        [Dialog.Component.name]: Dialog.Component,
     },

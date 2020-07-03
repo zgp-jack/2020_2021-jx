@@ -33,7 +33,6 @@
 import Tarbar from "../../components/tarbar";
 import { Search,Uploader } from "vant";
 import CustomArea from "../../components/customArea";
-import serverLoading from "../../store/serverLoading.js";
 import vertical_banner from "../../components/vertical_banner/vertical_banner.vue";
 export default {
   data() {
@@ -45,7 +44,6 @@ export default {
 
     };
   },
-  store:serverLoading,
   components: {
     Tarbar,
     "van-search": Search,
