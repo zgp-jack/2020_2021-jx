@@ -108,4 +108,7 @@
         background-color:$color;
         color: #fff;
     }
+    .noReady{
+      pointer-events:none;
+    }
 }

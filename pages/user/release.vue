@@ -6,7 +6,7 @@
        <div class="point-mask" v-if="mask">
            <div class="btn-img" @click="mask_show()"></div>
        </div>
-       <div class="father">
+       <div class="father" @scroll="handleScroll">
            <div class="item" v-for="(item,i) in detail" :key='i'>
                <div class="staus"></div>
                <div class="title-h3">{{item.title}}</div>
@@ -16,6 +16,7 @@
                </div>
            </div>
        </div>
+       <div  class="cart" v-show="isshow">1</div>
   </div>
 </template>
 
@@ -27,22 +28,37 @@ export default {
         Headers,
         collHead
     },
+   mounted () {
+
+      },
     data(){
         return{
             title:'我的发布',
             arr:[{title:'我的求租'},{title:'我的出租'},{title:'我的出售'},{title:'我的求购'},],
             mask:false,
-            detail:[{title:'购回'},{title:'购回'},{title:'购回'},{title:'购回'},{title:'购回'},{title:'购回'},]
+            detail:[{title:'购回'},{title:'购回'},{title:'购回'},{title:'购回'},{title:'购回'},{title:'购回'},],
+            my_scroll:0,
+            isshow:true,
         }
     },
     methods:{
         mask_show(){
             this.mask = false
-        }
+        },
+         handleScroll(e){
+            const {scrollTop} = e.currentTarget;
+            let {my_scroll,isshow} = this;
+            // 页面滚动距顶部距离
+            if(scrollTop>my_scroll && isshow){
+                this.isshow = false;
+            }else if(scrollTop<my_scroll && !isshow){
+                this.isshow = true;
+            }
+            this.my_scroll=scrollTop
+        },
     }
 }
 </script>
-
 <style lang='scss' scoped>
  @import './release.scss'
 </style>

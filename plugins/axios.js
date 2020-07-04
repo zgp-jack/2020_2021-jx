@@ -1,5 +1,6 @@
-/* 
+/*
     params.globalLoading === false//取消loading，默认不传展示
+    params必传  可以传params:{}
 */
 
 import {Toast} from 'vant';
@@ -8,12 +9,12 @@ export default function ({$axios,redirect,store}) {
     // request拦截器
     let globalLoading = true;
     $axios.onRequest(config => {
+        config.url += `?source=XCX`
         const {params} = config;
-        if(params.globalLoading === false){
+        if(params && params.globalLoading === false){
             globalLoading = false
             delete params.globalLoading
         }
-        config.params = {...params,source:'XCX'}
         globalLoading && Toast.loading({
             mask: true,
             message: '加载中...',
@@ -23,7 +24,7 @@ export default function ({$axios,redirect,store}) {
     })
     $axios.onError(error => {
         globalLoading && Toast.clear()
-        return {error:'error'}
+        return {data:{error:'error'}}
     })
     // response拦截器
     $axios.interceptors.response.use(response => {
@@ -53,6 +54,6 @@ export default function ({$axios,redirect,store}) {
         } else {
             Toast('网络请求失败')
         }
-        return response
+        return response.data
     })
 }

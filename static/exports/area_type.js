@@ -26,5 +26,6 @@ function GetArea(){
 }
 
 module.exports = {
-    get_area: GetArea,
+	get_area: GetArea,
+	StorageType,
 }

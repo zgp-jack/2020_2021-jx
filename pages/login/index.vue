@@ -12,7 +12,7 @@
               <input type="password" id="username" placeholder="密码" autocomplete="off" v-model="password" @input="user_pass()">
             </div>
           </div>
-          <div class="submit" :class="[userright&&pass?'active':'']" @click="Login()">登录</div>
+          <div class="submit" :class="[userright&&pass?'active':'noReady']" @click="Login()">登录</div>
           <div class="containr-res">
             <router-link to='/register'>快速注册</router-link>
             <router-link to='/reset' class="con-fr">忘记密码?</router-link>
@@ -34,6 +34,7 @@
 
 <script>
 import Headers from '../../components/header'
+import { Toast } from 'vant';
 export default {
   components:{
     Headers
@@ -68,14 +69,20 @@ export default {
         }
       },
       Login(){
-        if(this.userright && this.pass){
-          this.$router.push('/user')
-        }
+        // if(this.userright && this.pass){
+        //   this.$router.push('/user')
+        // }
+        this.$axios.post('/user/app-login',{params:{phone:this.users,passkey:this.password}}).then(res=>{
+              const {code,msg} = res
+                  if(code == 3000){
+                    Toast.fail(msg)
+                  }
+        })
       }
     }
 }
 </script>
 
 <style lang='scss' scoped>
-  @import './index.scss'  
+  @import './index.scss'
 </style>

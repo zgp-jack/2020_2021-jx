@@ -14,10 +14,11 @@
             background: url('../../assets/img/my-fabu/i_know.png') 0 0 / 100px 32px;
             top: 70%;
             left: calc((100vw - 100px) / 2);
-        }   
+        }
 }
 .father{
-    @include box_inner($bottom:0rem,$padding-bottom:1rem,$top:2rem); 
+    @include box_inner($bottom:0rem,$padding-bottom:1rem,$top:2rem);
+    overflow: scroll;
         .item{
             margin-top:0.2rem;
             padding: 0.2rem 0.2rem;
@@ -67,4 +68,12 @@
                 margin-right:0.3rem;
                }
         }
+}
+.cart{
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  width: 2rem;
+  height: 2rem;
+  background-color: blue;
 }
