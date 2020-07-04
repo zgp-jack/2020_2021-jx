@@ -1,0 +1,15 @@
+.father{
+  position: fixed;
+  width:44vw;
+  height:15vw;
+  bottom: 9%;
+  left: 30%;
+  opacity:1;
+  transition: all 500ms;
+  background:url('../../assets/img/qiuzu.png');
+  background-size: 100% 100%;
+  z-index: 9999;
+}
+.top-hide{
+  bottom:-48px;opacity: 0;
+}

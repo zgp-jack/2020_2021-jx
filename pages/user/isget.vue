@@ -134,8 +134,3 @@ export default {
 <style lang='scss' scoped>
 @import './isget.scss'
 </style>
-<style>
-.van-picker__confirm{
-        color:#FFAA26;
-    }
-</style>

@@ -1,6 +1,6 @@
 <!-- 首页 -->
 <template>
-  <div class="container">
+  <div class="container" @scroll="my_scroll">
     <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" />
 	  <div id="head">
 
@@ -71,6 +71,7 @@
         <p class="more" :v-if="list[title_data[title_active].key].length>0">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
+    <BottomTop ref="mychild" />
     <Tarbar />
   </div>
 </template>
@@ -82,6 +83,7 @@ import seccondListItem from '../../components/seccondListItem/index.vue'
 import { Swipe , SwipeItem } from 'vant';
 import Banner from '../../components/banner/banner.vue'
 import chooseArea from '../../components/customArea/index.vue'
+import BottomTop from '../../components/bottom-topbar/index'
 
 export default {
   components: {
@@ -91,7 +93,8 @@ export default {
     'firstListItem':firstListItem,
     'seccondListItem':seccondListItem,
     "Banner" :Banner,
-    chooseArea
+    chooseArea,
+    BottomTop
   },
   data(){
     return{
@@ -146,6 +149,11 @@ export default {
         that.$axios.get('/index/home',{params:{area:322}}).then(res=>{
             that.$set(that, "list", {...res.content});
         })
+      },
+      // 滚动显示隐藏
+      my_scroll(e){
+        const {scrollTop} = e.currentTarget;
+        this.$refs.mychild.handleScroll(scrollTop)
       }
   },
   created(){
