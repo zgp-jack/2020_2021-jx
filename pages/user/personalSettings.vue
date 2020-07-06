@@ -13,7 +13,7 @@
                         <span>意见和反馈</span>
                         <i></i>
                     </router-link>
-                    <router-link to='' class="row">
+                    <router-link to='./contact' class="row">
                         <span>联系我们</span>
                         <i></i>
                     </router-link>

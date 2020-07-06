@@ -34,6 +34,7 @@
 
 <script>
 import Headers from '../../components/header'
+import md5 from 'js-md5';
 import { Toast } from 'vant';
 export default {
   components:{
@@ -69,10 +70,9 @@ export default {
         }
       },
       Login(){
-        // if(this.userright && this.pass){
-        //   this.$router.push('/user')
-        // }
-        this.$axios.post('/user/app-login',{params:{phone:this.users,passkey:this.password}}).then(res=>{
+        let Pass = this.password
+        let psd = md5(Pass)
+        this.$axios.post('/user/login',{username:this.users,psd:this.password}).then(res=>{
               const {code,msg} = res
                   if(code == 3000){
                     Toast.fail(msg)
