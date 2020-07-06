@@ -112,6 +112,9 @@ export default {
             this.$router.push('/user/company')
           break;
           case 4:
+            this.$router.push('/user/face-book')
+          break;
+           case 5:
             this.$router.push('/user/personalSettings')
           break;
           default:
