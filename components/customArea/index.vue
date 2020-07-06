@@ -1,17 +1,19 @@
 <!-- 自定义地区选择 -->
 <template>
-    <div :class="{'model_mask':true,'selectd_box':!isSelect_area}" @click.stop.prevent="onSelect('isSelect_area',false)">
+    <div :class="{'model_mask':true,'selectd_box':!isSelect_area}" @click.stop.prevent="onSelect('isSelect_area',false)" v-if="city.length">
         <div :class="{'inner':true,'clearfix':true,'selectd':!isSelect_area}">
             <div class="city fl">
                 <div @click="provinceChosed(0)" :class="{'item':provinceChosedIndex==0,'selectItem':provinceChosedIndex==0}">{{city[0].name}}</div>
                 <div v-for="(item,index) in city" :key="index" v-if="index>0" @click.stop.prevent="provinceChosed(index)" :class="{'item':provinceChosedIndex==index,'selectItem':provinceChosedIndex==index}">{{item[0].name}}</div>
             </div>
             <div class="area item fl">
-                <div v-for="(item,index) in city" :key="index" v-if="index>0 && provinceChosedIndex===index">
-                    <div v-for="(item,index) in item" :key="index" :class="{'selectItem':cityChosedIndex==index}" @click.stop.prevent="cityChosed(index)">
+              <div v-if="provinceChosedIndex">
+                <div v-for="(item,index) in city[provinceChosedIndex]" :key="index" >
+                    <div :class="{'selectItem':cityChosedIndex==index}" @click.stop.prevent="cityChosed(index)">
                         {{item.name}}
                     </div>
                 </div>
+              </div>
             </div>
         </div>
     </div>
@@ -22,7 +24,7 @@
 </style>
 
 <script>
-import { mapMutations, mapState,mapGetters } from "vuex";
+import { mapMutations, mapState, mapGetters } from "vuex";
 import Tarbar from "../../components/tarbar";
 import { Search } from "vant";
 import { constants } from "zlib";
@@ -31,8 +33,30 @@ export default {
   data() {
     return {
       provinceChosedIndex: null,
-      cityChosedIndex: null
-    }
+      cityChosedIndex: null,
+      intData: {}
+    };
+  },
+  created() {
+    const that = this;
+    const default_addr = window.$nuxt.$store.state.default_addr;
+    const city = window.$nuxt.$store.state.city;
+    const chose_area = default_addr.province.id - 1;
+    city[chose_area].find((item, index) => {
+      if (item.id == default_addr.city.id) {
+        that.$set(that, "intData", item);
+        this.$set(this, "cityChosedIndex", index);
+        return false;
+      }
+    });
+    this.$set(this, "provinceChosedIndex", chose_area);
+  },
+  mounted() {
+    this.onSelect(
+      "isSelect_area",
+      false,
+      this.intData
+    );
   },
   methods: {
     //大城市选择
@@ -48,18 +72,19 @@ export default {
     //城市选择
     cityChosed(index) {
       this.$set(this, "cityChosedIndex", index);
-      index && this.onSelect(
-        "isSelect_area",
-        false,
-        this.city[this.provinceChosedIndex][index]
-      )
-    },
-  },
-  computed:{
-    city(){
-      return window.$nuxt.$store.state.city
+      index !== null &&
+        this.onSelect(
+          "isSelect_area",
+          false,
+          this.city[this.provinceChosedIndex][index]
+        );
     }
   },
+  computed: {
+    city() {
+      return window.$nuxt.$store.state.city;
+    }
+  }
 };
 </script>
 

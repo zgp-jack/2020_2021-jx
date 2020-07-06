@@ -1,4 +1,5 @@
 .model_mask{
+    transition: all 0.3s;
     .inner{
         width: 7.5rem;
         overflow-y: auto;
@@ -23,7 +24,7 @@
             position: relative;
             padding-left:0.3rem; 
         }
-        .city>div:not(:last-child),.area>div>div:not(:last-child){
+        .city>div:not(:last-child),.area>div>div{
             border-bottom:1px solid #e5e5e5;
         }
         .selectItem{
