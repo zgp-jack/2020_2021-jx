@@ -16,7 +16,8 @@ const store =()=>new Vuex.Store({
         //默认头像
         default_portrait:{},
         //当前地址
-        default_addr:{}
+        default_addr:{},
+        show:false
     },
     mutations:{
         //设置机械类型
@@ -31,6 +32,10 @@ const store =()=>new Vuex.Store({
         //当前地址
         setDefaultAddr(state,obj){
             state.default_addr = {...obj}
+        },
+        //打电话弹窗
+        setCallPhone(state,bool){
+          state.show = bool
         }
     },
   })

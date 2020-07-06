@@ -6,6 +6,7 @@
     <div class="right-inner fl">
       <div class="title">{{data.title}}</div>
       <div class="basic-info fl">
+         <p class="userName fl">{{data.user}}</p>
          <p class="userTel fl">{{data.tel}}</p>
          <p class="tel-icon fr"  @click="callPhone('123456')" v-show="is_mine"></p>
       </div>
@@ -20,7 +21,7 @@
       </div>
     </div>
     <!-- 弹框 -->
-    <van-dialog class="phone_alert" v-model="show" title="温馨提示" @confirm="go_call" show-cancel-button confirmButtonText="去拨打">
+    <van-dialog class="phone_alert" v-model="show" title="温馨提示" @cancel="go_cancel" @confirm="go_call" show-cancel-button confirmButtonText="去拨打">
       <p class="ask">你是否要拨打电话?</p>
       <div class="tips">
         <input type="checkbox" v-model="whether">七天内不再提示
@@ -43,6 +44,9 @@
         show:false,  //是否显示弹框
         whether:false //是否勾选七天内不打电话
       }
+    },
+    created(){
+      this.default_img= this.$store.state.default_portrait.default_cover
     },
     methods:{
       //打电话弹框显示
@@ -68,6 +72,9 @@
         if(this.whether){
            localStorage.setItem('is_seven',"true")
         }
+      },
+      go_cancel(){
+        this.$store.commit("setCallPhone",false)
       }
     }
   }

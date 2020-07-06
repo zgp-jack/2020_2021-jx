@@ -82,6 +82,7 @@ import seccondListItem from '../../components/seccondListItem/index.vue'
 import { Swipe , SwipeItem } from 'vant';
 import Banner from '../../components/banner/banner.vue'
 import chooseArea from '../../components/customArea/index.vue'
+import call_confirm from '../../components/call_confirm/call_confirm'
 
 export default {
   components: {
@@ -91,19 +92,20 @@ export default {
     'firstListItem':firstListItem,
     'seccondListItem':seccondListItem,
     "Banner" :Banner,
-    chooseArea
+    chooseArea,
+    "call-confirm":call_confirm
   },
   data(){
     return{
       title_data:[{name:"机械求租",type:1,key:'tenant'},{name:"机械出租",type:2,key:'machine'},{name:"机械转让",type:3,key:'ershou'},{name:"机械求购",type:4,key:'want'}],
       title_active:0,
-      banner_children:{
-        "width" : "100%",
-        "height" : "height: 2.56rem",
-        "vertical":"false",
-        "click":()=>{},
-        "content":[],
-      },
+      banner_children:[{
+          img:"http://statics.zhaogongdi.com/images/banner/20190624/558TWm1561367968.png",
+          href:"/coin/get/",
+        },{
+          img:"http://statics.zhaogongdi.com/images/banner/20190815/0t7W171565854698.png",
+          href:"/user/invitation/",
+        }],
       isSelect_area:false,
       selectAreaData:{},
       list:{
@@ -150,6 +152,7 @@ export default {
   },
   created(){
     this.listData()
+
   }
 
 }
