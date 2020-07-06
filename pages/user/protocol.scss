@@ -1,0 +1,24 @@
+@import '../../assets/css/style.scss';
+.father{
+  @include box_inner($bottom:0rem,$padding-bottom:0.3rem,$top:1rem);
+    .waiver{
+      background-color: #f4f9ea;
+      overflow: hidden;
+      color: $colors;
+        .title{
+          text-align: center;
+          font-size:0.35rem;
+          margin: 0.3rem 0.3rem;
+        }
+        .protocol-text{
+          padding:0 0.1rem;
+            >p{
+              text-align: justify;
+              font-size:0.28rem;
+            }
+            >p:first-child{
+              text-indent:2em;
+            }
+        }
+    }
+}

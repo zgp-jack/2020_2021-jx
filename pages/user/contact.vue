@@ -21,7 +21,7 @@ export default {
     data(){
       return{
         contat:{},
-        title:'鱼泡机械-联系我们'
+        title:'联系我们'
       }
     },
     created(){
