@@ -3,11 +3,14 @@
   @include box_inner(0)
   #head{
     padding: 0 0.3rem;
-    /* background: #fff; */
+    position:fixed;
+    background-image:url('http://statics.zhaogongdi.com/common/index_top_back.png');
+    width:7.5rem;
     box-sizing: border-box;
     margin-bottom: 0.25rem;
-    height: 0.7rem;
+    height: 1rem;
     padding-top:0.15rem;
+    z-index:9999;
     .left_dom{
       h1{
         padding-top: 0.1rem;
@@ -44,6 +47,7 @@
     }
   }
   .banner{
+    margin-top: 1rem;
     height: 2.56rem;
     width: 100%;
     .my-swipe{
@@ -83,6 +87,7 @@
       span{
         display: block;
         height: 0.42rem;
+        font-size: 0.27rem;
         line-height: 0.52rem;
         color: #000;
       }
@@ -90,14 +95,16 @@
   }
   .list_title{
     width: 100%;
-    height: 0.9rem;
-    background-color: #fff;
+
+    background-color: #f6f6f6;
     margin-bottom: 0.14rem;
     display: flex;
     div{
       width: 25%;
       text-align: center;
-      font-size: 0.23rem;
+      font-size: 0.27rem;
+      height: 0.9rem;
+      background: #fff;
       line-height: 0.9rem;
       .active{
         color: #f9a10f;
@@ -108,11 +115,15 @@
       }
     }
   }
+  .list_title_fixed{
+    position: fixed;
+    top: 1rem;
+    height: 1.18rem;
+    padding-top: 0.14rem;
+  }
   .list_content{
     width: 100%;
     overflow: hidden;
-    // padding-bottom: 1.42rem;
-    // background-color: #fff;
     .more{
       height: 0.77rem;
       background-color: #fff;
@@ -122,6 +133,15 @@
       font-size: 0.24rem;
       margin-bottom: 0.5rem;
     }
+  }
+  .sign{
+    position: fixed;
+    right: 0.2rem;
+    bottom: 1.8rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url(../../assets/img/home-images/sign_in.png);
+    background-size: 1.5rem 1.5rem;
   }
   #{'/deep/'} .model_mask{
       top:0.9rem;
@@ -136,13 +156,6 @@
   }
 }
 
-// #{'/deep/'} .model_mask{
-//     top:calc(1.91rem + 2px);
-//     transition: all 0.3s;
-//     .selectd{
-//         width: ;
-//     }
-// }
 #{'/deep/'}  .selectd_box{
     width: 0;
     opacity: 0;

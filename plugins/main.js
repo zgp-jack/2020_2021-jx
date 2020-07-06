@@ -7,4 +7,4 @@ Vue.filter('moment', function (value, formatString) {
         formatString = formatString || "YYYY年M月";
     return moment(value).format(formatString);
     });
-
+export default new Vue({})

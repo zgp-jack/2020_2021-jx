@@ -22,14 +22,6 @@
       "van-swipe": Swipe,
       "van-swipe-item" : SwipeItem,
     },
-    mounted() {
-      // 轮播图重新获取上一级的尺寸
-      setTimeout(()=>{
-        this.$refs.resize.resize()
-      },0)
-
-
-    },
     created(){
       //轮播图数据
       this.banner_data = this.$props.obj

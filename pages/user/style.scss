@@ -6,7 +6,7 @@
     color:$font-color;
     overflow: hidden;
     .container{
-        padding-bottom: 1.2rem;
+        padding-bottom: 3.2rem;
         position: relative;
         font-size:0.34rem;
         .main_textc{
@@ -119,16 +119,13 @@
                             width:0.8rem;
                             height:0.8rem;
                         }
-                        div:not(:last-child).desc_main{
-                            border-bottom: 1px solid #ddd;
-                        }
                     .desc_main{
                         width:5.4rem;
                         display: flex;
                         justify-content: space-around;
                         align-items: center;
                         font-size:0.25rem;
-                        padding:0.3rem 0;
+                        padding:0.2rem 0;
                         div:first-child{
                             width: 3.8rem;
                             p:first-child{
@@ -145,6 +142,9 @@
                             font-size:0.25rem;
                             margin-left: 0.2rem;
                         }
+                    }
+                    .desc_main:not(:first-child){
+                        border-top: 1px solid #ddd;
                     }
                 }
             }

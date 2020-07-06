@@ -1,6 +1,8 @@
 <template>
   <div class="list-item">
-    <div class="title">{{data.title}}</div>
+    <div class="title">
+      <span>{{data.title}}</span>
+    </div>
     <div class="left-img">
       <img :src="data.cover && data.cover!='' ? data.cover : default_img.default_header" alt="">
     </div>
@@ -47,11 +49,11 @@
     },
     created(){
       this.default_img={...this.$store.state.default_portrait};
-
     },
     methods:{
       // //打电话弹框显示
         callPhone(phone,id,mode){
+          let that = this;
           //判断是否登录
           if(!"login"){
             window.history.pushState({},'','/login')
@@ -61,18 +63,21 @@
           let reg = /\*+/;
           if(!reg.test(phone)){
             window.location.href = "tel:"+phone;
+            return false;
           }
           //获取改条信息的id  和 属于类型
           this.item_flag.id=id,
           this.item_flag.mode = mode
           // 获取本地存储判断是否勾选了七天不提示
-          let is_seven = localStorage.getItem('is_seven');
-          if(is_seven == "false" || is_seven == null){
+          let cookies = document.cookie;
+          if(!cookies.includes("havaSeven")){
             //弹出选择框
-            console.log(this.$store.state.show)
-            this.show = !(this.$store.state.show);
-             
-            //this.iscallShow(true)
+            if(this.show){
+               this.show = !(this.show);
+            }
+            setTimeout(()=>{
+                that.show = !(that.show);
+            },20)
 
           }else{
             //调用请求获取完整的电话号码
@@ -80,18 +85,7 @@
           }
 
 
-        },
-        iscallShow(flag){
-          this.$set(this, show, flag);
         }
-      //   //点击去拨打按钮
-      //   go_call(){
-      //     //勾选了选择框
-      //     if(this.whether){
-      //        localStorage.setItem('is_seven',"true");
-      //     }
-      //   }
-      //   //打电话
       }
 
   }

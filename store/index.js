@@ -32,10 +32,6 @@ const store =()=>new Vuex.Store({
         //当前地址
         setDefaultAddr(state,obj){
             state.default_addr = {...obj}
-        },
-        //打电话弹窗
-        setCallPhone(state,bool){
-          state.show = bool
         }
     },
   })

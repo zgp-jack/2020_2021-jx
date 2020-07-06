@@ -1,0 +1,49 @@
+@import '../../assets/css/style.scss';
+.content{
+height:100vh;
+margin: 0;
+padding: 0;
+padding-top: 2.2rem;
+border-top: 1px solid #ddd;
+background-position-y: -0.6rem;
+background-image: url('http://statics.zhaogongdi.com/xcx/5ATH2w1559734787.jpeg');
+    .contact-title{
+      position: relative;
+      font-size:0.5rem;
+      letter-spacing: 3px;
+      color: #000;
+      padding-left:0.8rem;
+      font-family: '楷体', "楷体_GB2312";
+      font-weight: 600;
+      line-height:0.4rem;
+    }
+    .contact-title::before{
+      position: absolute;
+      content: '/';
+      left:0.5rem;
+      top: 0;
+      color: #666;
+      font-family: '楷体', "楷体_GB2312";
+      font-weight: 600;
+    }
+    .contact-container{
+      width:90%;
+      margin-left: 5%;
+      padding: 0.1rem 0.4rem 0.4rem;
+      background: white;
+      box-shadow: #dcdcdc 0 0 0.2rem;
+      border-radius: 5px 5px 3px 3px;
+        >div{
+          font-size:0.32rem;
+          border-bottom: 1px solid #eee;
+          list-style: none;
+          line-height:0.7rem;
+          padding-top:0.5rem;
+          color: #888;
+            span{
+              font-size: 0.3rem;
+              color:$color;
+            }
+        }
+    }
+}
