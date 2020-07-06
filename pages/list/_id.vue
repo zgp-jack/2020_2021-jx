@@ -65,6 +65,9 @@ export default {
       this.onSelect(type, flag);
     },
   },
+  mounted() {
+
+  }
 };
 </script>
 

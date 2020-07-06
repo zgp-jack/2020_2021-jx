@@ -1,30 +1,32 @@
 <template>
   <div class="list-item">
-    <div class="title">
-      <span>{{data.title}}</span>
-    </div>
-    <div class="left-img">
-      <img :src="data.cover && data.cover!='' ? data.cover : default_img.default_header" alt="">
-    </div>
-    <div class="right-inner">
-      <div class="basic-info">
-         <p class="userName">{{data.user}}</p>
-         <p class="userTel">{{data.tel}}</p>
-         <p class="tel-icon"  @click="callPhone(data.tel,data.uu,data.mode)" v-show="is_mine"></p>
+    <nuxt-link :to="{path:'/machine_detail/',query:{id:data.uu,type:data.mode}}">
+      <div class="title">
+        <span>{{data.title}}</span>
       </div>
-      <div class="type-class">
-        <a href="javascript:;"  v-for="(itemSon,i) in data.class" :key="i">{{itemSon.name}}</a>
+      <div class="left-img">
+        <img :src="data.cover && data.cover!='' ? data.cover : default_img.default_header" alt="">
       </div>
-      <div class="position-time">
-        <div class="position fl">
-          <i class="icon-dingwei iconfont"></i>
-           {{data.area}}
+      <div class="right-inner">
+        <div class="basic-info">
+           <p class="userName">{{data.user}}</p>
+           <p class="userTel">{{data.tel}}</p>
+           <p class="tel-icon"  @click="callPhone(data.tel,data.uu,data.mode)" v-show="is_mine"></p>
         </div>
-        <div class="time fr">
-          {{data.time}}
+        <div class="type-class">
+          <a href="javascript:;"  v-for="(itemSon,i) in data.class" :key="i">{{itemSon.name}}</a>
+        </div>
+        <div class="position-time">
+          <div class="position fl">
+            <i class="icon-dingwei iconfont"></i>
+             {{data.area}}
+          </div>
+          <div class="time fr">
+            {{data.time}}
+          </div>
         </div>
       </div>
-    </div>
+    </nuxt-link>
     <!-- 弹框 -->
     <call-confirm :userInfo="item_flag" v-if="show" />
   </div>
