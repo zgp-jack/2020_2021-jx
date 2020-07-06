@@ -17,8 +17,9 @@ $colors:#555;
   z-index:$z-index;
 }
 @mixin overflow_hiding($clamp: 1){
-　　text-overflow: ellipsis;
-　　overflow: hidden;
-　　-webkit-line-clamp: $clamp;
-　　-webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+　-webkit-line-clamp: $clamp;
+　-webkit-box-orient: vertical;
 }
