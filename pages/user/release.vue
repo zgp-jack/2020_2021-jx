@@ -6,7 +6,7 @@
        <div class="point-mask" v-if="mask">
            <div class="btn-img" @click="mask_show()"></div>
        </div>
-       <div class="father" @scroll="handleScroll">
+       <div class="father">
            <div class="item" v-for="(item,i) in detail" :key='i'>
                <div class="staus"></div>
                <div class="title-h3">{{item.title}}</div>
@@ -16,7 +16,6 @@
                </div>
            </div>
        </div>
-       <div  class="cart" v-show="isshow">1</div>
   </div>
 </template>
 
@@ -44,17 +43,6 @@ export default {
     methods:{
         mask_show(){
             this.mask = false
-        },
-         handleScroll(e){
-            const {scrollTop} = e.currentTarget;
-            let {my_scroll,isshow} = this;
-            // 页面滚动距顶部距离
-            if(scrollTop>my_scroll && isshow){
-                this.isshow = false;
-            }else if(scrollTop<my_scroll && !isshow){
-                this.isshow = true;
-            }
-            this.my_scroll=scrollTop
         },
     }
 }

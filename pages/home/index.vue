@@ -68,7 +68,7 @@
         <div v-if="(item.type == 2 || item.type == 3) && list[title_data[title_active].key].length>0">
           <seccondListItem v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="item"/>
         </div>
-        <p class="more" :v-if="list[title_data[title_active].key].length>0">查看更多{{title_data[title_active].name}}信息</p>
+        <p class="more" v-if="list[title_data[title_active].key].length>0">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
     <BottomTop ref="mychild" />
