@@ -1,7 +1,7 @@
 <template>
   <div class='layout'>
     <nuxt v-if="isShow && numberServers==2"/>
-    <Loading v-else-if="!isShow || counter!==0"/>
+    <Loading v-else-if="!isShow"/>
   </div>
 </template>
 
