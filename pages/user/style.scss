@@ -103,6 +103,9 @@
                 }
             }
             .list_menu{
+              >div:not(:last-child) .desc_main{
+                border-bottom: 1px solid #ddd;
+              }
                 margin-bottom:0.2rem;
                 margin:0.3rem auto auto;
                 width: 6.6rem;
@@ -142,9 +145,6 @@
                             font-size:0.25rem;
                             margin-left: 0.2rem;
                         }
-                    }
-                    .desc_main:not(:first-child){
-                        border-top: 1px solid #ddd;
                     }
                 }
             }
