@@ -73,8 +73,8 @@
           }
         }
         .telphone{
-
-          width: 5.8rem;
+          overflow: hidden;
+          width: 5.2rem;
           clear: both;
           .phone-num{
               float: left;
@@ -141,6 +141,80 @@
          }
       }
 
+    }
+    .detail-info{
+      border-bottom: 1px solid #eee;
+      position: relative;
+      padding-bottom: 0.34rem;
+      .detail-content{
+        color: #525252;
+        font-size: 0.22rem;
+        line-height: 0.4rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        letter-spacing: 0.021rem;
+      }
+      .show-all-text{
+        position: absolute;
+        background-color: #fff;
+        font-size: 0.22rem;
+        right: 0;
+        bottom: 0.4rem;
+      }
+    }
+    .machine-imgs{
+      margin-bottom: 0.36rem;
+      padding: 0.37rem 0 0.17rem 0;
+      border-bottom: 1px solid #eee;
+      flex-wrap: wrap;
+      display: flex;
+      justify-content: space-between;
+      div{
+        margin-bottom: 0.2rem;
+        width: 2rem;
+        height: 2rem;
+        background-color: red;
+      }
+    }
+    .address{
+      .addree-info{
+        font-size: 0.21rem;
+        color: #7c7c7c;
+        padding-bottom: 0.36rem;
+      }
+    }
+  }
+  .reminder{
+    background-color: #fff;
+    padding: 0.16rem 0.26rem;
+    margin-bottom: 1.95rem;
+    span{
+      float: left;
+      width: 0.27rem;
+      height: 0.27rem;
+      margin-right: 0.07rem;
+      background-color: #0570DB;
+    }
+    margin-top: 0.23rem;
+    font-size: 0.19rem;
+    color: #2c303b;
+    line-height: 0.36rem;
+  }
+  .footer-opeart{
+    display: flex;
+    padding: 0 0.38rem;
+    height: 1.12rem;
+    width: 100%;
+    background-color: #fff;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid #eee;
+    .cellcot-share{
+      width: 2.55rem;
     }
   }
 }

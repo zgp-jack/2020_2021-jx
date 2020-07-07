@@ -35,8 +35,42 @@
               <b>大炮</b>
             </div>
           </div>
+          <div class="detail-info">
+            <p class="title">详情信息</p>
+            <p class="detail-content">弱水三千只取一瓢饮，繁华三千只为你一人饮尽悲欢弱水三千只取一瓢饮，繁华三千只为你一人饮尽悲欢弱水三千只取一瓢饮，繁华三千只为你一人饮尽悲欢弱水三千只取一瓢饮，繁华三千只为你一人饮尽悲欢弱水三千只取一瓢饮，繁华三千只为你一人饮尽悲欢</p>
+            <p class="show-all-text">... <b style="color: #f60;">查看全部</b></p>
+          </div>
+          <div class="machine-imgs">
+            <div>
+              <img src="" alt="">
+            </div>
+            <div>
+              <img src="" alt="">
+            </div>
+            <div>
+              <img src="" alt="">
+            </div>
+            <div>
+              <img src="" alt="">
+            </div>
+          </div>
+          <div class="address">
+            <p class="title">所在地址</p>
+            <p class="addree-info">每行中心成都市剑南大道1108号</p>
+          </div>
        </div>
-
+       <!-- 防骗警告 -->
+       <div class="reminder">
+         <span></span>
+         <p>防骗警示:  达成交易前,请确认好对方身份,确认合同条款合理无误,在双方确认交易达成之前不要进行任何财务转账,交易双方可拍照保留证据,以免产生经济纠纷。若产生经济纠纷及恶劣影响。请立即报警，鱼泡机械配合调查但概不承担相应损失及责任。如遇诈骗信息请
+          <b style="color: #f60;">“立即举报”</b>
+        </p>
+       </div>
+       <!-- 底部 -->
+       <div class="footer-opeart">
+         <div class="cellcot-share"></div>
+         <p class="show-all-tel"></p>
+       </div>
     </div>
 
   </div>
