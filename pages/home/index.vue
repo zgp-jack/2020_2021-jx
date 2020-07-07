@@ -2,9 +2,8 @@
 <template>
   <div class="container" @scroll="my_scroll">
     <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" />
-	  <div id="head">
-
-      <div class="left_dom">
+	  <div id="head" ref="head">
+      <div class="left_dom fl">
         <h1 class="fl">
           <img src="http://statics.zhaogongdi.com/common/logo_m.png" alt="">
         </h1>
@@ -18,10 +17,10 @@
         <a href="https://a.app.qq.com/o/simple.jsp?pkgname=com.yupao.machine"></a>
       </div>
     </div>
-    <div class="banner">
+    <div class="banner" ref="banner">
       <Banner :obj="banner_children"></Banner>
     </div>
-    <div class="menus">
+    <div class="menus" ref="menus">
       <a href="">
         <img src="http://statics.zhaogongdi.com/xcx/index_tenant.png" alt="">
         <span>机械求租</span>
@@ -55,12 +54,12 @@
         <span> 供应商</span>
       </a>
     </div>
-    <div class="list_title">
+    <div class="list_title" :class="{list_title_fixed:whether_fixed}" ref="list_title">
       <div v-for="(itme,index) in title_data" v-on:click="changeTitle(index)" :key="index">
          <span  :class="title_active == index ? 'active' : '' ">{{itme.name}}</span>
       </div>
     </div>
-    <div class="list_content">
+    <div class="list_content" :style="whether_fixed?'margin-top: 1.2rem':''">
       <div v-for="(item,index) in title_data" :data-type="item.type" v-if="title_active == index" :key="index">
         <div v-if="(item.type == 1 || item.type == 4) && list[title_data[title_active].key].length>0">
           <firstListItem v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="item"/>
@@ -71,6 +70,11 @@
         <p class="more" v-if="list[title_data[title_active].key].length>0">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
+    <!-- 签到 -->
+    <div class="sign">
+      
+    </div>
+    <!-- 底部导航 -->
     <BottomTop ref="mychild" />
     <Tarbar />
   </div>
@@ -83,6 +87,7 @@ import seccondListItem from '../../components/seccondListItem/index.vue'
 import { Swipe , SwipeItem } from 'vant';
 import Banner from '../../components/banner/banner.vue'
 import chooseArea from '../../components/customArea/index.vue'
+import call_confirm from '../../components/call_confirm/call_confirm'
 import BottomTop from '../../components/bottom-topbar/index'
 
 export default {
@@ -94,19 +99,20 @@ export default {
     'seccondListItem':seccondListItem,
     "Banner" :Banner,
     chooseArea,
+    "call-confirm":call_confirm,
     BottomTop
   },
   data(){
     return{
       title_data:[{name:"机械求租",type:1,key:'tenant'},{name:"机械出租",type:2,key:'machine'},{name:"机械转让",type:3,key:'ershou'},{name:"机械求购",type:4,key:'want'}],
       title_active:0,
-      banner_children:{
-        "width" : "100%",
-        "height" : "height: 2.56rem",
-        "vertical":"false",
-        "click":()=>{},
-        "content":[],
-      },
+      banner_children:[{
+          img:"http://statics.zhaogongdi.com/images/banner/20190624/558TWm1561367968.png",
+          href:"/coin/get/",
+        },{
+          img:"http://statics.zhaogongdi.com/images/banner/20190815/0t7W171565854698.png",
+          href:"/user/invitation/",
+        }],
       isSelect_area:false,
       selectAreaData:{},
       list:{
@@ -114,13 +120,10 @@ export default {
         machine:[],
         ershou:[],
         want:[]
-      }
+      },
+      whether_fixed:false,
+      scroll_tops:300
     }
-  },
-  mounted(){
-
-
-
   },
   methods:{
     changeTitle(index){
@@ -153,11 +156,22 @@ export default {
       // 滚动显示隐藏
       my_scroll(e){
         const {scrollTop} = e.currentTarget;
-        this.$refs.mychild.handleScroll(scrollTop)
+        this.$refs.mychild.handleScroll(scrollTop);
+        this.fixed_title(scrollTop);
+      },
+      fixed_title(top_position){
+         if(top_position >= this.scroll_tops){
+            this.whether_fixed = true
+         }else{
+           this.whether_fixed = false
+         }
       }
   },
   created(){
     this.listData()
+  },
+  mounted() {
+    this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
   }
 
 }

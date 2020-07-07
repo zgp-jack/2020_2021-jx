@@ -105,6 +105,9 @@ export default {
       type !=='isSelect_sort' && this.$set(this, 'isSelect_sort', false);
     }
   },
+  mounted() {
+
+  }
 };
 </script>
 

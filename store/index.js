@@ -16,7 +16,8 @@ const store =()=>new Vuex.Store({
         //默认头像
         default_portrait:{},
         //当前地址
-        default_addr:{}
+        default_addr:{},
+        show:false
     },
     mutations:{
         //获取机械类型

@@ -1,0 +1,40 @@
+#detail{
+    padding-top: 1.01rem;
+
+}
+.header{
+  top: 0;
+}
+.detail_main{
+  height: 0.77rem;
+  width: 100%;
+
+  .notice{
+    height: 0.77rem;
+    background-color: #fff;
+    width: 100%;
+    padding: 0 0.26rem;
+    margin: 0.2rem 0;
+  }
+  .content{
+
+    background: #fff;
+    padding: 0 0.26rem;
+    .title-time{
+      padding-top: 0.33rem;
+
+      font-size: 0.3rem;
+      border-bottom: 1px solid #eee;
+      .title{
+        font-size: 0.3rem;
+        font-weight: bold;
+      }
+      .time{
+        padding-top: 0.26rem;
+        font-size: 0.26rem;
+        color: #7F7E7E;
+        margin-bottom: 0.25rem;
+      }
+    }
+  }
+}

@@ -23,19 +23,25 @@
     .title{
         padding-left: 0.13rem;
         width: 100%;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        font-size: 0.25rem;
+
+        font-size: 0.27rem;
         font-weight: bold;
         height: 0.51rem;
         border-bottom: 1px dashed #e7e7e7;
         margin-bottom: 0.16rem;
         box-sizing: border-box;
+        span{
+          display: inline-block;
+          max-width: 85%;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          margin-left: 7%;
+        }
     }
     .basic-info{
-      margin-bottom: 0.2rem;
-      font-size: 0.23rem;
+      margin-bottom: 0.1rem;
+      font-size: 0.27rem;
       padding-left: 0.13rem;
       width: 100%;
       line-height: 0.38rem;
@@ -49,16 +55,16 @@
         margin-right: 0.15rem;
       }
       .tel-icon{
-        height: 0.38rem;
-        width: 0.38rem;
+        height: 0.42rem;
+        width: 0.42rem;
         border-radius: 50%;
-        background: url(../../assets/img/home-images/icon-tel_03.png) 0 0 / 0.38rem 0.38rem no-repeat;
+        background: url(../../assets/img/home-images/icon-tel_03.png) 0 0 / 0.42rem 0.42rem no-repeat;
       }
     }
     .position-time{
       clear: both;
       height: 0.5rem;
-      font-size: 0.21rem;
+      font-size: 0.27rem;
       line-height: 0.5rem;
       color: #969696;
       .position{

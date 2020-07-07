@@ -1,9 +1,11 @@
 <template>
-    <van-swipe class="my-swipe"  indicator-color="white" width="7.5rem" :vertical="true" :autoplay="3000" ref="resize">
-      <van-swipe-item v-for="(item,index) in banner_data " :key="index">{{item}}</van-swipe-item>
-      <van-swipe-item>2</van-swipe-item>
-      <van-swipe-item>3</van-swipe-item>
-      <van-swipe-item>4</van-swipe-item>
+    <van-swipe class="my-swipe"  indicator-color="white" width="7.5rem" :autoplay="3000" ref="resize">
+      <van-swipe-item v-for="(item,index) in banner_data " :key="index">
+        <a :href="item.href">
+          <img :src="item.img" alt="">
+        </a>
+      </van-swipe-item>
+
     </van-swipe>
 </template>
 
@@ -20,16 +22,10 @@
       "van-swipe": Swipe,
       "van-swipe-item" : SwipeItem,
     },
-    mounted() {
-      // 轮播图重新获取上一级的尺寸
-      setTimeout(()=>{
-        this.$refs.resize.resize()
-      },0)
-      this.banner_data = this.$props.obj.content
-
-    },
     created(){
-    
+      //轮播图数据
+      this.banner_data = this.$props.obj
+      
     },
     props:['obj']
   }
@@ -43,5 +39,10 @@
       text-align: center;
       background-color: #39a9ed;
       width: 7.5rem !important;
+    }
+    .van-swipe-item a{
+      display: inline-block;
+      width: 100%;
+      height: 100%;
     }
 </style>

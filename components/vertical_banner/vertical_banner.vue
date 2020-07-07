@@ -1,11 +1,11 @@
 <template>
-    <van-swipe class="my-swipe" :vertical="true" :autoplay="3000" :show-indicators="false" ref="resize">
-      <van-swipe-item>
-        <p>大家发了份的发的发达</p>
-      </van-swipe-item>
-      <van-swipe-item>3</van-swipe-item>
-      <van-swipe-item>4</van-swipe-item>
-    </van-swipe>
+      <van-swipe class="my-swipe" :vertical="true" :autoplay="3000" :show-indicators="false" ref="resize">
+        <van-swipe-item>
+          <p>大家发了份的发的发达</p>
+        </van-swipe-item>
+        <van-swipe-item>3</van-swipe-item>
+        <van-swipe-item>4</van-swipe-item>
+      </van-swipe>
 </template>
 
 <script>
