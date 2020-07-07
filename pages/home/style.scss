@@ -2,7 +2,15 @@
 .container{
   @include box_inner(0)
   .model_mask{
-    text-align:center;
+    .inner{
+      div{
+        div{
+           text-align:center
+        }
+      }
+     
+    }
+
   }
   #head{
     padding: 0 0.3rem;

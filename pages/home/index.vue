@@ -72,7 +72,7 @@
     </div>
     <!-- 签到 -->
     <div class="sign">
-      
+
     </div>
     <!-- 底部导航 -->
     <BottomTop ref="mychild" />
@@ -159,6 +159,7 @@ export default {
         this.$refs.mychild.handleScroll(scrollTop);
         this.fixed_title(scrollTop);
       },
+      //固定标题
       fixed_title(top_position){
          if(top_position >= this.scroll_tops){
             this.whether_fixed = true
@@ -166,9 +167,6 @@ export default {
            this.whether_fixed = false
          }
       }
-  },
-  created(){
-    this.listData()
   },
   mounted() {
     this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
