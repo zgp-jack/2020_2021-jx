@@ -20,16 +20,16 @@ const store =()=>new Vuex.Store({
         show:false
     },
     mutations:{
-        //设置机械类型
+        //获取机械类型
         setMechanics(state,obj){
             state.type = [...obj.type]
             state.clas = [...obj.clas]
         },
-        //设置默认头像
+        //获取默认头像
         setPortrait(state,obj){
             state.default_portrait = {...obj}
         },
-        //当前地址
+        //获取当前地址
         setDefaultAddr(state,obj){
             state.default_addr = {...obj}
         }

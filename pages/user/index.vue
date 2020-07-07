@@ -59,7 +59,7 @@
         </div>
     </div>
     <Tarbar/>
- </div> 
+ </div>
 </template>
 
 <script>
@@ -72,20 +72,20 @@ export default {
         {
           id:0,
           src:"http://statics.zhaogongdi.com/common/coin_get.png",
-          text:'获取鱼泡币'   
+          text:'获取鱼泡币'
         },
         {
           id:1,
           src:"http://statics.zhaogongdi.com/common/coin_consume.png",
-          text:'鱼泡币消耗'   
+          text:'鱼泡币消耗'
         },
         {
           id:2,
           src:"http://statics.zhaogongdi.com/common/coin_source.png",
-          text:'鱼泡币来源'   
+          text:'鱼泡币来源'
         },
       ],
-      my_list:[{src:"http://statics.zhaogongdi.com/common/user_collect.png",title:'我的收藏',detail:'收藏的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/user_release.png",title:'我的发布',detail:'发布的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/my_welfare_coin.png",title:'我的福利',detail:'查看我的福利信息'},{src:"http://statics.zhaogongdi.com/common/user_company.png",title:'我的企业',detail:'诚邀各大机械租赁企业入驻'},{src:"http://statics.zhaogongdi.com/common/user_set.png",title:'设置',detail:'意见建议、联系我们'},],
+      my_list:[{src:"http://statics.zhaogongdi.com/common/user_collect.png",title:'我的收藏',detail:'收藏的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/user_release.png",title:'我的发布',detail:'发布的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/my_welfare_coin.png",title:'我的福利',detail:'查看我的福利信息'},{src:"http://statics.zhaogongdi.com/common/user_company.png",title:'我的企业',detail:'诚邀各大机械租赁企业入驻'},{src:"http://statics.zhaogongdi.com/common/user_set.png",title:'意见反馈',detail:'提交您的问题与建议'},{src:"http://statics.zhaogongdi.com/common/user_set.png",title:'设置',detail:'意见建议、联系我们'},],
 
     }
   },
@@ -112,6 +112,9 @@ export default {
             this.$router.push('/user/company')
           break;
           case 4:
+            this.$router.push('/user/face-book')
+          break;
+           case 5:
             this.$router.push('/user/personalSettings')
           break;
           default:

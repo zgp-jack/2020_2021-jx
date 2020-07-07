@@ -1,6 +1,9 @@
 @import '../../assets/css/style.scss';
 .container{
   @include box_inner(0)
+  .model_mask{
+    text-align:center;
+  }
   #head{
     padding: 0 0.3rem;
     position:fixed;
@@ -21,7 +24,7 @@
         }
       }
       .position{
-        width: 1.4rem;
+        width: 1.6rem;
         height: 0.62rem;
         line-height: 0.62rem;
         font-size: 0.3rem;
