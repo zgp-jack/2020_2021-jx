@@ -140,6 +140,7 @@ export default {
         if (cityData) {
           this.selectAreaData = {...cityData}
           //接口请求
+          this.listData()
         }
       },
       onisclose(type) {

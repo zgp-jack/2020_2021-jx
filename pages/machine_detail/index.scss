@@ -5,6 +5,11 @@
 .header{
   top: 0;
 }
+.title{
+  font-size: 0.3rem;
+  font-weight: bold;
+  margin-bottom: 0.26rem;
+}
 .detail_main{
   height: 0.77rem;
   width: 100%;
@@ -16,25 +21,126 @@
     padding: 0 0.26rem;
     margin: 0.2rem 0;
   }
-  .content{
 
+  .content{
+    overflow: hidden;
     background: #fff;
     padding: 0 0.26rem;
     .title-time{
       padding-top: 0.33rem;
-
       font-size: 0.3rem;
+
       border-bottom: 1px solid #eee;
-      .title{
-        font-size: 0.3rem;
-        font-weight: bold;
-      }
       .time{
-        padding-top: 0.26rem;
         font-size: 0.26rem;
         color: #7F7E7E;
         margin-bottom: 0.25rem;
       }
+    }
+    .user-info{
+      overflow: hidden;
+        padding-top: 0.23rem;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 0.35rem;
+         padding-bottom: 0.36rem;
+      .left-img{
+        margin-top: 0.2rem;
+        margin-right: 0.21rem;
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 50%;
+        background-color: red;
+        float:left;
+
+      }
+      .right-inner{
+        float: left;
+        .name-pay{
+          float: left;
+          height: 0.5rem;
+          line-height: 0.5rem;
+          .userName{
+            font-weight: bold;
+            margin-right: 0.35rem;
+            float: left;
+            font-size: 0.29rem;
+            color: #000000;
+          }
+          .pay{
+            float: left;
+            font-size: 0.2rem;
+            color: #5f5e5e;
+          }
+        }
+        .telphone{
+
+          width: 5.8rem;
+          clear: both;
+          .phone-num{
+              float: left;
+            padding-top: 0.15rem;
+            font-size: 0.2rem;
+            color: #5f5e5e;
+          }
+          .opeart{
+            margin-bottom: 0.27rem;
+            float: right;
+            .show-complete-tel{
+              float: right;
+              background: #ffa926;
+              padding: 0.08rem 0.07rem;
+              color: #fff;
+              border-radius: 0.1rem;
+              font-size: 0.18rem;
+            }
+            .complete-state{
+              float: right;
+              background: #ccc;
+              padding: 0.08rem 0.07rem;
+              color: #fff;
+              border-radius: 0.1rem;
+              font-size: 0.18rem;
+            }
+            .report{
+              float: right;
+              background: red;
+              padding: 0.08rem 0.07rem;
+              color: #fff;
+              border-radius: 0.1rem;
+              font-size: 0.18rem;
+            }
+            p{
+              margin-left: 0.1rem;
+            }
+          }
+
+        }
+        .tips{
+          clear: both;
+          text-align: center;
+          font-size: 0.2rem;
+          height: 0.42rem;
+          line-height: 0.42rem;
+          width: 4.85rem;
+          background-color: #edf1fa;
+          border-radius: 0.2rem;
+        }
+      }
+    }
+    .machine-type{
+      .type-list{
+        line-height: 0;
+        height: 0.83rem;
+         b{
+           padding: 0.11rem 0.3rem;
+           background-color: #f5f5f5;
+           color: #525252;
+           font-size: 0.22rem;
+           border: 0.1rem;
+           margin-right: 0.15rem;
+         }
+      }
+
     }
   }
 }

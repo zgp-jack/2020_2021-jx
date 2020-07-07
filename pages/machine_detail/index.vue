@@ -11,14 +11,32 @@
             <p class="time">发布时间：10121540</p>
           </div>
           <div class="user-info">
-            <div class="left-img">
-              <img src="" alt="">
+            <div class="left-img"></div>
+            <div class="right-inner">
+              <p class="name-pay">
+                <span class="userName">张大炮</span>
+                <span class="pay"><b></b>协商付款</span>
+              </p>
+              <div class="telphone">
+                <p class="phone-num">17384374513</p>
+                <div class="opeart">
+                  <p class="report">投诉</p>
+                  <p class="show-complete-tel">查看完整电话</p>
+                  <p class="complete-state">已租到</p>
+                </div>
+              </div>
+              <div class="tips">联系我时，请说明是在<b style="color:red">“鱼泡机械”</b>上看到的</div>
             </div>
-            <div class="info-inner">
-
+          </div>
+          <div class="machine-type">
+            <p class="title">机械类型</p>
+            <div class="type-list">
+              <b>飞机</b>
+              <b>大炮</b>
             </div>
           </div>
        </div>
+
     </div>
 
   </div>
@@ -40,7 +58,6 @@
         window.location.replace('/dist/home')
       }else{
        let obj = {...this.$route.query}
-       console.log(obj)
       }
     },
     mounted() {
