@@ -7,7 +7,7 @@ $colors:#555;
 .van-picker__confirm{
   color:#FFAA26;
 }
-@mixin box_inner($top:1.01rem,$bottom:1.1rem,$padding-bottom:0rem,$z-index:99){
+@mixin box_inner($top:1.01rem,$bottom:1.1rem,$padding-bottom:0rem,$z-index:2){
   position: fixed;
 	top: $top;
 	bottom: $bottom;

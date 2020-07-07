@@ -75,4 +75,5 @@ a{
 	left: calc(50% - 7.5rem / 2);
 	background-color: rgba(0, 0, 0,.3);
 	overflow-y: auto;
+	z-index: 20;
 }

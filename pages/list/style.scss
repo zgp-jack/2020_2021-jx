@@ -11,6 +11,15 @@
                 height: 0.7rem;
                 padding: 0;
             }
+            .van-cell{
+                line-height: 0.6rem;
+                font-size: 0.28rem;
+            }
+            #{'/deep/'} {
+                .van-field__left-icon .van-icon{
+                    font-size: 0.28rem;
+                }
+            }
             .search_text{
                 margin-right: 0.27rem;
                 line-height: 0.7rem;
@@ -20,6 +29,7 @@
         }
         .select_head{
             display: flex;
+            width: 7.5rem;
             line-height: 0.6rem;
             padding: 0.15rem 0;
             background: #fff;
@@ -34,7 +44,7 @@
                 color: rgb(85,85,85);
                 p{
                     display: inline-block;
-                    width: 25vw;
+                    width: calc(7.5rem * 0.25);
                     @include overflow_hiding();
                 }
                 .icon-down{
@@ -60,6 +70,11 @@
         }
     }
 }
+
+.list_data{
+    @include box_inner($top:calc(1.91rem + 2px))
+}
+
 //排序
 .model_mask{
     .inner{
