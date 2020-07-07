@@ -18,6 +18,7 @@
           <div class="select_inner" @click="onisclose('isSelect_sort')">{{selectSortData.name || '最新'}}<img src="../../assets/img/list/sort.png" alt=""></div>
         </div>
       </div>
+      <Topbar/>
     </div>
 
     <!-- 地区选择 -->
@@ -25,7 +26,7 @@
 
     <!-- 机械类型选择 -->
     <CustomMechanicalType :onSelect="onSelect" :isSelect_jixie="isSelect_jixie"/>
-    
+
     <!-- 排序 -->
     <div :class="{'model_mask':true,'selectd_box':!isSelect_sort}" @click.stop.prevent="onisclose('isSelect_sort')">
         <div :class="{'inner':true,'clearfix':true,'selectd':!isSelect_sort}">
@@ -44,6 +45,7 @@ import { Search,Uploader } from "vant";
 import CustomArea from "../../components/customArea";
 import CustomMechanicalType from "../../components/customMechanicalType";
 import vertical_banner from "../../components/vertical_banner/vertical_banner.vue";
+import Topbar from "../../components/Topbar";
 export default {
   data() {
     return {
@@ -65,7 +67,8 @@ export default {
     "van-search": Search,
     CustomArea,
     verticalBanner:vertical_banner,
-    CustomMechanicalType
+    CustomMechanicalType,
+    Topbar
   },
   methods: {
     //控制赛选框显示隐藏
@@ -80,7 +83,7 @@ export default {
           case 'isSelect_area' :
           this.selectAreaData = { ...Data };
           //接口请求
-          
+
           break;
           case 'isSelect_jixie' :
           this.selectJixieData = { ...Data };
