@@ -9,7 +9,7 @@
         </h1>
         <div @click="chooseArea" class="position fl">
           <i class="icon-dingwei iconfont" /><b>{{selectAreaData.name || '成都'}}</b>
-          <strong class="iconfont icon-youjiantou"></strong>
+          <strong class="iconfont icon-arrowBottom-fill"></strong>
 
         </div>
       </div>
