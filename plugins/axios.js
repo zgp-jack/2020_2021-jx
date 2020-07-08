@@ -30,7 +30,7 @@ export default function ({$axios,redirect,store}) {
     $axios.interceptors.response.use(response => {
         globalLoading && Toast.clear()
         if (response.status == 200) {
-            if (response.code==300){
+            if (response.data.code==300){
                 Toast('账号异常')
                 // let error_data = response.data
                 // wx.showModal({
@@ -46,7 +46,7 @@ export default function ({$axios,redirect,store}) {
                 //         }
                 //     }
                 // })
-            } else if (response.code == 0) {
+            } else if (response.data.code == 0) {
                 redirect({
                     path: '/login',
                 })
