@@ -9,7 +9,7 @@
         </h1>
         <div @click="chooseArea" class="position fl">
           <i class="icon-dingwei iconfont" /><b>{{selectAreaData.name || '成都'}}</b>
-          <strong class="iconfont icon-arrowBottom-fill"></strong>
+          <strong class="iconfont icon-youjiantou" st></strong>
 
         </div>
       </div>
@@ -140,7 +140,7 @@ export default {
         if (cityData) {
           this.selectAreaData = {...cityData}
           //接口请求
-          this.listData()
+          this.listData({area:cityData.id})
         }
       },
       onisclose(type) {
@@ -148,9 +148,9 @@ export default {
         this.onSelect(type, flag);
       },
       //列表页数据
-      listData(){
+      listData(params={}){
         const that = this;
-        that.$axios.get('/index/home',{params:{area:322}}).then(res=>{
+        that.$axios.get('/index/home',{params}).then(res=>{
             that.$set(that, "list", {...res.content});
         })
       },

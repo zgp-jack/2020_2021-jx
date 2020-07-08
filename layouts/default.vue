@@ -64,6 +64,10 @@ export default {
 
 
 <style scoped>
+.layout{
+  width: 7.5rem;
+  margin:0 auto;
+}
 .model_mask {
   width: 100%;
   left: 0;
