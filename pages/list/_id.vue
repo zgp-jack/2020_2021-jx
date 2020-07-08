@@ -72,7 +72,6 @@ import Tarbar from "../../components/tarbar";
 import { Search,Uploader } from "vant";
 import CustomArea from "../../components/customArea";
 import CustomMechanicalType from "../../components/customMechanicalType";
-import vertical_banner from "../../components/vertical_banner/vertical_banner.vue";
 import Topbar from "../../components/Topbar";
 import FirstListItem from '../../components/firstListItem';
 import SeccondListItem from '../../components/seccondListItem';
@@ -121,7 +120,6 @@ export default {
     Tarbar,
     "van-search": Search,
     CustomArea,
-    verticalBanner:vertical_banner,
     CustomMechanicalType,
     Topbar,
     FirstListItem,

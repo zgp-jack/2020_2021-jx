@@ -21,27 +21,27 @@
       <Banner :obj="banner_children"></Banner>
     </div>
     <div class="menus" ref="menus">
-      <a href="">
+      <a href="/dist/list/1">
         <img src="http://statics.zhaogongdi.com/xcx/index_tenant.png" alt="">
         <span>机械求租</span>
       </a>
-      <a href="">
+      <a href="/dist/common/create">
         <img src="http://statics.zhaogongdi.com/xcx/index_create_tenant.png" alt="">
         <span>发布求租</span>
       </a>
-      <a href="">
+      <a href="/dist/list/2">
         <img src="http://statics.zhaogongdi.com/xcx/index_mahcine.png" alt="">
         <span>机械出租</span>
       </a>
-      <a href="">
+      <a href="http://m.yupao.com/zhaogong/quanguo_jixiesiji/">
         <img src="../../assets/img/home-images/Lark20200608-172704.png" alt="">
         <span>招聘机手</span>
       </a>
-      <a href="">
+      <a href="/dist/list/3">
         <img src="http://statics.zhaogongdi.com/xcx/index_ershou.png" alt="">
         <span> 机械转让</span>
       </a>
-      <a href="">
+      <a href="/dist/list/4">
         <img src="http://statics.zhaogongdi.com/xcx/index_want.png" alt="">
         <span> 机械求购</span>
       </a>
@@ -63,17 +63,20 @@
       <div v-for="(item,index) in title_data" :data-type="item.type" v-if="title_active == index" :key="index">
         <div v-if="(item.type == 1 || item.type == 4) && list[title_data[title_active].key].length>0">
           <firstListItem v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="item"/>
+
         </div>
         <div v-if="(item.type == 2 || item.type == 3) && list[title_data[title_active].key].length>0">
           <seccondListItem v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="item"/>
         </div>
-        <p class="more" v-if="list[title_data[title_active].key].length>0">查看更多{{title_data[title_active].name}}信息</p>
+         <!-- <EmptyMsg :empty1="iscomplete" :empty2="isempty"/> -->
+        <p class="more" v-if="list[title_data[title_active].key].length>0" @click="Jump_page(title_data[title_active].type)">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
     <!-- 签到 -->
-    <div class="sign">
+    <div class="sign" @click="go_sign">
 
     </div>
+
     <!-- 底部导航 -->
     <BottomTop ref="mychild" />
     <Tarbar />
@@ -104,8 +107,10 @@ export default {
   },
   data(){
     return{
+      //首页列表标题数据
       title_data:[{name:"机械求租",type:1,key:'tenant'},{name:"机械出租",type:2,key:'machine'},{name:"机械转让",type:3,key:'ershou'},{name:"机械求购",type:4,key:'want'}],
       title_active:0,
+      //轮播图数据
       banner_children:[{
           img:"http://statics.zhaogongdi.com/images/banner/20190624/558TWm1561367968.png",
           href:"/coin/get/",
@@ -115,14 +120,16 @@ export default {
         }],
       isSelect_area:false,
       selectAreaData:{},
-      list:{
+      list:{ //首页列表内容的数据
         tenant:[],
         machine:[],
         ershou:[],
         want:[]
       },
-      whether_fixed:false,
-      scroll_tops:300
+      whether_fixed:false, //标题是否要固定
+      scroll_tops:300,  //滚动的位置
+      iscomplete:false, //是否加载完成
+      isempty:false, //数据是否为空
     }
   },
   methods:{
@@ -152,12 +159,14 @@ export default {
         const that = this;
         that.$axios.get('/index/home',{params}).then(res=>{
             that.$set(that, "list", {...res.content});
+            console.log(that.list)
         })
       },
       // 滚动显示隐藏
       my_scroll(e){
         const {scrollTop} = e.currentTarget;
         this.$refs.mychild.handleScroll(scrollTop);
+        
         this.fixed_title(scrollTop);
       },
       //固定标题
@@ -167,6 +176,26 @@ export default {
          }else{
            this.whether_fixed = false
          }
+      },
+      //查看更多机械  跳转页面
+      Jump_page(type){
+        if(type == 1){
+          this.$router.replace("/list/1")
+        }else if(type == 2){
+          this.$router.replace("/list/2")
+        }else if(type == 3){
+          this.$router.replace("/list/3")
+        }else if(type == 4){
+          this.$router.replace("/list/4")
+        }
+      },
+      //去签到
+      go_sign(){
+        if(!"login"){
+          this.$router.replace("/login")
+        }else{
+          //发送ajax请求进行签到
+        }
       }
   },
   mounted() {
