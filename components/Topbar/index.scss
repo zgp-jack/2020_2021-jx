@@ -1,0 +1,72 @@
+@import '../../assets/css/style.scss';
+.notice{
+  color: $colors;
+  font-size:0.26rem;
+  margin:0.2rem 0;
+  background: #fff;
+  font-size:0.27rem;
+  padding: 0.2rem 0.2rem;
+  line-height:0.46rem;
+  display: flex;
+    >div>p{
+      line-height:0.45rem;
+    }
+    .tel-num{
+      color: $color;
+    }
+    .button{
+      display:inline-block;
+      font-weight: 400;
+      vertical-align: text-bottom;
+      background-color: #ffa926;
+      color: #fff;
+      border-radius:0.1rem;
+      padding: 0 0.1rem;
+      margin-left: 0.1rem;
+      line-height: 0.35rem;
+      text-align: center;
+    }
+}
+.father{
+  @include box_inner($bottom:0rem,$padding-bottom:0rem,$top:0rem,$z-index:999);
+  background-color: rgba(0, 0, 0, 0.5);
+  .modal{
+    width: 5.8rem;
+    background-color: #fff;
+    border-radius:0.08rem;
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+      .content{
+        font-size:0.28rem;
+        text-align: center;
+        padding:0.3rem;
+        letter-spacing: 1px;
+        color: #383847;
+        .inner:nth-of-type(1){
+          border-bottom: 1px solid #ddd;
+        }
+          .inner{
+            padding: 0.5rem 0;
+              .button{
+                line-height:0.85rem;
+                margin-top:0.6rem;
+                color: #fff;
+                background-color: #ffa926;
+                border-radius:0.1rem;
+              }
+              .timer{
+                display: block;
+                color: #797979;
+                text-align: center;
+                font-size: 0.3rem;
+                margin-top: 0.1rem;
+              }
+          }
+      }
+  }
+}
+.msg{
+  color: $color;
+}

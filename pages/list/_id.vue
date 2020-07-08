@@ -25,7 +25,7 @@
 
     <!-- 机械类型选择 -->
     <CustomMechanicalType :onSelect="onSelect" :isSelect_jixie="isSelect_jixie"/>
-    
+
     <!-- 排序 -->
     <div :class="{'model_mask':true,'selectd_box':!isSelect_sort}" @click.stop.prevent="onisclose('isSelect_sort')">
         <div :class="{'inner':true,'clearfix':true,'selectd':!isSelect_sort}">
@@ -37,6 +37,7 @@
 
 
     <div class="list_data">
+      <Topbar/>
         <div v-if="list.length && (mode==1 || mode==4)">
 
         <van-list
@@ -72,10 +73,12 @@ import { Search,Uploader } from "vant";
 import CustomArea from "../../components/customArea";
 import CustomMechanicalType from "../../components/customMechanicalType";
 import vertical_banner from "../../components/vertical_banner/vertical_banner.vue";
+import Topbar from "../../components/Topbar";
 import FirstListItem from '../../components/firstListItem';
 import SeccondListItem from '../../components/seccondListItem';
 import EmptyMsg from '../../components/emptyMsg';
 import {List} from 'vant';
+
 export default {
   data() {
     return {
@@ -120,6 +123,7 @@ export default {
     CustomArea,
     verticalBanner:vertical_banner,
     CustomMechanicalType,
+    Topbar,
     FirstListItem,
     SeccondListItem,
     EmptyMsg,
@@ -159,7 +163,7 @@ export default {
             params
           })
           break;
-          
+
           case 'isSelect_sort' :
           this.selectSortData = { ...Data };
           this.sort_index = Data.id;
@@ -183,7 +187,7 @@ export default {
       type !=='isSelect_sort' && this.isSelect_sort && this.$set(this, 'isSelect_sort', false);
     },
     //获取列表页数据
-    /* 
+    /*
       reload  true重新加载
     */
     getList(params,reload=true){
