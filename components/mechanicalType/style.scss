@@ -1,0 +1,49 @@
+@import '../../assets/css/style.scss';
+
+@mixin inner {
+    background-color: #fff;
+    padding: 0.1rem 0.3rem 0.3rem;
+}
+@mixin title {
+    padding-top: 0.3rem;
+}
+.mechanics_select_box{
+    position: absolute;
+    width: 7.5rem;
+    height: 100vh;
+    background-color: #f6f6f6;
+    z-index: 100;
+    font-size: 0.35rem;
+    color: #303030;
+    .mechanics-inner{
+        @include box_inner($top:calc(1.01rem + 0.2rem),$bottom:0);
+        .top{
+            @include inner;
+            .title{
+                @include title;
+                .msg{
+                    font-size: 0.3rem;
+                    color: #A5A5A5;
+                }
+            }
+            .mechanics{
+                height: 1.5rem;
+            }
+        }
+        .mechanics_select{
+            @include box_inner($top:4.08rem,$bottom:0);
+            @include inner;
+            .title{
+                @include title;
+            }
+            .list_title{
+                position: relative;
+                margin-bottom: 0.05rem;
+                line-height: 1.2rem;
+                font-weight: 400;
+                border-bottom: 1px solid #E7E7E7;
+            }
+        }
+    }
+    
+}

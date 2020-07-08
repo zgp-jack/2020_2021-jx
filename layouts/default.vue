@@ -1,6 +1,6 @@
 <template>
   <div class='layout'>
-    <nuxt v-if="isShow && numberServers==2"/>
+    <nuxt v-if="isShow && numberServers==2" keep-alive/>
     <Loading v-else-if="!isShow"/>
   </div>
 </template>
