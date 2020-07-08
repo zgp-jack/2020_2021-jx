@@ -11,7 +11,7 @@
     font-size: 0.27rem;
     font-weight: bold;
     line-height: 0.75rem;
-  
+    position: relative;
     width: 100%;
     margin-bottom: 0.17rem;
     span{
@@ -20,6 +20,24 @@
       overflow: hidden;
       white-space: nowrap;
       width: 80%;
+      padding-left:0.26rem;
+    }
+    .seting-top{
+      position: absolute;
+      background-image: url(../../assets/img/other/zhi_ding.png);
+      height: 0.75rem;
+      width: 0.75rem;
+      left: -0.29rem;
+      background-size: 100% 100%;
+    }
+    .complate-state{
+      position: absolute;
+      right: 0.1rem;
+      width: 1.3rem;
+      height: 0.5rem;
+      top: 0;
+      background-image: url(../../assets/img/other/rented.png);
+      background-size: 100% 100%;
     }
   }
   .left-img{

@@ -6,6 +6,7 @@
   top: 0;
 }
 .title{
+  clear: both;
   font-size: 0.3rem;
   font-weight: bold;
   margin-bottom: 0.26rem;
@@ -136,15 +137,21 @@
       }
     }
     .machine-type{
+      margin-bottom: 0.36rem;
       .type-list{
+        overflow: hidden;
         line-height: 0;
-        height: 0.83rem;
+        max-height: 1.2rem;
          b{
-           padding: 0.11rem 0.3rem;
+           float: left;
+           height: 0.5rem;
+           line-height: 0.5rem;
+           padding: 0.03rem 0.3rem;
            background-color: #f5f5f5;
            color: #525252;
            font-size: 0.22rem;
            border: 0.1rem;
+           margin-bottom: 0.1rem;
            margin-right: 0.15rem;
          }
       }
@@ -182,8 +189,8 @@
       justify-content: space-between;
       div{
         margin-bottom: 0.2rem;
-        width: 2rem;
-        height: 2rem;
+        width: 2.2rem;
+        height: 2.2rem;
 
       }
     }
