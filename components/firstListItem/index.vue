@@ -1,6 +1,6 @@
 <template>
   <div class="list-item">
-    <nuxt-link :to="{path:'/machine_detail/',query:{id:data.uu,type:data.mode}}">
+    <nuxt-link :to="{path:'/view/',query:{info:data.uu,mode:data.mode}}">
       <div class="title">
         <span>{{data.title}}</span>
       </div>

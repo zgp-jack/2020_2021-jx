@@ -11,6 +11,7 @@ export default function ({$axios,redirect,store}) {
     $axios.onRequest(config => {
         config.url += `?source=XCX`
         const {params} = config;
+        console.log(params)
         if(params && params.globalLoading === false){
             globalLoading = false
             delete params.globalLoading

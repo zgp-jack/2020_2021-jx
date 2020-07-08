@@ -1,10 +1,11 @@
 <template>
       <van-swipe class="my-swipe" :vertical="true" :autoplay="3000" :show-indicators="false" ref="resize">
         <van-swipe-item>
-          <p>大家发了份的发的发达</p>
+          <p>置顶发布消息，提升曝光率，让别主动联系你 <span>去置顶</span></p>
         </van-swipe-item>
-        <van-swipe-item>3</van-swipe-item>
-        <van-swipe-item>4</van-swipe-item>
+        <van-swipe-item>
+          <p>点此发布机械出租、求租、转让、求购 <span>一键发布</span></p>
+        </van-swipe-item>
       </van-swipe>
 </template>
 
@@ -22,10 +23,6 @@
       "van-swipe-item" : SwipeItem,
     },
     mounted() {
-      // 轮播图重新获取上一级的尺寸
-      setTimeout(()=>{
-        this.$refs.resize.resize()
-      },0)
 
     },
     created(){
@@ -36,6 +33,13 @@
 </script>
 
 <style lang="scss" scoped="scoped">
+  .my-swipe{
+    height: 100%;
+    p{
+      font-size:0.25rem;
+      color: #ffa926;
+    }
+  }
  .van-swipe-item{
     font-size: 0.3rem;
     background: #fff;

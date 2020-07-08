@@ -3,22 +3,22 @@
     <Header title="机械出租详情" />
     <div class="detail_main">
        <div class="notice">
-         <verticalBanner type="1" />
+         <VerticalBanner type="1" />
        </div>
        <div class="content">
           <div class="title-time">
-            <p class="title">西藏那个哈皮娃儿</p>
-            <p class="time">发布时间：10121540</p>
+            <p class="title">{{detail_info.title}}</p>
+            <p class="time">发布时间：{{detail_info.time}}</p>
           </div>
           <div class="user-info">
-            <div class="left-img"></div>
+            <div class="left-img" :style="{'background-image':'url('+(detail_info.header_img ? detail_info.header_img : 'http://statics.zhaogongdi.com/common/default_header.png')+')'}"></div>
             <div class="right-inner">
               <p class="name-pay">
-                <span class="userName">张大炮</span>
+                <span class="userName">{{detail_info.user}}</span>
                 <span class="pay"><b></b>协商付款</span>
               </p>
               <div class="telphone">
-                <p class="phone-num">17384374513</p>
+                <p class="phone-num">{{detail_info.phone}}</p>
                 <div class="opeart">
                   <p class="report">投诉</p>
                   <p class="show-complete-tel">查看完整电话</p>
@@ -31,32 +31,23 @@
           <div class="machine-type">
             <p class="title">机械类型</p>
             <div class="type-list">
-              <b>飞机</b>
-              <b>大炮</b>
+              <b v-for="(item,index) in detail_info.class" :key="index">{{item.name}}</b>
             </div>
           </div>
-          <div class="detail-info">
+          <div class="detail-info" :style="{'margin-bottom': (detail_info.images && detail_info.images.length>0 ? '' : '0.35rem')}">
             <p class="title">详情信息</p>
-            <p class="detail-content">弱水三千只取一瓢饮，繁华三千只为你一人饮尽悲欢弱水三千只取一瓢饮，繁华三千只为你一人饮尽悲欢弱水三千只取一瓢饮，繁华三千只为你一人饮尽悲欢弱水三千只取一瓢饮，繁华三千只为你一人饮尽悲欢弱水三千只取一瓢饮，繁华三千只为你一人饮尽悲欢</p>
+            <p class="detail-content">{{detail_info.desc}}</p>
             <p class="show-all-text">... <b style="color: #f60;">查看全部</b></p>
           </div>
-          <div class="machine-imgs">
-            <div>
-              <img src="" alt="">
+          <div class="machine-imgs" v-if="detail_info.images && detail_info.images.length>0">
+            <div v-for="(item,index) in detail_info.images">
+              <img :src="item" alt="">
             </div>
-            <div>
-              <img src="" alt="">
-            </div>
-            <div>
-              <img src="" alt="">
-            </div>
-            <div>
-              <img src="" alt="">
-            </div>
+
           </div>
           <div class="address">
             <p class="title">所在地址</p>
-            <p class="addree-info">每行中心成都市剑南大道1108号</p>
+            <p class="addree-info">{{detail_info.area}}</p>
           </div>
        </div>
        <!-- 防骗警告 -->
@@ -78,24 +69,35 @@
 </template>
 
 <script>
-  import head from "../../components/header/index.vue";
-  import vertical_banner from "../../components/vertical_banner/vertical_banner.vue";
+  import VerticalBanner from "../../components/vertical_banner";
   export default{
-    comments:{
-      Header:head,
-      verticalBanner:vertical_banner
+    data(){
+      return{
+        detail_info:{}
+      }
+    },
+    components:{
+      VerticalBanner
     },
     created(){
-
+      let that = this;
       //参数不完整跳转首页
-      if(!(this.$route.query.id && this.$route.query.type)){
+      if(!(this.$route.query.info && this.$route.query.mode)){
         window.location.replace('/dist/home')
       }else{
-       let obj = {...this.$route.query}
+       let params = {...this.$route.query}
+       //根据参数请求数据
+        this.$axios.get('/index/new-view',{params}).then(res=>{
+          if(res.code == 200){
+             // that.detail_info = {...res.content}
+             that.$set(that,'detail_info',{...res.content})
+             console.log(res)
+          }
+        })
       }
     },
     mounted() {
-       console.log(head,vertical_banner)
+       console.log(this.detail_info);
     }
   }
 </script>
