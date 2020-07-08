@@ -1,27 +1,29 @@
 <template>
   <div class="list-item">
-    <div class="left-img fl" :style="'background-image:url('+(data.cover && data.cover!=''?data.cover:default_img)+')'">
-      <span></span>
-    </div>
-    <div class="right-inner fl">
-      <div class="title">
-        <span>{{data.title}}</span>
+    <nuxt-link :to="{path:'/view/',query:{info:data.uu,mode:data.mode}}">
+      <div class="left-img fl" :style="'background-image:url('+(data.cover && data.cover!=''?data.cover:default_img)+')'">
+        <span></span>
       </div>
-      <div class="basic-info fl">
-         <p class="userName fl">{{data.user}}</p>
-         <p class="userTel fl">{{data.tel}}</p>
-         <p class="tel-icon fr"  @click="callPhone(data.tel,data.uu,data.mode)" v-show="is_mine"></p>
-      </div>
-      <div class="position-time">
-        <div class="position fl">
-          <i class="icon-dingwei iconfont"></i>
-           {{data.area}}
+      <div class="right-inner fl">
+        <div class="title">
+          <span>{{data.title}}</span>
         </div>
-        <div class="time fr">
-          {{data.time}}
+        <div class="basic-info fl">
+           <p class="userName fl">{{data.user}}</p>
+           <p class="userTel fl">{{data.tel}}</p>
+           <p class="tel-icon fr"  @click.prevent="callPhone(data.tel,data.uu,data.mode)" v-show="is_mine"></p>
+        </div>
+        <div class="position-time">
+          <div class="position fl">
+            <i class="icon-dingwei iconfont"></i>
+             {{data.area}}
+          </div>
+          <div class="time fr">
+            {{data.time}}
+          </div>
         </div>
       </div>
-    </div>
+    </nuxt-link>
     <!-- 弹框 -->
    <!-- <van-dialog class="phone_alert" v-model="show" title="温馨提示" @cancel="go_cancel" @confirm="go_call" show-cancel-button confirmButtonText="去拨打">
       <p class="ask">你是否要拨打电话?</p>
@@ -59,7 +61,7 @@
         let that = this;
         //判断是否登录
         if(!"login"){
-          window.history.pushState({},'','/login')
+          this.$router.replace("/login")
           return false;
         }
         //判断是否查看了完整的电话号码

@@ -4,7 +4,7 @@
           <p>置顶发布消息，提升曝光率，让别主动联系你 <span>去置顶</span></p>
         </van-swipe-item>
         <van-swipe-item>
-          <p>点此发布机械出租、求租、转让、求购 <span>一键发布</span></p>
+          <p @click="go_release">点此发布机械出租、求租、转让、求购 <span>一键发布</span></p>
         </van-swipe-item>
       </van-swipe>
 </template>
@@ -28,6 +28,10 @@
     created(){
       console.log(this.$props.type)
     },
+    methods:{
+      //一键发布
+      go_release(){}
+    },
     props:['type']
   }
 </script>
@@ -38,6 +42,13 @@
     p{
       font-size:0.25rem;
       color: #ffa926;
+      span{
+        padding: 0.05rem 0.1rem;
+        background-color: #FFAA26;
+        color: #fff;
+        border-radius: 0.07rem;
+        // float: right;
+      }
     }
   }
  .van-swipe-item{

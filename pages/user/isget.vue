@@ -80,7 +80,7 @@ Vue.use(DatetimePicker);
 Vue.use(Picker)
 export default {
     created(){
-        
+
     },
     components:{
         Header
@@ -103,7 +103,7 @@ export default {
             this.show = true
         },
         showPopups(){
-           this.shows = true 
+           this.shows = true
         },
         formatter(type,val){
             if (type === 'year') {
@@ -126,7 +126,7 @@ export default {
         onConfirm(value){
             this.shows = false
             this.classification = value
-        }    
+        }
     },
 }
 </script>

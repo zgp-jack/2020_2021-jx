@@ -1,6 +1,6 @@
 <template>
   <div id="detail">
-    <Header title="机械出租详情" />
+    <Header :title="title" />
     <div class="detail_main">
        <div class="notice">
          <VerticalBanner type="1" />
@@ -15,14 +15,15 @@
             <div class="right-inner">
               <p class="name-pay">
                 <span class="userName">{{detail_info.user}}</span>
-                <span class="pay"><b></b>协商付款</span>
+                <span class="pay" v-if="mode == 1"><b></b>协商付款</span>
               </p>
               <div class="telphone">
                 <p class="phone-num">{{detail_info.phone}}</p>
                 <div class="opeart">
-                  <p class="report">投诉</p>
-                  <p class="show-complete-tel">查看完整电话</p>
-                  <p class="complete-state">已租到</p>
+                  <p class="report" v-if="call_phone" @click="reportFn">投诉</p>
+                  <p class="show-complete-tel" v-if="show_complete_tel" @click="showPhone(detail_info.uu)">查看完整电话</p>
+                  <p class="complete-state" v-if="complete">已租到</p>
+                  <p class="call-phone" v-if="call_phone" @click="callPhone">拨打电话</p>
                 </div>
               </div>
               <div class="tips">联系我时，请说明是在<b style="color:red">“鱼泡机械”</b>上看到的</div>
@@ -51,33 +52,42 @@
           </div>
        </div>
        <!-- 防骗警告 -->
-       <div class="reminder">
+       <div class="reminder" v-if="!is_mine">
          <span></span>
          <p>防骗警示:  达成交易前,请确认好对方身份,确认合同条款合理无误,在双方确认交易达成之前不要进行任何财务转账,交易双方可拍照保留证据,以免产生经济纠纷。若产生经济纠纷及恶劣影响。请立即报警，鱼泡机械配合调查但概不承担相应损失及责任。如遇诈骗信息请
           <b style="color: #f60;">“立即举报”</b>
         </p>
        </div>
        <!-- 底部 -->
-       <div class="footer-opeart">
+       <div class="footer-opeart" v-if="!is_mine">
          <div class="cellcot-share"></div>
          <p class="show-all-tel"></p>
        </div>
     </div>
-
+    <!-- 发布弹窗 -->
+    <!-- <BottomTop /> -->
   </div>
 
 </template>
 
 <script>
   import VerticalBanner from "../../components/vertical_banner";
+  import BottomTop from '../../components/bottom-topbar/index'
   export default{
     data(){
       return{
-        detail_info:{}
+        mode:1,
+        title:"机械出租详情",
+        detail_info:{},
+        call_phone:false,
+        show_complete_tel:false,
+        complete:false,
+        is_mine:false
       }
     },
     components:{
-      VerticalBanner
+      VerticalBanner,
+      BottomTop
     },
     created(){
       let that = this;
@@ -85,19 +95,88 @@
       if(!(this.$route.query.info && this.$route.query.mode)){
         window.location.replace('/dist/home')
       }else{
-       let params = {...this.$route.query}
+       let params = {...this.$route.query};
+       this.mode = this.$route.query.mode;
+       // 改变标题
+       this.changeTitle(this.mode);
        //根据参数请求数据
         this.$axios.get('/index/new-view',{params}).then(res=>{
           if(res.code == 200){
-             // that.detail_info = {...res.content}
              that.$set(that,'detail_info',{...res.content})
-             console.log(res)
+             console.log(res.content)
+             // 状态的显示
+             that.allState(res.content);
           }
         })
       }
     },
     mounted() {
        console.log(this.detail_info);
+    },
+    methods:{
+      // 改变标题
+      changeTitle(mode){
+        if(mode == 1){
+          this.title = "机械求租详情"
+        }else if(mode == 2){
+          this.title = "机械出租详情"
+        }else if(mode == 3){
+          this.title = "机械转让详情"
+        }else if(mode == 4){
+          this.title = "机械求购详情"
+        }
+      },
+      //状态的显示
+      allState(obj){
+        //该信息是不是自己的
+        if(obj.is_author){
+           this.is_mine = true;
+           return false;
+        }
+        // 状态是不是已完成
+        if(obj.status == 2){
+          this.complete = true;
+          this.detail_info.phone = this.detail_info.phone.slice(0,7) + "***";
+          return false;
+        }
+        //是否查看了完整电话号码
+        let reg = /\*+/g;
+        if(reg.test(obj.phone)){
+          this.show_complete_tel = true;
+          return false;
+        }else{
+          this.call_phone = true;
+          return false
+        }
+      },
+      //查看完整电话
+      showPhone(id){
+        let that = this;
+        //判断是否登录
+        if(!"login"){
+          this.$router.push("/login")
+          return false;
+        }
+        let params = {};
+        params.id = id;
+        params.mode = this.mode;
+        console.log(params)
+        //进行ajax请求完整的电话号码
+        if("success"){ //成功后
+          that.show_complete_tel = false;
+          that.call_phone = true;
+          that.detail_info.phone = 18384374513;
+        }
+      },
+      //拨打电话
+      callPhone(){
+        window.location.href = "tel:"+this.detail_info.phone
+      },
+      //投诉
+      reportFn(){
+        //跳转到投诉页面
+        // this.$router.push('')
+      }
     }
   }
 </script>

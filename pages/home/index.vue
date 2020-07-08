@@ -73,7 +73,7 @@
       </div>
     </div>
     <!-- 签到 -->
-    <div class="sign">
+    <div class="sign" @click="go_sign">
 
     </div>
 
@@ -158,7 +158,6 @@ export default {
       listData(params={}){
         const that = this;
         that.$axios.get('/index/home',{params}).then(res=>{
-
             that.$set(that, "list", {...res.content});
             console.log(that.list)
         })
@@ -167,6 +166,7 @@ export default {
       my_scroll(e){
         const {scrollTop} = e.currentTarget;
         this.$refs.mychild.handleScroll(scrollTop);
+        
         this.fixed_title(scrollTop);
       },
       //固定标题
@@ -177,7 +177,7 @@ export default {
            this.whether_fixed = false
          }
       },
-      //跳转页面
+      //查看更多机械  跳转页面
       Jump_page(type){
         if(type == 1){
           this.$router.replace("/list/1")
@@ -188,7 +188,14 @@ export default {
         }else if(type == 4){
           this.$router.replace("/list/4")
         }
-        console.log(type)
+      },
+      //去签到
+      go_sign(){
+        if(!"login"){
+          this.$router.replace("/login")
+        }else{
+          //发送ajax请求进行签到
+        }
       }
   },
   mounted() {

@@ -11,7 +11,7 @@
         <div class="basic-info">
            <p class="userName">{{data.user}}</p>
            <p class="userTel">{{data.tel}}</p>
-           <p class="tel-icon"  @click="callPhone(data.tel,data.uu,data.mode)" v-show="is_mine"></p>
+           <p class="tel-icon"  @click.prevent ="callPhone(data.tel,data.uu,data.mode)" v-show="is_mine"></p>
         </div>
         <div class="type-class">
           <a href="javascript:;"  v-for="(itemSon,i) in data.class" :key="i">{{itemSon.name}}</a>
@@ -58,7 +58,7 @@
           let that = this;
           //判断是否登录
           if(!"login"){
-            window.history.pushState({},'','/login')
+            this.$router.replace("/login")
             return false;
           }
           //判断是否查看了完整的电话号码

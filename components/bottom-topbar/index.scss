@@ -6,7 +6,7 @@
   overflow: hidden;
   transition: all 300ms ease-in-out 0s;
     .create_content{
-      padding:0.8rem 0.2rem;
+      padding:1.3rem 0.2rem;
       transform: scale(3,3);
       -webkit-transform: scale(3,3);
       color: #777;
@@ -71,10 +71,10 @@
 }
 .bottom-taber{
   position: fixed;
-  width:44vw;
-  height:15vw;
+  width:3rem;
+  height:1.24rem;
   bottom: 9%;
-  left: 30%;
+  left: calc(50% - 1.5rem);
   opacity:1;
   transition: all 500ms;
   background:url('../../assets/img/qiuzu.png');
@@ -85,6 +85,7 @@
   bottom:-48px;opacity: 0;
 }
 .closeCreate{
+  color: #ffa926;
   position: absolute;
   font-size:0.6rem;
   left: calc(50% - 0.3rem);

@@ -1,0 +1,72 @@
+<template>
+  <div>
+    <!-- TOP -->
+    <div class="notice" @click="hides(true)">
+      <div>
+          <p>
+            添加
+            <span class="tel-num">14552160836</span>
+            <span>微信号,拉您进机械微信群</span>
+            <span class="button">复制</span>
+          </p>
+          <p>
+            添加
+            <span class="tel-num">15608008605</span>
+            <span>联系鱼泡机械客服</span>
+            <span class="button">呼叫</span>
+          </p>
+      </div>
+    </div>
+    <!-- 遮罩 -->
+    <div class="father" v-show="bar_show" @click="hides(false)">
+        <div class="modal">
+          <div class="content">
+            <div class="inner">
+                <p>
+                  添加<span class="msg">14552160836</span>
+                  工友微信号,需要在<span class="msg">添加朋友-搜索框</span>
+                  中粘贴已复制微信号添加好友
+                </p>
+                <p class="button" @click.stop="copy">复制</p>
+            </div>
+            <div class="inner">
+                <p>
+                  客服电话: <span class="msg">15608008605</span>
+                  <span class="timer">上班时间:早上8:00-晚上21:00</span>
+                </p>
+                <p class="button" @click.stop="cell">呼叫</p>
+            </div>
+          </div>
+        </div>
+    </div>
+ </div>
+</template>
+
+<script>
+export default {
+  data(){
+    return{
+        bar_show:false
+    }
+  },
+  methods:{
+    hides(right){
+        if(right){
+          this.bar_show = true
+        }else if(!right){
+          this.bar_show = false
+        }
+    },
+    copy(){
+      console.log('复制')
+    },
+    cell(){
+      console.log('打电话')
+    }
+  }
+}
+</script>
+
+<style lang='scss' scoped>
+ @import './index.scss'
+</style>

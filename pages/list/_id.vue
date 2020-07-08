@@ -37,6 +37,7 @@
 
 
     <div class="list_data">
+      <Topbar/>
         <div v-if="list.length && (mode==1 || mode==4)">
 
         <van-list
@@ -71,10 +72,12 @@ import Tarbar from "../../components/tarbar";
 import { Search,Uploader } from "vant";
 import CustomArea from "../../components/customArea";
 import CustomMechanicalType from "../../components/customMechanicalType";
+import Topbar from "../../components/Topbar";
 import FirstListItem from '../../components/firstListItem';
 import SeccondListItem from '../../components/seccondListItem';
 import EmptyMsg from '../../components/emptyMsg';
 import {List} from 'vant';
+
 export default {
   data() {
     return {
@@ -118,6 +121,7 @@ export default {
     "van-search": Search,
     CustomArea,
     CustomMechanicalType,
+    Topbar,
     FirstListItem,
     SeccondListItem,
     EmptyMsg,
