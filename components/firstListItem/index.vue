@@ -4,7 +4,7 @@
       <div class="title">
         <b class="seting-top" v-if="data.top"></b>
         <span>{{data.title}}</span>
-        <b class="complate-state"></b>
+        <b class="complate-state" style="background-image: url(url(/dist/_nuxt/assets/img/home-images/icon-tel_03.png));"></b>
       </div>
       <div class="left-img">
         <img :src="data.cover && data.cover!='' ? data.cover : default_img.default_header" alt="">
@@ -54,9 +54,10 @@
     },
     created(){
       this.default_img={...this.$store.state.default_portrait};
+      this.stateImage();
     },
     methods:{
-      // //打电话弹框显示
+        //打电话弹框显示
         callPhone(phone,id,mode){
           let that = this;
           //判断是否登录
@@ -88,6 +89,10 @@
             //调用请求获取完整的电话号码
             console.log('调用请求获取完整的电话号码')
           }
+        },
+        //状态显示的图片
+        stateImage(){
+
         }
       }
 
