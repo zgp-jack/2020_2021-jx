@@ -49,7 +49,7 @@
         is_mine:true, //是否是自己发布的消息
         show:false,  //是否显示弹框
         item_flag:{},
-        
+        state_img:"url(../../assets/img/other/rented.png)"
       }
     },
     created(){
