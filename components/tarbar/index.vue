@@ -5,7 +5,6 @@
         <nuxt-link v-for="(item,index) in list" :to="item.path" :key="index">
           <img :src="path==item.path?item.img:item.img_hui">{{item.name}}
         </nuxt-link>
-
     </div>
 </template>
 
@@ -35,7 +34,7 @@ export default {
         },
         {
           name:'个人中心',
-          path:'/login',
+          path:'/user',
           img:require("../../assets/img/personal.png"),
           img_hui:require("../../assets/img/personal_hui.png"),
         },

@@ -33,13 +33,10 @@
 </template>
 
 <script>
-import Headers from '../../components/header'
 import md5 from 'js-md5';
-import { Toast } from 'vant';
+import {setCookie} from '../../static/utils/utils.js';
+import {Toast} from 'vant';
 export default {
-  components:{
-    Headers
-  },
   created(){
   },
     data(){
@@ -72,11 +69,13 @@ export default {
       Login(){
         let Pass = this.password
         let psd = md5(Pass)
-        this.$axios.post('/user/login',{username:this.users,psd:this.password}).then(res=>{
-              const {code,msg} = res
-                  if(code == 3000){
-                    Toast.fail(msg)
-                  }
+        this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password}).then(res=>{
+          if(res.code==200){
+            setCookie('ssoToken',res.content.token);
+            Toast({message:'登录成功',duration:200,onClose:()=>{
+              this.$router.go(-1);
+            }})
+          }
         })
       }
     }

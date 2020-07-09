@@ -7,7 +7,7 @@
            <div class="btn-img" @click="mask_show()"></div>
        </div>
        <!-- 置顶遮罩 -->
-        <div class="Topmask" @click="Topmask" :class="[Topmaskr?'':'Topide']" v-show="Topmaskr">
+        <div class="Topmask" @click="Topmask" :class="[Topmaskr?'':'Topide']">
             <div class="top_notice_content">
               <div class="base">
                   <p>鱼泡提示</p>
@@ -55,7 +55,7 @@ export default {
             detail:[{title:'购回'},{title:'购回'},{title:'购回'},{title:'购回'},{title:'购回'},{title:'购回'},],
             my_scroll:0,
             isshow:true,
-            Topmaskr:true
+            Topmaskr:false
         }
     },
     methods:{
