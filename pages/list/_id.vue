@@ -1,7 +1,7 @@
 <!-- 列表页 -->
 <template>
   <div class="container">
-    <Tarbar />
+    <Tarbar v-if="mode==1 || mode==2"/>
     <div class="list">
       <div class="head">
         <div class="clearfix head_search">
@@ -36,7 +36,7 @@
     </div>
 
 
-    <div class="list_data">
+    <div class="list_data" :style="{bottom:(mode==3||mode==4) && 0}">
       <Topbar/>
         <div v-if="list.length && (mode==1 || mode==4)">
 
@@ -144,9 +144,8 @@ export default {
           case 'isSelect_area' :
           this.selectAreaData = { ...Data };
           //接口请求
-          const addr = {addr:Data.id}
           this.addr = Data.id;
-          var params = this.getParams(addr);
+          var params = this.getParams({addr:Data.id});
           this.getList({
             params
           })
@@ -155,8 +154,7 @@ export default {
           case 'isSelect_jixie' :
           this.selectJixieData = { ...Data };
           //接口请求
-          const types = {type:Data.id}
-          var params = this.getParams(types);
+          var params = this.getParams({type:Data.id});
           this.getList({
             params
           })
@@ -166,8 +164,7 @@ export default {
           this.selectSortData = { ...Data };
           this.sort_index = Data.id;
           //接口请求
-          const pattern = {pattern:Data.id}
-          var params = this.getParams(pattern);
+          var params = this.getParams({pattern:Data.id});
           this.getList({
             params
           })

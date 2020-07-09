@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <Headers :title="title"/>
+    <div class="create">
+        <Header :title="title"/>
+        <!-- <MechanicalType /> -->
         <div class="form">
             <div class="public-style">
               <div class="form_row">
@@ -67,15 +68,14 @@
           <div class="submit">提交保存</div>
 
         </div>
-
     </div>
 </template>
 
 <script>
-import Headers from '../../components/header'
+import MechanicalType from '../../components/mechanicalType'
 export default {
   components:{
-    Headers
+    MechanicalType
   },
     data(){
       return{

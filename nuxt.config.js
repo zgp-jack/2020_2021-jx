@@ -84,6 +84,7 @@ export default {
   proxy: {
     '/api/': {
       target: 'http://jxapi.kkbbi.com/', // 目标服务器ip
+      // target:'https://api.zhaogongdi.com/',
       pathRewrite: {
         '^/api/': '/',
         changeOrigin: true

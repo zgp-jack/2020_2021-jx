@@ -17,7 +17,9 @@ const store =()=>new Vuex.Store({
         default_portrait:{},
         //当前地址
         default_addr:{},
-        show:false
+        
+        //用户信息
+        userinfo:{}
     },
     mutations:{
         //获取机械类型
@@ -32,6 +34,10 @@ const store =()=>new Vuex.Store({
         //获取当前地址
         setDefaultAddr(state,obj){
             state.default_addr = {...obj}
+        },
+        //设置用户信息
+        setUserinfo(state,obj){
+            state.userinfo = {...obj}
         }
     },
   })
