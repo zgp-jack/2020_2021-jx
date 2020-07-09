@@ -2,6 +2,7 @@
     <header class="header" >
         <span class="header_lefticon"><van-icon name="arrow-left" @click='onback'/></span>
         <p>{{title}}</p>
+        <p class="confirm" v-if="ensure_text" @click="onEnsure">{{ensure_text}}</p>
     </header>
 </template>
 
@@ -15,7 +16,7 @@ import { Icon } from 'vant';
 
 Vue.use(Icon);
 export default {
-    props:['title','onskip'],
+    props:['title','onskip','ensure_text','onEnsure'],
     data(){
         return{
 

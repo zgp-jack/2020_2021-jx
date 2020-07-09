@@ -6,6 +6,7 @@
 }
 @mixin title {
     padding-top: 0.3rem;
+    line-height: 0.35rem;
 }
 @mixin item {
     display: inline-block;
@@ -19,15 +20,21 @@
     background-color: #F5F5F5;
 }
 .mechanics_select_box{
+    width: 0;
     position: absolute;
-    width: 7.5rem;
     height: 100vh;
     background-color: #f6f6f6;
-    z-index: 100;
+    z-index: 50;
     font-size: 0.35rem;
     color: #303030;
+    right: 0;
+    overflow: hidden;
+    transition: all 300ms;
+    z-index: 60;
     .mechanics-inner{
-        @include box_inner($top:calc(1.01rem + 0.2rem),$bottom:0);
+        position: absolute;
+        top:calc(1.01rem + 0.2rem);
+        width: 7.5rem;
         .top{
             @include inner;
             .title{
@@ -53,8 +60,11 @@
             }
         }
         .mechanics_select{
-            @include box_inner($top:4.8rem,$bottom:0);
+            position: relative;
+            height: calc(100vh - 4.46rem);
+            margin-top: 0.2rem;
             @include inner;
+            overflow-x: hidden;
             .title{
                 @include title;
             }
@@ -98,4 +108,12 @@
         }
     }
     
+}
+.mechanics_show{
+    width: 7.5rem;
+}
+#{'/deep/'} {
+    .header{
+        position: absolute;
+    }
 }
