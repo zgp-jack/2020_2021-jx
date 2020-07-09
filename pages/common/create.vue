@@ -1,7 +1,7 @@
 <template>
     <div class="create">
         <Header :title="title"/>
-        <MechanicalType />
+        <!-- <MechanicalType /> -->
         <div class="form">
             <div class="public-style">
               <div class="form_row">

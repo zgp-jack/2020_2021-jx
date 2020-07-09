@@ -7,6 +7,17 @@
 @mixin title {
     padding-top: 0.3rem;
 }
+@mixin item {
+    display: inline-block;
+    padding: 0 0.32rem;
+    margin-right: 0.2rem;
+    margin-top: 0.26rem;
+    font-size: 0.28rem;
+    line-height: 0.7rem;
+    border-radius: 0.1rem;
+    color: #5C5B5B;
+    background-color: #F5F5F5;
+}
 .mechanics_select_box{
     position: absolute;
     width: 7.5rem;
@@ -27,21 +38,62 @@
                 }
             }
             .mechanics{
-                height: 1.5rem;
+                height: 2.2rem;
+                span{
+                    position: relative;
+                    @include item;
+                    i{
+                        position: absolute;
+                        right: 0;
+                        top: 0.02rem;
+                        line-height: 0.2rem;
+                        font-size: 0.2rem;
+                    }
+                }
             }
         }
         .mechanics_select{
-            @include box_inner($top:4.08rem,$bottom:0);
+            @include box_inner($top:4.8rem,$bottom:0);
             @include inner;
             .title{
                 @include title;
             }
-            .list_title{
-                position: relative;
-                margin-bottom: 0.05rem;
-                line-height: 1.2rem;
-                font-weight: 400;
-                border-bottom: 1px solid #E7E7E7;
+            .list{
+                margin-bottom: 0.2rem;
+                .list_title{
+                    margin-bottom: 0.05rem;
+                    line-height: 1.2rem;
+                    font-weight: 400;
+                    border-bottom: 1px solid #E7E7E7;
+                    .rotate{
+                        transform: rotate(-90deg);
+                    }
+                    span{
+                        float: right;
+                        margin-top: calc(1.2rem / 2 - 0.39rem /2);
+                        margin-right: 0.3rem;
+                        width: 0.39rem;
+                        height: 0.39rem;
+                        line-height: 0.39rem;
+                        text-align: center;
+                        font-size: 0.28rem;
+                        border-radius: 50%;
+                        color: #fff;
+                        background-color: #ffa926;
+                    }
+                    i{
+                        float: right;
+                    }
+                }
+                .list_data{
+                    span{
+                        @include item;
+                    }
+                    .yellow {
+                        background-color: #ffa926;
+                        color: #fff;
+                    }
+                }
             }
         }
     }
