@@ -62,9 +62,9 @@
         </div>
 
         <EmptyMsg :empty1="iscomplete" :empty2="isempty"/>
-        <!-- 呼出 -->
-        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
     </div>
+    <!-- 呼出 -->
+    <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
   </div>
 </template>
 
