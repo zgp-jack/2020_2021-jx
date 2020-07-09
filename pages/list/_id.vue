@@ -36,7 +36,7 @@
     </div>
 
 
-    <div class="list_data">
+    <div class="list_data" @scroll="my_scroll">
       <Topbar/>
         <div v-if="list.length && (mode==1 || mode==4)">
 
@@ -61,8 +61,9 @@
         </div>
 
         <EmptyMsg :empty1="iscomplete" :empty2="isempty"/>
+        <!-- 呼出 -->
+        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
     </div>
-
   </div>
 </template>
 
@@ -77,6 +78,7 @@ import FirstListItem from '../../components/firstListItem';
 import SeccondListItem from '../../components/seccondListItem';
 import EmptyMsg from '../../components/emptyMsg';
 import {List} from 'vant';
+import BottomTop from '../../components/bottom-topbar/index'
 
 export default {
   data() {
@@ -125,13 +127,19 @@ export default {
     FirstListItem,
     SeccondListItem,
     EmptyMsg,
-    'van-list':List
+    'van-list':List,
+    BottomTop
   },
   created(){
     const mode = this.$route.params.id;
     this.mode = mode;
   },
   methods: {
+    // 滚动
+    my_scroll(e){
+        const {scrollTop} = e.currentTarget;
+        this.$refs.mychild.handleScroll(scrollTop);
+    },
     //控制赛选框显示隐藏
     onSelect(type, flag, Data) {
       if(flag){

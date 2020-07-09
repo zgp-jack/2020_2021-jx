@@ -72,13 +72,9 @@
         <p class="more" v-if="list[title_data[title_active].key].length>0" @click="Jump_page(title_data[title_active].type)">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
-    <!-- 签到 -->
-    <div class="sign" @click="go_sign">
-
-    </div>
 
     <!-- 底部导航 -->
-    <BottomTop ref="mychild" />
+    <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
     <Tarbar />
   </div>
 </template>
@@ -164,9 +160,9 @@ export default {
       },
       // 滚动显示隐藏
       my_scroll(e){
+        console.log(1)
         const {scrollTop} = e.currentTarget;
         this.$refs.mychild.handleScroll(scrollTop);
-        
         this.fixed_title(scrollTop);
       },
       //固定标题
@@ -189,14 +185,6 @@ export default {
           this.$router.replace("/list/4")
         }
       },
-      //去签到
-      go_sign(){
-        if(!"login"){
-          this.$router.replace("/login")
-        }else{
-          //发送ajax请求进行签到
-        }
-      }
   },
   mounted() {
     this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
