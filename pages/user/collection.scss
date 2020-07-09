@@ -1,6 +1,7 @@
 @import '../../assets/css/style.scss';
 .father{
     @include box_inner($bottom:0rem,$padding-bottom:1rem,$top:2rem);
+      font-size: 0.3rem;
         .list_one{
             background-size: 4rem auto;
             background-image: url('http: //statics.zhaogongdi.com/common/list_empty.png?v=10001');
@@ -12,5 +13,41 @@
             font-size:0.37rem;
             color: #888;
             text-align: center;
+        }
+        .collection_item{
+          background: #fff;
+          margin: 0.2rem 0.2rem 0;
+          padding: 0.15rem;
+          line-height: 0.8rem;
+          border-radius: 0.08rem;
+          box-shadow: 0 0.03rem 0.1rem #eee;
+            >div{
+              display: flex;
+              justify-content: space-between;
+            }
+              .top{
+                border-bottom: 1px dashed #ddd;
+                  >p{
+                    display: inline-block;
+                    width: 75%;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                  }
+                  span{
+                    color:$color;
+                  }
+              }
+              .bottom{
+                  >span:last-child{
+                    color: $color;
+                  }
+              }
+        }
+        .more_none{
+          line-height: 1rem;
+          font-size:0.37rem;
+          color: #888;
+          text-align: center;
         }
 }

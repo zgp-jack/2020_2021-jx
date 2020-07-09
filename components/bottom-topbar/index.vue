@@ -14,18 +14,29 @@
       </div>
       <!-- 底部呼出 -->
       <div class="bottom-taber" :class="isshow==false?'top-hide':''" @click="list_show"></div>
+      <!-- 右侧呼出 -->
+      <div class="flex_want_top" :class="isshow==false?'right-show':''" v-show="showWant" @click="fabugo">
+        <img src="http://statics.zhaogongdi.com/common/setTopButton.png">
+      </div>
+      <!-- 底部右侧呼出 -->
+      <div class="flex_upload_bot" :class="isshow==false?'right-show':''" v-show="showWant" @click="AppGo('https://a.app.qq.com/o/simple.jsp?pkgname=com.yupao.machine')" >
+        <img src="http://statics.zhaogongdi.com/common/list_upload_app.png">
+      </div>
+      <!-- 签到 -->
+    <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao"></div>
   </div>
 </template>
 
 <script>
 export default {
+    props:['showWant','qiandao'],
   data(){
     return{
         my_scroll:0,
         isshow:true,
         list:[{title:'发布求租机械信息',detail:'快速发布求租需求，1000万机械、机手任你选',desc:'我找机械',src:'../../common/create'},{title:'发布出租机械信息',detail:'完整填写机械出租信息，无限好活接不完',desc:'机械找活'},{title:'发布转让机械信息',detail:'全网最大二手机械信息平台机械转手只需分分钟',desc:'我卖机械'},{title:'发布求购机械信息',detail:'50万条转让信息，总有一条适合你',desc:'我买机械'},],
         lists_show:false,
-        showButton:true
+        showButton:true,
     }
   },
   methods:{
@@ -50,7 +61,23 @@ export default {
         },
         Isgo(link){
           this.$router.push(link)
+        },
+        //去签到
+      go_sign(){
+        if(!"login"){
+          this.$router.replace("/login")
+        }else{
+          //发送ajax请求进行签到
         }
+      },
+      // 去下载
+      AppGo(url){
+        window.location.href = url
+      },
+      // 跳转发布页
+      fabugo(){
+        this.$router.push({path:'/user/release',query:{show:true}})
+      }
   }
 }
 </script>
