@@ -23,3 +23,13 @@ $colors:#555;
 　-webkit-line-clamp: $clamp;
 　-webkit-box-orient: vertical;
 }
+// 遮罩
+@mixin box_black($z-index:200){
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width:7.5rem;
+  height:100%;
+  z-index:$z-index;
+}
