@@ -16,7 +16,9 @@
                 <div class="corm-row">
                     <div class="row-left">企业logo</div>
                     <div class="row-right">
-                        <router-link to='' class="file_mk">上传图片</router-link>
+                      <van-uploader :after-read="afterRead" v-model="filelist" multiple :max-count="1">
+                        <span class="file_mk">上传图片</span>
+                      </van-uploader>
                     </div>
                 </div>
                 <div class="corm-row">
@@ -102,14 +104,23 @@
 
 <script>
 import Header from '../../components/header'
+import { Uploader } from 'vant';
 export default {
     components:{
-        Header
+        Header,
+        'van-uploader':Uploader
     },
     data(){
-        return{ 
-            title:'供应商申请'
+        return{
+            title:'供应商申请',
+            filelist:[]
         }
+    },
+    methods:{
+      afterRead(file) {
+      // 此时可以自行将文件上传至服务器
+      console.log(file,this.filelist);
+    }
     }
 }
 </script>

@@ -38,10 +38,10 @@
           <div class="detail-info" :style="{'margin-bottom': (detail_info.images && detail_info.images.length>0 ? '' : '0.35rem')}">
             <p class="title">详情信息</p>
             <p class="detail-content">{{detail_info.desc}}</p>
-            <p class="show-all-text">... <b style="color: #f60;">查看全部</b></p>
+            <p class="show-all-text" v-if="false" @click="watchAll">... <b style="color: #f60;">查看全部</b></p>
           </div>
           <div class="machine-imgs" v-if="detail_info.images && detail_info.images.length>0">
-            <div v-for="(item,index) in detail_info.images">
+            <div v-for="(item,index) in detail_info.images" @click="showImage(index)">
               <img :src="item" alt="">
             </div>
 
@@ -52,7 +52,7 @@
           </div>
        </div>
        <!-- 防骗警告 -->
-       <div class="reminder" v-if="!is_mine">
+       <div class="reminder" v-if="!is_mine" @click="reportFn(detail_info.phone)">
          <span></span>
          <p>防骗警示:  达成交易前,请确认好对方身份,确认合同条款合理无误,在双方确认交易达成之前不要进行任何财务转账,交易双方可拍照保留证据,以免产生经济纠纷。若产生经济纠纷及恶劣影响。请立即报警，鱼泡机械配合调查但概不承担相应损失及责任。如遇诈骗信息请
           <b style="color: #f60;">“立即举报”</b>
@@ -66,13 +66,17 @@
     </div>
     <!-- 发布弹窗 -->
     <!-- <BottomTop /> -->
+    <!-- 举报弹框 -->
+    <!-- <van-dialog /> -->
   </div>
 
 </template>
 
 <script>
   import VerticalBanner from "../../components/vertical_banner";
-  import BottomTop from '../../components/bottom-topbar/index'
+  import BottomTop from '../../components/bottom-topbar/index';
+  import { Dialog } from 'vant';
+  import { ImagePreview } from 'vant';
   export default{
     data(){
       return{
@@ -87,7 +91,9 @@
     },
     components:{
       VerticalBanner,
-      BottomTop
+      BottomTop,
+      "van-dialog": Dialog.Component,
+      [ImagePreview.Component.name]: ImagePreview.Component,
     },
     created(){
       let that = this;
@@ -173,9 +179,30 @@
         window.location.href = "tel:"+this.detail_info.phone
       },
       //投诉
-      reportFn(){
-        //跳转到投诉页面
-        // this.$router.push('')
+      reportFn(phone){
+        let reg = /\*+/g;
+        if(reg.test(phone)){
+          Dialog.alert({
+            title: '温馨提示',
+            message: '请先查看完整号码后操作',
+          }).then(() => {
+            // on close
+          });
+        }else{
+          //跳转到投诉页面
+          // this.$router.push('/set/report')
+        }
+
+      },
+      //查看全部
+      watchAll(){
+
+      },
+      //展示图片
+      showImage(index){
+        let that = this;
+        // 查看图片
+        ImagePreview({images:that.detail_info.images,startPosition:index,closeable:true})
       }
     }
   }

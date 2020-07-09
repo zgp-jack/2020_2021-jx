@@ -12,10 +12,7 @@
                       <img src="../../assets/img/consume/tou-bottom.png" alt="">
                   </p>
               </div>
-              <div class="consume-two">
-                  <p>消耗鱼泡币:<span>365</span></p>
-                  <p>获取鱼泡币:<span>365</span></p>
-              </div>
+
           </div>
           <div class="consume-content">
               <div class="consume-content-one">

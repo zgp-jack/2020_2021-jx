@@ -2,7 +2,9 @@
   <div class="list-item">
     <nuxt-link :to="{path:'/view/',query:{info:data.uu,mode:data.mode}}">
       <div class="title">
+        <b class="seting-top" v-if="data.top"></b>
         <span>{{data.title}}</span>
+        <b class="complate-state"></b>
       </div>
       <div class="left-img">
         <img :src="data.cover && data.cover!='' ? data.cover : default_img.default_header" alt="">
@@ -46,7 +48,8 @@
         default_img:{},
         is_mine:true, //是否是自己发布的消息
         show:false,  //是否显示弹框
-        item_flag:{}
+        item_flag:{},
+        state_img:"url(../../assets/img/other/rented.png)"
       }
     },
     created(){
@@ -85,8 +88,6 @@
             //调用请求获取完整的电话号码
             console.log('调用请求获取完整的电话号码')
           }
-
-
         }
       }
 

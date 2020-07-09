@@ -10,7 +10,7 @@
                   <div class="title">
                       鱼泡币获取规则
                   </div>
-                  <div class="item" v-for="(item,i) in list" :key='i'>
+                  <div class="item" v-for="(item,i) in list" :key='i' @click="isGo(item.src)">
                       <div class="info">
                           <p v-text="item.title"></p>
                           <p>({{item.detail}})</p>
@@ -45,12 +45,18 @@ export default {
             list:[
                 {title:'每日签到 + 1 鱼泡币',detail:'每日一次',btn_text:'签到'},
                 {title:'邀请好友成功 + 5 鱼泡币',detail:'好友注册送鱼泡币,  不限次数',btn_text:'去邀请'},
+                 {title:'充值',detail:'充值付钱购买鱼泡币',btn_text:'去充值',src:'../coin/recharge'},
                 {title:'发布求租 + 1鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
                 {title:'发布机械 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
                 {title:'发布出售 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
                 {title:'发布求购 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
             ],
             title:'获取鱼泡币'
+        }
+    },
+    methods:{
+        isGo(src){
+          this.$router.push(src)
         }
     }
 }
