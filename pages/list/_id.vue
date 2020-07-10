@@ -1,7 +1,7 @@
 <!-- 列表页 -->
 <template>
   <div class="container">
-    <Tarbar v-if="mode==1 || mode==2"/>
+    <Tarbar />
     <div class="list">
       <div class="head">
         <div class="clearfix head_search">
@@ -37,7 +37,7 @@
 
 
 
-    <div class="list_data" :style="{bottom:(mode==3||mode==4) && 0}" @scroll="my_scroll">
+    <div class="list_data" @scroll="my_scroll">
       <Topbar/>
         <div v-if="list.length && (mode==1 || mode==4)">
 
