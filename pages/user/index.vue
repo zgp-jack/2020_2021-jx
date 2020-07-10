@@ -9,13 +9,13 @@
             </div>
             <div class="user">
                 <div class="top">
-                    <img src="http://statics.zhaogongdi.com/images/wx-xcx/20200620/xY7U301592639800.jpeg"/>
+                    <img :src="list.header"/>
                     <div class="userinfo">
-                      <p>const</p>
+                      <p>{{list.name}}</p>
                       <p>
                         <span>用户编号:</span>
                         <span class="main_textc">
-                          123456
+                          {{list.id}}
                         </span>
                       </p>
                     </div>
@@ -23,11 +23,11 @@
                 </div>
                 <div class="bottom">
                     <div>
-                      <p class="main_textc">66279</p>
+                      <p class="main_textc">{{list.coin_balance}}</p>
                       <p>可用鱼泡币</p>
                     </div>
                     <div>
-                      <p class="main_textc">4815</p>
+                      <p class="main_textc">{{list.coin_consume}}</p>
                       <p>消耗鱼泡币</p>
                     </div>
                 </div>
@@ -65,6 +65,9 @@
 <script>
 import Tarbar from '../../components/tarbar'
 export default {
+  created(){
+      this.getuser()
+  },
   data(){
     return{
       title:'个人中心',
@@ -86,6 +89,7 @@ export default {
         },
       ],
       my_list:[{src:"http://statics.zhaogongdi.com/common/user_collect.png",title:'我的收藏',detail:'收藏的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/user_release.png",title:'我的发布',detail:'发布的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/my_welfare_coin.png",title:'我的福利',detail:'查看我的福利信息'},{src:"http://statics.zhaogongdi.com/common/user_company.png",title:'我的企业',detail:'诚邀各大机械租赁企业入驻'},{src:"http://statics.zhaogongdi.com/common/user_set.png",title:'意见反馈',detail:'提交您的问题与建议'},{src:"http://statics.zhaogongdi.com/common/user_set.png",title:'设置',detail:'意见建议、联系我们'},],
+      list:{}
 
     }
   },
@@ -95,6 +99,13 @@ export default {
   methods:{
     toInfo(){
      this.$router.push('/user/info')
+    },
+    // 获取数据
+    getuser(){
+      this.$axios.post('/user/get-userinfo').then(res=>{
+        const {content} = res
+         this.list = {...content}
+      })
     },
     // 跳转
     isGo(i){

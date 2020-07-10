@@ -1,6 +1,6 @@
 @import '../../assets/css/style.scss';
 .father{
-    @include box_inner($bottom:0rem,$padding-bottom:1rem,$top:2rem);
+    @include box_inner($bottom:0rem,$padding-bottom:0rem,$top:2rem);
       font-size: 0.3rem;
         .list_one{
             background-size: 4rem auto;
@@ -39,7 +39,17 @@
                   }
               }
               .bottom{
+                >p{
+                  flex: 1;
+                  width:50%;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                }
                   >span:last-child{
+
+                    width: 30%;
+                    text-align:right;
                     color: $color;
                   }
               }
