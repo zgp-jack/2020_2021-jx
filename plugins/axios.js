@@ -37,7 +37,7 @@ export default function ({$axios,redirect,store}) {
         const ssoToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkuemhhb2dvbmdkaS5jb20iLCJhdWQiOiJodHRwOlwvXC9hcGkuemhhb2dvbmdkaS5jb20iLCJpYXQiOjE1OTQyNjY4OTUsIm5iZiI6MTU5NDI2Njg5NSwiZXhwIjo0NzA0NjY2ODk1LCJkYXRhIjp7InVzZXJpZCI6MTI0NzQyMSwidGltZSI6MTU5NDI2Njg5NX19.9tggJ823-zaf2xY7rhSye04hNSDhy2FLED126z7KYl0'
         config.headers.common['x-token'] = ssoToken;
         config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
-        
+
     })
     $axios.onError(error => {
         globalLoading && Toast.clear()

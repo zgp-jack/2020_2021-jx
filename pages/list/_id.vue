@@ -46,9 +46,8 @@
           :finished="iscomplete || isempty"
           @load="listScroll"
         >
-          <FirstListItem v-for="(item,index) in list" :key="index" :data="item"/>
+          <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
         </van-list>
-
         </div>
         <div v-if="list.length && (mode==2 || mode==3)">
           <van-list
@@ -56,7 +55,7 @@
             :finished="iscomplete || isempty"
             @load="listScroll"
           >
-          <SeccondListItem v-for="(item,index) in list" :key="index" :data="item"/>
+          <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
         </van-list>
 
         </div>
@@ -134,6 +133,7 @@ export default {
   created(){
     const mode = this.$route.params.id;
     this.mode = mode;
+
   },
   methods: {
     // 滚动
@@ -236,6 +236,7 @@ export default {
             }
           }
           that.$set(that,'list',[...list])
+          console.log(that.list)
         })
       }else{
         Toast('您访问的页面不存在，将自动跳转')
@@ -263,6 +264,12 @@ export default {
       this.page += 1;
       const params = this.getParams({page:this.page});
       this.getList({params},false)
+    },
+    //得到电话号码并显示
+    getObj(obj){
+      let list = this.list;
+      list[obj.index].tel = obj.tel
+      this.$set(this,'list',[...list])
     }
   },
 };

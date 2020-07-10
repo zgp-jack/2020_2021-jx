@@ -14,3 +14,7 @@ export function setCookie(name, value,Days=1) {
     exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
     document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
 }
+// 打电话
+export function callPhoneFn(phone){
+  window.location.href = "tel:"+phone
+}
