@@ -4,7 +4,7 @@
       <div class="title">
         <b class="seting-top" v-if="data.top"></b>
         <span>{{data.title}}</span>
-        <b class="complate-state" style="background-image: url(url(/dist/_nuxt/assets/img/home-images/icon-tel_03.png));"></b>
+        <b class="complate-state" style="background-image: url(/dist/_nuxt/assets/img/other/rented.png);"></b>
       </div>
       <div class="left-img">
         <img :src="data.cover && data.cover!='' ? data.cover : default_img.default_header" alt="">
