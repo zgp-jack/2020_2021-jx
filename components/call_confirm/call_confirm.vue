@@ -11,6 +11,9 @@
 
 <script>
   import { Dialog } from 'vant';
+  import Vue from 'vue';
+  import { Toast } from 'vant';
+  import {callPhoneFn} from '../../static/utils/utils.js';
   export default{
     components:{
        "van-dialog": Dialog.Component,
@@ -19,18 +22,37 @@
     data(){
       return{
         show:true,
-        whether:false
+        whether:false,
       }
     },
     methods:{
       go_call(){
+        let that = this;
         //是否勾选了七天不再提示
         if(this.whether){
            var future = new Date().getTime() + 604800000;
            document.cookie = "havaSeven" + "=" + future + ";expires=" + new Date(future)+";path=/";
         }
-        console.log(this.$props.userInfo);
+        let data = {
+          id:this.$props.userInfo.id,
+          mode:this.$props.userInfo.mode
+        }
         //进行ajax请求,获取完整的电话号码  ---- 进行打电话
+        this.$axios.post('/index/get-contact',{data:JSON.stringify(data)}).then(res=>{
+          console.log(res)
+          if(res.code == 200){
+            that.tel = res.content;
+            callPhoneFn(res.content)
+            that.giveParentPhone({tel:res.content,id:data.id,index:that.$props.userInfo.index,mode:data.mode})
+          }else if(res.code == 300){
+            Toast(res.msg);
+          }else if(res.code == 303){
+            Toast(res.msg);
+          }
+        })
+      },
+      giveParentPhone(obj){
+        this.$emit('phoneNunber',obj)
       }
     }
 
