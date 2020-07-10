@@ -60,8 +60,29 @@
        </div>
        <!-- 底部 -->
        <div class="footer-opeart" v-if="!is_mine">
-         <div class="cellcot-share"></div>
-         <p class="show-all-tel"></p>
+         <div class="cellcot-share">
+           <p class="cellect">
+             <span>
+               <img src="../../assets/img/detail/collect.png" alt="">
+             </span>
+             <b>收藏</b>
+           </p>
+           <p class="share">
+             <span>
+               <img src="../../assets/img/detail/share.png" alt="">
+             </span>
+             <b>分享</b>
+           </p>
+           <p class="report">
+             <span>
+               <img src="../../assets/img/detail/report.png" alt="">
+             </span>
+             <b>举报</b>
+           </p>
+         </div>
+         <p class="show-all-tel" @click="callPhone(detail_info.uu)">
+           {{call_phone?'拨打电话':'查看完整电话'}}
+         </p>
        </div>
     </div>
     <!-- 发布弹窗 -->
@@ -77,6 +98,8 @@
   import BottomTop from '../../components/bottom-topbar/index';
   import { Dialog } from 'vant';
   import { ImagePreview } from 'vant';
+  import {showPhoneFn,callPhoneFn} from '../../static/utils/utils.js';
+  import { Toast } from 'vant';
   export default{
     data(){
       return{
@@ -163,20 +186,24 @@
           this.$router.push("/login")
           return false;
         }
-        let params = {};
-        params.id = id;
-        params.mode = this.mode;
-        console.log(params)
+        let params = {
+          id,
+          mode:this.mode,
+        };
         //进行ajax请求完整的电话号码
-        if("success"){ //成功后
+        showPhoneFn(that,Toast,params,(tel)=>{
           that.show_complete_tel = false;
           that.call_phone = true;
-          that.detail_info.phone = 18384374513;
-        }
+          that.detail_info.phone = tel;
+        })
       },
       //拨打电话
-      callPhone(){
-        window.location.href = "tel:"+this.detail_info.phone
+      callPhone(id){
+        if(!this.call_phone) {
+          this.showPhone(id)
+          return false;
+        }
+        callPhoneFn(this.detail_info.phone)
       },
       //投诉
       reportFn(phone){

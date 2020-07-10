@@ -95,9 +95,7 @@
               id,
               mode
             };
-            this.$axios.post('/get-contact',data).then(res=>{
-              console.log(res)
-            })
+            showPhoneFn(that,Toast,data)
             console.log('调用请求获取完整的电话号码')
           }
         },

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import { Dialog } from 'vant';
+  import { Dialog ,Toast} from 'vant';
   import call_confirm from '../call_confirm/call_confirm'
   import {callPhoneFn} from '../../static/utils/utils.js';
   export default{
@@ -83,7 +83,11 @@
 
         }else{
           //调用请求获取完整的电话号码
-          console.log('调用请求获取完整的电话号码')
+          let data={
+            id,
+            mode
+          }
+          showPhoneFn(that,Toast,data)
         }
       },
       //得到子组件传的电话号码
