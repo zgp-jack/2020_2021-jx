@@ -2,6 +2,7 @@
     <div class="create">
         <Header :title="title"/>
         <MechanicalType :isShow='mechanicsShow' :onShow="onMechanicsShow"/>
+        <PickerArea ref="pickerArea"/>
         <div class="form">
             <div class="public-style">
               <div class="form_row" @click="onMechanicsShow(true)">
@@ -12,7 +13,7 @@
               </div>
               <div class="form_row">
                 <div class="notice">工作地点</div>
-                <div class="content">
+                <div class="content" @click="onPickerAreaShow(true)">
                   <span>请选择工作地点</span>
                 </div>
               </div>
@@ -72,15 +73,16 @@
 </template>
 
 <script>
-import MechanicalType from '../../components/mechanicalType'
+import MechanicalType from '../../components/mechanicalType';
+import PickerArea from '../../components/pickerArea';
 export default {
   components:{
-    MechanicalType
+    MechanicalType,
+    PickerArea
   },
     data(){
       return{
           title:'发布求租信息',
-
 
           mechanicsShow:false,
       }
@@ -88,6 +90,9 @@ export default {
     methods:{
       onMechanicsShow(flag){
         this.$set(this,'mechanicsShow',flag)
+      },
+      onPickerAreaShow(flag){
+        this.$refs.pickerArea.onShow(true)
       }
     }
 }
