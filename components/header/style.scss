@@ -6,12 +6,18 @@
     font-size: 0.36rem;
     color: #fff;
     background-color: #FFAA26;
-    z-index:99;
+    z-index:50;
     .header_lefticon{
         position: absolute;
         height: 0.8rem;
         font-size: 0.4rem;
         top:calc((1.01rem - 0.8rem)/2);
         left:0.25rem;
+    }
+    .confirm{
+        position: absolute;
+        top: 0;
+        right: 0.05rem;
+        padding: 0 0.2rem;
     }
 }

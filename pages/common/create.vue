@@ -1,10 +1,10 @@
 <template>
     <div class="create">
         <Header :title="title"/>
-        <!-- <MechanicalType /> -->
+        <MechanicalType :isShow='mechanicsShow' :onShow="onMechanicsShow"/>
         <div class="form">
             <div class="public-style">
-              <div class="form_row">
+              <div class="form_row" @click="onMechanicsShow(true)">
                 <div class="notice">机械类型</div>
                 <div class="content">
                   <span>请选择机械类型</span>
@@ -79,7 +79,15 @@ export default {
   },
     data(){
       return{
-          title:'发布求租信息'
+          title:'发布求租信息',
+
+
+          mechanicsShow:false,
+      }
+    },
+    methods:{
+      onMechanicsShow(flag){
+        this.$set(this,'mechanicsShow',flag)
       }
     }
 }
