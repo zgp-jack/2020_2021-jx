@@ -3,13 +3,13 @@
       <Headers :title="title"/>
       <div class="father">
         <div class="welfare">
-            <div class="welfare-content">
+            <div class="welfare-content" v-for="(item,i) in list" :key="i" v-if="!item.is_overdue">
                 <div class="welfare-one">
                     <img src="../../assets/img/welfare/yellow.png">
                     <div class="welfare-text">
                          <p>
                             赠
-                            <span>10</span>
+                            <span>{{item.welfare.value}}</span>
                          </p>
                         <p>
                             鱼泡币
@@ -18,24 +18,24 @@
                 </div>
                  <div class="welfare-two">
                      <div class="two-title">
-                         新手大礼包
+                       {{item.welfare.name}}
                      </div>
                      <div class="two-context">
-                         <span>免费获得10鱼泡币</span>
+                         <span>{{item.welfare.content}}</span>
                          <span style="color:#FFA926;margin-left:0.2rem;">去使用</span>
                      </div>
                      <div class="two-date">
-                         有效期至: 2018-10-21 13:54:19
+                         有效期至:{{item.out_time}}
                      </div>
                  </div>
             </div>
-            <div class="welfare-content">
+            <div class="welfare-content" v-for="(item,i) in list" :key="i" v-if='item.is_overdue'>
                 <div class="welfare-one">
                     <img src="../../assets/img/welfare/grey.png">
                     <div class="welfare-text">
                          <p>
                             赠
-                            <span>10</span>
+                            <span>{{item.welfare.value}}</span>
                          </p>
                         <p>
                             鱼泡币
@@ -45,16 +45,17 @@
                  <div class="welfare-two ">
                      <img src="../../assets/img/welfare/guoqi.png" id="guoqi">
                      <div class="two-title twos-color">
-                         新手大礼包
+                         {{item.welfare.name}}
                      </div>
                      <div class="two-context">
-                         <span class="twos-color">免费获得10鱼泡币</span>
+                         <span class="twos-color">{{item.welfare.content}}</span>
                      </div>
                      <div class="two-date">
-                         有效期至: 2018-10-21 13:54:19
+                         有效期至: {{item.out_time}}
                      </div>
                  </div>
             </div>
+            <emptyMsg :empty2='true' v-if = '!list.length'/>
         </div>
       </div>
   </div>
@@ -62,14 +63,29 @@
 
 <script>
 import Headers from '../../components/header'
+import emptyMsg from '../../components/emptyMsg/index'
 export default {
+    created(){
+      this.getWelfare()
+    },
     components:{
-        Headers
+        Headers,
+        emptyMsg
     },
     data(){
         return{
-            title:'我的福利'
+            title:'我的福利',
+            list:[]
         }
+    },
+    methods:{
+      // 获取数据
+       getWelfare(){
+          this.$axios.post('/user-welfare/welfare-list').then(res=>{
+              this.list = res.content
+              console.log(this.list)
+          })
+       }
     }
 }
 </script>

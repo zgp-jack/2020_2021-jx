@@ -1,6 +1,6 @@
 <template>
   <div class="fathers">
-      <div v-for="(item,i) in arr" :key="i" @click="active(i)" :class="{'active':ActiveIndex == i}">{{item.title}}</div>
+      <div v-for="(item,i) in arr" :key="i" @click="active(i,item.id)" :class="{'active':ActiveIndex == i}">{{item.title}}</div>
   </div>
 </template>
 
@@ -13,8 +13,9 @@ export default {
         }
     },
     methods:{
-        active(i){
+        active(i,mode){
             this.ActiveIndex = i
+            this.$emit('modeType',mode)
         }
     }
 }
