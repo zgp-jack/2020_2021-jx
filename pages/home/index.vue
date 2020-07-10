@@ -62,11 +62,11 @@
     <div class="list_content" :style="whether_fixed?'margin-top: 1.2rem':''">
       <div v-for="(item,index) in title_data" :data-type="item.type" v-if="title_active == index" :key="index">
         <div v-if="(item.type == 1 || item.type == 4) && list[title_data[title_active].key].length>0">
-          <firstListItem v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="item"/>
+          <firstListItem @giveParent="getObj" v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="{item,index}"/>
 
         </div>
         <div v-if="(item.type == 2 || item.type == 3) && list[title_data[title_active].key].length>0">
-          <seccondListItem v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="item"/>
+          <seccondListItem @giveParent="getObj" v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="{item,index}"/>
         </div>
          <!-- <EmptyMsg :empty1="iscomplete" :empty2="isempty"/> -->
         <p class="more" v-if="list[title_data[title_active].key].length>0" @click="Jump_page(title_data[title_active].type)">查看更多{{title_data[title_active].name}}信息</p>
@@ -155,12 +155,10 @@ export default {
         const that = this;
         that.$axios.get('/index/home',{params}).then(res=>{
             that.$set(that, "list", {...res.content});
-            console.log(that.list)
         })
       },
       // 滚动显示隐藏
       my_scroll(e){
-        console.log(1)
         const {scrollTop} = e.currentTarget;
         this.$refs.mychild.handleScroll(scrollTop);
         this.fixed_title(scrollTop);
@@ -185,6 +183,13 @@ export default {
           this.$router.replace("/list/4")
         }
       },
+      getObj(obj){
+        console.log(obj)
+        const {list,title_data,title_active} = this;
+        // debugger
+        list[title_data[title_active].key][obj.index].tel = obj.tel
+        this.$set(this,'list',{...list})
+      }
   },
   mounted() {
     this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
