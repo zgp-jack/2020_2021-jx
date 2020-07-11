@@ -10,6 +10,7 @@
 import Loading from "../components/loading";
 import {StorageType} from '../static/exports/area_type.js';
 import {mapState} from 'vuex';
+import {getCookie} from '../static/utils/utils.js';
 
 export default {
   data() {
@@ -23,6 +24,7 @@ export default {
     Loading
   },
   mounted() {
+    this.getUser()
     setTimeout(() => {
       this.$set(this, "isShow", true);
     }, 10);
@@ -32,7 +34,6 @@ export default {
     this.getMechanics()
     //获取默认头像、地区
     this.getDefaultData()
-    this.getUser()
   },
   methods:{
     //获取机械类型
@@ -60,13 +61,18 @@ export default {
     },
 
     getUser(){
+      const ssoToken = getCookie('ssoToken');
       const that = this;
-      that.$axios.get('/user/get-userinfo').then(res=>{
-        if(res.code==200){
-          window.$nuxt.$store.commit('setUserinfo',res.content)
-        }
+      if(ssoToken){
+        that.$axios.get('/user/get-userinfo').then(res=>{
+          if(res.code==200){
+            window.$nuxt.$store.commit('setUserinfo',res.content)
+          }
+          that.numberServers+=1
+        })
+      }else{
         that.numberServers+=1
-      })
+      }
     }
   },
   computed: {
