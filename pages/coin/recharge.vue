@@ -29,7 +29,7 @@
             </p>
             <p>
                充值后总积分
-              <span class="colors">{{item}}.00元</span>
+              <span class="colors">{{coin_users+item+recharge_given[i]}}积分(可查看个{{(coin_users+item+recharge_given[i])/3 | tel}}电话)</span>
             </p>
          </div>
        </div>
@@ -65,7 +65,8 @@ export default {
           math_num_list:[],
           recharge_given:[],
           liIndex:0,
-          rehIndex:0
+          rehIndex:0,
+          coin_users:''
       }
     },
     methods:{
@@ -76,16 +77,20 @@ export default {
       // 获取数据
       recharge(){
         this.$axios.post('/coin/recharge-ready').then(res=>{
-           const {math_num_list,recharge_given} = res.content
+           const {math_num_list,recharge_given,coin_user} = res.content
             this.math_num_list = [...math_num_list]
             this.recharge_given = [...recharge_given]
+            this.coin_users = coin_user
         })
       }
     },
     filters: {
       capitalize: function (value) {
          return value.toFixed(2)
-  }
+  },
+      tel:function (value){
+        return  parseInt(value)
+      }
 }
 }
 </script>
