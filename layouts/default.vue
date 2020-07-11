@@ -62,8 +62,8 @@ export default {
 
     getUser(){
       const ssoToken = getCookie('ssoToken');
+      const that = this;
       if(ssoToken){
-        const that = this;
         that.$axios.get('/user/get-userinfo').then(res=>{
           if(res.code==200){
             window.$nuxt.$store.commit('setUserinfo',res.content)
