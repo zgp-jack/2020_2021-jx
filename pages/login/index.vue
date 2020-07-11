@@ -73,7 +73,7 @@ export default {
           if(res.code==200){
             setCookie('ssoToken',res.content.token);
             Toast({message:'登录成功',duration:200,onClose:()=>{
-              // this.$router.go(-1);
+              this.$router.go(-1);
             }})
           }
         })
