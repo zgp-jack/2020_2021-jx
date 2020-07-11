@@ -73,9 +73,9 @@
       </div>
     </div>
 
-    <!-- 底部导航 -->
-    <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
     <Tarbar />
+     <!-- 底部导航 -->
+    <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
   </div>
 </template>
 

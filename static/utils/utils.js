@@ -18,3 +18,12 @@ export function setCookie(name, value,Days=1) {
 export function callPhoneFn(phone){
   window.location.href = "tel:"+phone
 }
+// 签到
+export function coinget(that){
+  that.$axios.get('/coin/get').then(res=>{
+      if(res.content.sign){
+        that.box_on = false
+      }
+
+  })
+}
