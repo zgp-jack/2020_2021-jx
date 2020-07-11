@@ -1,7 +1,6 @@
 <!-- 列表页 -->
 <template>
   <div class="container">
-    <Tarbar />
     <div class="list">
       <div class="head">
         <div class="clearfix head_search">
@@ -36,7 +35,6 @@
     </div>
 
 
-
     <div class="list_data" @scroll="my_scroll">
       <Topbar/>
         <div v-if="list.length && (mode==1 || mode==4)">
@@ -61,9 +59,10 @@
         </div>
 
         <EmptyMsg :empty1="iscomplete" :empty2="isempty"/>
-    </div>
-    <!-- 呼出 -->
+        <!-- 呼出 -->
     <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
+    <Tarbar />
+    </div>
   </div>
 </template>
 
