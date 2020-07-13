@@ -1,5 +1,6 @@
 <template>
     <div>
+      <Copy :Copys = 'Copys' :show = 'show' @hander = 'hander'/>
       <Headers :title="title"/>
       <div class="father">
         <div class="form">
@@ -19,9 +20,9 @@
             <p>
               <span>*</span>
                我们一直都在努力做的更好，只为能够给您提供更好的服务。为用户提供良好的线上机械租赁环境是我们奋斗目标！若是我们有什么做的不好的，请一定赐教。为提高沟通效率，建议您添加 客服微信 或者 拨打客服电话。 客服微信号：
-               <span class="main_textc">13060002541</span>
+               <span class="main_textc"  @click="Copy">{{Copys}}</span>
                客服电话
-               <span class="main_textc">15608008605</span>
+               <span class="main_textc" @click="tel(phone)" >{{phone}}</span>
             </p>
         </div>
       </div>
@@ -30,16 +31,23 @@
 
 <script>
 import Headers from '../../components/header'
+import Copy from '../../components/Copy'
+import {callPhoneFn} from '../../static/utils/utils'
+import {Copynum} from '../../static/utils/utils'
 import {Toast} from 'vant'
 export default {
   components:{
-    Headers
+    Headers,
+    Copy
   },
   data(){
     return{
         title:'意见反馈',
         test:'',
-        submits:false
+        submits:false,
+        phone:15608008605,
+        Copys:13060002541,
+        show:false
     }
   },
   methods:{
@@ -65,6 +73,17 @@ export default {
             clearTimeout(timeout)
         },2000)
       })
+    },
+    // 打电话
+    tel(phone){
+      callPhoneFn(phone)
+    },
+    Copy(){
+      this.show = true
+      Copynum(this,this.Copys)
+    },
+    hander(hide){
+        this.show = hide
     }
   }
 }
