@@ -18,7 +18,7 @@ export function setCookie(name, value,Days=1) {
 export function callPhoneFn(phone){
   window.location.href = "tel:"+phone
 }
-<<<<<<< HEAD
+
 //查看完整电话号码
 export function showPhoneFn(that,Toast,data,bool=false){
   /*
@@ -43,14 +43,13 @@ export function showPhoneFn(that,Toast,data,bool=false){
     }else if(res.code == 303){
       Toast(res.msg);
     }
-=======
+  })
+}
 // 签到
 export function coinget(that){
   that.$axios.get('/coin/get').then(res=>{
       if(res.content.sign){
         that.box_on = false
       }
-
->>>>>>> c2c5db5fdacfe1e02ff6decc9568a97ade75dc37
   })
 }

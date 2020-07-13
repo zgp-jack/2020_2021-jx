@@ -72,8 +72,6 @@
         <p class="more" v-if="list[title_data[title_active].key].length>0" @click="Jump_page(title_data[title_active].type)">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
-
-<<<<<<< HEAD
     <!-- 底部导航 -->
     <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
     <!-- 新手大礼包 -->
@@ -88,8 +86,6 @@
         <div class="gift-close iconfont icon-cuo" @click="close_gift_alert($event,'close')"></div>
       </van-popup>
     </div>
-=======
->>>>>>> c2c5db5fdacfe1e02ff6decc9568a97ade75dc37
     <Tarbar />
      <!-- 底部导航 -->
     <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
