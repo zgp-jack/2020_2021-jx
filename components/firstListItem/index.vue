@@ -4,7 +4,8 @@
       <div class="title">
         <b class="seting-top" v-if="data.item.top"></b>
         <span>{{data.item.title}}</span>
-        <b class="complate-state" style="background-image: url(/dist/_nuxt/assets/img/other/rented.png);" v-if="(data.item.status == 2)"></b>
+        <b class="complate-state" :style="{'background-image': 'url('+require('../../assets/img/other/rented.png')}" v-if="(data.item.mode == 1 && data.item.status == 2)"></b>
+        <b class="complate-state" :style="{'background-image': 'url('+require('../../assets/img/other/finished.png')}" v-if="(data.item.mode == 4 && data.item.status==2)"></b>
       </div>
       <div class="left-img">
         <img :src="data.item.cover && data.item.cover!='' ? data.item.cover : default_img.default_header" alt="">
@@ -95,10 +96,7 @@
               id,
               mode
             };
-            this.$axios.post('/get-contact',data).then(res=>{
-              console.log(res)
-            })
-            console.log('调用请求获取完整的电话号码')
+            showPhoneFn(that,Toast,data)
           }
         },
         //状态显示的图片

@@ -1,7 +1,7 @@
 <template>
   <div>
-      <div class="father" @click="list_hide" :class="[lists_show?'Create':'']">
-          <div class="create_content" :class="[lists_show?'Boxon':'']">
+      <div class="father" @click="list_hide" :class="[(lists_show)?'Create':'']">
+          <div class="create_content" :class="[(lists_show)?'Boxon':'']">
               <div class="create_item" v-for="(item,i) in list" :key="i">
                   <div class="create_list_left">
                       <div class="create_item_title">{{item.title}}</div>
@@ -13,19 +13,23 @@
           <div class="iconfont icon-cuo closeCreate"></div>
       </div>
       <!-- 底部呼出 -->
-      <div class="bottom-taber" :class="isshow==false?'top-hide':''" @click="list_show"></div>
+      <div class="bottom-taber" :class="isshow==false?'top-hide':''" @click="list_show" v-if="hiddenAll==undefined"></div>
       <!-- 右侧呼出 -->
-      <div class="flex_want_top" :class="isshow==false?'right-show':''" v-show="showWant" @click="fabugo">
+      <div class="flex_want_top" :class="isshow==false?'right-show':''" v-show="showWant" v-if="hiddenAll == undefined" @click="fabugo">
         <img src="http://statics.zhaogongdi.com/common/setTopButton.png">
       </div>
       <!-- 底部右侧呼出 -->
-      <div class="flex_upload_bot" :class="isshow==false?'right-show':''" v-show="showWant" @click="AppGo('https://a.app.qq.com/o/simple.jsp?pkgname=com.yupao.machine')" >
+      <div class="flex_upload_bot" :class="isshow==false?'right-show':''" v-show="showWant" v-if="hiddenAll==undefined" @click="AppGo('https://a.app.qq.com/o/simple.jsp?pkgname=com.yupao.machine')" >
         <img src="http://statics.zhaogongdi.com/common/list_upload_app.png">
       </div>
       <!-- 签到 -->
+<<<<<<< HEAD
+    <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao" v-if="hiddenAll==undefined"></div>
+=======
     <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao">
     </div>
     <Sign :boxon = 'box_on' :boxshow = 'box_show' @handle = 'handle'/>
+>>>>>>> c2c5db5fdacfe1e02ff6decc9568a97ade75dc37
   </div>
 </template>
 
@@ -33,10 +37,14 @@
 import Sign from '../../components/Sign'
 import {coinget} from '../../static/utils/utils'
 export default {
+<<<<<<< HEAD
+    props:['showWant','qiandao','hiddenAll',"showAlert"],
+=======
     props:['showWant','qiandao'],
     components:{
       Sign
     },
+>>>>>>> c2c5db5fdacfe1e02ff6decc9568a97ade75dc37
   data(){
     return{
         my_scroll:0,

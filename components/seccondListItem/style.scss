@@ -19,11 +19,11 @@
   }
   .right-inner{
     margin-left: 0.18rem;
-    width: 4.6rem;
+    width: 4.8rem;
     .title{
-        padding-left: 0.13rem;
+      position: relative;
+        // padding-left: 0.13rem;
         width: 100%;
-
         font-size: 0.27rem;
         font-weight: bold;
         height: 0.51rem;
@@ -32,11 +32,19 @@
         box-sizing: border-box;
         span{
           display: inline-block;
-          max-width: 85%;
+          max-width: 66%;
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
-          margin-left: 7%;
+        }
+        .complate-state{
+          position: absolute;
+          right: 0rem;
+          width: 1.3rem;
+          height: 0.5rem;
+          top: -0.35rem;
+          background-image: url(../../assets/img/other/rented.png);
+          background-size: 100% 100%;
         }
     }
     .basic-info{

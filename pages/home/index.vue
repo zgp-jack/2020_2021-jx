@@ -73,6 +73,23 @@
       </div>
     </div>
 
+<<<<<<< HEAD
+    <!-- 底部导航 -->
+    <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
+    <!-- 新手大礼包 -->
+    <div class="new_gift" v-if="show_gift_alert" @click.stop="close_gift_alert($event,'bg')">
+      <van-popup v-model="show_gift">
+        <div class="inner">
+          <div class="gift-img-text"></div>
+          <p class="gift-title">领礼包，上万机械信息免费看</p>
+          <div class="main-img"></div>
+          <div class="gift-btn" @click="rigthReceove">立即领取</div>
+        </div>
+        <div class="gift-close iconfont icon-cuo" @click="close_gift_alert($event,'close')"></div>
+      </van-popup>
+    </div>
+=======
+>>>>>>> c2c5db5fdacfe1e02ff6decc9568a97ade75dc37
     <Tarbar />
      <!-- 底部导航 -->
     <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
@@ -83,7 +100,7 @@
 import Tarbar from '../../components/tarbar'
 import firstListItem from '../../components/firstListItem/index.vue'
 import seccondListItem from '../../components/seccondListItem/index.vue'
-import { Swipe , SwipeItem } from 'vant';
+import { Swipe , SwipeItem , Popup ,Dialog } from 'vant';
 import Banner from '../../components/banner/banner.vue'
 import chooseArea from '../../components/customArea/index.vue'
 import call_confirm from '../../components/call_confirm/call_confirm'
@@ -99,7 +116,9 @@ export default {
     "Banner" :Banner,
     chooseArea,
     "call-confirm":call_confirm,
-    BottomTop
+    BottomTop,
+    'van-popup':Popup,
+    [Dialog.Component.name]: Dialog.Component,
   },
   data(){
     return{
@@ -126,6 +145,8 @@ export default {
       scroll_tops:300,  //滚动的位置
       iscomplete:false, //是否加载完成
       isempty:false, //数据是否为空
+      show_gift:true, //新手大礼包
+      show_gift_alert:false,//新手大礼包
     }
   },
   methods:{
@@ -154,7 +175,10 @@ export default {
       listData(params={}){
         const that = this;
         that.$axios.get('/index/home',{params}).then(res=>{
+
             that.$set(that, "list", {...res.content});
+            //新手礼包
+            that.show_gift_alert = that.list.welfareDialog;
         })
       },
       // 滚动显示隐藏
@@ -189,10 +213,38 @@ export default {
         // debugger
         list[title_data[title_active].key][obj.index].tel = obj.tel
         this.$set(this,'list',{...list})
+      },
+      //关闭新手大礼包
+      close_gift_alert(e,need){
+        e.stopPropagation()
+        let classText = e.target.className;
+        if(classText.includes('van-fade-leave-active') && need == "bg"){
+
+        }else if(need == "close"){
+          this.show_gift_alert = false
+        }
+      },
+      //立即领取
+      rigthReceove(){
+        let that = this;
+        //发送ajax请求
+        let params = {welfareId: 1}
+        this.$axios.get('/user-welfare/get-welfare',{params}).then(res=>{
+          if(res.code == 200){
+            that.$router.push('/user/welfare')
+          }else if(res.code == 500){
+            Dialog.alert({
+              title: '温馨提示',
+              message: '您已经领取过该福利了',
+            })
+            that.show_gift_alert = false
+          }
+        })
       }
   },
   mounted() {
     this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
+    console.log(this.list)
   }
 
 }
