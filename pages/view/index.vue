@@ -184,7 +184,6 @@
           if(this.$route.query.mode == 1) this.state_text = "已租到";
           else if(this.$route.query.mode == 2) this.state_text = "已出租";
           else this.state_text = "已完成";
-          //
           return false;
         }
         //是否查看了完整电话号码
@@ -243,7 +242,10 @@
           })
         }else{
           //跳转到投诉页面
-          this.$router.push('/set/report')
+          this.$router.push({
+            path:'/set/report',
+            query:this.$route.query
+          })
         }
 
       },
@@ -259,7 +261,6 @@
       },
       //分享
       shareFn(){
-        console.log("你点击了分享")
         this.$router.push("/user/invitation")
       },
       //收藏
