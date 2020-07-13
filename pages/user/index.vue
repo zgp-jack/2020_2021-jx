@@ -54,7 +54,7 @@
             </div>
         </div>
         <!-- 客服电话 -->
-        <div class="server_tel">
+        <div class="server_tel" @click="tel">
           客服电话:&nbsp;15608008605
         </div>
     </div>
@@ -64,6 +64,7 @@
 
 <script>
 import Tarbar from '../../components/tarbar'
+import {callPhoneFn} from '../../static/utils/utils'
 export default {
   created(){
       this.getuser()
@@ -132,8 +133,9 @@ export default {
           break;
       }
     },
-      menusGo(i){
-      switch (i) {
+    menusGo(i){
+    switch (i) {
+
           case 0:
             this.$router.push('/user/get')
           break;
@@ -146,8 +148,13 @@ export default {
           default:
           break;
           }
-      }
-  }
+      },
+      // 打电话
+     tel(){
+        callPhoneFn(15608008605)
+       }
+  },
+
 }
 </script>
 

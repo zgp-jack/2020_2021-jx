@@ -14,7 +14,7 @@
               </div>
             </div>
         </div>
-        <div class="mark">提交反馈</div>
+        <div class="mark" @click="submit">提交反馈</div>
         <div class="msg">
             <p>
               <span>*</span>
@@ -30,6 +30,7 @@
 
 <script>
 import Headers from '../../components/header'
+import {Toast} from 'vant'
 export default {
   components:{
     Headers
@@ -37,7 +38,33 @@ export default {
   data(){
     return{
         title:'意见反馈',
-        test:''
+        test:'',
+        submits:false
+    }
+  },
+  methods:{
+    submit(){
+      if(this.submits){
+        Toast('您刚刚已经提交过一次了，短时间内不能重复操作')
+        return false
+      }
+      if(this.test.length<15){
+        Toast('至少要输入不少于15个字才能进行提交')
+        return false
+      }
+      this.$axios.post('/user/face-book',{msg:this.test}).then(res=>{
+        if(res.code == 200){
+          Toast('信息提交成功，感谢您提供的宝贵意见，我方会尽快处理的');
+          this.submits = true
+        }else{
+          Toast(res.msg)
+        }
+        const that = this
+        let timeout = setTimeout(function(){
+            that.$router.go(-1)
+            clearTimeout(timeout)
+        },2000)
+      })
     }
   }
 }
