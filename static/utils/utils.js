@@ -45,6 +45,7 @@ export function showPhoneFn(that,Toast,data,bool=false){
     }
   })
 }
+
 // 签到
 export function coinget(that){
   that.$axios.get('/coin/get').then(res=>{

@@ -24,8 +24,10 @@
       </div>
       <!-- 签到 -->
     <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao" v-if="hiddenAll==undefined"></div>
+
     <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao">
     </div>
+
     <Sign :boxon = 'box_on' :boxshow = 'box_show' @handle = 'handle'/>
   </div>
 </template>

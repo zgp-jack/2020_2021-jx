@@ -1,21 +1,27 @@
 <template>
   <div class="fathers">
-      <div v-for="(item,i) in arr" :key="i" @click="active(i,item.id)" :class="{'active':ActiveIndex == i}">{{item.title}}</div>
+      <div v-for="(item,i) in arr" :key="i" @click="active(i,item.id)" :class="{'active':ActiveIndex == item.id}">{{item.title}}</div>
   </div>
 </template>
 
 <script>
 export default {
     props:['arr'],
+    created(){
+        this.$set(this,'ActiveIndex',this.arr[0].id)
+    },
     data(){
         return{
-            ActiveIndex:0
+            ActiveIndex:''
         }
     },
     methods:{
         active(i,mode){
-            this.ActiveIndex = i
+            this.ActiveIndex = mode
             this.$emit('modeType',mode)
+        },
+        onchangeIndex(id){
+            this.$set(this,'ActiveIndex',id)
         }
     }
 }
