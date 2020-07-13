@@ -7,7 +7,8 @@
       <div class="right-inner fl">
         <div class="title">
           <span>{{data.item.title}}</span>
-          <b v-if="(data.item.status == 2)"></b>
+          <b class="complate-state" :style="{'background-image': 'url('+require('../../assets/img/other/leased.png')}" v-if="(data.item.mode == 2 && data.item.status == 2)"></b>
+          <b class="complate-state" :style="{'background-image': 'url('+require('../../assets/img/other/finished.png')}" v-if="(data.item.mode == 3 && data.item.status==2)"></b>
         </div>
         <div class="basic-info fl">
            <p class="userName fl">{{data.item.user}}</p>
@@ -31,7 +32,7 @@
 </template>
 
 <script>
-  import { Dialog } from 'vant';
+  import { Dialog ,Toast} from 'vant';
   import call_confirm from '../call_confirm/call_confirm'
   import {callPhoneFn} from '../../static/utils/utils.js';
   export default{
@@ -83,7 +84,11 @@
 
         }else{
           //调用请求获取完整的电话号码
-          console.log('调用请求获取完整的电话号码')
+          let data={
+            id,
+            mode
+          }
+          showPhoneFn(that,Toast,data)
         }
       },
       //得到子组件传的电话号码

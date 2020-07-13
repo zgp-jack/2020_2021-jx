@@ -63,14 +63,13 @@ export default {
         if(res.code == 200){
           Toast('信息提交成功，感谢您提供的宝贵意见，我方会尽快处理的');
           this.submits = true
+          let timeout = setTimeout(function(){
+            this.$router.go(-1)
+            clearTimeout(timeout)
+        },2000)
         }else{
           Toast(res.msg)
         }
-        const that = this
-        let timeout = setTimeout(function(){
-            that.$router.go(-1)
-            clearTimeout(timeout)
-        },2000)
       })
     },
     // 打电话
