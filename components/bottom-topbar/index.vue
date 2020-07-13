@@ -23,13 +23,8 @@
         <img src="http://statics.zhaogongdi.com/common/list_upload_app.png">
       </div>
       <!-- 签到 -->
-<<<<<<< HEAD
     <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao" v-if="hiddenAll==undefined"></div>
-=======
-    <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao">
-    </div>
     <Sign :boxon = 'box_on' :boxshow = 'box_show' @handle = 'handle'/>
->>>>>>> c2c5db5fdacfe1e02ff6decc9568a97ade75dc37
   </div>
 </template>
 
@@ -37,14 +32,10 @@
 import Sign from '../../components/Sign'
 import {coinget} from '../../static/utils/utils'
 export default {
-<<<<<<< HEAD
     props:['showWant','qiandao','hiddenAll',"showAlert"],
-=======
-    props:['showWant','qiandao'],
     components:{
       Sign
     },
->>>>>>> c2c5db5fdacfe1e02ff6decc9568a97ade75dc37
   data(){
     return{
         my_scroll:0,
