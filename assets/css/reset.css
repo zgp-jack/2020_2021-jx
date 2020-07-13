@@ -77,3 +77,9 @@ a{
 	overflow-y: auto;
 	z-index: 20;
 }
+input::placeholder{
+	color: #ccc;
+}
+textarea::placeholder{
+  color: #ccc;
+}

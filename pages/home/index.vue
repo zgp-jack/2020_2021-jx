@@ -87,8 +87,7 @@
       </van-popup>
     </div>
     <Tarbar />
-     <!-- 底部导航 -->
-    <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
+
   </div>
 </template>
 
