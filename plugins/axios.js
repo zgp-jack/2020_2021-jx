@@ -35,7 +35,9 @@ export default function ({$axios,redirect,store}) {
             duration: 0,
         });
         const ssoToken = getCookie('ssoToken');
-        config.headers.common['x-token'] = ssoToken;
+        if(ssoToken){
+            config.headers.common['x-token'] = ssoToken;
+        }
         config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
 
     })

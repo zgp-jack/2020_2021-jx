@@ -114,7 +114,7 @@ export default {
             this.$router.push('/user/collection')
           break;
            case 1:
-            this.$router.push('/user/release')
+            this.$router.push('/user/release/1')
           break;
           case 2:
             this.$router.push('/user/welfare')
