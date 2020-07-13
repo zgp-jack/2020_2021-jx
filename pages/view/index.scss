@@ -226,11 +226,73 @@
     width: 100%;
     background-color: #fff;
     position: fixed;
+    padding-top: 0.15rem;
     left: 0;
     bottom: 0;
     border-top: 1px solid #eee;
+    justify-content: space-between;
     .cellcot-share{
-      width: 2.55rem;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 0.1rem;
+      width: 3rem;
+      p{
+        float: left;
+        text-align: center;
+         width: 0.9rem;
+         height: 0.98rem;
+        span{
+          margin: 0 auto;
+          display: block;
+          width: 0.44rem;
+          height: 0.44rem;
+
+          background-size: 0.44px 0.44rem;
+        }
+        b{
+          display: block;
+          font-size: 0.24rem;
+          color: #a4a4a4;
+        }
+      }
+      .cellect{
+        span{
+          // background-image: url(../../assets/img/detail/collect.png);
+        }
+      }
+      .share{
+        span{
+          // background-image: url(../../assets/img/detail/share.png);
+        }
+      }
+      .report{
+        span{
+          // background-image: url(../../assets/img/detail/report.png);
+        }
+      }
+    }
+    .show-all-tel{
+      width: 2.42rem;
+      height: 0.82rem;
+      background: linear-gradient(90deg,#FF773D,#FFA926);
+      color: #fff;
+      line-height: 0.82rem;
+      text-align: center;
+      border-radius: 0.4rem;
+      font-size: 0.3rem;
+      span{
+
+      }
+    }
+    .alread_complate{
+      width: 2.42rem;
+      height: 0.82rem;
+      background: #ccc;
+      color: #fff;
+      line-height: 0.82rem;
+      text-align: center;
+      border-radius: 0.4rem;
+      font-size: 0.3rem;
     }
   }
 }

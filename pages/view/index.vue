@@ -3,7 +3,7 @@
     <Header :title="title" />
     <div class="detail_main">
        <div class="notice">
-         <VerticalBanner type="1" />
+         <VerticalBanner :go_release="go_release" :go_settop="go_settop" type="1" />
        </div>
        <div class="content">
           <div class="title-time">
@@ -60,12 +60,33 @@
        </div>
        <!-- 底部 -->
        <div class="footer-opeart" v-if="!is_mine">
-         <div class="cellcot-share"></div>
-         <p class="show-all-tel"></p>
+         <div class="cellcot-share">
+           <p class="cellect" @click="cellectFn(detail_info.uu)">
+             <span>
+               <img :src="[is_collection ? require('../../assets/img/detail/collect_active.png') : require('../../assets/img/detail/collect.png')]" alt="">
+             </span>
+             <b>{{is_collection ? "已收藏" : "收藏"}}</b>
+           </p>
+           <p class="share" @click="shareFn">
+             <span>
+               <img src="../../assets/img/detail/share.png" alt="">
+             </span>
+             <b>分享</b>
+           </p>
+           <p class="report" @click="reportFn()">
+             <span>
+               <img src="../../assets/img/detail/report.png" alt="">
+             </span>
+             <b>举报</b>
+           </p>
+         </div>
+         <p class="show-all-tel" @click="callPhone(detail_info.uu)" v-if="detail_info.status != 2">
+           {{call_phone?'拨打电话':'查看完整电话'}}
+         </p>
+         <p class="alread_complate" v-else>{{"已租到"}}</p>
        </div>
     </div>
-    <!-- 发布弹窗 -->
-    <!-- <BottomTop /> -->
+
     <!-- 举报弹框 -->
     <!-- <van-dialog /> -->
   </div>
@@ -74,9 +95,11 @@
 
 <script>
   import VerticalBanner from "../../components/vertical_banner";
-  import BottomTop from '../../components/bottom-topbar/index';
+
   import { Dialog } from 'vant';
   import { ImagePreview } from 'vant';
+  import {showPhoneFn,callPhoneFn} from '../../static/utils/utils.js';
+  import { Toast } from 'vant';
   export default{
     data(){
       return{
@@ -86,12 +109,15 @@
         call_phone:false,
         show_complete_tel:false,
         complete:false,
-        is_mine:false
+        is_mine:false,
+        is_collection:false, //1收藏false  2取消收藏true
+        state_text:"已出租",
+        go_release:false, //去发布
+        go_settop:false,  //去置顶
       }
     },
     components:{
       VerticalBanner,
-      BottomTop,
       "van-dialog": Dialog.Component,
       [ImagePreview.Component.name]: ImagePreview.Component,
     },
@@ -134,6 +160,18 @@
       },
       //状态的显示
       allState(obj){
+        //是否是新用户
+        if(this.detail_info.roofTag == 1){
+           this.go_release = true;
+        }else if(this.detail_info.roofTag == 2){
+          this.go_settop = true;
+        }else if(this.detail_info.roofTag == 0){
+          this.go_release = true;
+          this.go_settop = true;
+        }
+        //是否已经收藏
+        this.is_collection = obj.collection;
+
         //该信息是不是自己的
         if(obj.is_author){
            this.is_mine = true;
@@ -143,6 +181,9 @@
         if(obj.status == 2){
           this.complete = true;
           this.detail_info.phone = this.detail_info.phone.slice(0,7) + "***";
+          if(this.$route.query.mode == 1) this.state_text = "已租到";
+          else if(this.$route.query.mode == 2) this.state_text = "已出租";
+          else this.state_text = "已完成";
           return false;
         }
         //是否查看了完整电话号码
@@ -154,6 +195,7 @@
           this.call_phone = true;
           return false
         }
+
       },
       //查看完整电话
       showPhone(id){
@@ -163,34 +205,47 @@
           this.$router.push("/login")
           return false;
         }
-        let params = {};
-        params.id = id;
-        params.mode = this.mode;
-        console.log(params)
+        let params = {
+          id,
+          mode:this.mode,
+        };
         //进行ajax请求完整的电话号码
-        if("success"){ //成功后
+        showPhoneFn(that,Toast,params,(tel)=>{
           that.show_complete_tel = false;
           that.call_phone = true;
-          that.detail_info.phone = 18384374513;
-        }
+          that.detail_info.phone = tel;
+        })
       },
       //拨打电话
-      callPhone(){
-        window.location.href = "tel:"+this.detail_info.phone
+      callPhone(id){
+        if(!this.call_phone) {
+          this.showPhone(id)
+          return false;
+        }
+        callPhoneFn(this.detail_info.phone)
       },
       //投诉
       reportFn(phone){
+        // 判断是否已完成
+        if(this.detail_info.status == 2){
+          Dialog.alert({
+            title: '温馨提示',
+            message: '不能举报已完成的信息',
+          })
+          return false;
+        }
         let reg = /\*+/g;
         if(reg.test(phone)){
           Dialog.alert({
             title: '温馨提示',
             message: '请先查看完整号码后操作',
-          }).then(() => {
-            // on close
-          });
+          })
         }else{
           //跳转到投诉页面
-          // this.$router.push('/set/report')
+          this.$router.push({
+            path:'/set/report',
+            query:this.$route.query
+          })
         }
 
       },
@@ -203,6 +258,31 @@
         let that = this;
         // 查看图片
         ImagePreview({images:that.detail_info.images,startPosition:index,closeable:true})
+      },
+      //分享
+      shareFn(){
+        this.$router.push("/user/invitation")
+      },
+      //收藏
+      cellectFn(id){
+        let that = this;
+         let data = {
+           id,
+           mode:this.$route.query.mode,
+           type:(this.is_collection ? "2" : "1")
+         }
+         console.log(data)
+         //发起ajax请求
+         this.$axios.post('/index/collection',{data:JSON.stringify(data)}).then(res=>{
+           // console.log(res)
+           if(res.code == 200){
+              Dialog.alert({
+                title:"温馨提示",
+                message: (data.type==2?"取消收藏":"收藏成功")
+              });
+              that.is_collection = !that.is_collection;
+           }
+         })
       }
     }
   }

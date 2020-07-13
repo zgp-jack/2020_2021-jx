@@ -22,7 +22,7 @@
                         background-size: cover;
                         border-radius:1rem;
                         background-color: #666;
-                        background-image: url('http://statics.zhaogongdi.com/common/default_header.png');
+                        // background-image: url(`${userinfo.header}`);
                         background-position: center;
                         background-repeat: no-repeat;
                     }
