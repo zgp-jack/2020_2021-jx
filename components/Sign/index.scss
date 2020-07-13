@@ -1,0 +1,65 @@
+@import '../../assets/css/style.scss';
+.Box{
+  @include box_black($z-index:-2);
+  transition: all .6s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity:0;
+    .signNoticeContent{
+      width: 6rem;
+      height: 6rem;
+      border-radius:0.3rem;
+      overflow: hidden;
+      text-align: center;
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+      position: relative;
+      top: -1rem;
+          .sign_head{
+            padding:0.3rem;
+            height: 3rem;
+            background-position: center;
+            background-image: url('http://statics.zhaogongdi.com/common/sign_bg.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            padding-top: 1rem;
+            line-height:0.6rem;
+            color: #fff;
+            font-size: 0.43rem;
+                >p{
+                  padding-top:0.3rem;
+                }
+          }
+          .sign_body{
+            height: 3rem;
+            background: #fff;
+            padding-top:0.35rem;
+                .notices{
+                  margin-bottom:0.35rem;
+                  line-height:0.6rem;
+                  font-size:0.32rem;
+                }
+                .invitation{
+                  width: 4rem;
+                  line-height:0.8rem;
+                  border-radius:0.4rem;
+                  margin: auto;
+                  background:$color;
+                  color: #fff;
+                  font-size:0.32rem;
+                }
+          }
+    }
+    .signclose{
+      position: absolute;
+      font-size:0.6rem;
+      bottom: calc(50vh - 3rem - 0.3rem);
+      left: calc(50% - 0.3rem);
+      color: #fff;
+    }
+}
+.on{
+  z-index:60;
+  opacity: 1;
+}

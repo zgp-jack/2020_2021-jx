@@ -6,19 +6,33 @@
          <div class="chose_box" >
            请选择充值数额
            <ul class="num_list">
-              <li v-for="(item,i) in list" :key="i" :class="[i == liIndex?'cur':'']" @click="choses(i)">
-                <p class="colors">{{item.money}}</p>
-                <p>{{item.num}}鱼泡币</p>
+              <li v-for="(item,i) in math_num_list" :key="i" :class="[i == liIndex?'cur':'']" @click="choses(i)">
+                <p class="colors">{{item}}元</p>
+                <p>{{item+recharge_given[i]}}鱼泡币</p>
               </li>
            </ul>
          </div>
          <div class="title">充值明细</div>
+        <div v-for="(item,i) in math_num_list" :key="i" v-if='i==rehIndex'>
          <div class="recharge-details">
-            <p v-for="(item,i) in lists" :key="i">
-                {{item.title}}
-              <span class="colors">{{item.num}}.00元</span>
+            <p>
+               充值金额
+              <span class="colors">{{item}}元</span>
+            </p>
+            <p>
+               充值积分
+              <span class="colors">{{item+recharge_given[i]}}积分</span>
+            </p>
+            <p>
+               积分单价
+              <span class="colors">{{item/(item+recharge_given[i]) | capitalize}}元 /个</span>
+            </p>
+            <p>
+               充值后总积分
+              <span class="colors">{{coin_users+item+recharge_given[i]}}积分(可查看个{{(coin_users+item+recharge_given[i])/3 | tel}}电话)</span>
             </p>
          </div>
+       </div>
          <div class="pay-type">
            <div class="left">
              <img src="../../assets/img/wx-icon.png">
@@ -43,23 +57,41 @@ export default {
       Headers
     },
     created(){
-      this.$axios.get('/coin/recharge-ready').then(res=>{
-        console.log(res)
-      })
+      this.recharge()
     },
     data(){
       return{
           title:'鱼泡币充值',
-          list:[{money:'29元',num:29},{money:'29元',num:29},{money:'29元',num:29},{money:'29元',num:29},{money:'29元',num:29},{money:'29元',num:29},],
-          lists:[{title:'充值金额',num:29.00},{title:'充值金额',num:29.00},{title:'充值金额',num:29.00},{title:'充值金额',num:29.00},{title:'充值金额',num:29.00},],
-          liIndex:0
+          math_num_list:[],
+          recharge_given:[],
+          liIndex:0,
+          rehIndex:0,
+          coin_users:''
       }
     },
     methods:{
       choses(index){
         this.liIndex = index
+        this.rehIndex = index
+      },
+      // 获取数据
+      recharge(){
+        this.$axios.post('/coin/recharge-ready').then(res=>{
+           const {math_num_list,recharge_given,coin_user} = res.content
+            this.math_num_list = [...math_num_list]
+            this.recharge_given = [...recharge_given]
+            this.coin_users = coin_user
+        })
       }
-    }
+    },
+    filters: {
+      capitalize: function (value) {
+         return value.toFixed(2)
+  },
+      tel:function (value){
+        return  parseInt(value)
+      }
+}
 }
 </script>
 
