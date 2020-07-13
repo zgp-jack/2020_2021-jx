@@ -32,8 +32,7 @@
 <script>
 import Headers from '../../components/header'
 import Copy from '../../components/Copy'
-import {callPhoneFn} from '../../static/utils/utils'
-import {Copynum} from '../../static/utils/utils'
+import {callPhoneFn,Copynum} from '../../static/utils/utils'
 import {Toast} from 'vant'
 export default {
   components:{

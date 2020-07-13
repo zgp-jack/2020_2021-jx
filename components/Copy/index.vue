@@ -1,7 +1,7 @@
 <template>
     <div>
        <!-- 遮罩 -->
-    <van-overlay :show="show" @click="show =false" z-index="60">
+    <van-overlay :show="show" @click="show =false" z-index="70">
         <div class="wrapper" @click.stop='hander'>
             <div class="item">
                 <div class="title">温馨提示</div>
