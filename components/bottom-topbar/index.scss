@@ -24,7 +24,6 @@
                  float: left;
                  width: 60%;
                   .create_item_title{
-                    width: 2.56rem;
                     padding-top:0.14rem;
                     font-size:0.32rem;
                     font-weight: 500;
@@ -90,7 +89,7 @@
   position: absolute;
   font-size:0.6rem;
   left: calc(50% - 0.3rem);
-  bottom: 2rem;
+  bottom: calc(12% - 0.3rem);
 }
 .Create{
 opacity: 1;

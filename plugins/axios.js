@@ -5,14 +5,15 @@
 
 import {Toast} from 'vant';
 import qs from 'qs';
-import {getCookie} from '../static/utils/utils';
+import {getCookie,setCookie} from '../static/utils/utils';
 
 export default function ({$axios,redirect,store}) {
     // request拦截器
     let globalLoading = true;
     $axios.onRequest(config => {
         if(config.url == '/user/app-login'){
-            config.url += `?source=M`
+            config.url += `?source=M`;
+            config.headers.common['key'] = '1';
         }else{
             config.url += `?source=XCX`
         }
@@ -33,8 +34,7 @@ export default function ({$axios,redirect,store}) {
             message: '加载中...',
             duration: 0,
         });
-        // const ssoToken = getCookie('ssoToken');
-        const ssoToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkuemhhb2dvbmdkaS5jb20iLCJhdWQiOiJodHRwOlwvXC9hcGkuemhhb2dvbmdkaS5jb20iLCJpYXQiOjE1OTQyNjY4OTUsIm5iZiI6MTU5NDI2Njg5NSwiZXhwIjo0NzA0NjY2ODk1LCJkYXRhIjp7InVzZXJpZCI6MTI0NzQyMSwidGltZSI6MTU5NDI2Njg5NX19.9tggJ823-zaf2xY7rhSye04hNSDhy2FLED126z7KYl0'
+        const ssoToken = getCookie('ssoToken');
         config.headers.common['x-token'] = ssoToken;
         config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
 
@@ -64,6 +64,7 @@ export default function ({$axios,redirect,store}) {
                 //     }
                 // })
             } else if (response.data.code == 0) {
+                setCookie('ssoToken','',-1)
                 redirect({
                     path: '/login',
                 })

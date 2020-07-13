@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Headers :title="title"/>
+      <Header :title="title"/>
       <div class="father">
           <div class="form">
             <div class="form-row">

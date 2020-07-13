@@ -28,7 +28,7 @@
     }
 }
 .father{
-  @include box_inner($bottom:0rem,$padding-bottom:0rem,$top:0rem,$z-index:999);
+  @include box_inner($bottom:0rem,$padding-bottom:0rem,$top:0rem,$z-index:60);
   background-color: rgba(0, 0, 0, 0.5);
   .modal{
     width: 5.8rem;

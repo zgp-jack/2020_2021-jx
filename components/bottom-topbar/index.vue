@@ -23,13 +23,28 @@
         <img src="http://statics.zhaogongdi.com/common/list_upload_app.png">
       </div>
       <!-- 签到 -->
+<<<<<<< HEAD
     <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao" v-if="hiddenAll==undefined"></div>
+=======
+    <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao">
+    </div>
+    <Sign :boxon = 'box_on' :boxshow = 'box_show' @handle = 'handle'/>
+>>>>>>> c2c5db5fdacfe1e02ff6decc9568a97ade75dc37
   </div>
 </template>
 
 <script>
+import Sign from '../../components/Sign'
+import {coinget} from '../../static/utils/utils'
 export default {
+<<<<<<< HEAD
     props:['showWant','qiandao','hiddenAll',"showAlert"],
+=======
+    props:['showWant','qiandao'],
+    components:{
+      Sign
+    },
+>>>>>>> c2c5db5fdacfe1e02ff6decc9568a97ade75dc37
   data(){
     return{
         my_scroll:0,
@@ -37,6 +52,8 @@ export default {
         list:[{title:'发布求租机械信息',detail:'快速发布求租需求，1000万机械、机手任你选',desc:'我找机械',src:'../../common/create'},{title:'发布出租机械信息',detail:'完整填写机械出租信息，无限好活接不完',desc:'机械找活'},{title:'发布转让机械信息',detail:'全网最大二手机械信息平台机械转手只需分分钟',desc:'我卖机械'},{title:'发布求购机械信息',detail:'50万条转让信息，总有一条适合你',desc:'我买机械'},],
         lists_show:false,
         showButton:true,
+        box_on:true,
+        box_show:false
     }
   },
   methods:{
@@ -64,11 +81,9 @@ export default {
         },
         //去签到
       go_sign(){
-        if(!"login"){
-          this.$router.replace("/login")
-        }else{
-          //发送ajax请求进行签到
-        }
+        const that = this
+        this.box_show = true
+          coinget(that)
       },
       // 去下载
       AppGo(url){
@@ -77,6 +92,9 @@ export default {
       // 跳转发布页
       fabugo(){
         this.$router.push({path:'/user/release',query:{show:true}})
+      },
+       handle(show){
+          this.box_show = show
       }
   }
 }
