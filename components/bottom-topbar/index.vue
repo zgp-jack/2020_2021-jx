@@ -74,7 +74,7 @@ export default {
       go_sign(){
         const that = this
         this.box_show = true
-          coinget(that)
+        coinget(that)
       },
       // 去下载
       AppGo(url){
