@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        
+
         <div class="father" v-if="list.length">
             <van-list
                 v-model="loading"
@@ -30,7 +30,7 @@
                     <div class="intruduce">{{item.desc}}</div>
                     <div class="opearting clearfix">
                         <span :class="[(item.check==0) || !(item.end==2||item.check==1)?'list_item_editor':'modify']" >修改信息</span>
-                        <span v-if="item.check!='0' && item.end!='2'"><span class="list_item_top">{{item.top?'取消置顶':'去置顶'}}</span></span>
+                        <span v-if="item.check!='0' && item.end!='2'"><span class="list_item_top" @click.stop="goSettingFn($event,item)">{{item.top?'取消置顶':'去置顶'}}</span></span>
                         <span v-if="item.check == 0" class="list_item_reason fr"><img src="../../../assets/img/user_release/warning.png" alt=""> 查看被拒原因</span>
                         <span v-if="item.etime && item.check!=='0' && item.end !='2'" class="list_item_time fr">{{item.etime}} 到期</span>
                     </div>
@@ -131,7 +131,7 @@ export default {
                             that.$set(that,'list',res.content);
                         }else{
                             that.$set(that,'list',[...list,...res.content]);
-                        }                        
+                        }
                     }
                 })
             }else{
@@ -157,10 +157,25 @@ export default {
         onSkip(key,data){
             const that = this;
             switch(key){
-                case 'view' : 
+                case 'view' :
                 that.$router.push({path:'/view/',query:{info:data.uu_id,mode:that.mode}})
                 break;
             }
+        },
+        //置顶
+        goSettingFn(e,item){
+          if(item.bool){
+
+          }else{
+            //去置顶页面
+            this.$router.push({
+              path:"/user/set_top_page/set_top",
+              query:{
+                id:item.uu_id,
+                mode:this.mode
+              }
+            })
+          }
         }
     }
 }

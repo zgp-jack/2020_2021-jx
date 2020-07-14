@@ -24,6 +24,10 @@
       </div>
       <!-- 签到 -->
     <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao" v-if="hiddenAll==undefined"></div>
+
+    <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao">
+    </div>
+
     <Sign :boxon = 'box_on' :boxshow = 'box_show' @handle = 'handle'/>
   </div>
 </template>
@@ -40,7 +44,12 @@ export default {
     return{
         my_scroll:0,
         isshow:true,
-        list:[{title:'发布求租机械信息',detail:'快速发布求租需求，1000万机械、机手任你选',desc:'我找机械',src:'../../common/create'},{title:'发布出租机械信息',detail:'完整填写机械出租信息，无限好活接不完',desc:'机械找活'},{title:'发布转让机械信息',detail:'全网最大二手机械信息平台机械转手只需分分钟',desc:'我卖机械'},{title:'发布求购机械信息',detail:'50万条转让信息，总有一条适合你',desc:'我买机械'},],
+        list:[
+          {title:'发布求租机械信息',detail:'快速发布求租需求，1000万机械、机手任你选',desc:'我找机械',src:'../../common/create?mode=1'},
+          {title:'发布出租机械信息',detail:'完整填写机械出租信息，无限好活接不完',desc:'机械找活',src:'../../common/create?mode=2'},
+          {title:'发布转让机械信息',detail:'全网最大二手机械信息平台机械转手只需分分钟',desc:'我卖机械',src:'../../common/create?mode=3'},
+          {title:'发布求购机械信息',detail:'50万条转让信息，总有一条适合你',desc:'我买机械',src:'../../common/create?mode=4'}
+          ],
         lists_show:false,
         showButton:true,
         box_on:true,
