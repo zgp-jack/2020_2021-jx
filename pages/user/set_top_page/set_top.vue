@@ -3,7 +3,7 @@
      <Header :title="title"/>
      <div class="main">
         <span class="set_area">当前选择置顶范围：</span>
-            <div class="choose_scope">
+            <div class="choose_scope" @click="chooseAreaFn">
                 <span>点击选择置顶范围 ></span>
             </div>
         <span class="set_data">请输入置顶天数：</span>
@@ -110,6 +110,12 @@
     data(){
       return{
         title:"机械置顶"
+      }
+    },
+    methods:{
+      //选择城市
+      chooseAreaFn(){
+        console.log(123)
       }
     }
   }
@@ -230,7 +236,7 @@
            background-image: url(../../../assets/img/other/province-setTop.png);
          }
          .contry_setTop{
-           
+
            background-image: url(../../../assets/img/other/county-setTop.png);
          }
        }
