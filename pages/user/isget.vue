@@ -61,7 +61,8 @@
                 :columns="columns"
                 @confirm="(e)=>onConfirm(e)"
                 @cancel="onCancel"
-                :default-index="2"
+                :default-index="0"
+                ref='getindex'
                 />
           </van-popup>
       </div>
@@ -72,12 +73,14 @@
 import Header from '../../components/header'
 import Vue from 'vue'
 import { Popup,DatetimePicker,Picker} from 'vant';
+import {formatDate} from '../../static/utils/utils'
 Vue.use(Popup);
 Vue.use(DatetimePicker);
 Vue.use(Picker)
 export default {
     created(){
-
+      this.getcoin()
+      this.getrec()
     },
     components:{
         Header
@@ -87,12 +90,16 @@ export default {
             title:'鱼泡币消耗记录',
             show:false,
             shows:false,
-            minDate: new Date(2000,1),
-            maxDate: new Date(2025, 10, 1),
+            minDate: '',
+            maxDate: '',
             currentDate: new Date(),
             value:new Date(),
-            columns:['查看求租','查看出租','全部分类','置顶求租','置顶出租'],
-            classification:'消耗分类'
+            columns:['全部分类'],
+            classification:'全部分类',
+            page:1,
+            page_size:10,
+            valuetime:'',
+            fenleiindex:0
         }
     },
     methods:{
@@ -116,6 +123,9 @@ export default {
         confirm(value){
             this.show = false
             this.value = value
+            let valuetime = formatDate(this.value.toLocaleDateString(),'yyyy-MM')
+            this.valuetime = valuetime
+            this.getrec()
         },
         onCancel(){
             this.shows = false
@@ -123,6 +133,30 @@ export default {
         onConfirm(value){
             this.shows = false
             this.classification = value
+            console.log(value)
+        },
+        getindex(){
+          let dddd = getColumnIndex()
+          console.log(dddd)
+        },
+        // 获取配置数据
+        getcoin(){
+             this.$axios.get('/coin/record-conf',{params:{type:0}}).then(res=>{
+             const {category,searchDate} = res.content
+             let timeList = [...searchDate]
+             this.minDate = new Date(timeList[0])
+             this.maxDate = new Date(timeList[timeList.length-1])
+             !this.columns?this.columns = [...category]:this.columns = [...this.columns,...category]
+             console.log(category)
+
+          })
+        },
+        // 获取输出数据
+        getrec(){
+          let params = {type:0,page:this.page,page_size:this.page_size,date:this.valuetime,category:1}
+          this.$axios.get('/coin/record',{params}).then(res=>{
+              console.log(res)
+          })
         }
     },
 }

@@ -1,6 +1,8 @@
 <!-- 首页 -->
 <template>
   <div class="container" @scroll="my_scroll">
+    <!-- 底部导航 -->
+    <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
     <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" />
 	  <div id="head" ref="head">
       <div class="left_dom fl">
@@ -49,7 +51,7 @@
         <img src="http://statics.zhaogongdi.com/xcx/index_invitation.png" alt="">
         <span> 邀请好友</span>
       </a>
-      <a href="">
+      <a href="/dist/gongyingshang">
         <img src="../../assets/img/home-images/supplier.png" alt="">
         <span> 供应商</span>
       </a>
@@ -72,9 +74,7 @@
         <p class="more" v-if="list[title_data[title_active].key].length>0" @click="Jump_page(title_data[title_active].type)">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
-	
-    <!-- 底部导航 -->
-    <!-- <BottomTop ref="mychild" :showWant="false" :qiandao='true'/> -->
+
     <!-- 新手大礼包 -->
     <div class="new_gift" v-if="show_gift_alert" @click.stop="close_gift_alert($event,'bg')">
       <van-popup v-model="show_gift">
