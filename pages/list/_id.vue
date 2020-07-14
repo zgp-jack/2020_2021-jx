@@ -1,6 +1,8 @@
 <!-- 列表页 -->
 <template>
   <div class="container">
+       <!-- 呼出 -->
+    <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
     <div class="list">
       <div class="head">
         <div class="clearfix head_search">
@@ -59,24 +61,20 @@
         </div>
 
         <EmptyMsg :empty1="iscomplete" :empty2="isempty"/>
-        <!-- 呼出 -->
-    <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
     <Tarbar />
     </div>
   </div>
 </template>
 
 <script>
-import {Toast} from 'vant';
 import Tarbar from "../../components/tarbar";
-import { Search,Uploader } from "vant";
+import { Search,Uploader,Toast,List} from "vant";
 import CustomArea from "../../components/customArea";
 import CustomMechanicalType from "../../components/customMechanicalType";
 import Topbar from "../../components/Topbar";
 import FirstListItem from '../../components/firstListItem';
 import SeccondListItem from '../../components/seccondListItem';
 import EmptyMsg from '../../components/emptyMsg';
-import {List} from 'vant';
 import BottomTop from '../../components/bottom-topbar/index'
 
 export default {

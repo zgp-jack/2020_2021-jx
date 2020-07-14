@@ -68,6 +68,7 @@ export default {
           this.$router.push(src)
             if(index == 0){
               this.box_show = true
+              this.coinget()
               this.Signget()
             }
         },

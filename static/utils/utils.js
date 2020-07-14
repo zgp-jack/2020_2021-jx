@@ -54,3 +54,7 @@ export function coinget(that){
       }
   })
 }
+// 复制粘贴
+export function Copynum(that,number){
+  that.$copyText(number).then(e=>{})
+}

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Headers :title="title"/>
       <div class="father">
           <div class="yupao-user-share">
               <div class="user-share-item">
@@ -19,9 +20,14 @@
 </template>
 
 <script>
+import Headers from '../../components/header'
 export default {
+    components:{
+        Headers
+    },
     data(){
         return{
+          title:'邀请好友'
         }
     }
 }

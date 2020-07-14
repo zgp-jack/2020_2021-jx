@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Copy :Copys = 'Copys' :show = 'show' @hander = 'hander'/>
     <!-- TOP -->
     <div class="notice" @click="hides(true)">
       <div>
@@ -43,10 +44,17 @@
 </template>
 
 <script>
+import Copy from '../../components/Copy'
+import {Copynum,callPhoneFn} from '../../static/utils/utils'
 export default {
+  components:{
+    Copy
+  },
   data(){
     return{
-        bar_show:false
+        bar_show:false,
+        show:false,
+        Copys:14552160836
     }
   },
   methods:{
@@ -58,10 +66,14 @@ export default {
         }
     },
     copy(){
-      console.log('复制')
+     this.show = true
+     Copynum(this,this.Copys)
     },
     cell(){
-      console.log('打电话')
+      callPhoneFn()
+    },
+    hander(hide){
+      this.show = hide
     }
   }
 }

@@ -74,7 +74,7 @@
     </div>
 	
     <!-- 底部导航 -->
-    <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
+    <!-- <BottomTop ref="mychild" :showWant="false" :qiandao='true'/> -->
     <!-- 新手大礼包 -->
     <div class="new_gift" v-if="show_gift_alert" @click.stop="close_gift_alert($event,'bg')">
       <van-popup v-model="show_gift">

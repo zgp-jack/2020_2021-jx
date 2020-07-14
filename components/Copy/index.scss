@@ -1,0 +1,30 @@
+.wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:100vh;
+    .item{
+      width:6rem;
+      background-color: #fff;
+      border-radius:0.1rem;
+      text-align: center;
+      font-size:0.3rem;
+          .title{
+            font-size: 0.33rem;
+            margin:0.2rem 0;
+          }
+          .detail{
+            text-indent:0.3rem;
+            line-height:0.4rem;
+            font-size:0.28rem;
+            padding-right:0.3rem;
+            padding-bottom:0.3rem;
+            color:#7D7D7D;
+          }
+          .right{
+            width: 100%;
+            line-height:0.8rem;
+            color:#1989fa;
+          }
+    }
+}
