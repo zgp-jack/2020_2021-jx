@@ -132,10 +132,10 @@ export default {
             this.$router.push('/user/get')
           break;
           case 1:
-            this.$router.push('/user/isget')
+            this.$router.push({path:'/user/isget',query:{mode:0}})
           break;
            case 2:
-            this.$router.push('/user/isget')
+            this.$router.push({path:'/user/isget',query:{mode:1}})
           break;
           default:
           break;
