@@ -317,6 +317,7 @@
       },
       //确定置顶
       sureSetTop(){
+        let that = this;
         if(this.sure_data.length == 0){
           Toast("请选择置顶区域");
           return false
@@ -338,11 +339,14 @@
         // return;
         this.$axios.post('/user/new-set-top-do',{...data}).then(res=>{
           if(res.code == 200){
-
+           Toast.success('置顶成功');
+           setTimeout(()=>{
+             that.$router.go(-1);
+           },2000)
           }else if(res.code == 303){
-
+            Toast.fail(res.msg)
           }else if(res.code == 501){
-
+            Toast(res.msg)
           }
         })
       }

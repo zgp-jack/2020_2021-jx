@@ -3,11 +3,13 @@
     justify-content: space-between;
     position: fixed;
     top: 1rem;
-    left: 0;
-    width: 100%;
+    left: 50%;
+    margin-left: -3.75rem;
+    width:7.5rem;
     height: 1rem;
     z-index: 10;
     box-shadow: 0 0.03rem 0.1rem #ddd;
+
     >div{
         width: 25%;
         line-height:0.95rem;

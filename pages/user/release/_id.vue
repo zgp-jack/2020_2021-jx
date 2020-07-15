@@ -1,7 +1,10 @@
 <template>
   <div>
       <Header :title="title"/>
-       <collHead :arr = 'arr' @modeType = 'onServers' ref="collHead"/>
+      <div style="width: 7.5rem;">
+        <collHead :arr = 'arr' @modeType = 'onServers' ref="collHead"/>
+      </div>
+
        <!-- 遮罩 -->
        <div class="point-mask" v-if="mask">
            <div class="btn-img" @click="mask_show()"></div>
@@ -23,18 +26,18 @@
         <div class="father" v-if="list.length">
             <van-list
                 v-model="loading"
-                :finished="iscomplete || isempty"
+                :finished="iscomplete"
                 @load="listScroll">
                 <div class="item" v-for="(item,index) in list" :key='index' @click.stop="onSkip('view',item)">
                     <div class="title-h3">{{item.title}}</div>
                     <div class="intruduce">{{item.desc}}</div>
                     <div class="opearting clearfix">
-                        <span :class="[(item.check==0) || !(item.end==2||item.check==1)?'list_item_editor':'modify']" >修改信息</span>
-                        <span v-if="item.check!='0' && item.end!='2'"><span class="list_item_top" @click.stop="goSettingFn($event,item)">{{item.top?'取消置顶':'去置顶'}}</span></span>
-                        <span v-if="item.check == 0" class="list_item_reason fr"><img src="../../../assets/img/user_release/warning.png" alt=""> 查看被拒原因</span>
-                        <span v-if="item.etime && item.check!=='0' && item.end !='2'" class="list_item_time fr">{{item.etime}} 到期</span>
+                        <span @click.stop="goModifyPage(item)" :class="[(item.check==0) || !(item.end==2||item.check==1)?'list_item_editor':'modify']" >修改信息</span>
+                        <span class="list_item_top" @click.stop="goSettingFn($event,item,index)" v-if="item.check!='0' && item.end!='2'">{{item.top?'取消置顶':item.top_over_due?'继续置顶':'去置顶'}}</span>
+                        <span @click.stop="refuse(item)" v-if="item.check == 0" class="list_item_reason fr"><img src="../../../assets/img/user_release/warning.png" alt=""> 查看被拒原因</span>
+                        <span v-if="item.etime && item.check!=='0' && item.end !='2' && item.top" class="list_item_time fr">{{item.etime}} 到期</span>
                     </div>
-                    <img class="status" :src="item.check!='2'?status[item.check].url:changeStatus[mode][item.end].url" alt="">
+                    <img @click.stop="changeSateFn(item)" class="status" :src="item.check!='2'?status[item.check].url:changeStatus[mode][item.end].url" alt="">
                 </div>
             </van-list>
             <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
@@ -45,7 +48,7 @@
 <script>
 import collHead from '../../../components/collection-head';
 import EmptyMsg from '../../../components/emptyMsg';
-import { Toast,List } from 'vant';
+import { Toast,List,Dialog  } from 'vant';
 export default {
   created(){
     if(this.$route.query.show){
@@ -58,7 +61,8 @@ export default {
     components:{
         collHead,
         'van-list':List,
-        EmptyMsg
+        EmptyMsg,
+        [Dialog.Component.name]: Dialog.Component,
     },
     mounted () {
         this.$refs.collHead.onchangeIndex(this.mode)
@@ -121,7 +125,7 @@ export default {
                     !that.loading && (that.loading = false);
                     if(res.content){
                         const {page_size,page,list} = that;
-                        if(res.content.length < page_size){
+                        if(res.content.length < this.page_size){
                             that.$set(that,'iscomplete',true)
                         }
                         if(!res.content.length && page==1){
@@ -153,6 +157,7 @@ export default {
             this.loading = true;
             const params = this.getParams({});
             this.getData(params)
+
         },
         onSkip(key,data){
             const that = this;
@@ -163,19 +168,137 @@ export default {
             }
         },
         //置顶
-        goSettingFn(e,item){
-          if(item.bool){
-
+        goSettingFn(e,item,index){
+          let that = this;
+          if(item.top){
+            //取消置顶
+            Dialog.confirm({
+              title: '提示',
+              message: '取消置顶，该消息将失去置顶效果，点击继续置顶可恢复置顶',
+              confirmButtonColor:"#ffa926"
+            }).then(() => {
+                let params = {
+                  info: item.uu_id,
+                  type: that.mode
+                }
+                that.$axios.get('user/cancel-top',{params}).then(res=>{
+                  that.findItem(res,"top",false,item,index)
+                })
+              }).catch(() => {
+                 // on cancel
+               });
           }else{
             //去置顶页面
-            this.$router.push({
-              path:"/user/set_top_page/set_top",
-              query:{
-                id:item.uu_id,
-                mode:this.mode
+            let params = {
+              info: item.uu_id,
+              mode: that.mode
+            }
+            that.$axios.get('/user/set-top',{params}).then(res=>{
+              console.log(res.top.etime)
+              that.findItem(res,"top",true,item,index);
+              if(res.code == 8639){
+                this.$router.push({
+                  path:"/user/set_top_page/set_top",
+                  query:{
+                    id:item.uu_id,
+                    mode:this.mode
+                  }
+                })
               }
             })
+
           }
+        },
+        //找到要改变状态的元素u
+        findItem(res,attr,value,item,index){
+          let list = [...this.list];
+          if(res.code == 200){
+            list[index][attr]=value;
+            this.$set(this,'list',list)
+            console.log(this.list)
+          }
+        },
+        //改变状态
+        changeSateFn(item){
+          let str = "已租到";
+          let that = this;
+          if(item.check == 0 || item.check == 1){
+            //审核中或审核失败的数据
+            Toast("审核通过后才能修改");
+            return false;
+          }else if(item.check == 2 && item.end == 1){
+            //等待完成的数据
+            if(this.mode == 1){
+              str = '已租到'
+            }else if(this.mode == 2){
+              str = "已出租"
+            }else {
+              str = "已完成"
+            }
+             Dialog.confirm({
+               title: '提示',
+               message: '你的信息状态将变更为'+str+'，列表不在展示你发布的信息',
+               confirmButtonColor:"#ffa926"
+             }).then(() => {
+              //进行ajax请求，改变状态
+              let params = {
+                mode: that.mode,
+                info: item.uu_id,
+                type: 0
+              }
+              that.$axios.get('/user/change-status',{params}).then(res=>{
+                that.findItem(res,"end",2,item)
+              })
+               }).catch(() => {
+                 // on cancel
+               });
+
+          }else if(item.check == 2 && item.end == 2){
+            //该判断 已经完成的数据
+            Dialog.alert({
+              title: '提示',
+              message: '已完成信息不支持切换状态，点击修改信息可重新提交发布',
+              confirmButtonColor:"#ffa926"
+            }).then(() => {
+              // on close
+            });
+          }
+        },
+        //修改提示
+        goModifyPage(item){
+          if(item.check == 1 || item.end == 2) {
+            if(item.check == 1 && item.end == 1){
+              Dialog.alert({
+                title: '温馨提示',
+                message: "审核中的信息不能修改",
+                confirmButtonColor:"#ffa926"
+              })
+            }else if(item.check == 2 && item.end == 2){
+              Dialog.alert({
+                title: '温馨提示',
+                message: "已经完成的信息无法修改哦",
+                confirmButtonColor:"#ffa926"
+              })
+            }
+            return false
+          };
+          this.$router.push({
+            path:'/create?mode='+this.mode,
+            query:{
+              id:item.uu_id,
+              type:this.mode
+            }
+          })
+
+        },
+        //拒绝原因
+        refuse(item){
+          console.log(item)
+          Dialog.alert({
+            title:"提示",
+            message:item.fail_reason,
+            confirmButtonColor:"#ffa926"
+          })
         }
     }
 }
