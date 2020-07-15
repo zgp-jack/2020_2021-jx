@@ -166,7 +166,7 @@ export default {
               this.listLoading = false
               this.list = !this.list.length?[...res.content.list]:[...this.list,...res.content.list]
               res.content.list.length>=10?(this.iscomplete = false,this.page++):(this.iscomplete = true,this.More = true)
-              res.content.list.length<=0?(this.Moreimg = true,this.More=false):(this.Moreimg = false)
+              this.list.length<=0?(this.Moreimg = true,this.More=false):(this.Moreimg = false)
           })
         },
         // 点击获取数据

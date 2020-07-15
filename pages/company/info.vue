@@ -47,8 +47,8 @@
           </div>
          <div class="product-list">
            <div class="headess">
-             <div class="cur">出租机械</div>
-             <div class="ShowErshou">二手机械</div>
+             <div :class="[barshow?'cur':'']" @click="machinery">出租机械</div>
+             <div :class="[!barshow?'cur':'']" @click="second_hand">二手机械</div>
            </div>
            <div class="list">
              <emptyMsg  :empty2='true' v-if='More'/>
@@ -69,7 +69,16 @@ export default {
   data(){
     return{
       title:'供应商详情',
-      More:true
+      More:true,
+      barshow:true
+    }
+  },
+  methods:{
+    machinery(){
+      this.barshow = true
+    },
+    second_hand(){
+      this.barshow = false
     }
   }
 }
