@@ -69,7 +69,6 @@ export default {
             if(index == 0){
               this.box_show = true
               this.coinget()
-              this.Signget()
             }
         },
         //获取鱼泡币页面 获取数据
@@ -78,21 +77,22 @@ export default {
             this.sign = res.content.sign
               if(this.sign){
                 this.list[0].btn_text = '已签到'
+                this.box_on = false
               }else{
                 this.list[0].btn_text = '签到'
               }
           })
         },
         // 获取签到数据
-        Signget(){
-          if(this.sign){
-            this.box_on = false
-            return false
-          };
-          this.$axios.post('/user/sign').then(res=>{
-              const {code,msg,content} = res
-          })
-        },
+        // Signget(){
+        //   if(this.sign){
+        //     this.box_on = false
+        //     return false
+        //   };
+        //   this.$axios.post('/user/sign').then(res=>{
+        //       const {code,msg,content} = res
+        //   })
+        // },
         handle(show){
           this.box_show = show
         }
