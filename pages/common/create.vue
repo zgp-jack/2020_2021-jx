@@ -128,12 +128,10 @@
 <script>
 import MechanicalType from '../../components/mechanicalType';
 import PickerArea from '../../components/pickerArea';
-import Uploader from '../../components/uploader';
 export default {
   components:{
     MechanicalType,
     PickerArea,
-    Uploader
   },
     data(){
       return{
