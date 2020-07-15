@@ -116,15 +116,12 @@
        </div>
      </div>
      <div class="data_alert" v-show="show_data_alert">
-        <van-datetime-picker
-          v-model="currentDate"
-           type="month-day"
-           title="选择月日"
-           :min-date="minDate"
-           :max-date="maxDate"
-           :formatter="formatter"
-           @confirm="sureDate"
-           @cancel="cancelDate"
+        <van-picker
+          title="标题"
+          show-toolbar
+          :columns="columns"
+          @confirm="onConfirm"
+          @cancel="onCancel"
         />
      </div>
 
@@ -132,7 +129,7 @@
 </template>
 
 <script>
-  import { Toast,DatetimePicker  } from 'vant';
+  import { Toast,DatetimePicker,Picker   } from 'vant';
 
   export default{
     data(){
@@ -144,62 +141,46 @@
         show_set_top:true,
         show_back_btn:false,
         sure_data:[],
-        minDate: new Date(2020, 3, 1),
-        maxDate: new Date(2020, 3, 30),
-        currentDate: new Date(),
+        columns: [],
         show_data_alert:false,
         day:'',
         integral:0
       }
     },
     components:{
-      "van-datetime-picker":DatetimePicker
+      "van-picker":Picker
     },
     created() {
+      for(var i = 1; i <= 30;i++){
+        this.columns.push(i+"天")
+      }
        let arr = window.$nuxt.$store.state.area;
        let newArr = arr.map((item)=>{
         item.addColor=false;
          return item
       })
       this.$set(this,'area',newArr);
-
-    },
-    mounted() {
-        document.getElementsByClassName("van-picker-column")[0].style.display = "none"
     },
     methods:{
+       onConfirm(value, index) {
+         this.day = parseInt(value);
+          this.show_data_alert=false;
+        },
+        onCancel() {
+           this.show_data_alert=false;
+        },
       //选择城市
       chooseAreaFn(){
         this.show_set_top = false;
         this.show_area_choose = true;
         this.show_back_btn = true;
       },
-      //确定选择天数
-      sureDate(e){
-        if(this.sure_data.length == 0){
-          Toast("请先选择置顶范围");
-          this.show_data_alert = false;
-          return false;
-        }
-        let day = e.toString().split(" ")[2]
-        this.day = day
-        this.show_data_alert = false;
-      },
-      cancelDate(){
-        this.show_data_alert = false;
-      },
+
       //选择时间
       chooseTime(){
         this.show_data_alert = true;
       },
-      formatter(type, val){
-        if(type == 'month'){
-          return ''
-        }else if (type === 'day') {
-          return `${val}天`;
-        }
-        return val;
-      },
+
       //点击选中城市
       selectedArea(item){
         let that = this;

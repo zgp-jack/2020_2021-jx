@@ -30,7 +30,7 @@
     <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao">
     </div>
 
-    <Sign :boxon = 'box_on' :boxshow = 'box_show' @handle = 'handle'/>
+    <Sign :boxon = 'box_on' :boxshow = 'box_show' @handle = 'handle' v-show="qiandao"/>
   </div>
 </template>
 

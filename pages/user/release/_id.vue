@@ -48,6 +48,7 @@
 <script>
 import collHead from '../../../components/collection-head';
 import EmptyMsg from '../../../components/emptyMsg';
+import {formatDate} from '../../../static/utils/utils.js'
 import { Toast,List,Dialog  } from 'vant';
 export default {
   created(){
@@ -194,8 +195,10 @@ export default {
               mode: that.mode
             }
             that.$axios.get('/user/set-top',{params}).then(res=>{
-              console.log(res.top.etime)
+              let etime = res.top.etime*1000;
+              let time = formatDate(etime,'yyyy-MM-dd h:m')
               that.findItem(res,"top",true,item,index);
+              that.findItem(res,"etime",time,item,index);
               if(res.code == 8639){
                 this.$router.push({
                   path:"/user/set_top_page/set_top",
@@ -215,7 +218,6 @@ export default {
           if(res.code == 200){
             list[index][attr]=value;
             this.$set(this,'list',list)
-            console.log(this.list)
           }
         },
         //改变状态
