@@ -8,16 +8,16 @@
                     </div>
                     <div>修改头像</div>
                 </div>
-                <div class="nickName reset-psd" style="margin-left:0.3rem;padding-left:0;">
+                <div class="nickName reset-psd" style="padding-left:0.3rem;">
                     <span style="letter-spacing:36px;">昵称</span>
-                    <input type="text" :value='userinfo.name'/>
+                    <input type="text" disabled="disabled" :value='userinfo.name'/>
                 </div>
                 <div class="nickName reset-psd">
                     <span>手机号码</span>
                      <span>{{userinfo.tel}}<i class="icon"></i></span>
                 </div>
             </div>
-            <div class="nickName reset-psd nones">
+            <div class="nickName reset-psd nones" @click="modfiy">
                     <span>修改密码</span>
                      <i class="icon"></i>
                 </div>
@@ -40,6 +40,11 @@ export default {
         userinfo(){
           return window.$nuxt.$store.state.userinfo
         }
+    },
+    methods:{
+      modfiy(){
+        this.$router.push('/user/modfiy_password/modfiy_password')
+      }
     }
 }
 </script>

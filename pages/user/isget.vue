@@ -14,38 +14,32 @@
               </div>
 
           </div>
-          <div class="consume-content">
+          <van-list
+          v-if="list.length"
+          v-model="listLoading"
+          :finished="iscomplete"
+          @load="getrec">
+          <div class="consume-content" v-for="(item,i) in list" :key="i" @click="go(item.uu_id)">
               <div class="consume-content-one">
-                  <div class="consume-content-img"></div>
+                  <div class="consume-content-img"><img :src="item.icon"></div>
                   <div class="consume-center border-btn">
                       <div class="consume-content-text">
-                      <p>查看求租</p>
-                      <p>查看求租信息,消耗-3个鱼泡币
+                      <p>{{item.topic}}</p>
+                      <p>{{item.desc}}
                       </p>
-                      <span>2020-05-26 10:25</span>
+                      <span>{{item.time}}</span>
                   </div>
                   <div class="consume-content-right">
-                      <p>-3</p>
-                        <img src="../../assets/img/consume/tou-right.png">
-                  </div>
-                  </div>
-              </div>
-              <div class="consume-content-one">
-                  <div class="consume-content-img" style="background-color:#F0D01D;"></div>
-                  <div class="consume-center border-btn">
-                      <div class="consume-content-text">
-                      <p>置顶出租消息 全国*1天</p>
-                      <p>置顶出租消息,消耗-600鱼泡币
-                      </p>
-                      <span>2020-05-26 10:25</span>
-                  </div>
-                  <div class="consume-content-right">
-                      <p>-600</p>
-                        <img src="../../assets/img/consume/tou-right.png">
+                      <p v-if="mode==1">+{{item.coin}}</p>
+                      <p v-else>-{{item.coin}}</p>
+                      <img src="../../assets/img/consume/tou-right.png" v-if="mode==0">
                   </div>
                   </div>
               </div>
           </div>
+          </van-list>
+           <emptyMsg  :empty1='true' v-if='More'/>
+           <emptyMsg  :empty2='true' v-if='Moreimg'/>
           <van-popup v-model="show" position="bottom" :style="{height:'30%'}">
               <van-datetime-picker
                 v-model="currentDate"
@@ -61,7 +55,8 @@
                 :columns="columns"
                 @confirm="(e)=>onConfirm(e)"
                 @cancel="onCancel"
-                :default-index="2"
+                :default-index="0"
+                ref='getindex'
                 />
           </van-popup>
       </div>
@@ -71,28 +66,46 @@
 <script>
 import Header from '../../components/header'
 import Vue from 'vue'
-import { Popup,DatetimePicker,Picker} from 'vant';
+import { Popup,DatetimePicker,Picker,List} from 'vant';
+import {formatDate} from '../../static/utils/utils'
+import emptyMsg from '../../components/emptyMsg/index'
 Vue.use(Popup);
 Vue.use(DatetimePicker);
 Vue.use(Picker)
 export default {
     created(){
-
+      this.mode = this.$route.query.mode
+      if(this.mode == 1){
+        this.fenleiindex = ''
+      }
+      this.getcoin()
     },
     components:{
-        Header
+        Header,
+        emptyMsg,
+        'van-list':List,
     },
     data(){
         return{
             title:'鱼泡币消耗记录',
             show:false,
             shows:false,
-            minDate: new Date(2000,1),
-            maxDate: new Date(2025, 10, 1),
+            minDate: '',
+            maxDate: '',
             currentDate: new Date(),
             value:new Date(),
-            columns:['查看求租','查看出租','全部分类','置顶求租','置顶出租'],
-            classification:'消耗分类'
+            columns:['全部分类'],
+            classification:'全部分类',
+            page:1,
+            page_size:10,
+            valuetime:'',
+            fenleiindex:0,
+            More:false,
+            Moreimg:false,
+            list:[],
+            listLoading:false,
+            iscomplete:false,
+            mode:0
         }
     },
     methods:{
@@ -116,6 +129,9 @@ export default {
         confirm(value){
             this.show = false
             this.value = value
+            let valuetime = formatDate(this.value.toLocaleDateString(),'yyyy-MM')
+            this.valuetime = valuetime
+            this.getcoll()
         },
         onCancel(){
             this.shows = false
@@ -123,7 +139,56 @@ export default {
         onConfirm(value){
             this.shows = false
             this.classification = value
+            let indexs = this.$refs.getindex.getIndexes()[0]
+            if(this.mode == 1) indexs-=1
+            this.fenleiindex = indexs
+            this.getcoll()
+        },
+        // 获取配置数据
+        getcoin(){
+             this.$axios.get('/coin/record-conf',{params:{type:this.mode}}).then(res=>{
+             const {category,searchDate} = res.content
+             let timeList = [...searchDate]
+             this.minDate = new Date(timeList[0])
+             this.maxDate = new Date(timeList[timeList.length-1])
+             this.valuetime = formatDate(this.currentDate.toLocaleDateString(),'yyyy-MM')
+             !this.columns?this.columns = [...category]:this.columns = [...this.columns,...category]
+             this.getrec()
+          })
+        },
+        // 获取输出数据
+        getrec(){
+          this.listLoading = true
+          if(this.classification == '全部分类') this.fenleiindex = ''
+          let params = {type:this.mode,page:this.page,page_size:this.page_size,date:this.valuetime,category:this.fenleiindex}
+          this.$axios.get('/coin/record',{params}).then(res=>{
+            console.log(res)
+              this.listLoading = false
+              this.list = !this.list.length?[...res.content.list]:[...this.list,...res.content.list]
+              res.content.list.length>=10?(this.iscomplete = false,this.page++):(this.iscomplete = true,this.More = true)
+              res.content.list.length<=0?(this.Moreimg = true,this.More=false):(this.Moreimg = false)
+          })
+        },
+        // 点击获取数据
+        getcoll(){
+         this.page = 1;
+         this.list = []
+         this.getrec()
+      },
+      // 跳转
+      go(id){
+        if(this.mode == 0){
+          this.$router.push({
+            path:'/view',
+            query:{
+              info:id,
+              mode:1
+            }
+        })
+        }else{
+          return false
         }
+      }
     },
 }
 </script>
