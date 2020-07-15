@@ -69,7 +69,11 @@ export default {
       Login(){
         let Pass = this.password
         let psd = md5(Pass)
-        this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password}).then(res=>{
+        this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password},{
+          headers:{
+            key:1
+          }
+        }).then(res=>{
           if(res.code==200){
             setCookie('ssoToken',res.content.token);
             Toast({message:'登录成功',duration:200,onClose:()=>{
