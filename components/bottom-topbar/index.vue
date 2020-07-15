@@ -1,17 +1,19 @@
 <template>
   <div>
-      <div class="father" @click="list_hide" :class="[(lists_show)?'Create':'']">
+    <transition name="fade">
+      <div class="father" @click="list_hide" v-show="lists_show">
           <div class="create_content" :class="[(lists_show)?'Boxon':'']">
-              <div class="create_item" v-for="(item,i) in list" :key="i">
+              <div class="create_item" v-for="(item,i) in list" :key="i" @click="Isgo(item.src)">
                   <div class="create_list_left">
                       <div class="create_item_title">{{item.title}}</div>
                       <div class="create_item_msg">{{item.detail}}</div>
                   </div>
-                  <div class="create_ite_right" @click="Isgo(item.src)">{{item.desc}}</div>
+                  <div class="create_ite_right">{{item.desc}}</div>
               </div>
           </div>
           <div class="iconfont icon-cuo closeCreate"></div>
       </div>
+     </transition>
       <!-- 底部呼出 -->
       <div class="bottom-taber" :class="isshow==false?'top-hide':''" @click="list_show" v-if="hiddenAll==undefined"></div>
       <!-- 右侧呼出 -->
@@ -83,7 +85,7 @@ export default {
       go_sign(){
         const that = this
         this.box_show = true
-          coinget(that)
+        coinget(that)
       },
       // 去下载
       AppGo(url){
