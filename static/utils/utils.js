@@ -84,3 +84,16 @@ export function formatDate(timestamp, format = 'yyyy-MM-dd') {
   }
   return format;
 }
+
+//上传图片
+export function uploadPictures (page,file){
+  let fd = new FormData();
+　fd.append('pic', file.file);
+  let config = {
+      headers:{'Content-Type':'multipart/form-data'},
+  };
+  return page.$axios.post('/upload',fd,config).then(res=>{
+      return res
+  })
+}
+

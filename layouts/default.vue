@@ -49,7 +49,7 @@ export default {
     //获取默认头像、地区
     getDefaultData(){
       const that = this;
-      that.$axios.get('/').then(res=>{
+      that.$axios.get('/index/index',{params:{phone:'',user_token:''}}).then(res=>{
         that.numberServers+=1
         const {default_cover,default_header,addr} = res.content
         const default_portrait = {

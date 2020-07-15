@@ -11,12 +11,7 @@ export default function ({$axios,redirect,store}) {
     // request拦截器
     let globalLoading = true;
     $axios.onRequest(config => {
-        if(config.url == '/user/app-login'){
-            config.url += `?source=M`;
-            config.headers.common['key'] = '1';
-        }else{
-            config.url += `?source=XCX`
-        }
+        config.url += `?source=M`;
         const {params,data} = config;
         if(params && params.globalLoading === false){
             globalLoading = false
@@ -26,7 +21,7 @@ export default function ({$axios,redirect,store}) {
             globalLoading = false
             delete data.globalLoading
         }
-        if(data){
+        if(data && config.url!=='/upload?source=M'){
             config.data = qs.stringify(config.data)
         }
         globalLoading && Toast.loading({
@@ -38,7 +33,9 @@ export default function ({$axios,redirect,store}) {
         if(ssoToken){
             config.headers.common['x-token'] = ssoToken;
         }
-        config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
+        if(!config.headers){
+            config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
+        }
 
     })
     $axios.onError(error => {
