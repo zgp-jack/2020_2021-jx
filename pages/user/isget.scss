@@ -26,12 +26,11 @@
                     font-weight: 550;
                 }
                 >p:last-child{
-                    width: 1.8rem;
                     height: 0.4rem;
-                    line-height:0.33rem;
+                    line-height:0.4rem;
                     background:rgba(246,246,246,1);
                     border-radius:3px;
-                    padding:0.02rem;
+                    padding:0 0.1rem;
                     color: #4F4F4F;
                     font-size: 0.23rem;
                     text-align: center;
@@ -63,11 +62,10 @@
                     .consume-content-img{
                         width: 0.6rem;
                         height: 0.6rem;
-                        border-radius:50%;
-                        background: url('../../assets/img/consume/text.png') no-repeat;
-                        background-size: 80% 80%;
-                        background-position: center;
-                        background-color:rgba(255,169,38,1);;
+                          img{
+                            width:100%;
+                            height:100%;
+                          }
                     }
                     .consume-center{
                        margin-left:0.25rem;

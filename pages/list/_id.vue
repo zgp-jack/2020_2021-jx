@@ -1,8 +1,6 @@
 <!-- 列表页 -->
 <template>
   <div class="container">
-       <!-- 呼出 -->
-    <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
     <div class="list">
       <div class="head">
         <div class="clearfix head_search">
@@ -36,9 +34,10 @@
         </div>
     </div>
 
-
     <div class="list_data" @scroll="my_scroll">
       <Topbar/>
+       <!-- 呼出 -->
+       <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
         <div v-if="list.length && (mode==1 || mode==4)">
 
         <van-list

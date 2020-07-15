@@ -9,13 +9,13 @@
             </div>
             <div class="user">
                 <div class="top">
-                    <img :src="list.header"/>
+                    <img :src="userinfo.header"/>
                     <div class="userinfo">
-                      <p>{{list.name}}</p>
+                      <p>{{userinfo.name}}</p>
                       <p>
                         <span>用户编号:</span>
                         <span class="main_textc">
-                          {{list.id}}
+                          {{userinfo.id}}
                         </span>
                       </p>
                     </div>
@@ -23,11 +23,11 @@
                 </div>
                 <div class="bottom">
                     <div>
-                      <p class="main_textc">{{list.coin_balance}}</p>
+                      <p class="main_textc">{{userinfo.coin_balance}}</p>
                       <p>可用鱼泡币</p>
                     </div>
                     <div>
-                      <p class="main_textc">{{list.coin_consume}}</p>
+                      <p class="main_textc">{{userinfo.coin_consume}}</p>
                       <p>消耗鱼泡币</p>
                     </div>
                 </div>
@@ -67,7 +67,6 @@ import Tarbar from '../../components/tarbar'
 import {callPhoneFn} from '../../static/utils/utils'
 export default {
   created(){
-      this.getuser()
   },
   data(){
     return{
@@ -101,13 +100,6 @@ export default {
     toInfo(){
      this.$router.push('/user/info')
     },
-    // 获取数据
-    getuser(){
-      this.$axios.post('/user/get-userinfo').then(res=>{
-        const {content} = res
-         this.list = {...content}
-      })
-    },
     // 跳转
     isGo(i){
       switch (i) {
@@ -140,10 +132,10 @@ export default {
             this.$router.push('/user/get')
           break;
           case 1:
-            this.$router.push('/user/isget')
+            this.$router.push({path:'/user/isget',query:{mode:0}})
           break;
            case 2:
-            this.$router.push('/user/isget')
+            this.$router.push({path:'/user/isget',query:{mode:1}})
           break;
           default:
           break;
@@ -154,6 +146,11 @@ export default {
         callPhoneFn(15608008605)
        }
   },
+  computed:{
+        userinfo(){
+          return window.$nuxt.$store.state.userinfo
+        }
+  }
 
 }
 </script>
