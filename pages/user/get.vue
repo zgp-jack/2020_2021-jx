@@ -75,7 +75,7 @@ export default {
         coinget(){
           this.$axios.get('/coin/get').then(res=>{
             this.sign = res.content.sign
-              if(this.sign){
+              if(!res.content.sign){
                 this.list[0].btn_text = '已签到'
                 this.box_on = false
               }else{
