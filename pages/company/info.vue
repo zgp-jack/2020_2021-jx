@@ -165,17 +165,26 @@ export default {
     // 列表框
     machineryfile(){
       let params = {mode:2,company:this.uu_id,page:this.page,page_size:this.page_size}
-      this.file(params,'first',this.More,this.Moreimg)
+      this.file(params,'first',2)
     },
     second_handfile(){
       let params = {mode:3,company:this.uu_id,page:this.page,page_size:this.page_size}
-      this.file(params,'second',this.Moretwo,this.Moreimgtwo)
+      let Moretwo = this.Moretwo
+      let Moreimgtwo = this.Moreimgtwo
+      this.file(params,'second',3)
     },
-     file(params,list,More,Moreimg){
+     file(params,list,mode){
         this.$axios.get('/company/release-list',{params}).then(res=>{
         this[list] = [...res.content]
-        if(list.length == 0) this.Moreimg = true
-        if(res.content.length < this.page_size && list.length>0)More = true
+        console.log(this.first,this.second)
+        if(mode == 2){
+             if(this[list].length == 0) this.Moreimg = true
+             if(res.content.length < this.page_size && this[list].length>0)this.More = true
+        }
+        if(mode == 3){
+             if(this[list].length == 0) this.Moreimgtwo = true,this.Moretwo = false
+             if(res.content.length < this.page_size && this[list].length>0)this.Moretwo = true
+        }
       })
      },
     // 跳转
