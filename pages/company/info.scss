@@ -56,6 +56,14 @@
           margin-left:0.1rem;
           border-bottom: 1px dashed #ddd;
           padding:0.3rem 0;
+            >p{
+              position: relative;
+              left:-0.1rem;
+              padding-left: 7px;
+              font-size:0.33rem;
+              font-weight: bold;
+              color: #555;
+            }
         }
         .describe{
           padding:0.2rem;
@@ -76,6 +84,9 @@
                   width: 30%;
                   display: block;
                   color: #555555;
+                }
+                span{
+                  color: #077BD9;
                 }
                 .contact{
                   margin-left:0.8rem;
