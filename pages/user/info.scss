@@ -41,6 +41,7 @@
               >span:last-child{
                   text-align: right;
                   color:$font-color;
+                  margin-right: 0.2rem;
               }
               input{
                   width:5.6rem;
@@ -59,17 +60,20 @@
             padding-right:0.5rem;
         }
         .icon{
-            width:0.2rem;
-            height:0.2rem;
+            width:0.4rem;
+            height:0.4rem;
             position: absolute;
             right: 10px;
-            top: 19px;
+            top: 50%;
+            margin-left: 0.2rem;
+            margin-top: -0.2rem;
             background-size: contain;
             display: inline-block;
             background-position: center;
             background-repeat: no-repeat;
             font-size: 0;
             background-image: url('http://statics.zhaogongdi.com/common/arrow-right.png');
+            background-size: 100% 100%;
         }
         .nones{
             margin-top:0.2rem;

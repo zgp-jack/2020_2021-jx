@@ -3,8 +3,8 @@
         <Header :title="page_info.title"/>
         <MechanicalType :isShow='mechanicsShow' :onShow="onMechanicsShow"/>
         <PickerArea ref="pickerArea"/>
-
         <div class="form" v-if="mode==1">
+          <Uploader />
             <div class="public-style">
               <div class="form_row" @click="onMechanicsShow(true)">
                 <div class="notice">机械类型</div>
@@ -131,7 +131,7 @@ import PickerArea from '../../components/pickerArea';
 export default {
   components:{
     MechanicalType,
-    PickerArea
+    PickerArea,
   },
     data(){
       return{

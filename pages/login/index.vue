@@ -4,11 +4,11 @@
       <div class="father">
           <div class="form">
             <div class="form-row">
-              <i class="iconfont"></i>
-              <input type="text" id="username" placeholder="手机号码" autocomplete="off" v-model="users" maxlength="11" @input="user_name()">
+              <i class="iconfont icon-shouji54"></i>
+              <input type="number" id="username" placeholder="手机号码" autocomplete="off" v-model="users" maxlength="11" @input="user_name()">
             </div>
             <div class="form-row">
-              <i class="iconfont"></i>
+              <i class="iconfont icon-mima"></i>
               <input type="password" id="username" placeholder="密码" autocomplete="off" v-model="password" @input="user_pass()">
             </div>
           </div>
@@ -22,8 +22,8 @@
                 <span>遇到麻烦?</span>
             </span>
           </div>
-          <div class="con_call">
-            <router-link to=''>
+          <div class="con_call" @click="call_costum(15608008605)">
+            <router-link to='' >
                 <i class="icon"></i>
                 拨打客服热线：15608008605
             </router-link>
@@ -38,6 +38,9 @@ import {setCookie} from '../../static/utils/utils.js';
 import {Toast} from 'vant';
 export default {
   created(){
+    if(document.cookie.includes("ssoToken")){
+      this.$router.push("/home")
+    }
   },
     data(){
         return{
@@ -69,14 +72,24 @@ export default {
       Login(){
         let Pass = this.password
         let psd = md5(Pass)
-        this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password}).then(res=>{
+        this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password},{
+          headers:{
+            key:1
+          }
+        }).then(res=>{
           if(res.code==200){
             setCookie('ssoToken',res.content.token);
             Toast({message:'登录成功',duration:200,onClose:()=>{
               this.$router.go(-1);
             }})
+          }else if(res.code == 500){
+            Toast(res.msg)
           }
         })
+      },
+      call_costum(tel){
+        console.log(12)
+        window.location.href = "tel:"+tel;
       }
     }
 }

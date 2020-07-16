@@ -4,20 +4,20 @@
       <div class="father">
           <div class="form">
             <div class="form-row">
-              <i class="iconfont"></i>
+              <i class="iconfont icon-touxiang"></i>
               <input type="text"  placeholder="请输入你的姓名" autocomplete="off"  maxlength="10" >
             </div>
             <div class="form-row">
-              <i class="iconfont"></i>
-              <input type="text"  placeholder="请输入你的手机号" autocomplete="off" v-model="users"  maxlength="11">
+              <i class="iconfont icon-shouji54"></i>
+              <input type="number"  placeholder="请输入你的手机号" autocomplete="off" v-model="users"  maxlength="11">
             </div>
             <div class="form-row">
-              <i class="iconfont"></i>
+              <i class="iconfont icon-yanzheng"></i>
               <input type="text"  placeholder="请输入短信验证码" autocomplete="off" maxlength="6" id="yanzheng">
               <div class="get-captcha">获取验证码</div>
             </div>
             <div class="form-row">
-              <i class="iconfont"></i>
+              <i class="iconfont icon-mima"></i>
               <input type="password"  placeholder="请输入设置您的密码" autocomplete="off" v-model="password" maxlength="16">
             </div>
           </div>
@@ -55,11 +55,11 @@ export default {
         }
     },
     methods:{
-            
+
     }
 }
 </script>
 
 <style lang='scss' scoped>
-  @import './index.scss'  
+  @import './index.scss'
 </style>
