@@ -88,7 +88,7 @@ export function formatDate(timestamp, format = 'yyyy-MM-dd') {
 //上传图片
 export function uploadPictures (page,file){
   let fd = new FormData();
-　fd.append('pic', file.file);
+　fd.append('pic', file);
   let config = {
       headers:{'Content-Type':'multipart/form-data'},
   };
@@ -96,4 +96,3 @@ export function uploadPictures (page,file){
       return res
   })
 }
-

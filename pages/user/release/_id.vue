@@ -33,7 +33,7 @@
                     <div class="intruduce">{{item.desc}}</div>
                     <div class="opearting clearfix">
                         <span @click.stop="goModifyPage(item)" :class="[(item.check==0) || !(item.end==2||item.check==1)?'list_item_editor':'modify']" >修改信息</span>
-                        <span class="list_item_top" @click.stop="goSettingFn($event,item,index)" v-if="item.check!='0' && item.end!='2'">{{item.top?'取消置顶':item.top_over_due?'继续置顶':'去置顶'}}</span>
+                        <span class="list_item_top" @click.stop="goSettingFn($event,item,index)" v-if="item.check!='0' && item.end!='2'">{{item.top?'取消置顶':!item.top_over_due?'继续置顶':'去置顶'}}</span>
                         <span @click.stop="refuse(item)" v-if="item.check == 0" class="list_item_reason fr"><img src="../../../assets/img/user_release/warning.png" alt=""> 查看被拒原因</span>
                         <span v-if="item.etime && item.check!=='0' && item.end !='2' && item.top" class="list_item_time fr">{{item.etime}} 到期</span>
                     </div>
@@ -195,19 +195,22 @@ export default {
               mode: that.mode
             }
             that.$axios.get('/user/set-top',{params}).then(res=>{
+              console.log(res)
+             if(res.code == 8639){
+               this.$router.push({
+                 path:"/user/set_top_page/set_top",
+                 query:{
+                   id:item.uu_id,
+                   mode:this.mode
+                 }
+               })
+               return
+             }
               let etime = res.top.etime*1000;
               let time = formatDate(etime,'yyyy-MM-dd h:m')
               that.findItem(res,"top",true,item,index);
               that.findItem(res,"etime",time,item,index);
-              if(res.code == 8639){
-                this.$router.push({
-                  path:"/user/set_top_page/set_top",
-                  query:{
-                    id:item.uu_id,
-                    mode:this.mode
-                  }
-                })
-              }
+
             })
 
           }
