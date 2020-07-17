@@ -19,7 +19,7 @@
           v-model="listLoading"
           :finished="iscomplete"
           @load="getrec">
-          <div class="consume-content" v-for="(item,i) in list" :key="i" @click="go(item.uu_id)">
+          <div class="consume-content" v-for="(item,i) in list" :key="i" @click="go(item)">
               <div class="consume-content-one">
                   <div class="consume-content-img"><img :src="item.icon"></div>
                   <div class="consume-center border-btn">
@@ -66,7 +66,7 @@
 <script>
 import Header from '../../components/header'
 import Vue from 'vue'
-import { Popup,DatetimePicker,Picker,List} from 'vant';
+import { Popup,DatetimePicker,Picker,List, Toast} from 'vant';
 import {formatDate} from '../../static/utils/utils'
 import emptyMsg from '../../components/emptyMsg/index'
 Vue.use(Popup);
@@ -162,11 +162,11 @@ export default {
           if(this.classification == '全部分类') this.fenleiindex = ''
           let params = {type:this.mode,page:this.page,page_size:this.page_size,date:this.valuetime,category:this.fenleiindex}
           this.$axios.get('/coin/record',{params}).then(res=>{
-            console.log(res)
+              console.log(res)
               this.listLoading = false
               this.list = !this.list.length?[...res.content.list]:[...this.list,...res.content.list]
               res.content.list.length>=10?(this.iscomplete = false,this.page++):(this.iscomplete = true,this.More = true)
-              res.content.list.length<=0?(this.Moreimg = true,this.More=false):(this.Moreimg = false)
+              this.list.length<=0?(this.Moreimg = true,this.More=false):(this.Moreimg = false)
           })
         },
         // 点击获取数据
@@ -176,17 +176,23 @@ export default {
          this.getrec()
       },
       // 跳转
-      go(id){
-        if(this.mode == 0){
-          this.$router.push({
-            path:'/view',
-            query:{
-              info:id,
-              mode:1
-            }
-        })
-        }else{
-          return false
+      go(item){
+        // if(this.mode == 0){
+        //   this.$router.push({
+        //     path:'/view',
+        //     query:{
+        //       info:id,
+        //       mode:1
+        //     }
+        // })
+        // }else{
+        //   return false
+        // }
+        const {is_deleted} = item
+        if(is_deleted == 0){
+            console.log(1)
+        }else if(is_deleted == 1){
+          Toast('此条信息已删除!')
         }
       }
     },

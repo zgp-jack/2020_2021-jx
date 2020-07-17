@@ -7,7 +7,7 @@
       :finished="iscomplete"
       @load="getList">
       <div class="list-company" v-for="(item,i) in list" :key="i">
-        <div class="company-info">
+        <div class="company-info" @click="godetail(item.uu_id)">
             <div class="imgs">
               <img :src="[item.cover?item.cover:'http://statics.zhaogongdi.com/common/default_header.png']">
             </div>
@@ -59,6 +59,12 @@ export default {
             this.list = !this.list.length?[...res.content]:[...this.list,...res.content]
             res.content.length>=10?(this.iscomplete = false,this.page++):(this.iscomplete = true,this.More = true)
             })
+        },
+        godetail(id){
+          this.$router.push({
+            path:'/company/info',
+            query:{id:id}
+          })
         }
     }
 }
