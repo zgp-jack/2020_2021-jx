@@ -84,7 +84,7 @@ export default {
         })
       },
       phone(){
-        console.log(1)
+       this.$router.push('/set/change-phone')
       }
     }
 }
