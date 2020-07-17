@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import {Toast} from 'vant';
   export default{
     data(){
       return{
@@ -30,18 +31,34 @@
     },
     methods:{
       submit(){
-        if(!this.isOk) return false;
-        console.log(this.origin_pass,this.news_pass,this.sure_pass)
+        if(!this.isOk){
+          Toast('请输入正确的密码')
+          return false
+        }
+        if(this.news_pass != this.sure_pass){
+          Toast('请确认新密码是否一致')
+          return false
+        }
+        let news= {old_pass:this.origin_pass,new_pass:this.news_pass}
+        let data = JSON.stringify(news)
+        console.log(news)
+        this.$axios.post('/user/app-updatekey',{data}).then(res=>{
+          if(res.code == 200){
+            Toast(res.msg)
+          }
+          if(res.code == 500){
+            Toast(res.msg)
+          }
+        })
       }
     },
     computed:{
       isOk(){
-        if(this.origin_pass.length > 6 && this.news_pass.length > 6 && this.sure_pass.length > 6){
+        if(this.origin_pass.length >=6 && this.news_pass.length >=6 && this.sure_pass.length >=6){
           return true
-        }else {
+        }else{
           return false;
         }
-
       }
     }
   }

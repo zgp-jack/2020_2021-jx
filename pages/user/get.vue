@@ -40,7 +40,7 @@ import Headers from '../../components/header'
 import Sign from '../../components/Sign'
 export default {
     created(){
-      this.coinget()
+      this.Signget()
     },
     components:{
         Headers,
@@ -58,7 +58,6 @@ export default {
                 {title:'发布求购 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
             ],
             title:'获取鱼泡币',
-            sign:'',
             box_on:true,
             box_show:false
         }
@@ -68,31 +67,24 @@ export default {
           this.$router.push(src)
             if(index == 0){
               this.box_show = true
-              this.coinget()
+              this.Signget()
             }
         },
-        //获取鱼泡币页面 获取数据
-        coinget(){
-          this.$axios.get('/coin/get').then(res=>{
-            this.sign = res.content.sign
-              if(!res.content.sign){
+        // 获取签到数据
+        Signget(){
+          if(!this.box_on){
+            return false
+          };
+          this.$axios.get('/user/sign').then(res=>{
+              if(res.code == 200){
+                this.list[0].btn_text = '已签到'
+              }
+              if(res.code == 400){
                 this.list[0].btn_text = '已签到'
                 this.box_on = false
-              }else{
-                this.list[0].btn_text = '签到'
               }
           })
         },
-        // 获取签到数据
-        // Signget(){
-        //   if(this.sign){
-        //     this.box_on = false
-        //     return false
-        //   };
-        //   this.$axios.post('/user/sign').then(res=>{
-        //       const {code,msg,content} = res
-        //   })
-        // },
         handle(show){
           this.box_show = show
         }
