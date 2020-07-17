@@ -48,7 +48,8 @@
                 </div>
                 <div class=" desc-row">
                     <div class="row-left"><span class="f-red">*</span>企业介绍</div>
-                    <textarea class="desc" ref="detail_company" maxlength="120" v-model="detail_company" placeholder="请介绍一下贵公司业务情况"></textarea>
+                    <textarea class="desc" ref="detail_company" maxlength="500" v-model="detail_company" placeholder="请介绍一下贵公司业务情况"></textarea>
+                    <div class="text_length" style="text-align: right;">{{detail_company.length}}/500</div>
                 </div>
             </div>
             <div class="union-title">联系方式</div>
@@ -137,7 +138,9 @@
                  提交申请
              </button>
         </div>
+        <div class="update">
 
+        </div>
     </div>
 </template>
 
@@ -339,13 +342,15 @@ export default {
             return false;
           }
 
-          let license = this.upload_license[0].img;
+          let arr_license = new Array('','','');
+          arr_license[0] = this.upload_license[0].img
           if(this.upload_revenue[0]){
-            license += ','+this.upload_revenue[0].img;
+            arr_license[1] = this.upload_revenue[0].img
           }
           if(this.upload_mechanism[0]){
-            license += ','+this.upload_mechanism[0].img;
+            arr_license[2] = this.upload_mechanism[0].img
           }
+          console.log(arr_license)
           let data = {
             cname:this.company_name,
             logo:this.upload_logo[0]?this.upload_logo[0].img:null,
@@ -356,14 +361,23 @@ export default {
             desc:this.detail_company,
             uname:this.company_username,
             contact:this.company_tel,
-            license:license,
+            license:arr_license.join(),
             id_card:this.upload_id_card[0].img,
             hand_card:this.upload_hand_card[0].img
           }
-          //ajax
           this.$axios.post('/company/save',{data:JSON.stringify(data)}).then(res=>{
             if(res.code == 200){
               //跳转页面
+            Dialog.confirm({
+              title:"提交成功",
+              message:'您提交的申请，需要核实人员核实之后才能通过，工作人员将在一个工作日之内联系您，请保持电话畅通，客服电话：15608008605',
+              cancelButtonText:"稍后再去",
+              confirmButtonText:"联系客服"
+            }) .then(() => {
+              this.$router.push({name:'company-user',params:{isCall:15608008605}})
+            }).catch(() => {
+              this.$router.push('/company/user')
+            });
             }else if(res.code == 500){
                this.alert(res.msg)
             }

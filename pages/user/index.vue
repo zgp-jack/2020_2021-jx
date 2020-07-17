@@ -67,6 +67,13 @@ import Tarbar from '../../components/tarbar'
 import {callPhoneFn} from '../../static/utils/utils'
 export default {
   created(){
+    this.userInfo = window.$nuxt.$store.state.userinfo;
+  },
+  beforeCreate(){
+    //判断登录
+     if(!document.cookie.includes("ssoToken")){
+        this.$router.push('/login')
+     }
   },
   data(){
     return{
@@ -89,7 +96,8 @@ export default {
         },
       ],
       my_list:[{src:"http://statics.zhaogongdi.com/common/user_collect.png",title:'我的收藏',detail:'收藏的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/user_release.png",title:'我的发布',detail:'发布的求租，出租、转让、求购信息'},{src:"http://statics.zhaogongdi.com/common/my_welfare_coin.png",title:'我的福利',detail:'查看我的福利信息'},{src:"http://statics.zhaogongdi.com/common/user_company.png",title:'我的企业',detail:'诚邀各大机械租赁企业入驻'},{src:"http://statics.zhaogongdi.com/common/user_set.png",title:'意见反馈',detail:'提交您的问题与建议'},{src:"http://statics.zhaogongdi.com/common/user_set.png",title:'设置',detail:'意见建议、联系我们'},],
-      list:{}
+      list:{},
+      userInfo:{}
 
     }
   },
@@ -113,7 +121,18 @@ export default {
             this.$router.push('/user/welfare')
           break;
           case 3:
-            this.$router.push('/user/company')
+            //ajax请求
+            this.$axios.post('/company/mine').then(res=>{
+              if(res.code == 200){
+                this.$router.push({name:'company-user',params:{data:res.content}})
+              }else if(res.code == 505){
+                this.$router.push('/user/company')
+              }else{
+                this.$router.push('/user/company')
+              }
+            })
+            return
+
           break;
           case 4:
             this.$router.push('/user/face-book')
@@ -148,7 +167,8 @@ export default {
   },
   computed:{
         userinfo(){
-          return window.$nuxt.$store.state.userinfo
+          let userInfo = {...this.userInfo}
+          return userInfo
         }
   }
 

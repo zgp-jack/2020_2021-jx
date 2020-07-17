@@ -1,5 +1,6 @@
 @import '../../assets/css/style.scss';
 @import './info.scss';
+@import '../../assets/css/iconfont.css';
 .info-list{
   .authenticate{
     display: flex;
@@ -20,4 +21,33 @@
         }
     }
   }
+}
+.states{
+  color: #888 !important;
+  P{
+    float: left;
+    .iconfont{
+      &:nth-of-type(1){
+        font-size: 0.35rem;
+        color: rgb(255, 103, 1);
+      }
+      &:nth-of-type(2){
+        font-size: 0.35rem;
+        color: #d81e06;
+        margin-right:0.12rem;
+      }
+    }
+  }
+}
+.fail{
+  margin-top: 0.3rem;
+  margin-left: 0.1rem;
+  height: 0.5rem;
+  line-height: 0.5rem;
+  color: #f00;
+  font-size: 0.35rem;
+}
+.list-head{
+ color: #000 !important;
+ .modify-msg{float: right;margin-right: 0.1rem;color: #888;}
 }
