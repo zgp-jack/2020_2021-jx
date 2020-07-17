@@ -84,7 +84,7 @@ export default {
         let page_size = this.page_size
         this.$axios.get('/user/collect-list',{params:{mode:modes,page,page_size}}).then(res=>{
           this.listLoading = false;
-          !res.content.next?(this.iscomplete=true,this.More = true):(this.iscomplete=false)
+          !res.content.next?(this.iscomplete=true,res.content.list.length!=0 && !res.content.next ?this.More = true:''):(this.iscomplete=false)
           res.content.list.length<=0?(this.Moreimg=true,this.More=false):(this.Moreimg=false)
           list = !list.length?[...res.content.list]:[...list,...res.content.list]
           this.isLoading && (this.isLoading = false);
