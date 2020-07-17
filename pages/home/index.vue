@@ -145,6 +145,15 @@ export default {
       show_gift_alert:false,//新手大礼包
     }
   },
+  created() {
+    let city = window.localStorage.getItem('city');
+    let obj = JSON.parse(city);
+    console.log(obj)
+    if(city){
+      this.listData({area:obj.id})
+    }
+
+  },
   methods:{
     changeTitle(index){
        this.title_active = index;
@@ -160,7 +169,7 @@ export default {
         if (cityData) {
           this.selectAreaData = {...cityData}
           //接口请求
-          this.listData({area:cityData.id})
+          this.listData({area:cityData.id},cityData)
         }
       },
       onisclose(type) {
@@ -168,13 +177,15 @@ export default {
         this.onSelect(type, flag);
       },
       //列表页数据
-      listData(params={}){
+      listData(params={},cityData){
         const that = this;
         that.$axios.get('/index/home',{params}).then(res=>{
-
+            console.log(res)
             that.$set(that, "list", {...res.content});
             //新手礼包
             that.show_gift_alert = that.list.welfareDialog;
+            //本地储存
+            window.localStorage.setItem('city',JSON.stringify(cityData))
         })
       },
       // 滚动显示隐藏

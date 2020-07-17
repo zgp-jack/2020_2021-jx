@@ -138,6 +138,13 @@
              console.log(res.content)
              // 状态的显示
              that.allState(res.content);
+          }else if(res.code == 500){
+            Dialog.alert({
+              title:"提示",
+              message:res.msg,
+            }).then(res=>{
+              that.$router.go(-1)
+            })
           }
         })
       }
