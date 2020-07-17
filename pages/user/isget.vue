@@ -77,6 +77,7 @@ export default {
       this.mode = this.$route.query.mode
       if(this.mode == 1){
         this.fenleiindex = ''
+        this.title = '鱼泡币来源记录'
       }
       this.getcoin()
     },

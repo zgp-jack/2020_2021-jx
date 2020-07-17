@@ -24,9 +24,6 @@
 import Headers from '../../components/header'
 import {Toast} from 'vant';
 export default {
-  created(){
-    console.log(window.$nuxt.$store.state.userinfo)
-  },
   components:{
     Headers
   },
