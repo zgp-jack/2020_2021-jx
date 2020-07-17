@@ -28,7 +28,7 @@
           </div>
           <div class="info-list">
               <div class="list-head">企业简介
-                  <span class="modify-msg" v-if="company.check==0 || company.authen==0">修改企业信息</span>
+                  <span @click="to_modify_company" class="modify-msg" v-if="company.check==0 || company.authen==0">修改企业信息</span>
               </div>
               <div class="describe">{{data.company && data.company.desc}}</div>
           </div>
@@ -93,7 +93,6 @@ export default {
         this.getmine();
       }
       //是否要弹框打电话
-      console.log(this.$route.params)
       if(this.$route.params.isCall){
         let tel = this.$route.params.isCall;
         callPhoneFn(tel)
@@ -131,6 +130,10 @@ export default {
       },
       showImage(src){
         ImagePreview([src])
+      },
+      //去修改页面
+      to_modify_company(){
+        this.$router.push('/user/modfiy_company/modfiy_company')
       }
     }
 }

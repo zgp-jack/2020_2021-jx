@@ -39,7 +39,15 @@ export default {
   },
   created() {
     const that = this;
-    const default_addr = window.$nuxt.$store.state.default_addr;
+    let default_addr={}
+    const storage_city = window.localStorage.getItem('city');
+    if(storage_city.id){
+      default_addr = JSON.parse(storage_city);
+    }else{
+      default_addr = window.$nuxt.$store.state.default_addr;
+    }
+
+
     const city = window.$nuxt.$store.state.city;
     const chose_area = default_addr.province.id - 1;
     city[chose_area].find((item, index) => {
@@ -50,6 +58,7 @@ export default {
       }
     });
     this.$set(this, "provinceChosedIndex", chose_area);
+
   },
   mounted() {
     this.onSelect(
@@ -87,4 +96,3 @@ export default {
   }
 };
 </script>
-

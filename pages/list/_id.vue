@@ -147,13 +147,16 @@ export default {
       if(Data){
         switch(type){
           case 'isSelect_area' :
-          this.selectAreaData = { ...Data };
-          //接口请求
-          this.addr = Data.id;
-          var params = this.getParams({addr:Data.id});
-          this.getList({
-            params
-          })
+            this.selectAreaData = { ...Data };
+            //接口请求
+            this.addr = Data.id;
+            //本地存储
+            let city = window.localStorage.setItem('city',JSON.stringify(Data));
+            console.log(Data)
+            var params = this.getParams({addr:Data.id});
+            this.getList({
+              params
+            })
           break;
 
           case 'isSelect_jixie' :
