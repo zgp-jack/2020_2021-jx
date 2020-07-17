@@ -16,7 +16,6 @@
         .form_row{
           display: flex;
           justify-content: space-between;
-          height:0.9rem;
           line-height:0.9rem;
           border-bottom: 1px solid #ddd;
             .notice{
@@ -32,9 +31,11 @@
                   height: 100%;
                   display: block;
                   color:#ccc;
-                  white-space: nowrap;
-                  overflow-x: hidden;
-                  text-overflow: ellipsis;
+                  line-height: 0.4rem;
+                  padding: 0.25rem 0;
+                }
+                .inner{
+                  color: #333;
                 }
                 select{
                   width: 100%;

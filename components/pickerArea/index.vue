@@ -11,7 +11,7 @@
 <script>
 import { Picker,Popup } from "vant";
 export default {
- props:['onCelectd'],
+ props:['onSelectd'],
   data() {
     return {
         isShow:false,
@@ -63,7 +63,7 @@ export default {
           const {default_data} = this;
           this.selectData = {city:{...default_data.newCity_data[index[0]]},area:{...default_data.children_data[index[0]][index[1]]}};
           //数据传入父组件
-          this.onCelectd(this.selectData)
+          this.onSelectd(this.selectData)
           this.onShow(false)
       }
   }

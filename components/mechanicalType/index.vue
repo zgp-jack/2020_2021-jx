@@ -1,7 +1,7 @@
 <!-- 单页面机械类型选择 -->
 <template>
     <div :class="['mechanics_select_box',isShow?'mechanics_show':'']">
-        <Header title="机械类型选择" :onskip="()=>onShow(false)" ensure_text="确定"/>
+        <Header title="机械类型选择" :onskip="onclose" ensure_text="确定" :onEnsure="selectd"/>
         <div class="mechanics-inner">
             <div class="top">
                 <div class="title">
@@ -29,20 +29,33 @@
 </template>
 
 <script>
+import { Toast } from "vant";
+import {deepCopy} from '../../static/utils/utils.js'
 export default {
-  props:['isShow','onShow'],
+  props:['onSelectd'],
   data() {
     return {
         clas:[],
+        list:[],
         selectData:[],
+        oldSelectData:[],
+        isShow:false,
     };
   },
   created(){
-      const {clas} = window.$nuxt.$store.state
-      clas.shift()
+      let clas = deepCopy(window.$nuxt.$store.state.clas);
+      let list = deepCopy(window.$nuxt.$store.state.clas);
+      clas.splice(0,1)
+      list.splice(0,1)
       this.$set(this,'clas',[...clas])
+      this.$set(this,'list',[...list])
   },
   methods:{
+
+      onShow(flag){
+          this.$set(this,'isShow',flag)
+      },
+
       //展开
       showSelect(index,e){
           const {clas} = this;
@@ -71,7 +84,8 @@ export default {
                       that.isAdd(data,false)
                   }else{
                       if(that.selectData.length==3){
-                          return
+                          Toast('最多可选3个类型')
+                          return false
                       }
                       item.color = true;
                       clas[indexFather][0].number?clas[indexFather][0].number+=1:clas[indexFather][0].number=1;
@@ -84,7 +98,7 @@ export default {
       },
 
       isAdd(data,add){
-          const {selectData} = this;
+          const selectData = deepCopy(this.selectData)
           if(add){
               selectData.push(data)
           }else{
@@ -95,6 +109,25 @@ export default {
               })
           }
           this.$set(this,'selectData',[...selectData])
+      },
+      //确认后的回调
+      selectd(){
+          const {selectData} = this;
+          this.oldSelectData = deepCopy(selectData)
+          this.onSelectd([...selectData]);
+          this.onShow(false)
+      },
+      //关闭后的回调
+      onclose(){
+          const {oldSelectData,onShow,isAdd,selectData,colorSelect,list} = this;
+          this.clas=list
+          selectData.length && selectData.forEach(element => {
+              isAdd(element,false)
+          });
+          oldSelectData.length && oldSelectData.map(item=>{
+              colorSelect(item)
+          })
+          onShow(false)
       }
   },
 };
