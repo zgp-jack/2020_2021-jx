@@ -88,7 +88,6 @@
       </van-popup>
     </div>
     <Tarbar />
-
   </div>
 </template>
 
