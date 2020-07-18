@@ -34,6 +34,7 @@
                         border: none;
                         background: none;
                         color: #666;
+                        font-size: 0.3rem;
                     }
                     .file_mk{
                         padding: 0.15rem 0.15rem;
@@ -112,4 +113,7 @@
             text-align: center;
             line-height:0.8rem;
         }
+}
+.choose-area{position: fixed;bottom: 0;width: 7.5rem;height:100vh;background-color:rgba(0,0,0,0.5);z-index: 40;
+  .van-picker{position: absolute;bottom: 0;width: 7.5rem;height: 4rem;}
 }

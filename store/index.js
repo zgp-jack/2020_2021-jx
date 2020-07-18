@@ -19,7 +19,11 @@ const store =()=>new Vuex.Store({
         default_addr:{},
         
         //用户信息
-        userinfo:{}
+        userinfo:{},
+
+        //图片地址服务/file_domain
+        img_server:'',
+
     },
     mutations:{
         //获取机械类型
@@ -38,6 +42,10 @@ const store =()=>new Vuex.Store({
         //设置用户信息
         setUserinfo(state,obj){
             state.userinfo = {...obj}
+        },
+        //设置图片服务地址
+        setImgServer(state,str){
+            state.img_server = str
         }
     },
   })

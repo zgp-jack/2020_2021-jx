@@ -51,6 +51,23 @@
   content: "\e610";
 }
 
+.icon-dingwei:before {
+  content: "\e629";
+}
+
+.icon-tubiao-:before {
+  content: "\e627";
+}
+
+.icon-gouxuan:before {
+  content: "\e61a";
+}
+
+.icon-gou:before {
+  content: "\e608";
+}
+
+
 
 
 
