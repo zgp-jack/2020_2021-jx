@@ -20,10 +20,10 @@
     </div>
 
     <!-- 地区选择 -->
-    <CustomArea :onSelect="onSelect" :isSelect_area="isSelect_area"/>
+    <CustomArea whearthStorage="true" :onSelect="onSelect" :isSelect_area="isSelect_area"/>
 
     <!-- 机械类型选择 -->
-    <CustomMechanicalType :onSelect="onSelect" :isSelect_jixie="isSelect_jixie"/>
+    <CustomMechanicalType whearthStorage="true" :onSelect="onSelect" :isSelect_jixie="isSelect_jixie"/>
 
     <!-- 排序 -->
     <div :class="{'model_mask':true,'selectd_box':!isSelect_sort}" @click.stop.prevent="onisclose('isSelect_sort')">
@@ -129,7 +129,15 @@ export default {
   created(){
     const mode = this.$route.params.id;
     this.mode = mode;
-
+    //获取本地存储机械类型
+    let all = window.sessionStorage.getItem('mechanic_all');
+    let mechanic_child = window.sessionStorage.getItem('mechanic_child');
+    if(all){
+      this.type = JSON.parse(all).id;
+    }else if(mechanic_child){
+      this.type = JSON.parse(mechanic_child).id;
+      this.selectJixieData = JSON.parse(mechanic_child);
+    }
   },
   methods: {
     // 滚动

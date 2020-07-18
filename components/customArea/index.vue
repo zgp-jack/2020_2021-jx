@@ -29,50 +29,57 @@ import Tarbar from "../../components/tarbar";
 import { Search } from "vant";
 import { constants } from "zlib";
 export default {
-  props: ["isSelect_area", "onSelect"],
+  props: ["isSelect_area", "onSelect","whearthStorage"],
   data() {
     return {
       provinceChosedIndex: null,
       cityChosedIndex: null,
       intData: {},
-      province:{}
+      province:{},
+      whearth_storage:false,
     };
   },
   created() {
+    if(this.$props.whearthStorage){
+      this.whearth_storage = true;
+    }
     const that = this;
     let default_addr={}
     let storage_city = window.sessionStorage.getItem('city');
     let storage_province = window.sessionStorage.getItem('province');
     let all_area = window.sessionStorage.getItem('all');
-    if(all_area){
+    if(this.whearth_storage){ //是否要从本地存储获取值
+      if(all_area){
+        //本地存储是否有全国的数据
+        this.onSelect("isSelect_area", false, {id: 1, name: "全国", pid: "0"});
+        this.provinceChosedIndex=0;
+        this.intData = {id: 1, name: "全国", pid: "0"};
+        return
+      }else if(storage_city){
+        //本地存储有城市数据的时候
+        //省份是否为空  ---- 上来直接选择城市，没有选择省，这时省份就为空
+        let province = JSON.parse(storage_province);
+        if(province.id){
+          // 不为空就赋本地的数据
+          default_addr = {
+            province,
+            city:JSON.parse(storage_city),
+          };
+        }else{
+           //为空就是用vuex的数据或者另一个本地存储
+          let flag_province = window.sessionStorage.getItem('flag_province');
+          let province = window.$nuxt.$store.state.default_addr.province;
 
-      //本地存储是否有全国的数据
-      this.onSelect("isSelect_area", false, {id: 1, name: "全国", pid: "0"});
-      this.provinceChosedIndex=0;
-      this.intData = {id: 1, name: "全国", pid: "0"};
-      return
-    }else if(storage_city){
-      //本地存储有城市数据的时候
-      //省份是否为空  ---- 上来直接选择城市，没有选择省，这时省份就为空
-      let province = JSON.parse(storage_province);
-      if(province.id){
-        // 不为空就赋本地的数据
-        default_addr = {
-          province,
-          city:JSON.parse(storage_city),
-        };
-      }else{
-         //为空就是用vuex的数据或者另一个本地存储
-        let flag_province = window.sessionStorage.getItem('flag_province');
-        let province = window.$nuxt.$store.state.default_addr.province;
-
-        if(flag_province){
-          province = JSON.parse(flag_province);
+          if(flag_province){
+            province = JSON.parse(flag_province);
+          }
+          default_addr = {
+            province,
+            city:JSON.parse(storage_city),
+          };
         }
-        default_addr = {
-          province,
-          city:JSON.parse(storage_city),
-        };
+      }else{
+        default_addr = window.$nuxt.$store.state.default_addr;
       }
     }else{
       default_addr = window.$nuxt.$store.state.default_addr;

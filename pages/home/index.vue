@@ -74,19 +74,6 @@
         <p class="more" v-if="list[title_data[title_active].key].length>0" @click="Jump_page(title_data[title_active].type)">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
-
-    <!-- 新手大礼包 -->
-    <!-- <div class="new_gift" v-if="show_gift_alert" @click.stop="close_gift_alert($event,'bg')">
-      <van-popup v-model="show_gift">
-        <div class="inner">
-          <div class="gift-img-text"></div>
-          <p class="gift-title">领礼包，上万机械信息免费看</p>
-          <div class="main-img"></div>
-          <div class="gift-btn" @click="rigthReceove">立即领取</div>
-        </div>
-        <div class="gift-close iconfont icon-cuo" @click="close_gift_alert($event,'close')"></div>
-      </van-popup>
-    </div> -->
       <Newgift v-if="show_gift_alert"/>
     <Tarbar />
   </div>
@@ -147,12 +134,7 @@ export default {
     }
   },
   created() {
-    let city = window.localStorage.getItem('city');
-    let obj = JSON.parse(city);
-    console.log(obj)
-    if(city){
-      this.listData({area:obj.id})
-    }
+
 
   },
   methods:{

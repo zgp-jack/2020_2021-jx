@@ -29,29 +29,50 @@ import Tarbar from "../../components/tarbar";
 import { Search } from "vant";
 import { constants } from "zlib";
 export default {
-  props: ["isSelect_jixie", "onSelect"],
+  props: ["isSelect_jixie", "onSelect","whearthStorage"],
   data() {
     return {
       clasIndex: 0,
       typeIndex: null,
-      mechanic:{}
+      mechanic:{},
+      whearth_storage:false,
     };
+  },
+  created() {
+    //是否要改机械类型的样式
+    this.whearth_storage = this.$props.whearthStorage;
+    if(this.whearth_storage){
+      //获取本地存储的数据
+      let mechanic_all = window.sessionStorage.getItem('mechanic_all');
+      let flag_mechanic = window.sessionStorage.getItem('flag_mechanic');
+      let mechanic_child = window.sessionStorage.getItem('mechanic_child');
+      let mechanic = window.sessionStorage.getItem('mechanic');
+      if(mechanic_all){
+        this.clasIndex=0;
+      }else if(mechanic){
+        let index = JSON.parse(mechanic).index ? JSON.parse(mechanic).index : JSON.parse(flag_mechanic).index;
+        this.clasIndex = index;
+      }
+      if(mechanic_child){
+        this.typeIndex = JSON.parse(mechanic_child).index;
+      }
+    }
   },
   methods: {
     //机械选择
     mechanicsChosed(index,item) {
-      debugger
       if (this.clasIndex !== index) {
         if (index == 0) {
           this.onSelect("isSelect_jixie", false, this.type[index]);
-           window.sessionStorage.setItem('mechanic_all','{id:0}');
+           window.sessionStorage.setItem('mechanic_all','{"id":"0"}');
         }
         this.$set(this, "clasIndex", index);
         this.sonMechanicsChosed(null);
       }
       if(item){
         this.mechanic = {...item};
-        window.sessionStorage.setItem('flag_mechanic',JSON.stringify(item))
+        this.mechanic.index = index;
+        window.sessionStorage.setItem('flag_mechanic',JSON.stringify(this.mechanic))
       }
     },
     //子机械选择
@@ -60,7 +81,9 @@ export default {
       if(index != null){
         //设置本地存储
         window.sessionStorage.setItem('mechanic',JSON.stringify(this.mechanic));
-        window.sessionStorage.setItem('mechanic_child',JSON.stringify(item));
+        let itemSon = {...item};
+        itemSon.index = index;
+        window.sessionStorage.setItem('mechanic_child',JSON.stringify(itemSon));
         window.sessionStorage.setItem('mechanic_all','');
       }
       index!==null &&
