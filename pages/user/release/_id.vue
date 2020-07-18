@@ -195,22 +195,20 @@ export default {
               mode: that.mode
             }
             that.$axios.get('/user/set-top',{params}).then(res=>{
-              console.log(res)
-             if(res.code == 8639){
-               this.$router.push({
-                 path:"/user/set_top_page/set_top",
-                 query:{
-                   id:item.uu_id,
-                   mode:this.mode
-                 }
-               })
-               return
-             }
+                if(res.code == 8639){
+                this.$router.push({
+                  path:"/user/set_top_page/set_top",
+                  query:{
+                    id:item.uu_id,
+                    mode:this.mode
+                  }
+                })
+                return
+              }
               let etime = res.top.etime*1000;
               let time = formatDate(etime,'yyyy-MM-dd h:m')
               that.findItem(res,"top",true,item,index);
               that.findItem(res,"etime",time,item,index);
-
             })
 
           }

@@ -49,8 +49,11 @@ export function showPhoneFn(that,Toast,data,bool=false){
 
 // 签到
 export function coinget(that){
-  that.$axios.get('/coin/get').then(res=>{
-      if(!res.content.sign){
+  if(!that.box_on){
+    return false
+  };
+  that.$axios.get('/user/sign').then(res=>{
+      if(res.code == 400){
         that.box_on = false
       }
   })
