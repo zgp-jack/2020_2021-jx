@@ -77,6 +77,7 @@ export default {
       this.mode = this.$route.query.mode
       if(this.mode == 1){
         this.fenleiindex = ''
+        this.title = '鱼泡币来源记录'
       }
       this.getcoin()
     },
@@ -173,6 +174,7 @@ export default {
         getcoll(){
          this.page = 1;
          this.list = []
+         this.More = false
          this.getrec()
       },
       // 跳转
@@ -188,9 +190,15 @@ export default {
         // }else{
         //   return false
         // }
-        const {is_deleted} = item
-        if(is_deleted == 0){
-            console.log(1)
+        const {is_deleted,uu_id,type} = item
+        if(is_deleted == 0 && this.mode == 0){
+            this.$router.push({
+              path:'/view',
+              query:{
+                info:uu_id,
+                mode:type
+              }
+            })
         }else if(is_deleted == 1){
           Toast('此条信息已删除!')
         }

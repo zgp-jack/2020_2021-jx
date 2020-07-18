@@ -23,11 +23,11 @@
                 </div>
                 <div class="bottom">
                     <div>
-                      <p class="main_textc">{{userinfo.coin_balance}}</p>
+                      <p class="main_textc" @click="harvest(0)">{{userinfo.coin_balance}}</p>
                       <p>可用鱼泡币</p>
                     </div>
                     <div>
-                      <p class="main_textc">{{userinfo.coin_consume}}</p>
+                      <p class="main_textc" @click="harvest(1)">{{userinfo.coin_consume}}</p>
                       <p>消耗鱼泡币</p>
                     </div>
                 </div>
@@ -163,6 +163,10 @@ export default {
       // 打电话
      tel(){
         callPhoneFn(15608008605)
+       },
+       harvest(mode){
+          if(mode == 0)this.$router.push({path:'/user/isget',query:{mode:mode}})
+          if(mode == 1)this.$router.push({path:'/user/isget',query:{mode:mode}})
        }
   },
   computed:{

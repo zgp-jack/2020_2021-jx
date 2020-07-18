@@ -76,7 +76,7 @@
     </div>
 
     <!-- 新手大礼包 -->
-    <div class="new_gift" v-if="show_gift_alert" @click.stop="close_gift_alert($event,'bg')">
+    <!-- <div class="new_gift" v-if="show_gift_alert" @click.stop="close_gift_alert($event,'bg')">
       <van-popup v-model="show_gift">
         <div class="inner">
           <div class="gift-img-text"></div>
@@ -86,7 +86,8 @@
         </div>
         <div class="gift-close iconfont icon-cuo" @click="close_gift_alert($event,'close')"></div>
       </van-popup>
-    </div>
+    </div> -->
+      <Newgift v-if="show_gift_alert"/>
     <Tarbar />
   </div>
 </template>
@@ -100,7 +101,7 @@ import Banner from '../../components/banner/banner.vue'
 import chooseArea from '../../components/customArea/index.vue'
 import call_confirm from '../../components/call_confirm/call_confirm'
 import BottomTop from '../../components/bottom-topbar/index'
-
+import Newgift from '../../components/new_gift/index'
 export default {
   components: {
     Tarbar: Tarbar,
@@ -114,6 +115,7 @@ export default {
     BottomTop,
     'van-popup':Popup,
     [Dialog.Component.name]: Dialog.Component,
+    Newgift
   },
   data(){
     return{
@@ -220,33 +222,6 @@ export default {
         list[title_data[title_active].key][obj.index].tel = obj.tel
         this.$set(this,'list',{...list})
       },
-      //关闭新手大礼包
-      close_gift_alert(e,need){
-        e.stopPropagation()
-        let classText = e.target.className;
-        if(classText.includes('van-fade-leave-active') && need == "bg"){
-
-        }else if(need == "close"){
-          this.show_gift_alert = false
-        }
-      },
-      //立即领取
-      rigthReceove(){
-        let that = this;
-        //发送ajax请求
-        let params = {welfareId: 1}
-        this.$axios.get('/user-welfare/get-welfare',{params}).then(res=>{
-          if(res.code == 200){
-            that.$router.push('/user/welfare')
-          }else if(res.code == 500){
-            Dialog.alert({
-              title: '温馨提示',
-              message: '您已经领取过该福利了',
-            })
-            that.show_gift_alert = false
-          }
-        })
-      }
   },
   mounted() {
     this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
