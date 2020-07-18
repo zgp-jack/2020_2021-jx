@@ -1,4 +1,5 @@
 
+import {Toast} from 'vant';
 //读取cookies
 export function getCookie(name) {
     var arr,
@@ -96,7 +97,11 @@ export function uploadPictures (page,file){
       headers:{'Content-Type':'multipart/form-data'},
   };
   return page.$axios.post('/upload',fd,config).then(res=>{
+    if(res && res.code==200){
       return res
+    }else{
+      Toast(res.msg)
+    }
   })
 }
 
