@@ -11,7 +11,7 @@
 <script>
 import { Picker,Popup } from "vant";
 export default {
- props:['onSelectd'],
+ props:['onSelectd','default_areaData'],
   data() {
     return {
         isShow:false,
@@ -47,6 +47,9 @@ export default {
 
       this.columns = [{values:[...newCity]},{values:[...children[0]]}]
   },
+  mounted(){
+      this.int()
+  },
   methods:{
       onChange(picker, values) {
           let index = this.$refs.picker.getIndexes()
@@ -65,6 +68,13 @@ export default {
           //数据传入父组件
           this.onSelectd(this.selectData)
           this.onShow(false)
+      },
+      //设置默认地区
+      int(){
+          const {default_areaData} = this;
+          if(default_areaData){
+              debugger
+          }
       }
   }
 };
