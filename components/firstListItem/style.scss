@@ -55,7 +55,7 @@
   .right-inner{
     float: left;
     .basic-info{
-      width: 5.6rem;
+      width: 5.5rem;
       height: 0.4rem;
       line-height: 0.4rem;
       font-size: 0.27rem;
@@ -63,7 +63,6 @@
         float: left;
         &:nth-of-type(1){
           max-width: 3.68rem;
-          /* @include overflow_hiding(); */
          overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
@@ -85,7 +84,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       line-height: 0.61rem;
-      width: 5.6rem;
+      width: 5.5rem;
       font-size: 0.2rem;
       height: 0.51rem;
       a{
@@ -99,7 +98,7 @@
     }
     .position-time{
       height: 0.58rem;
-      width: 5.6rem;
+      width: 5.5rem;
       color: #616161;
       font-size: 0.27rem;
       line-height: 0.58rem;
