@@ -51,12 +51,13 @@ export default {
       const that = this;
       that.$axios.get('/index/index',{params:{phone:'',user_token:''}}).then(res=>{
         that.numberServers+=1
-        const {default_cover,default_header,addr} = res.content
+        const {default_cover,default_header,addr,file_domain} = res.content
         const default_portrait = {
           default_cover,default_header
         }
         window.$nuxt.$store.commit('setPortrait',default_portrait)
         window.$nuxt.$store.commit('setDefaultAddr',addr)
+        window.$nuxt.$store.commit('setImgServer',file_domain)
       })
     },
 
