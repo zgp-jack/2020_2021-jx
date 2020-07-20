@@ -32,7 +32,7 @@
 import { Toast } from "vant";
 import {deepCopy} from '../../static/utils/utils.js'
 export default {
-  props:['onSelectd'],
+  props:['onSelectd','default_Mechanical'],
   data() {
     return {
         clas:[],
@@ -48,7 +48,14 @@ export default {
       clas.splice(0,1)
       list.splice(0,1)
       this.$set(this,'clas',[...clas])
-      this.$set(this,'list',[...list])
+      this.$set(this,'list',[...list]);
+      if(this.default_Mechanical){
+          this.default_Mechanical.forEach(item=>{
+              this.colorSelect({...item})
+          })
+          this.oldSelectData = [...this.default_Mechanical];
+          this.onSelectd([...this.default_Mechanical])
+      }
   },
   methods:{
 
