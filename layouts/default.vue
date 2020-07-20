@@ -10,7 +10,7 @@
 import Loading from "../components/loading";
 import {StorageType} from '../static/exports/area_type.js';
 import {mapState} from 'vuex';
-import {getCookie} from '../static/utils/utils.js';
+import {getCookie,GetUser} from '../static/utils/utils.js';
 
 export default {
   data() {
@@ -61,19 +61,13 @@ export default {
       })
     },
 
+    //获取用户信息
     getUser(){
-      const ssoToken = getCookie('ssoToken');
       const that = this;
-      if(ssoToken){
-        that.$axios.get('/user/get-userinfo').then(res=>{
-          if(res.code==200){
-            window.$nuxt.$store.commit('setUserinfo',res.content)
-          }
-          that.numberServers+=1
-        })
-      }else{
+      function callback(){
         that.numberServers+=1
       }
+      GetUser(that,callback);
     }
   },
   computed: {

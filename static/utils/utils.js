@@ -128,3 +128,18 @@ export function deepCopy(obj) {
 
   return result;
 }
+
+//获取个人信息接口
+export function GetUser(page,callback){
+  const ssoToken = getCookie('ssoToken');
+  if(ssoToken){
+    page.$axios.get('/user/get-userinfo').then(res=>{
+      if(res.code==200){
+        window.$nuxt.$store.commit('setUserinfo',res.content)
+      }
+      callback && callback()
+    })
+  }else{
+    callback && callback()
+  }
+}

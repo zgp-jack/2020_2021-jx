@@ -68,6 +68,7 @@ import {callPhoneFn} from '../../static/utils/utils'
 export default {
   created(){
     this.userInfo = window.$nuxt.$store.state.userinfo;
+    console.log(window.$nuxt.$store.state.userinfo)
   },
   beforeCreate(){
     //判断登录
@@ -162,6 +163,7 @@ export default {
       },
       // 打电话
      tel(){
+        console.log(window.$nuxt.$store.state.userinfo)
         callPhoneFn(15608008605)
        },
        harvest(mode){
