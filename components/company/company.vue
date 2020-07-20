@@ -365,7 +365,6 @@ export default {
             hand_card:this.upload_hand_card[0].img
           }
           console.log(data)
-          return;
           this.$axios.post('/company/save',{data:JSON.stringify(data)}).then(res=>{
             if(res.code == 200){
               //跳转页面
@@ -411,7 +410,6 @@ export default {
 
         let company = data.company;
         let licenses = data.licenses;
-         console.log(licenses)
         // 初始化修改页面的数据
         this.company_name = company.cname;
         this.detail_addr = company.addr;

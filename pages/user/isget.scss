@@ -13,7 +13,13 @@
                 img{
                     width: 0.36rem;
                     height:0.36rem;
+                     transition: 0.3s;
                     vertical-align:sub;
+
+                }
+                .rotate{
+                  transform:rotate(180deg);
+                 
                 }
                 padding: 0.26rem;
                 display: flex;
@@ -22,7 +28,7 @@
                 align-items: center;
                 >p:first-child{
                     color: #303030;
-                    font-size: 0.25rem;
+                    font-size: 0.33rem;
                     font-weight: 550;
                 }
                 >p:last-child{
@@ -32,7 +38,7 @@
                     border-radius:3px;
                     padding:0 0.1rem;
                     color: #4F4F4F;
-                    font-size: 0.23rem;
+                    font-size: 0.33rem;
                     text-align: center;
                 }
             }

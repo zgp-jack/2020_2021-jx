@@ -19,32 +19,37 @@
         .rule_list{
             margin: -0.5rem auto 0;
             width: 6.6rem;
-                .rule_one{
+                .rule_one,.rule_two{
                     background: #fff;
                     border-radius: 0.08rem;
                     box-shadow: 0 0.03rem 0.1rem #eee;
-                    [class='item']:not(:last-child){
-                        border-bottom: 1px dashed #ddd;
-                    }
+
                     .title{
                         line-height: 0.8rem;
-                        font-weight: bold;
-                        font-size:0.37rem;
-                        color: #555;
+                        font-size:0.3rem;
+                        color: #282828;
                         padding:0.1rem 0.18rem;
-                        border-bottom: 1px dashed #ddd;
+                        border-bottom: 2px dashed #ddd;
+                    }
+                    .content{
+                      padding: 0 0.18rem;
                     }
                     .item{
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
                         line-height:0.5rem;
-                        font-size: 0.35rem;
-                        padding:0.1rem 0.18rem;
-                        border-bottom: 1px dashed #ddd;
+                        font-size: 0.3rem;
+                        padding:0.2rem 0rem;
+                        border-bottom: 1px solid #ddd;
                             .info{
-                                p:first-child{
-                                    color: #555;
+                                p:nth-of-type(1){
+                                    color: #282828;
+                                    font-size: 0.31rem;
+                                }
+                                p:nth-of-type(2){
+                                  font-size: 0.28rem;
+                                  color: #7C7C7C;
                                 }
                             }
                             .op{
@@ -52,37 +57,44 @@
                                 background: #ffa926;
                                 text-align: center;
                                 color: #fff;
+                                font-size: 0.28rem;
                                 line-height:0.6rem;
                                 border-radius:0.08rem;
+                            }
+                            &:nth-last-child(1){
+                              border: none;
                             }
                     }
                 }
                 .rule_two{
-                    margin-top:0.2rem;
-                    padding: 0.1rem 0.18rem;
-                    background: #fff;
-                    border-radius:0.08rem;
-                    box-shadow: 0 0.03rem 0.1rem #eee;
-                        .title{
-                            border-bottom: 1px dashed #ddd;
-                            line-height:0.8rem;
-                            font-weight: bold;
-                            font-size:0.37rem;
-                            color: #555;
-                        }
-                        .item{
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            line-height:0.5rem;
-                            font-size: 0.35rem;
-                            padding: 0.1rem;
-                                .info{
-                                    p:first-child{
-                                        color: #555;
-                                    }
-                                }
-                        }
+                  margin-top:0.2rem;
                 }
+                // .rule_two{
+                //     margin-top:0.2rem;
+                //     padding: 0.1rem 0.18rem;
+                //     background: #fff;
+                //     border-radius:0.08rem;
+                //     box-shadow: 0 0.03rem 0.1rem #eee;
+                //         .title{
+                //             border-bottom: 1px dashed #ddd;
+                //             line-height:0.8rem;
+                //             font-weight: bold;
+                //             font-size:0.37rem;
+                //             color: #555;
+                //         }
+                //         .item{
+                //             display: flex;
+                //             justify-content: space-between;
+                //             align-items: center;
+                //             line-height:0.5rem;
+                //             font-size: 0.35rem;
+                //             padding: 0.1rem;
+                //                 .info{
+                //                     p:first-child{
+                //                         color: #555;
+                //                     }
+                //                 }
+                //         }
+                // }
         }
 }

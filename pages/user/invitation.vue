@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Headers :title="title"/>
+    <Headers :title="title" ensure_text="发布" @getParentFn="goRelease" />
       <div class="father">
           <div class="yupao-user-share">
               <div class="user-share-item">
@@ -8,27 +8,46 @@
                       复制下方（你的专享邀请链接，发到QQ群、论坛、贴吧，机友通过你的专享邀请链接来到鱼泡机械。
                   </div>
                   <div class="user-share-mine">
-                      <input type="text" value="http://jxm.kkbbi.com/qiuzu/?code=6978T88VmmX4u98&source=M">
+                      <input type="text" v-model="link">
                   </div>
               </div>
-              <div class="user-copy">
+              <div class="user-copy" @click="copyLink">
                   点击复制
               </div>
           </div>
+          <BottomTop  ref="child" :hiddenAll="true" />
       </div>
   </div>
 </template>
 
 <script>
-import Headers from '../../components/header'
+import Headers from '../../components/header';
+import {Copynum} from '../../static/utils/utils.js';
+import {Dialog} from 'vant'
+import BottomTop from '../../components/bottom-topbar/index.vue';
 export default {
     components:{
-        Headers
+        Headers,
+        BottomTop
     },
     data(){
         return{
-          title:'邀请好友'
+          title:'邀请好友_鱼泡机械',
+          link:'http://m.zhaogongdi.com/qiuzu/?code=K1A5UmX2V15UWxA&source=M',
         }
+    },
+    methods:{
+      copyLink(){
+        //点击复制
+        Copynum(this,this.link);
+        Dialog.alert({
+          title:'温馨提示',
+          message:"您的邀请链接已复制到粘贴板,赶快去邀请好友吧！"
+        })
+      },
+      goRelease(){
+        this.$refs.child.list_show();
+      }
     }
 }
 </script>

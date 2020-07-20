@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Header :title="title"/>
+      <Header :title="title" @getParentFn="showRelease" ensure_text="发布"/>
       <div style="width: 7.5rem;">
         <collHead :arr = 'arr' @modeType = 'onServers' ref="collHead"/>
       </div>
@@ -42,14 +42,18 @@
             </van-list>
             <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
         </div>
+         <BottomTop  ref="child" :hiddenAll="true" />
   </div>
 </template>
 
 <script>
 import collHead from '../../../components/collection-head';
 import EmptyMsg from '../../../components/emptyMsg';
-import {formatDate} from '../../../static/utils/utils.js'
+import {formatDate} from '../../../static/utils/utils.js';
 import { Toast,List,Dialog  } from 'vant';
+import BottomTop from '../../../components/bottom-topbar/index.vue';
+
+
 export default {
   created(){
     if(this.$route.query.show){
@@ -64,6 +68,7 @@ export default {
         'van-list':List,
         EmptyMsg,
         [Dialog.Component.name]: Dialog.Component,
+        BottomTop
     },
     mounted () {
         this.$refs.collHead.onchangeIndex(this.mode)
@@ -302,6 +307,9 @@ export default {
             message:item.fail_reason,
             confirmButtonColor:"#ffa926"
           })
+        },
+        showRelease(){
+          this.$refs.child.list_show();
         }
     }
 }

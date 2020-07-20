@@ -11,23 +11,27 @@
                   <div class="title">
                       鱼泡币获取规则
                   </div>
-                  <div class="item" v-for="(item,i) in list" :key='i'>
-                      <div class="info">
-                          <p v-text="item.title"></p>
-                          <p>({{item.detail}})</p>
-                      </div>
-                      <div class="op" v-text="item.btn_text" @click="isGo(item.src,i)"></div>
+                  <div class="content">
+                    <div class="item" v-for="(item,i) in list" :key='i'>
+                        <div class="info">
+                            <p v-text="item.title"></p>
+                            <p>{{item.detail}}</p>
+                        </div>
+                        <div class="op" v-text="item.btn_text" @click="isGo(item.src,i)"></div>
+                    </div>
                   </div>
               </div>
               <div class="rule_two">
                   <div class="title">
                       鱼泡币消耗规则
                   </div>
-                  <div class="item">
-                      <div class="info">
-                          <p>查看信息 -3 鱼泡币</p>
-                          <p>(获取信息联系方式)</p>
-                      </div>
+                  <div class="content">
+                    <div class="item">
+                        <div class="info">
+                            <p>查看信息 -3 鱼泡币</p>
+                            <p>(获取信息联系方式)</p>
+                        </div>
+                    </div>
                   </div>
               </div>
           </div>
@@ -40,7 +44,7 @@ import Headers from '../../components/header'
 import Sign from '../../components/Sign'
 export default {
     created(){
-      this.Signget()
+     
     },
     components:{
         Headers,
@@ -49,13 +53,13 @@ export default {
     data(){
         return{
             list:[
-                {title:'每日签到 + 1 鱼泡币',detail:'每日一次',btn_text:'已签到',src:''},
+                {title:'玩游戏，赚鱼泡币',detail:'每天玩15秒小游戏，可得3-300分',btn_text:'去看看',src:''},
                 {title:'邀请好友成功 + 5 鱼泡币',detail:'好友注册送鱼泡币,  不限次数',btn_text:'去邀请',src:'/user/invitation'},
-                 {title:'充值',detail:'充值付钱购买鱼泡币',btn_text:'去充值',src:'/coin/recharge'},
-                {title:'发布求租 + 1鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
-                {title:'发布机械 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
-                {title:'发布出售 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
-                {title:'发布求购 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布'},
+                 {title:'充值',detail:'充值付钱购买鱼泡币',btn_text:'去充值',src:'/coin/recharge',src:'/coin/recharge'},
+                {title:'发布求租 + 1鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布',src:'/coin/recharge',src:"../../common/create?mode=1"},
+                {title:'发布机械 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布',src:'/coin/recharge',src:"../../common/create?mode=2"},
+                {title:'发布出售 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布',src:'/coin/recharge',src:"../../common/create?mode=3"},
+                {title:'发布求购 + 1 鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布',src:'/coin/recharge',src:"../../common/create?mode=4"},
             ],
             title:'获取鱼泡币',
             box_on:true,
@@ -65,25 +69,7 @@ export default {
     methods:{
         isGo(src,index){
           this.$router.push(src)
-            if(index == 0){
-              this.box_show = true
-              this.Signget()
-            }
-        },
-        // 获取签到数据
-        Signget(){
-          if(!this.box_on){
-            return false
-          };
-          this.$axios.get('/user/sign').then(res=>{
-              if(res.code == 200){
-                this.list[0].btn_text = '已签到'
-              }
-              if(res.code == 400){
-                this.list[0].btn_text = '已签到'
-                this.box_on = false
-              }
-          })
+          
         },
         handle(show){
           this.box_show = show

@@ -14,7 +14,7 @@
                         <i></i>
                     </router-link>
                 </div>
-                <div class="container">
+                <div class="container" @click="signOut">
                     <router-link to='' class="con_btn">
                         退出登录
                     </router-link>
@@ -35,6 +35,16 @@ export default {
             title:'个人设置'
         }
     },
+    methods:{
+      signOut(){
+        //清除token
+        document.cookie = "ssoToken"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/dist/user';
+        document.cookie = "ssoToken"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/dist';
+        //清除七天不提示弹框
+        document.cookie = "havaSeven"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
+        this.$router.push("/login")
+      }
+    }
 }
 </script>
 
