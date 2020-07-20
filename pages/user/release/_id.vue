@@ -286,10 +286,10 @@ export default {
             return false
           };
           this.$router.push({
-            path:'/create?mode='+this.mode,
+            path:'/common/update?mode='+this.mode,
             query:{
               id:item.uu_id,
-              type:this.mode
+              // type:this.mode
             }
           })
 
