@@ -174,9 +174,7 @@ export default {
               params
             })
           break;
-
           case 'isSelect_sort' :
-          debugger
             this.selectSortData = { ...Data };
             this.sort_index = Data.id;
             //接口请求

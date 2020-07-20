@@ -1,6 +1,6 @@
 <template>
   <div>
-    <company ref="company" />
+    <company ref="company" v-if="show" :info="info" />
   </div>
 </template>
 <script>
@@ -13,16 +13,16 @@
     },
     data(){
       return{
-         info:''
+         info:'',
+         show:false,
       }
     },
     created() {
       //ajax请求需要修改的数据
         this.$axios.post('/company/mine').then(res=>{
           if(res.code == 200){
+            this.show = true;
             this.info = res.content;
-            //ajax请求成功以后调用子组件的方法，把获取到的数据给子组件
-            this.$refs.company.getParentData(res.content)
           }else{
             Dialog.alert({
               title:'提示',

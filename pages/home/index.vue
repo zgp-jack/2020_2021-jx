@@ -200,7 +200,6 @@ export default {
       getObj(obj){
         console.log(obj)
         const {list,title_data,title_active} = this;
-        // debugger
         list[title_data[title_active].key][obj.index].tel = obj.tel
         this.$set(this,'list',{...list})
       },

@@ -6,7 +6,7 @@
         <van-picker show-toolbar title="选择地区信息" :columns="columns" @confirm="onConfirm" @cancel="onCancel" @change='onChange' ref='picker'/>
     </van-popup>
 </div>
-    
+
 </template>
 
 <script>
@@ -31,7 +31,7 @@ export default {
       let newData = [];
       let {city} = window.$nuxt.$store.state;
       city = city.slice(1);
-      
+
       let newCity = [];
       let children = [];
       let newCity_data = [];
@@ -48,6 +48,7 @@ export default {
       //设置传入地区
       const {default_areaData} = this;
         if(default_areaData){
+
             let indexCity,indexArea;
             let default_city = newCity_data.find((item,index)=>{
                 if(item.id==default_areaData.city){
@@ -97,4 +98,3 @@ export default {
 
 <style lang='scss' scoped>
 </style>
-

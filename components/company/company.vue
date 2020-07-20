@@ -139,7 +139,7 @@
              </button>
         </div>
         <div class="update">
-          <PickerArea ref="area" :onSelectd="selectArea" />
+          <PickerArea ref="area" :onSelectd="selectArea" :default_areaData="area_id.city && area_id" />
         </div>
     </div>
 </template>
@@ -176,8 +176,16 @@ export default {
             upload_hand_card:[], //身份证反面
             area_text:'',
             area_id:{},
-            modify_data:{} //修改页面的初始数据
+            modify_data:{}, //修改页面的初始数据
+
         }
+    },
+    props:['info'],
+    created() {
+      if(this.info){
+         this.getParentData(this.info);
+      }
+      
     },
     methods:{
       //上传logo
@@ -407,7 +415,6 @@ export default {
       },
       //被父组件调用的方法--获取父组件的异步数据
       getParentData(data){
-
         let company = data.company;
         let licenses = data.licenses;
         // 初始化修改页面的数据
@@ -418,11 +425,12 @@ export default {
         this.detail_company = company.desc;
         this.company_username = company.uname;
         this.company_tel = company.contact;
+
         //logo
         if(company.logo.server){
           this.upload_logo = [{
             src:company.logo.server,
-            img:'123'
+            img:company.logo.value
            }];
         }
         //营业执照
