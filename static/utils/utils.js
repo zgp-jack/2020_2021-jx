@@ -1,5 +1,5 @@
 
-import {Toast} from 'vant';
+import {Toast,Dialog} from 'vant';
 //读取cookies
 export function getCookie(name) {
     var arr,
@@ -41,23 +41,29 @@ export function showPhoneFn(that,Toast,data,bool=false){
     }else if(res.code == 300){
       Toast(res.msg);
     }else if(res.code == 303){
-      Toast(res.msg);
-      // that.giveParentPhone({tel:res.content,id:data.id,index:that.$props.userInfo.index,mode:data.mode},true)
       Dialog.confirm({
-        title: '标题',
-        message: '弹窗内容',
+        title: '提示',
+        message: '鱼泡币不足?领取礼包,可免费查看电话',
+        confirmButtonText:'领礼包',
+        confirmButtonColor:'#FFA926',
+        cancelButtonText:"去充值"
+      }).then(()=>{
+        const params = {welfareId:1}
+        that.$axios.get('/user-welfare/get-welfare',{params}).then(res =>{
+          if(res.code == 200){
+            that.$router.push('/user/get')
+          }
+          if(res.code == 500){
+            Toast(res.msg)
+            return false
+          }
+        })
+      })
+      .catch(()=>{
+        that.$router.push('/user/get')
       })
     }
   })
-}
-// 余额不足领取礼包
-export function bance(that,yue,id){
-    // if(yue){
-    //   const params = {welfareId:id}
-    //   that.$axios.get('/user-welfare/get-welfare',{params}).then(res =>{
-    //     console.log(res)
-    //   })
-    // }
 }
 // 签到
 export function coinget(that){
