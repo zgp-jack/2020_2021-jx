@@ -2,7 +2,7 @@
     <div class="create">
         <Header :title="page_info.title"/>
         <MechanicalType @click="onMechanicsShow" :onSelectd="selectMechanical" ref="mechanics" :default_Mechanical='default_Mechanical'/>
-        <PickerArea ref="pickerArea" :onSelectd="selectArea"/>
+        <PickerArea ref="pickerArea" :onSelectd="selectArea" :default_areaData="default_areaData"/>
         <div class="form" v-if="mode==1">
             <div class="public-style">
               <div class="form_row">
@@ -154,7 +154,7 @@
 
           <div class="public-style" v-if="mode!=4">
             <div class="form_row desc">
-              <div class="notice">上传图片(可选)</div>
+              <div class="notice">上传图片(必填)</div>
               <div class="images-on">
                 <div class="img clearfix">
                     <div class="img_box fl" v-for="(item,index) in images" :key="index">
@@ -382,8 +382,9 @@ export default {
           return false;
         }
         if (mode != 4) {
-          if((mode == 2 || mode == 3) && !mages.length){
+          if((mode == 2 || mode == 3) && !images.length){
             Toast('请上传图片'); 
+            return false;
           }
           if (mode != 1 && images.length) data.cover = images[0];
            images.length && (data.images = images.map(item=>item).join(','));
@@ -402,7 +403,7 @@ export default {
         return {params,data}
       },
 
-      //创建提交
+      //创建/编辑提交
       createSubmit(){
         const that = this;
         let newParams = that.requstIntercept();
@@ -423,11 +424,12 @@ export default {
 
       requstCreate(params={}){
         const that = this;
-        that.$axios.post('/user/create',{...params}).then(res=>{
+        that.$axios.post(!that.editorData?'/user/create':'/user/update',!that.editorData?{...params}:{...params,data_id:that.$route.query.id}).then(res=>{
           if (res.code == 200) {
             function jump(paramsUrl){
               that.$router.replace('/user/release/' + paramsUrl) 
             }
+
             const modeText = [
                 {
                   mode:1,text:['求租','需要','急需','找']
@@ -448,7 +450,7 @@ export default {
               title: '温馨提示',
               message: '发布成功',
             }).then(()=>{
-              if(rexpText){
+              if(rexpText && !that.editorData){
                 const fondText = modeText.find(item=>{
                   if(item.text.includes(rexpText[0])){
                     return item
@@ -459,6 +461,9 @@ export default {
                 jump(params.mode) 
               }
             })
+
+          }else{
+            Toast(res.msg)
           }
         })
       },
@@ -467,12 +472,12 @@ export default {
           if(this.$route.path ==='/common/update' && this.editorData){
               const editorData = {...this.editorData};
               this.title = editorData.title;
-              this.$route.query.mode ==1 && (this.meth = editorData.payment_method);
+              this.$route.query.mode ==1 && (this.meth = editorData.payment_method==2?3:editorData.payment_method);
               this.user = editorData.user_name;
             //   this.phon = editorData.tel;
             //   this.oldPhon = editorData.tel;
               this.desc = editorData.desc;
-              editorData.image_arr.length && (this.images = [...editorData.image_arr.map(item=>item.server)]);
+              editorData.image_arr && editorData.image_arr.length && (this.images = [...editorData.image_arr.map(item=>item.server)]);
               editorData.class_id && editorData.class_id.length && (this.default_Mechanical = [...editorData.class_id]);
               this.default_areaData = {area:editorData.city_id,city:editorData.province_id}
           }

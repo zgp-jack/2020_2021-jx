@@ -1,4 +1,5 @@
-<!-- vant-picker地区选择 -->
+<!-- vant-picker地区选择(这里city和area写反了) -->
+<!-- 默认地区格式{city:id,area:id} -->
 <template>
 <div>
     <van-popup v-model="isShow" position="bottom">
@@ -26,6 +27,7 @@ export default {
     'van-popup':Popup
   },
   created(){
+
       let newData = [];
       let {city} = window.$nuxt.$store.state;
       city = city.slice(1);
@@ -43,12 +45,31 @@ export default {
       });
       this.default_data = {newCity_data:[...newCity_data],children_data:[...children_data]};
       this.default_columns = {newCity:[...newCity],children:[...children]}
-      this.$set(this,'columns',[{values:[...newCity]},{values:[...children[0]]}])
+      //设置传入地区
+      const {default_areaData} = this;
+        if(default_areaData){
+            let indexCity,indexArea;
+            let default_city = newCity_data.find((item,index)=>{
+                if(item.id==default_areaData.city){
+                    indexCity = index;
+                    return item
+                }
+            })
+            let default_arae = city[indexCity].find((item,index)=>{
+                if(item.id == default_areaData.area){
+                    indexArea = index-1;
+                    return item
+                }
+            })
+            this.columns = [{values:[...newCity],defaultIndex:indexCity},{values:[...children[indexCity]],defaultIndex:indexArea}];
 
-      this.columns = [{values:[...newCity]},{values:[...children[0]]}]
-  },
-  mounted(){
-      this.int()
+            this.selectData = {city:{...default_city},area:{...default_arae}};
+            //数据传入父组件
+            this.onSelectd(this.selectData)
+      }else{
+          //设置默认地区
+          this.columns = [{values:[...newCity]},{values:[...children[0]]}]
+      }
   },
   methods:{
       onChange(picker, values) {
@@ -69,13 +90,6 @@ export default {
           this.onSelectd(this.selectData)
           this.onShow(false)
       },
-      //设置默认地区
-      int(){
-          const {default_areaData} = this;
-          if(default_areaData){
-              debugger
-          }
-      }
   }
 };
 </script>
