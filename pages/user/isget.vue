@@ -6,10 +6,10 @@
               <div class="consume-one border-btn">
                   <p @click="showPopup">
                     {{value | moment}}
-                    <img src="../../assets/img/consume/tou-bottom.png">
+                    <img :class="[show?'rotate':'']" src="../../assets/img/consume/tou-bottom.png">
                   </p>
                   <p @click="showPopups">{{classification}}
-                      <img src="../../assets/img/consume/tou-bottom.png" alt="">
+                      <img :class="[shows?'rotate':'']" src="../../assets/img/consume/tou-bottom.png" alt="">
                   </p>
               </div>
 

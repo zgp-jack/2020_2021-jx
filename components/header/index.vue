@@ -16,7 +16,7 @@ import { Icon } from 'vant';
 
 Vue.use(Icon);
 export default {
-    props:['title','onskip','ensure_text','onEnsure'],
+    props:['title','onskip','ensure_text','getParentFn'],
     data(){
         return{
 
@@ -29,8 +29,10 @@ export default {
                 return false;
             }
             this.$router.go(-1)
-        }
-    }
+        },
+		onEnsure(){
+			this.$emit('getParentFn')
+		}
+  }
 }
 </script>
-

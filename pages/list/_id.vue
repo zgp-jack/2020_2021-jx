@@ -20,10 +20,10 @@
     </div>
 
     <!-- 地区选择 -->
-    <CustomArea :onSelect="onSelect" :isSelect_area="isSelect_area"/>
+    <CustomArea whearthStorage="true" :onSelect="onSelect" :isSelect_area="isSelect_area"/>
 
     <!-- 机械类型选择 -->
-    <CustomMechanicalType :onSelect="onSelect" :isSelect_jixie="isSelect_jixie"/>
+    <CustomMechanicalType whearthStorage="true" :onSelect="onSelect" :isSelect_jixie="isSelect_jixie"/>
 
     <!-- 排序 -->
     <div :class="{'model_mask':true,'selectd_box':!isSelect_sort}" @click.stop.prevent="onisclose('isSelect_sort')">
@@ -133,6 +133,15 @@ export default {
   created(){
     const mode = this.$route.params.id;
     this.mode = mode;
+    //获取本地存储机械类型
+    let all = window.sessionStorage.getItem('mechanic_all');
+    let mechanic_child = window.sessionStorage.getItem('mechanic_child');
+    if(all){
+      this.type = JSON.parse(all).id;
+    }else if(mechanic_child){
+      this.type = JSON.parse(mechanic_child).id;
+      this.selectJixieData = JSON.parse(mechanic_child);
+    }
   },
   methods: {
     // 滚动
@@ -148,34 +157,35 @@ export default {
       this.$set(this, type, flag);
       //关闭弹框请求接口
       if(Data){
+
         switch(type){
           case 'isSelect_area' :
-          this.selectAreaData = { ...Data };
-          //接口请求
-          this.addr = Data.id;
-          var params = this.getParams({addr:Data.id});
-          this.getList({
-            params
-          })
+            this.selectAreaData = { ...Data };
+            //接口请求
+            this.addr = Data.id;
+            //本地存储
+            var params = this.getParams({addr:Data.id});
+            this.getList({
+              params
+            })
           break;
-
+          //机械
           case 'isSelect_jixie' :
-          this.selectJixieData = { ...Data };
-          //接口请求
-          var params = this.getParams({type:Data.id});
-          this.getList({
-            params
-          })
+            this.selectJixieData = { ...Data };
+            //接口请求
+            var params = this.getParams({type:Data.id});
+            this.getList({
+              params
+            })
           break;
-
           case 'isSelect_sort' :
-          this.selectSortData = { ...Data };
-          this.sort_index = Data.id;
-          //接口请求
-          var params = this.getParams({pattern:Data.id});
-          this.getList({
-            params
-          })
+            this.selectSortData = { ...Data };
+            this.sort_index = Data.id;
+            //接口请求
+            var params = this.getParams({pattern:Data.id});
+            this.getList({
+              params
+            })
           break;
         }
       }
@@ -235,7 +245,6 @@ export default {
             }
           }
           that.$set(that,'list',[...list])
-          console.log(that.list)
         })
       }else{
         Toast('您访问的页面不存在，将自动跳转')

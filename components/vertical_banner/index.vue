@@ -2,7 +2,7 @@
   <div style="height: 100%;">
     <van-swipe class="my-swipe" :vertical="true" :autoplay="3000" :show-indicators="false" ref="resize">
       <van-swipe-item v-if="go_release">
-        <p>置顶发布消息，提升曝光率，让别主动联系你 <span>去置顶</span></p>
+        <p @click="go_set_top">置顶发布消息，提升曝光率，让别主动联系你 <span>去置顶</span></p>
       </van-swipe-item>
       <van-swipe-item v-if="go_settop">
         <p @click="go_releaseFn">点此发布机械出租、求租、转让、求购 <span>一键发布</span></p>
@@ -36,7 +36,9 @@
       //一键发布
       go_releaseFn(){
         this.$refs.child.list_show();
-         console.log(this.$refs)
+      },
+      go_set_top(){
+        this.$router.push('/user/release/'+this.$route.query.mode)
       }
     },
     props:['type','go_release','go_settop']

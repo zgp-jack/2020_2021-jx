@@ -1,4 +1,4 @@
-@import '../../assets/css/style.scss';
+@import "../../assets/css/style.scss";
 .create{
   position: relative;
   .form{
@@ -16,7 +16,6 @@
         .form_row{
           display: flex;
           justify-content: space-between;
-          height:0.9rem;
           line-height:0.9rem;
           border-bottom: 1px solid #ddd;
             .notice{
@@ -26,15 +25,35 @@
               font-weight: bold;
             }
             .content{
+              input{
+                width: 100%;
+              }
+              select{
+                font-size: 0.26rem;
+              }
               width: calc(100% - 1.3rem);
                 span{
                   width: 100%;
                   height: 100%;
                   display: block;
                   color:#ccc;
-                  white-space: nowrap;
-                  overflow-x: hidden;
-                  text-overflow: ellipsis;
+                  line-height: 0.4rem;
+                  padding: 0.25rem 0;
+                }
+                .inner{
+                  color: #333;
+                }
+                .capt{
+                  display: inline-block;
+                  margin-top: 0.15rem;
+                  padding: 0;
+                  height: 0.6rem;
+                  width: 2rem;
+                  color: #fff;
+                  border-radius: 0.15rem;
+                  line-height: 0.6rem;
+                  text-align: center;
+                  background-color: #ffa926
                 }
                 select{
                   width: 100%;
@@ -46,6 +65,11 @@
                   padding: 0;
                   margin: 1px 0;
                 }
+            }
+            .captInput{
+              input{
+                width: 50%;
+              }
             }
         }
         .desc{
@@ -65,15 +89,13 @@
           height: auto;
           flex-wrap: wrap;
           padding-bottom:0.2rem;
-          overflow: hidden;
-          transition: all .5s;
             .chose-img{
-              width: 25%;
-              height: 2.2rem;
+              width: 2rem;
+              height: 2rem;
+              //间隙0.19rem 6.38
               background-image: url('../../assets/img/up_load_img.png');
               background-repeat: no-repeat;
-              background-size: 100% 80px;
-              margin-top: 10px;
+              background-size: 100% 100%;
               position: relative;
               input{
                 width: 100%;
@@ -84,6 +106,40 @@
                 left: 0;
               }
             }
+        }
+        #{'/deep/'} {
+          .van-uploader__wrapper{
+            .van-uploader__preview{
+              .van-uploader__preview-image{
+                width: 1.89rem;
+                height: 1.89rem;
+              }
+            }
+          }
+        }
+        .img{
+          display: inline-block;
+          vertical-align: middle;
+          div{
+            &:nth-of-type(3n-1){
+              margin-left: 0.3rem;
+              margin-right: 0.3rem;
+            }
+            margin-bottom: 0.3rem;
+            width: 1.89rem;
+            height: 1.89rem;
+          }
+          .img_box{
+            position: relative;
+            display: inline-block;
+            .imgclose{
+              position: absolute;
+              right: 0.1rem;
+              top: 0.1rem;
+              font-size: 0.4rem;
+              line-height: 0.4rem;
+            }
+          }
         }
     }
     .submit{

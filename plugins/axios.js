@@ -23,6 +23,7 @@ export default function ({$axios,redirect,store}) {
         }
         if(data && config.url!=='/upload?source=M'){
             config.data = qs.stringify(config.data)
+            config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
         }
         globalLoading && Toast.loading({
             mask: true,
@@ -32,9 +33,6 @@ export default function ({$axios,redirect,store}) {
         const ssoToken = getCookie('ssoToken');
         if(ssoToken){
             config.headers.common['x-token'] = ssoToken;
-        }
-        if(!config.headers){
-            config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
         }
 
     })

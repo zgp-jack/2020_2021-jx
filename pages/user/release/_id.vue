@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Header :title="title"/>
+      <Header :title="title" @getParentFn="showRelease" ensure_text="发布"/>
       <div style="width: 7.5rem;">
         <collHead :arr = 'arr' @modeType = 'onServers' ref="collHead"/>
       </div>
@@ -33,7 +33,7 @@
                     <div class="intruduce">{{item.desc}}</div>
                     <div class="opearting clearfix">
                         <span @click.stop="goModifyPage(item)" :class="[(item.check==0) || !(item.end==2||item.check==1)?'list_item_editor':'modify']" >修改信息</span>
-                        <span class="list_item_top" @click.stop="goSettingFn($event,item,index)" v-if="item.check!='0' && item.end!='2'">{{item.top?'取消置顶':item.top_over_due?'继续置顶':'去置顶'}}</span>
+                        <span class="list_item_top" @click.stop="goSettingFn($event,item,index)" v-if="item.check!='0' && item.end!='2'">{{item.top?'取消置顶':!item.top_over_due?'继续置顶':'去置顶'}}</span>
                         <span @click.stop="refuse(item)" v-if="item.check == 0" class="list_item_reason fr"><img src="../../../assets/img/user_release/warning.png" alt=""> 查看被拒原因</span>
                         <span v-if="item.etime && item.check!=='0' && item.end !='2' && item.top" class="list_item_time fr">{{item.etime}} 到期</span>
                     </div>
@@ -42,14 +42,18 @@
             </van-list>
             <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
         </div>
+         <BottomTop  ref="child" :hiddenAll="true" />
   </div>
 </template>
 
 <script>
 import collHead from '../../../components/collection-head';
 import EmptyMsg from '../../../components/emptyMsg';
-import {formatDate} from '../../../static/utils/utils.js'
+import {formatDate} from '../../../static/utils/utils.js';
 import { Toast,List,Dialog  } from 'vant';
+import BottomTop from '../../../components/bottom-topbar/index.vue';
+
+
 export default {
   created(){
     if(this.$route.query.show){
@@ -64,6 +68,7 @@ export default {
         'van-list':List,
         EmptyMsg,
         [Dialog.Component.name]: Dialog.Component,
+        BottomTop
     },
     mounted () {
         this.$refs.collHead.onchangeIndex(this.mode)
@@ -286,10 +291,10 @@ export default {
             return false
           };
           this.$router.push({
-            path:'/create?mode='+this.mode,
+            path:'/common/update?mode='+this.mode,
             query:{
               id:item.uu_id,
-              type:this.mode
+              // type:this.mode
             }
           })
 
@@ -302,6 +307,9 @@ export default {
             message:item.fail_reason,
             confirmButtonColor:"#ffa926"
           })
+        },
+        showRelease(){
+          this.$refs.child.list_show();
         }
     }
 }

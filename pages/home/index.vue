@@ -74,22 +74,8 @@
         <p class="more" v-if="list[title_data[title_active].key].length>0" @click="Jump_page(title_data[title_active].type)">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
-
-    <!-- 新手大礼包 -->
-    <!-- <div class="new_gift" v-if="show_gift_alert" @click.stop="close_gift_alert($event,'bg')">
-      <van-popup v-model="show_gift">
-        <div class="inner">
-          <div class="gift-img-text"></div>
-          <p class="gift-title">领礼包，上万机械信息免费看</p>
-          <div class="main-img"></div>
-          <div class="gift-btn" @click="rigthReceove">立即领取</div>
-        </div>
-        <div class="gift-close iconfont icon-cuo" @click="close_gift_alert($event,'close')"></div>
-      </van-popup>
-    </div> -->
-      <Newgift home ='true'/>
+      <Newgift v-if="show_gift_alert"/>
     <Tarbar />
-
   </div>
 </template>
 
@@ -148,6 +134,10 @@ export default {
       home:true
     }
   },
+  created() {
+
+
+  },
   methods:{
     changeTitle(index){
        this.title_active = index;
@@ -163,7 +153,7 @@ export default {
         if (cityData) {
           this.selectAreaData = {...cityData}
           //接口请求
-          this.listData({area:cityData.id})
+          this.listData({area:cityData.id},cityData)
         }
       },
       onisclose(type) {
@@ -171,13 +161,15 @@ export default {
         this.onSelect(type, flag);
       },
       //列表页数据
-      listData(params={}){
+      listData(params={},cityData){
         const that = this;
         that.$axios.get('/index/home',{params}).then(res=>{
-
+            console.log(res)
             that.$set(that, "list", {...res.content});
             //新手礼包
             that.show_gift_alert = that.list.welfareDialog;
+            //本地储存
+            window.localStorage.setItem('city',JSON.stringify(cityData))
         })
       },
       // 滚动显示隐藏
@@ -208,7 +200,6 @@ export default {
       },
       getObj(obj){
         const {list,title_data,title_active} = this;
-        // debugger
         list[title_data[title_active].key][obj.index].tel = obj.tel
         this.$set(this,'list',{...list})
       },

@@ -220,14 +220,15 @@
     line-height: 0.36rem;
   }
   .footer-opeart{
+    width: 7.5rem;
     display: flex;
     padding: 0 0.38rem;
     height: 1.12rem;
-    width: 100%;
     background-color: #fff;
     position: fixed;
     padding-top: 0.15rem;
-    left: 0;
+    left: 50%;
+    margin-left: -3.75rem;
     bottom: 0;
     border-top: 1px solid #eee;
     justify-content: space-between;
