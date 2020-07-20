@@ -32,6 +32,7 @@
     </nuxt-link>
     <!-- 弹框 -->
     <call-confirm @phoneNunber="getPhone" :userInfo="item_flag" v-if="show" />
+    <bance v-show="shows"/>
   </div>
 </template>
 
@@ -39,20 +40,33 @@
   import { Dialog } from 'vant';
   import call_confirm from '../call_confirm/call_confirm';
   import {callPhoneFn} from '../../static/utils/utils.js';
+  import bance from '../bance/index';
   export default{
+   watch:{
+     yue(){
+       if(this.yue == true) this.shows = true
+       if(this.shows) {
+       this.yue = false
+       }
+       console.log(this.shows,this.yue)
+     },
+   },
    props:['data'],
    components:{
       [Dialog.Component.name]: Dialog.Component,
-     "call-confirm":call_confirm
+     "call-confirm":call_confirm,
+     "bance":bance
    },
     data(){
       return{
         default_img:{},
         is_mine:true, //是否是自己发布的消息
         show:false,  //是否显示弹框
+        shows:false, //去充值弹窗
         item_flag:{},
         state_img:"url(../../assets/img/other/rented.png)",
-        complatePhone:''
+        complatePhone:'',
+        yue:false
       }
     },
     created(){
@@ -104,8 +118,9 @@
 
         },
         //得到子组件传的电话号码
-        getPhone(obj){
-          this.$emit("giveParent",obj)
+        getPhone(obj,yue){
+          this.yue = yue
+          this.$emit("giveParent",obj,yue)
         }
       }
 

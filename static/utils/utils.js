@@ -18,7 +18,6 @@ export function setCookie(name, value,Days=1) {
 export function callPhoneFn(phone){
   window.location.href = "tel:"+phone
 }
-
 //查看完整电话号码
 export function showPhoneFn(that,Toast,data,bool=false){
   /*
@@ -42,10 +41,23 @@ export function showPhoneFn(that,Toast,data,bool=false){
       Toast(res.msg);
     }else if(res.code == 303){
       Toast(res.msg);
+      // that.giveParentPhone({tel:res.content,id:data.id,index:that.$props.userInfo.index,mode:data.mode},true)
+      Dialog.confirm({
+        title: '标题',
+        message: '弹窗内容',
+      })
     }
   })
 }
-
+// 余额不足领取礼包
+export function bance(that,yue,id){
+    // if(yue){
+    //   const params = {welfareId:id}
+    //   that.$axios.get('/user-welfare/get-welfare',{params}).then(res =>{
+    //     console.log(res)
+    //   })
+    // }
+}
 // 签到
 export function coinget(that){
   if(!that.box_on){

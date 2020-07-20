@@ -60,6 +60,7 @@
         </div>
 
         <EmptyMsg :empty1="iscomplete" :empty2="isempty"/>
+
     <Tarbar />
     </div>
   </div>
@@ -75,10 +76,12 @@ import FirstListItem from '../../components/firstListItem';
 import SeccondListItem from '../../components/seccondListItem';
 import EmptyMsg from '../../components/emptyMsg';
 import BottomTop from '../../components/bottom-topbar/index'
-
+import Newgift from '../../components/new_gift/index'
+import {bance} from '../../static/utils/utils.js';
 export default {
   data() {
     return {
+      lost:false,
       isSelect_area: false,
       isSelect_jixie: false,
       isSelect_sort: false,
@@ -124,12 +127,12 @@ export default {
     SeccondListItem,
     EmptyMsg,
     'van-list':List,
-    BottomTop
+    BottomTop,
+    Newgift
   },
   created(){
     const mode = this.$route.params.id;
     this.mode = mode;
-
   },
   methods: {
     // 滚动
@@ -262,10 +265,14 @@ export default {
       this.getList({params},false)
     },
     //得到电话号码并显示
-    getObj(obj){
+    getObj(obj,yue){
       let list = this.list;
-      list[obj.index].tel = obj.tel
-      this.$set(this,'list',[...list])
+      if(obj.tel){
+          list[obj.index].tel = obj.tel
+          this.$set(this,'list',[...list])
+      }
+      this.lost = yue
+      bance(this,yue,obj.id)
     }
   },
 };

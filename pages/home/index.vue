@@ -3,7 +3,7 @@
   <div class="container" @scroll="my_scroll">
     <!-- 底部导航 -->
     <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
-    <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" />
+    <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" whearthStorage = 'true' />
 	  <div id="head" ref="head">
       <div class="left_dom fl">
         <h1 class="fl">
@@ -87,7 +87,7 @@
         <div class="gift-close iconfont icon-cuo" @click="close_gift_alert($event,'close')"></div>
       </van-popup>
     </div> -->
-      <Newgift v-if="show_gift_alert"/>
+      <Newgift home ='true'/>
     <Tarbar />
 
   </div>
@@ -145,6 +145,7 @@ export default {
       isempty:false, //数据是否为空
       show_gift:true, //新手大礼包
       show_gift_alert:false,//新手大礼包
+      home:true
     }
   },
   methods:{
@@ -206,7 +207,6 @@ export default {
         }
       },
       getObj(obj){
-        console.log(obj)
         const {list,title_data,title_active} = this;
         // debugger
         list[title_data[title_active].key][obj.index].tel = obj.tel
