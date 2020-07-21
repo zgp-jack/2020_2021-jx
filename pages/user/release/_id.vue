@@ -4,9 +4,8 @@
       <div style="width: 7.5rem;">
         <collHead :arr = 'arr' @modeType = 'onServers' ref="collHead"/>
       </div>
-
        <!-- 遮罩 -->
-       <div class="point-mask" v-if="mask">
+       <div class="point-mask" v-if="mask" :style="{'background-image':mode == 1?'url('+require('../../../assets/img/my-fabu/qiuzu_point.png'):'url('+require('../../../assets/img/my-fabu/qiugou_point.png')}">
            <div class="btn-img" @click="mask_show()"></div>
        </div>
        <!-- 置顶遮罩 -->
@@ -62,6 +61,9 @@ export default {
     this.mode = this.$route.params.id;
     let params = this.getParams({})
     this.getData(params)
+    if((this.mode == 1 || this.mode == 4)){
+      this.mask = true
+    }
   },
     components:{
         collHead,
