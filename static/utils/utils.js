@@ -128,3 +128,15 @@ export function deepCopy(obj) {
 
   return result;
 }
+
+
+//解决浏览器缓存
+export function timestamp(url){
+     var getTimestamp=new Date().getTime();
+     if(url.indexOf("?")>-1){
+       url=url+"&t="+getTimestamp
+     }else{
+      url=url+"?t="+getTimestamp
+    }
+  return url;
+}

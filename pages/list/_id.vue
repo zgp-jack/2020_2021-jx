@@ -77,6 +77,7 @@ import EmptyMsg from '../../components/emptyMsg';
 import BottomTop from '../../components/bottom-topbar/index'
 
 export default {
+  name:'list',
   data() {
     return {
       isSelect_area: false,
