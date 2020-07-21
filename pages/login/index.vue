@@ -34,15 +34,15 @@
 
 <script>
 import md5 from 'js-md5';
-import {setCookie,GetUser} from '../../static/utils/utils.js';
+import {setCookie,GetUser,whetherLogin} from '../../static/utils/utils.js';
 import {Toast} from 'vant';
 export default {
-  created(){
-    if(document.cookie.includes("ssoToken")){
-      this.$router.push("/home")
-    }
+    beforeCreate() {
+      whetherLogin(this)
+    },
+    created(){
 
-  },
+    },
     data(){
         return{
           title:'登录_鱼泡机械',

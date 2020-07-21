@@ -43,12 +43,7 @@
   </div>
 </template>
 <script>
-   var getNumber = [1,3,10,100,300];
-   var random = Math.floor(Math.random()*5); //0-4的随机数
 
-    function gailu(){
-      console.log(geNumber[random])
-    }
 </script>
 
 <style>

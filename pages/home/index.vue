@@ -75,6 +75,9 @@
       </div>
     </div>
       <Newgift v-if="show_gift_alert"/>
+
+      <!-- 新手指引 -->
+      <home-novice-point v-if="novice_point_alert" @novicePointHidden="novicePointHiddenFn" />
     <Tarbar />
   </div>
 </template>
@@ -89,6 +92,8 @@ import chooseArea from '../../components/customArea/index.vue'
 import call_confirm from '../../components/call_confirm/call_confirm'
 import BottomTop from '../../components/bottom-topbar/index'
 import Newgift from '../../components/new_gift/index'
+import {getNovicePoint,setNovicePoint} from '../../static/utils/utils.js';
+import home_novice_point from '../../components/page-novice-point/index.vue'
 export default {
   components: {
     Tarbar: Tarbar,
@@ -102,7 +107,8 @@ export default {
     BottomTop,
     'van-popup':Popup,
     [Dialog.Component.name]: Dialog.Component,
-    Newgift
+    Newgift,
+    "home-novice-point":home_novice_point
   },
   data(){
     return{
@@ -131,13 +137,25 @@ export default {
       isempty:false, //数据是否为空
       show_gift:true, //新手大礼包
       show_gift_alert:false,//新手大礼包
+      novice_point:'',//新手指引对象
+      novice_point_alert:false
     }
   },
   created() {
-
-
+    this.novice_point = getNovicePoint();
+    //显示新手指引
+    this.novicePointFn()
   },
   methods:{
+    novicePointHiddenFn(open){
+      this.novice_point_alert = open
+    },
+    //指引弹窗显示
+    novicePointFn(){
+      if(this.novice_point.home && this.show_gift_alert == false){
+        this.novice_point_alert = true;
+      }
+    },
     changeTitle(index){
        this.title_active = index;
     },
