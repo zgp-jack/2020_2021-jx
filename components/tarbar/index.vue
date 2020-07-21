@@ -42,16 +42,6 @@ export default {
       path: this.$route.path
     };
   },
-  beforeRouteLeave(to,from,next){
-      debugger
-      ///关键语句
-      let top= document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;
-      this.rememberOffsetTop =top|| 0
-      debugger
-      next();
-  },
-  methods: {
-  },
 };
 </script>
 
