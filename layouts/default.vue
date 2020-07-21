@@ -1,7 +1,7 @@
 <!-- keep-alive -->
 <template>
   <div class='layout'>
-    <nuxt v-if="isShow && numberServers==3"/>
+    <nuxt v-if="isShow && numberServers==3" keep-alive :keep-alive-props="{ include: includeArr }"/>
     <Loading v-else-if="!isShow"/>
   </div>
 </template>
@@ -18,6 +18,7 @@ export default {
       isShow: false,
       value1:0,
       numberServers:0,
+      includeArr: ['list','home','user'] // 需要缓存的组件名数组
     };
   },
   components: {

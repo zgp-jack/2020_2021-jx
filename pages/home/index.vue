@@ -90,6 +90,7 @@ import call_confirm from '../../components/call_confirm/call_confirm'
 import BottomTop from '../../components/bottom-topbar/index'
 import Newgift from '../../components/new_gift/index'
 export default {
+  name:'home',
   components: {
     Tarbar: Tarbar,
     "van-swipe": Swipe,
