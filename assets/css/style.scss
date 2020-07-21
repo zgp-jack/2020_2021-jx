@@ -35,3 +35,8 @@ $colors:#555;
   height:100%;
   z-index:$z-index;
 }
+
+@mixin static_inner($top:1.01rem,$bottom:1.1rem){
+  padding-top: $top;
+  padding-bottom: $bottom;
+}
