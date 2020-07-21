@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Header :title="title"/>
+      <Header :title="title" go_home_page="true"/>
       <div class="father">
           <div class="form">
             <div class="form-row">
@@ -34,14 +34,15 @@
 
 <script>
 import md5 from 'js-md5';
-import {setCookie} from '../../static/utils/utils.js';
+import {setCookie,GetUser,whetherLogin} from '../../static/utils/utils.js';
 import {Toast} from 'vant';
 export default {
-  created(){
-    if(document.cookie.includes("ssoToken")){
-      this.$router.push("/home")
-    }
-  },
+    beforeCreate() {
+      whetherLogin(this)
+    },
+    created(){
+
+    },
     data(){
         return{
           title:'登录_鱼泡机械',
@@ -70,7 +71,8 @@ export default {
         }
       },
       Login(){
-        let Pass = this.password
+        const that = this;
+        let Pass = this.password;
         let psd = md5(Pass)
         this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password},{
           headers:{
@@ -79,9 +81,11 @@ export default {
         }).then(res=>{
           if(res.code==200){
             setCookie('ssoToken',res.content.token);
-            Toast({message:'登录成功',duration:200,onClose:()=>{
-              this.$router.go(-1);
-            }})
+            Toast('登录成功')
+            const callback = ()=>{
+               that.$router.go(-1);
+            }
+            GetUser(that,callback)
           }else if(res.code == 500){
             Toast(res.msg)
           }

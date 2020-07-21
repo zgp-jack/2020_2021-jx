@@ -147,6 +147,59 @@ export function deepCopy(obj) {
   return result;
 }
 
+//获取个人信息接口
+export function GetUser(page,callback){
+  const ssoToken = getCookie('ssoToken');
+  if(ssoToken){
+    page.$axios.get('/user/get-userinfo').then(res=>{
+      if(res.code==200){
+        window.$nuxt.$store.commit('setUserinfo',res.content)
+      }
+      callback && callback()
+    })
+  }else{
+    callback && callback()
+  }
+}
+
+/*
+  未登录跳转页面
+  @parmes: that : this
+           url : 需要跳转的路径，默认/login登录页
+*/
+export function whetherLogin(that,url="/login"){
+  if(!that) return false;
+  if (!window.$nuxt.$store.state.userinfo){
+    that.$router.push(url)
+  }
+}
+
+//新手弹窗指引/获取本地存储
+export function getNovicePoint(){
+  let guide = {
+      detail: true,
+      home: true,
+      lease: true,
+      userBuy: true,
+      userRelease: true,
+      welfare: true,
+      zhuanrang: true,
+    }
+  let storageGuide = window.localStorage.getItem('guide');
+  if(storageGuide){
+    guide = storageGuide
+  }else{
+    window.localStorage.setItem("guide",JSON.stringify(guide))
+  }
+  return typeof guide == "object" ? guide : JSON.parse(guide);
+}
+
+//新手弹窗指引/设置本地储存
+// parmes : guideObject 要修改的json数据
+export function setNovicePoint(guideObject){
+  if(!guideObject) return false;
+  window.localStorage.setItem("guide",JSON.stringify(guideObject))
+}
 
 //解决浏览器缓存
 export function timestamp(url){
