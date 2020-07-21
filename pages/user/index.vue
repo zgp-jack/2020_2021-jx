@@ -66,7 +66,9 @@
 import Tarbar from '../../components/tarbar'
 import {callPhoneFn} from '../../static/utils/utils'
 export default {
-  name:'user',
+  created(){
+    this.userInfo = window.$nuxt.$store.state.userinfo;
+  },
   beforeCreate(){
     //判断登录
      if(!document.cookie.includes("ssoToken")){
@@ -172,10 +174,7 @@ export default {
           let userInfo = {...this.userInfo}
           return userInfo
         }
-  },
-  activated(){
-    this.userInfo = window.$nuxt.$store.state.userinfo;
-  },
+  }
 
 }
 </script>
