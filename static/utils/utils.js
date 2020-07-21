@@ -1,5 +1,5 @@
 
-import {Toast} from 'vant';
+import {Toast,Dialog} from 'vant';
 //读取cookies
 export function getCookie(name) {
     var arr,
@@ -19,7 +19,6 @@ export function setCookie(name, value,Days=1) {
 export function callPhoneFn(phone){
   window.location.href = "tel:"+phone
 }
-
 //查看完整电话号码
 export function showPhoneFn(that,Toast,data,bool=false){
   /*
@@ -42,11 +41,30 @@ export function showPhoneFn(that,Toast,data,bool=false){
     }else if(res.code == 300){
       Toast(res.msg);
     }else if(res.code == 303){
-      Toast(res.msg);
+      Dialog.confirm({
+        title: '提示',
+        message: '鱼泡币不足?领取礼包,可免费查看电话',
+        confirmButtonText:'领礼包',
+        confirmButtonColor:'#FFA926',
+        cancelButtonText:"去充值"
+      }).then(()=>{
+        const params = {welfareId:1}
+        that.$axios.get('/user-welfare/get-welfare',{params}).then(res =>{
+          if(res.code == 200){
+            that.$router.push('/user/get')
+          }
+          if(res.code == 500){
+            Toast(res.msg)
+            return false
+          }
+        })
+      })
+      .catch(()=>{
+        that.$router.push('/user/get')
+      })
     }
   })
 }
-
 // 签到
 export function coinget(that){
   if(!that.box_on){
