@@ -18,7 +18,7 @@ export default {
       isShow: false,
       value1:0,
       numberServers:0,
-      includeArr: ['list','home','user'] // 需要缓存的组件名数组
+      includeArr: ['list','home'] // 需要缓存的组件名数组
     };
   },
   components: {
