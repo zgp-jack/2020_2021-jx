@@ -26,8 +26,8 @@
                   <p class="call-phone" v-if="call_phone" @click="callPhone">拨打电话</p>
                 </div>
               </div>
-              <div class="tips">联系我时，请说明是在<b style="color:red">“鱼泡机械”</b>上看到的</div>
             </div>
+            <div class="tips">联系我时，请说明是在<b style="color:red">“鱼泡机械”</b>上看到的</div>
           </div>
           <div class="machine-type">
             <p class="title">机械类型</p>
@@ -97,7 +97,7 @@
   import VerticalBanner from "../../components/vertical_banner";
   import { Dialog,ImagePreview,Toast } from 'vant';
   import {showPhoneFn,callPhoneFn} from '../../static/utils/utils.js';
-  
+
   export default{
     data(){
       return{

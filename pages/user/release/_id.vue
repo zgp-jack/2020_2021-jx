@@ -4,9 +4,8 @@
       <div style="width: 7.5rem;">
         <collHead :arr = 'arr' @modeType = 'onServers' ref="collHead"/>
       </div>
-
        <!-- 遮罩 -->
-       <div class="point-mask" v-if="mask">
+       <div class="point-mask" v-if="(mode ==1 && mask_tencent) || (mode == 4 && mask_want)" :style="{'background-image':mode == 1?'url('+require('../../../assets/img/my-fabu/qiuzu_point.png'):'url('+require('../../../assets/img/my-fabu/qiugou_point.png')}">
            <div class="btn-img" @click="mask_show()"></div>
        </div>
        <!-- 置顶遮罩 -->
@@ -49,7 +48,7 @@
 <script>
 import collHead from '../../../components/collection-head';
 import EmptyMsg from '../../../components/emptyMsg';
-import {formatDate} from '../../../static/utils/utils.js';
+import {formatDate,setNovicePoint,getNovicePoint} from '../../../static/utils/utils.js';
 import { Toast,List,Dialog  } from 'vant';
 import BottomTop from '../../../components/bottom-topbar/index.vue';
 
@@ -62,6 +61,11 @@ export default {
     this.mode = this.$route.params.id;
     let params = this.getParams({})
     this.getData(params)
+    if((this.mode == 1 || this.mode == 4)){
+      let guide = getNovicePoint();
+      this.mask_want = guide.userBuy;
+      this.mask_tencent = guide.lease;
+    }
   },
     components:{
         collHead,
@@ -77,7 +81,8 @@ export default {
         return{
             title:'我的发布',
             arr:[{title:'我的求租',id:'1'},{title:'我的出租',id:'2'},{title:'我的出售',id:'3'},{title:'我的求购',id:'4'},],
-            mask:false,
+            mask_want:false,
+            mask_tencent:false,
             my_scroll:0,
             isshow:true,
             Topmaskr:false,
@@ -117,8 +122,17 @@ export default {
         }
     },
     methods:{
+      //新手指引弹窗
         mask_show(){
-            this.mask = false
+          let guide = getNovicePoint();
+          if(this.mode == 1){
+             guide.lease = false;
+             this.mask_tencent = false;
+          }else{
+             guide.userBuy = false;
+              this.mask_want = false;
+          }
+           setNovicePoint(guide)
         },
         Topmask(){
           this.Topmaskr =false

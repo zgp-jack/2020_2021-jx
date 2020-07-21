@@ -3,7 +3,7 @@
   <div class="container" @scroll="my_scroll">
     <!-- 底部导航 -->
     <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
-    <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" />
+    <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" whearthStorage = 'true' />
 	  <div id="head" ref="head">
       <div class="left_dom fl">
         <h1 class="fl">
@@ -145,6 +145,10 @@ export default {
     this.novice_point = getNovicePoint();
     //显示新手指引
     this.novicePointFn()
+
+  },
+  created() {
+
   },
   methods:{
     novicePointHiddenFn(open){
@@ -181,7 +185,6 @@ export default {
       listData(params={},cityData){
         const that = this;
         that.$axios.get('/index/home',{params}).then(res=>{
-            console.log(res)
             that.$set(that, "list", {...res.content});
             //新手礼包
             that.show_gift_alert = that.list.welfareDialog;
@@ -216,7 +219,6 @@ export default {
         }
       },
       getObj(obj){
-        console.log(obj)
         const {list,title_data,title_active} = this;
         list[title_data[title_active].key][obj.index].tel = obj.tel
         this.$set(this,'list',{...list})
@@ -224,7 +226,6 @@ export default {
   },
   mounted() {
     this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
-    console.log(this.list)
   }
 
 }

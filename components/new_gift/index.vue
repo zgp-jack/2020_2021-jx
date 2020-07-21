@@ -17,6 +17,10 @@
 <script>
 import {Popup} from 'vant';
 export default {
+  created(){
+    // this.listData()
+  },
+  props:['home','lost'],
   components:{
     'van-popup':Popup,
   },
@@ -24,9 +28,22 @@ export default {
     return{
       show_gift:true, //新手大礼包
       show_gift_alert:true,//新手大礼包
+      welfareDialog:false
     }
   },
   methods:{
+    listData(parmas={}){
+        if(window.localStorage.getItem('welfare') == null && !this.home){
+            const that = this;
+            that.$axios.get('/index/home',{params}).then(res=>{
+            that.welfareDialog = res.content.welfareDialog
+            if(!that.welfareDialog) that.show_gift_alert = false
+            window.localStorage.setItem('welfare',that.welfareDialog)
+        })
+        }else if(!this.home && window.localStorage.getItem('welfare') !=null){
+            return false;
+        }
+      },
     //关闭新手大礼包
       close_gift_alert(e,need){
         e.stopPropagation()
