@@ -154,8 +154,8 @@ export function GetUser(page,callback){
     page.$axios.get('/user/get-userinfo').then(res=>{
       if(res.code==200){
         window.$nuxt.$store.commit('setUserinfo',res.content)
+        callback && callback()
       }
-      callback && callback()
     })
   }else{
     callback && callback()
