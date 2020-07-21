@@ -48,7 +48,7 @@ export default {
       let url = base?window.location.origin + base + path:window.location.origin+path
       if(url !==window.location.href){
         if(path == '/user'){
-        whetherLogin(this,this.$router.push(path))
+        whetherLogin(this,path)
         return false
       }
         window.location.href = url
