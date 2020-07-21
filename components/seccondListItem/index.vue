@@ -34,7 +34,7 @@
 <script>
   import { Dialog ,Toast} from 'vant';
   import call_confirm from '../call_confirm/call_confirm'
-  import {callPhoneFn} from '../../static/utils/utils.js';
+  import {callPhoneFn,showPhoneFn} from '../../static/utils/utils.js';
   export default{
     props:['data'],
     components:{

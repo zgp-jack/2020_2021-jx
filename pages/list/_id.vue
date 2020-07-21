@@ -273,7 +273,7 @@ export default {
         return false
       }
       let query = {...this.query};
-      this.keywords = query.keywords;
+      this.keywords = query.keywords.replace(/\s+/g,"");
       let chinese_test = /.*[\u4e00-\u9fa5]+.*$/;
       if(!chinese_test.test(this.keywords) && this.keywords != ''){
         Toast('搜索关键词必须包含中文才能进行搜索!')
