@@ -317,7 +317,6 @@
           area:areaId.slice(0,areaId.length-1)
         }
         console.log(data)
-        // return;
         this.$axios.post('/user/new-set-top-do',{...data}).then(res=>{
           if(res.code == 200){
            Toast.success('置顶成功');
@@ -326,7 +325,7 @@
            },2000)
           }else if(res.code == 303){
             Toast.fail(res.msg)
-          }else if(res.code == 501){
+          }else{
             Toast(res.msg)
           }
         })
