@@ -27,7 +27,7 @@ export default {
   data(){
     return{
       show_gift:true, //新手大礼包
-      show_gift_alert:false,//新手大礼包
+      show_gift_alert:true,//新手大礼包
       welfareDialog:false
     }
   },

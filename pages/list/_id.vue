@@ -7,7 +7,8 @@
           <van-search
               class="fl"
               :placeholder="search_placeholder[mode]"
-              bind:query.keywords="onSearch"
+              v-model="query.keywords"
+              maxlength="16"
           />
           <span class="search_text fr" @click="onSearch">搜索</span>
         </div>
@@ -210,6 +211,7 @@ export default {
       if(this.mode==1||this.mode==2||this.mode==3||this.mode==4){
         const that = this;
         this.$axios.get('/index/list',{...params}).then(res=>{
+          console.log(res)
           if(that.loading){
             that.loading = false;
           }
@@ -245,6 +247,8 @@ export default {
             }
           }
           that.$set(that,'list',[...list])
+        }).catch(()=>{
+
         })
       }else{
         Toast('您访问的页面不存在，将自动跳转')
@@ -264,9 +268,20 @@ export default {
 
     //搜索
     onSearch(){
-      this.keywords = this.query.keywords;
-      const params = this.getParams(this.keywords);
-      this.getList({...params})
+      if(Object.keys(window.$nuxt.$store.state.userinfo).length  == 0){
+        this.$router.push('/login')
+        return false
+      }
+      let query = {...this.query};
+      this.keywords = query.keywords;
+      let chinese_test = /.*[\u4e00-\u9fa5]+.*$/;
+      if(!chinese_test.test(this.keywords) && this.keywords != ''){
+        Toast('搜索关键词必须包含中文才能进行搜索!')
+        return false
+      }
+      const params = this.getParams();
+      this.list = []
+      this.getList({params},true)
     },
     listScroll(){
       this.page += 1;

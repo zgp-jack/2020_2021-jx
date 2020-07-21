@@ -136,7 +136,6 @@ export default {
   },
   created() {
 
-
   },
   methods:{
     changeTitle(index){
