@@ -89,14 +89,17 @@
 
     <!-- 举报弹框 -->
     <!-- <van-dialog /> -->
+    <pageView v-if="novice_point_alert" @novicePointHiddens="novicePointHiddens" :show = 'novice_point_alert' />
   </div>
 
 </template>
 
 <script>
   import VerticalBanner from "../../components/vertical_banner";
+  import pageView from "../../components/page-view";
   import { Dialog,ImagePreview,Toast } from 'vant';
   import {showPhoneFn,callPhoneFn} from '../../static/utils/utils.js';
+  import {getNovicePoint,setNovicePoint} from '../../static/utils/utils.js';
 
   export default{
     data(){
@@ -112,14 +115,18 @@
         state_text:"已出租",
         go_release:false, //去发布
         go_settop:false,  //去置顶
+        novice_point_alert:true
       }
     },
     components:{
       VerticalBanner,
       "van-dialog": Dialog.Component,
       [ImagePreview.Component.name]: ImagePreview.Component,
+      pageView
     },
     created(){
+      let guide = getNovicePoint();
+      if(!guide.detail) this.novice_point_alert = false
       let that = this;
       //参数不完整跳转首页
       if(!(this.$route.query.info && this.$route.query.mode)){
@@ -151,6 +158,9 @@
        console.log(this.detail_info);
     },
     methods:{
+      novicePointHiddens(open){
+      this.novice_point_alert = open
+    },
       // 改变标题
       changeTitle(mode){
         if(mode == 1){

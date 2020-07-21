@@ -64,16 +64,15 @@
 
 <script>
 import Tarbar from '../../components/tarbar'
-import {callPhoneFn} from '../../static/utils/utils'
+import {callPhoneFn,whetherLogin} from '../../static/utils/utils'
 export default {
   created(){
     this.userInfo = window.$nuxt.$store.state.userinfo;
+    console.log(window.$nuxt.$store.state.userinfo)
   },
   beforeCreate(){
     //判断登录
-     if(!document.cookie.includes("ssoToken")){
-        this.$router.push('/login')
-     }
+     whetherLogin(this)
   },
   data(){
     return{
@@ -162,6 +161,7 @@ export default {
       },
       // 打电话
      tel(){
+        console.log(window.$nuxt.$store.state.userinfo)
         callPhoneFn(15608008605)
        },
        harvest(mode){

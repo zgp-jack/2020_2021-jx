@@ -19,7 +19,7 @@
                 }
                 .rotate{
                   transform:rotate(180deg);
-                 
+
                 }
                 padding: 0.26rem;
                 display: flex;
@@ -81,9 +81,13 @@
                             display: inline-block;
                             line-height:0.46rem;
                               p{
-                                  font-size: 0.3rem;
+                                  font-size: 0.31rem;
                                   color: #252529;
                                   font-weight: 550;
+                                  &:nth-of-type(2){
+                                    font-size: 0.26rem;
+                                    margin-top: 0.05rem;
+                                  }
                               }
                               span{
                                   font-size: 0.26rem;
@@ -95,7 +99,7 @@
                             float: right;
                             p{
                                 font-size:0.26rem;
-                                color: #252529;
+                                color: #FFAA26;
                                 font-weight:550;
                             }
                             img{
