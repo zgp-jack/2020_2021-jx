@@ -66,9 +66,7 @@
 import Tarbar from '../../components/tarbar'
 import {callPhoneFn,whetherLogin} from '../../static/utils/utils'
 export default {
-  created(){
-    this.userInfo = window.$nuxt.$store.state.userinfo;
-  },
+  name:'user',
   beforeCreate(){
     //判断登录
      whetherLogin(this)
@@ -172,7 +170,10 @@ export default {
           let userInfo = {...this.userInfo}
           return userInfo
         }
-  }
+  },
+  activated(){
+    this.userInfo = window.$nuxt.$store.state.userinfo;
+  },
 
 }
 </script>

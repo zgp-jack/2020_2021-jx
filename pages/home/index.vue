@@ -95,6 +95,7 @@ import Newgift from '../../components/new_gift/index'
 import {getNovicePoint,setNovicePoint} from '../../static/utils/utils.js';
 import home_novice_point from '../../components/page-novice-point/index.vue'
 export default {
+  name:'home',
   components: {
     Tarbar: Tarbar,
     "van-swipe": Swipe,

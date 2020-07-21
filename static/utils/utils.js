@@ -200,3 +200,14 @@ export function setNovicePoint(guideObject){
   if(!guideObject) return false;
   window.localStorage.setItem("guide",JSON.stringify(guideObject))
 }
+
+//解决浏览器缓存
+export function timestamp(url){
+     var getTimestamp=new Date().getTime();
+     if(url.indexOf("?")>-1){
+       url=url+"&t="+getTimestamp
+     }else{
+      url=url+"?t="+getTimestamp
+    }
+  return url;
+}

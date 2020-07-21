@@ -42,15 +42,6 @@ export default {
       path: this.$route.path
     };
   },
-  methods: {
-    onback() {
-      if (this.onskip) {
-        this.onskip();
-        return false;
-      }
-      this.$router.go(-1);
-    }
-  },
 };
 </script>
 
