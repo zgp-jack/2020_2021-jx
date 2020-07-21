@@ -26,6 +26,9 @@
       }
     },
     methods:{
+      giveParentPhone(obj,yue){
+        this.$emit('phoneNunber',obj,yue)
+      },
       go_call(){
         let that = this;
         //是否勾选了七天不再提示
@@ -40,9 +43,6 @@
         //进行ajax请求,获取完整的电话号码  ---- 进行打电话
         showPhoneFn(that,Toast,data)
       },
-      giveParentPhone(obj){
-        this.$emit('phoneNunber',obj)
-      }
     }
 
   }

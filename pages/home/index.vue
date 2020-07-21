@@ -3,7 +3,7 @@
   <div class="container" @scroll="my_scroll">
     <!-- 底部导航 -->
     <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
-    <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" />
+    <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" whearthStorage = 'true' />
 	  <div id="head" ref="head">
       <div class="left_dom fl">
         <h1 class="fl">
@@ -131,10 +131,10 @@ export default {
       isempty:false, //数据是否为空
       show_gift:true, //新手大礼包
       show_gift_alert:false,//新手大礼包
+      home:true
     }
   },
   created() {
-
 
   },
   methods:{
@@ -198,7 +198,6 @@ export default {
         }
       },
       getObj(obj){
-        console.log(obj)
         const {list,title_data,title_active} = this;
         list[title_data[title_active].key][obj.index].tel = obj.tel
         this.$set(this,'list',{...list})
