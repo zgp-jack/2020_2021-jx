@@ -39,7 +39,6 @@
   import { Dialog,Toast } from 'vant';
   import call_confirm from '../call_confirm/call_confirm';
   import {callPhoneFn,showPhoneFn} from '../../static/utils/utils.js';
-  import bance from '../bance/index';
   export default{
    props:['data'],
    components:{

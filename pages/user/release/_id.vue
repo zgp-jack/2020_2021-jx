@@ -55,7 +55,7 @@ import BottomTop from '../../../components/bottom-topbar/index.vue';
 
 export default {
   created(){
-    if(this.$route.query.show){
+    if(this.$route.params.show){
       this.Topmaskr = true
     }
     this.mode = this.$route.params.id;
