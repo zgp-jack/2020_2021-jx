@@ -174,12 +174,14 @@ export default {
           //机械
           case 'isSelect_jixie' :
             this.selectJixieData = { ...Data };
+            this.type = Data.id;
             //接口请求
             this.getList()
           break;
           case 'isSelect_sort' :
             this.selectSortData = { ...Data };
             this.sort_index = Data.id;
+            this.pattern =  Data.id;
             //接口请求
             this.getList()
           break;
