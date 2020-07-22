@@ -37,11 +37,11 @@
           </div>
           <div class="detail-info" :style="{'margin-bottom': (detail_info.images && detail_info.images.length>0 ? '' : '0.35rem')}">
             <p class="title">详情信息</p>
-            <p class="detail-content">{{detail_info.desc}}</p>
-            <p class="show-all-text" v-if="false" @click="watchAll">... <b style="color: #f60;">查看全部</b></p>
+            <p class="detail-content" :class="{'show_spot':show_wath_all}" ref="detail_content">{{detail_info.desc}}</p>
+            <p class="show-all-text" v-if="show_wath_all" @click="watchAll">... <b style="color: #f60;">查看全部</b></p>
           </div>
           <div class="machine-imgs" v-if="detail_info.images && detail_info.images.length>0">
-            <div v-for="(item,index) in detail_info.images" @click="showImage(index)">
+            <div v-for="(item,index) in detail_info.images" @click="showImage(index)" :key="index">
               <img :src="item" alt="">
             </div>
 
@@ -53,10 +53,12 @@
        </div>
        <!-- 防骗警告 -->
        <div class="reminder" v-if="!is_mine" @click="reportFn(detail_info.phone)">
-         <span></span>
-         <p>防骗警示:  达成交易前,请确认好对方身份,确认合同条款合理无误,在双方确认交易达成之前不要进行任何财务转账,交易双方可拍照保留证据,以免产生经济纠纷。若产生经济纠纷及恶劣影响。请立即报警，鱼泡机械配合调查但概不承担相应损失及责任。如遇诈骗信息请
-          <b style="color: #f60;">“立即举报”</b>
-        </p>
+         <div class="inner">
+           <span></span>
+           <p>防骗警示:  达成交易前,请确认好对方身份,确认合同条款合理无误,在双方确认交易达成之前不要进行任何财务转账,交易双方可拍照保留证据,以免产生经济纠纷。若产生经济纠纷及恶劣影响。请立即报警，鱼泡机械配合调查但概不承担相应损失及责任。如遇诈骗信息请
+            <b style="color: #f60;">“立即举报”</b>
+           </p>
+         </div>
        </div>
        <!-- 底部 -->
        <div class="footer-opeart" v-if="!is_mine">
@@ -115,7 +117,7 @@
         state_text:"已出租",
         go_release:false, //去发布
         go_settop:false,  //去置顶
-        novice_point_alert:true
+        show_wath_all:false
       }
     },
     components:{
@@ -140,9 +142,10 @@
         this.$axios.get('/index/new-view',{params}).then(res=>{
           if(res.code == 200){
              that.$set(that,'detail_info',{...res.content})
-             console.log(res.content)
              // 状态的显示
              that.allState(res.content);
+             //获取详情的高度
+             that.detailContnetHeight()
           }else if(res.code == 500){
             Dialog.alert({
               title:"提示",
@@ -153,14 +156,19 @@
           }
         })
       }
-    },
-    mounted() {
-       console.log(this.detail_info);
+
     },
     methods:{
-      novicePointHiddens(open){
-      this.novice_point_alert = open
-    },
+      detailContnetHeight(){
+        setTimeout(()=>{
+           let detail_content_height = this.$refs.detail_content.offsetHeight;
+           let maxHeight = parseFloat(document.documentElement.style.fontSize) * 1.2;
+           if(detail_content_height>maxHeight){
+             this.show_wath_all = true;
+           }
+        },0)
+
+      },
       // 改变标题
       changeTitle(mode){
         if(mode == 1){
@@ -237,7 +245,6 @@
           this.showPhone(id)
           return false;
         }
-        callPhoneFn(this.detail_info.phone)
       },
       //投诉
       reportFn(phone){
@@ -266,7 +273,7 @@
       },
       //查看全部
       watchAll(){
-
+        this.show_wath_all = false;
       },
       //展示图片
       showImage(index){

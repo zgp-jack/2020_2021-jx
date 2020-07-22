@@ -1,7 +1,10 @@
 @import '../../assets/css/style.scss';
 .container{
-  @include box_inner(0)
-
+  bottom: 1.1rem;
+  width: 7.5rem;
+  overflow-y: scroll;
+  padding-bottom: 1rem;
+  z-index: 2;
   #head{
     padding: 0 0.3rem;
     position:fixed;

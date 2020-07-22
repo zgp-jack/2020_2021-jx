@@ -45,17 +45,17 @@
         margin-bottom: 0.35rem;
          padding-bottom: 0.36rem;
       .left-img{
-        margin-top: 0.2rem;
+        margin-top: 0.1rem;
         margin-right: 0.21rem;
-        width: 0.8rem;
-        height: 0.8rem;
+        width: 1rem;
+        height: 1rem;
         border-radius: 50%;
-        background-size: 0.8rem 0.8rem;
+        background-size: 1rem 1rem;
         float:left;
 
       }
       .right-inner{
-        width: 5.9rem;
+        width: 5.7rem;
         float: left;
         .name-pay{
           float: left;
@@ -89,10 +89,10 @@
         }
         .telphone{
           overflow: hidden;
-          width: 5.9rem;
+          width: 5.7rem;
           clear: both;
           .phone-num{
-              float: left;
+            float: left;
             padding-top: 0.15rem;
             font-size: 0.2rem;
             color: #5f5e5e;
@@ -166,18 +166,22 @@
         color: #525252;
         font-size: 0.22rem;
         line-height: 0.4rem;
+        letter-spacing: 0.021rem;
+      }
+      .show_spot{
+        max-height: 1.2rem;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
-        letter-spacing: 0.021rem;
       }
       .show-all-text{
         position: absolute;
         background-color: #fff;
         font-size: 0.22rem;
         right: 0;
+        width: 5.6em;
         bottom: 0.4rem;
       }
     }
@@ -185,14 +189,16 @@
       margin-bottom: 0.36rem;
       padding: 0.37rem 0 0.17rem 0;
       border-bottom: 1px solid #eee;
-      flex-wrap: wrap;
-      display: flex;
-      justify-content: space-between;
+
       div{
         margin-bottom: 0.2rem;
         width: 2.2rem;
         height: 2.2rem;
-
+        float: left;
+        margin-right:0.19rem;
+        &:nth-of-type(3n){
+          margin-right: 0;
+        }
       }
     }
     .address{
@@ -204,9 +210,12 @@
     }
   }
   .reminder{
-    background-color: #fff;
-    padding: 0.16rem 0.26rem;
-    margin-bottom: 1.95rem;
+
+    height: 4rem;
+    .inner{
+      background-color: #fff;
+      padding: 0.16rem 0.26rem;
+    }
     span{
       background-image: url(../../assets/img/home-images/light.png);
       background-size: 0.27rem 0.27rem;

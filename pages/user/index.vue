@@ -23,11 +23,11 @@
                 </div>
                 <div class="bottom">
                     <div>
-                      <p class="main_textc" @click="harvest(0)">{{userinfo.coin_balance}}</p>
+                      <p class="main_textc" @click="harvest(1)">{{userinfo.coin_balance}}</p>
                       <p>可用鱼泡币</p>
                     </div>
                     <div>
-                      <p class="main_textc" @click="harvest(1)">{{userinfo.coin_consume}}</p>
+                      <p class="main_textc" @click="harvest(0)">{{userinfo.coin_consume}}</p>
                       <p>消耗鱼泡币</p>
                     </div>
                 </div>

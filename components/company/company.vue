@@ -185,7 +185,7 @@ export default {
       if(this.info){
          this.getParentData(this.info);
       }
-      
+
     },
     methods:{
       //上传logo

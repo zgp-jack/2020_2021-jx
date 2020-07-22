@@ -23,38 +23,40 @@
       <Banner :obj="banner_children"></Banner>
     </div>
     <div class="menus" ref="menus">
-      <a href="/dist/list/1">
+      <router-link  to="/list/1" >
         <img src="http://statics.zhaogongdi.com/xcx/index_tenant.png" alt="">
         <span>机械求租</span>
-      </a>
-      <a href="/dist/common/create">
+      </router-link>
+      <router-link  to="/common/create" >
         <img src="http://statics.zhaogongdi.com/xcx/index_create_tenant.png" alt="">
         <span>发布求租</span>
-      </a>
-      <a href="/dist/list/2">
+      </router-link>
+
+      <router-link  to="/list/2" >
         <img src="http://statics.zhaogongdi.com/xcx/index_mahcine.png" alt="">
         <span>机械出租</span>
-      </a>
+      </router-link>
+
       <a href="http://m.yupao.com/zhaogong/quanguo_jixiesiji/">
         <img src="../../assets/img/home-images/Lark20200608-172704.png" alt="">
         <span>招聘机手</span>
       </a>
-      <a href="/dist/list/3">
+      <router-link  to="/list/3" >
         <img src="http://statics.zhaogongdi.com/xcx/index_ershou.png" alt="">
         <span> 机械转让</span>
-      </a>
-      <a href="/dist/list/4">
-        <img src="http://statics.zhaogongdi.com/xcx/index_want.png" alt="">
-        <span> 机械求购</span>
-      </a>
-      <a href="">
-        <img src="http://statics.zhaogongdi.com/xcx/index_invitation.png" alt="">
-        <span> 邀请好友</span>
-      </a>
-      <a href="/dist/gongyingshang">
-        <img src="../../assets/img/home-images/supplier.png" alt="">
-        <span> 供应商</span>
-      </a>
+      </router-link>
+      <router-link  to="/list/4" >
+         <img src="http://statics.zhaogongdi.com/xcx/index_want.png" alt="">
+         <span> 机械求购</span>
+      </router-link>
+      <router-link  to="/user/invitation" >
+         <img src="http://statics.zhaogongdi.com/xcx/index_invitation.png" alt="">
+         <span> 邀请好友</span>
+      </router-link>
+      <router-link  to="/company/index" >
+         <img src="../../assets/img/home-images/supplier.png" alt="">
+         <span> 供应商</span>
+      </router-link>
     </div>
     <div class="list_title" :class="{list_title_fixed:whether_fixed}" ref="list_title">
       <div v-for="(itme,index) in title_data" v-on:click="changeTitle(index)" :key="index">
@@ -171,10 +173,12 @@ export default {
         if (cityData) {
           this.selectAreaData = {...cityData}
           //接口请求
+
           this.listData({area:cityData.id},cityData)
         }
       },
       onisclose(type) {
+
         let flag = this.isSelect_area ? false : true;
         this.onSelect(type, flag);
       },
@@ -182,6 +186,7 @@ export default {
       listData(params={},cityData){
         const that = this;
         that.$axios.get('/index/home',{params}).then(res=>{
+
             that.$set(that, "list", {...res.content});
             //新手礼包
             that.show_gift_alert = that.list.welfareDialog;
@@ -191,7 +196,7 @@ export default {
       },
       // 滚动显示隐藏
       my_scroll(e){
-        const {scrollTop} = e.currentTarget;
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
         this.$refs.mychild.handleScroll(scrollTop);
         this.fixed_title(scrollTop);
       },
@@ -223,6 +228,8 @@ export default {
   },
   mounted() {
     this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
+    //监听document上的滚动事件
+    document.addEventListener('scroll',this.my_scroll)
   }
 
 }
