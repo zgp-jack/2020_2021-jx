@@ -148,9 +148,6 @@ export default {
     this.novicePointFn()
 
   },
-  created() {
-
-  },
   methods:{
     novicePointHiddenFn(open){
       this.novice_point_alert = open
@@ -195,7 +192,7 @@ export default {
       },
       // 滚动显示隐藏
       my_scroll(e){
-        const {scrollTop} = e.currentTarget;
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
         this.$refs.mychild.handleScroll(scrollTop);
         this.fixed_title(scrollTop);
       },
@@ -227,6 +224,8 @@ export default {
   },
   mounted() {
     this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
+    //监听document上的滚动事件
+    document.addEventListener('scroll',this.my_scroll)
   }
 
 }

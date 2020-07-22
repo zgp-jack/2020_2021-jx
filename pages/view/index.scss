@@ -204,9 +204,12 @@
     }
   }
   .reminder{
-    background-color: #fff;
-    padding: 0.16rem 0.26rem;
-    margin-bottom: 1.95rem;
+   
+    height: 4rem;
+    .inner{
+      background-color: #fff;
+      padding: 0.16rem 0.26rem;
+    }
     span{
       background-image: url(../../assets/img/home-images/light.png);
       background-size: 0.27rem 0.27rem;
