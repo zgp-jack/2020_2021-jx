@@ -1,5 +1,8 @@
 @import '../../assets/css/style.scss';
 .list{
+    position: fixed;
+    top: 0;
+    z-index: 10;
     .head{
         .head_search{
             height: 1rem;
@@ -72,7 +75,7 @@
 }
 
 .list_data{
-    @include box_inner($top:calc(1.91rem + 2px))
+    @include static_inner($top:calc(1.91rem + 2px))
 }
 
 //排序
