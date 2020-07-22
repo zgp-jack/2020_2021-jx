@@ -6,7 +6,7 @@
                 <div @click="mechanicsChosed(0)" :class="{'item':clasIndex==0,'selectItem':clasIndex==0}">{{type[0].name}}</div>
                 <div v-for="(item,index) in type" :key="index" v-if="index>0" @click.stop.prevent="mechanicsChosed(index,item)" :class="{'item':clasIndex==index,'selectItem':clasIndex==index}">{{item.name}}</div>
             </div>
-            <div class="area item fl">
+            <div class="area item fl" v-if="!onlyFather">
                 <div v-if="clasIndex">
                     <div v-for="(item,index) in clas[clasIndex]" :key="index">
                         <div :class="{'selectItem':typeIndex==index}" @click.stop.prevent="sonMechanicsChosed(index,item)">
@@ -29,7 +29,7 @@ import Tarbar from "../../components/tarbar";
 import { Search } from "vant";
 import { constants } from "zlib";
 export default {
-  props: ["isSelect_jixie", "onSelect","whearthStorage"],
+  props: ["isSelect_jixie", "onSelect","whearthStorage","onlyFather",],
   data() {
     return {
       clasIndex: 0,
@@ -65,6 +65,8 @@ export default {
         if (index == 0) {
           this.onSelect("isSelect_jixie", false, this.type[index]);
            window.sessionStorage.setItem('mechanic_all','{"id":"0"}');
+        }else if(this.onlyFather){
+          this.onSelect("isSelect_jixie", false, this.type[index]);
         }
         this.$set(this, "clasIndex", index);
         this.sonMechanicsChosed(null);

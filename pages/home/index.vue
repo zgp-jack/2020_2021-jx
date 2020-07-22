@@ -51,7 +51,7 @@
         <img src="http://statics.zhaogongdi.com/xcx/index_invitation.png" alt="">
         <span> 邀请好友</span>
       </a>
-      <a href="/dist/gongyingshang">
+      <a href="/dist/company/index">
         <img src="../../assets/img/home-images/supplier.png" alt="">
         <span> 供应商</span>
       </a>
