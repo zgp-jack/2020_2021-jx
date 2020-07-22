@@ -22,7 +22,7 @@
                      </div>
                      <div class="two-context">
                          <span>{{item.welfare.content}}</span>
-                         <span style="color:#FFA926;margin-left:0.2rem;">去使用</span>
+                         <span style="color:#FFA926;margin-left:0.2rem;" @click="goHome">去使用</span>
                      </div>
                      <div class="two-date">
                          有效期至:{{item.out_time}}
@@ -85,6 +85,10 @@ export default {
               this.list = res.content
               console.log(this.list)
           })
+       },
+       //点击去使用
+       goHome(){
+         this.$router.push("/home")
        }
     }
 }

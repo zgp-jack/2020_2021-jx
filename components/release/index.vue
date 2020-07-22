@@ -410,16 +410,21 @@ export default {
         if(!newParams){return false};
         let {data,params} = newParams;
         let newData = {...params,data:JSON.stringify(data)}
-        if(!data.images){
+        if(this.mode !=4){
+          if(!data.images){
             Dialog.confirm({
               title: '温馨提示',
               message: '您还未上传图片，确定发布吗？',
             }).then(()=>{
               that.requstCreate(newData)
             })
+          }else{
+            that.requstCreate(newData)
+          }
         }else{
           that.requstCreate(newData)
         }
+        
       },
 
       requstCreate(params={}){
