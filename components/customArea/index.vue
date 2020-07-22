@@ -6,7 +6,7 @@
                 <div @click="provinceChosed(0)" :class="{'item':provinceChosedIndex==0,'selectItem':provinceChosedIndex==0}">{{city[0].name}}</div>
                 <div v-for="(item,index) in city" :key="index" v-if="index>0" @click.stop.prevent="provinceChosed(index,item)" :class="{'item':provinceChosedIndex==index,'selectItem':provinceChosedIndex==index}">{{item[0].name}}</div>
             </div>
-            <div class="area item fl">
+            <div class="area item fl" v-if="!onlyFather">
               <div v-if="provinceChosedIndex">
                 <div v-for="(item,index) in city[provinceChosedIndex]" :key="index" >
                     <div :class="{'selectItem':cityChosedIndex==index}" @click.stop.prevent="cityChosed(index,item)">
@@ -29,7 +29,7 @@ import Tarbar from "../../components/tarbar";
 import { Search } from "vant";
 import { constants } from "zlib";
 export default {
-  props: ["isSelect_area", "onSelect","whearthStorage"],
+  props: ["isSelect_area", "onSelect","whearthStorage","onlyFather","default_data"],
   data() {
     return {
       provinceChosedIndex: null,
@@ -79,21 +79,24 @@ export default {
           };
         }
       }else{
-        default_addr = window.$nuxt.$store.state.default_addr;
+        default_addr = this.default_data?this.default_data:window.$nuxt.$store.state.default_addr;
       }
     }else{
-      default_addr = window.$nuxt.$store.state.default_addr;
+      default_addr = this.default_data?this.default_data:window.$nuxt.$store.state.default_addr;
     }
     const city = window.$nuxt.$store.state.city;
     const chose_area = default_addr.province.id - 1;
-    city[chose_area].find((item, index) => {
+    //只有父选项并且有默认值的情况下
+    default_addr.city ? city[chose_area].find((item, index) => {
       if (item.id == default_addr.city.id) {
         that.$set(that, "intData", item);
         this.$set(this, "cityChosedIndex", index);
         return false;
       }
-    });
-    this.$set(this, "provinceChosedIndex", chose_area);
+    })
+    :
+    that.$set(that, "intData", default_addr.province);
+    default_addr.province && this.$set(this, "provinceChosedIndex", chose_area);
   },
   mounted() {
     this.onSelect(
@@ -111,6 +114,8 @@ export default {
           this.onSelect("isSelect_area", false, this.city[index]);
           this.province = {...item};
           window.sessionStorage.setItem('all',JSON.stringify({id: 1, name: "全国", pid: "0"}))
+        }else if(this.onlyFather){
+          this.onSelect("isSelect_area", false, this.city[index][0]);
         }
         this.$set(this, "provinceChosedIndex", index);
         this.cityChosed(null);

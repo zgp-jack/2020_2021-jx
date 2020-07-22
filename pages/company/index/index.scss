@@ -1,0 +1,103 @@
+@import '../../../assets/css/style.scss';
+
+
+.select_head{
+  position: fixed;
+  top:1.01rem;
+  display: flex;
+  width: 7.5rem;
+  line-height: 0.6rem;
+  padding: 0.15rem 0;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 3rpx 10rpx #ddd;
+  .select_inner{
+      flex: 1;
+      text-align: center;
+      font-size: 0.30rem;
+      font-weight: bold;
+      color: rgb(85,85,85);
+      p{
+          display: inline-block;
+          width: calc(7.5rem * 0.3);
+          @include overflow_hiding();
+      }
+      .icon-down{
+          font-size: 0.30rem;
+          margin-right:0.5rem;
+          display: inline-block;
+          transition: 0.5s
+      }
+      img{
+          width: 0.3rem;
+          height: 0.26rem;
+          margin-left:0.04rem;
+          vertical-align: middle;
+      }
+      .rotate{
+          transform-origin:center calc(75% - 0.16rem);
+          transform: rotate(-180deg);
+      }
+  }
+  .select_inner:not(:first-child){
+      border-left:1px solid #ddd
+  }
+}
+.father{
+  @include box_inner($bottom:0rem,$padding-bottom:0rem,$top:calc(1.91rem + 2px),$z-index:10);
+  font-size:0.3rem;
+    .list-company{
+      margin-top:0.2rem;
+      padding: 0 0.2rem;
+      background: #fff;
+        .company-info{
+          display: flex;
+          justify-content: space-between;
+          padding: 0.2rem 0;
+            .imgs{
+              width:1.5rem;
+              height:1.5rem;
+              margin-right:0.5rem;
+                img{
+                  width:100%;
+                  height:100%;
+                  border-radius:50%;
+                }
+            }
+            .info{
+              flex:1;
+              line-height:0.5rem;
+              >div{
+                height:0.5rem;
+              }
+                .name{
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  color: #555;
+                }
+            }
+        }
+    }
+}
+
+#{'/deep/'} {
+  //机械选择/地区选择
+  .model_mask{
+    transition:none;
+    top:calc(1.91rem + 2px);
+    .selectd{
+        height: 0;
+    }
+    .inner{
+      .city{
+        width: 100%;
+      }
+    }
+  }
+
+  .selectd_box{
+    z-index: -2;
+    height: 0;
+  }
+}
