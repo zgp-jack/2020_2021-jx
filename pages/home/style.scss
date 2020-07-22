@@ -1,6 +1,6 @@
 @import '../../assets/css/style.scss';
 .container{
-  @include box_inner(0)
+  @include box_inner(0);
 
   #head{
     padding: 0 0.3rem;
