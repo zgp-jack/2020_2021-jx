@@ -39,28 +39,28 @@
       <Topbar/>
        <!-- 呼出 -->
        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
-        <div v-if="list.length && (mode==1 || mode==4)">
+        <div v-if="(mode==1 || mode==4)">
 
-        <van-list
-          v-model="loading"
-          :finished="iscomplete || isempty"
-          @load="listScroll"
-        >
-          <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
-        </van-list>
-        </div>
-        <div v-if="list.length && (mode==2 || mode==3)">
           <van-list
             v-model="loading"
             :finished="iscomplete || isempty"
             @load="listScroll"
           >
-          <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
-        </van-list>
+            <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}" v-if="list.length"/>
+          </van-list>
+          </div>
+          <div v-if="(mode==2 || mode==3)">
+            <van-list
+              v-model="loading"
+              :finished="iscomplete || isempty"
+              @load="listScroll"
+            >
+            <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}" v-if="list.length"/>
+          </van-list>
 
         </div>
 
-        <EmptyMsg :empty1="iscomplete" :empty2="isempty"/>
+        <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
 
     <Tarbar />
     </div>
@@ -162,35 +162,26 @@ export default {
       this.$set(this, type, flag);
       //关闭弹框请求接口
       if(Data){
-
+        this.onreset();
         switch(type){
           case 'isSelect_area' :
             this.selectAreaData = { ...Data };
             //接口请求
             this.addr = Data.id;
             //本地存储
-            var params = this.getParams({addr:Data.id});
-            this.getList({
-              params
-            })
+            this.getList()
           break;
           //机械
           case 'isSelect_jixie' :
             this.selectJixieData = { ...Data };
             //接口请求
-            var params = this.getParams({type:Data.id});
-            this.getList({
-              params
-            })
+            this.getList()
           break;
           case 'isSelect_sort' :
             this.selectSortData = { ...Data };
             this.sort_index = Data.id;
             //接口请求
-            var params = this.getParams({pattern:Data.id});
-            this.getList({
-              params
-            })
+            this.getList()
           break;
         }
       }
@@ -208,51 +199,37 @@ export default {
     /*
       reload  true重新加载
     */
-    getList(params,reload=true){
-      if(!reload){
-        this.loading = true;
-      }
+    getList(){
+      this.loading = true;
       if(this.mode==1||this.mode==2||this.mode==3||this.mode==4){
         const that = this;
-        this.$axios.get('/index/list',{...params}).then(res=>{
+        const {mode,page,page_size,addr,type,keywords,pattern} = that;
+        let params = {mode,page,page_size,addr,type,keywords,pattern}
 
-          if(that.loading){
-            that.loading = false;
-          }
-          const list =  reload?[...res.content]:that.list.push(...res.content);
-
-          function emptyStatus(status){
-            that.iscomplete!==status.iscomplete && that.$set(that,'iscomplete',status.iscomplete);
-            that.isempty!==status.isempty && that.$set(that,'isempty',status.isempty)
-          }
-          if(reload){
-            if(!res.content.length){
-              emptyStatus({
-                iscomplete:false,
-                isempty:true
-              })
-            }else if(res.content.length< that.page_size){
-              emptyStatus({
-                iscomplete:true,
-                isempty:false
-              })
+        this.$axios.get('/index/list',{params}).then(res=>{
+          that.loading = false;
+          if(that.page == 1){
+            if(res.content.length && res.content.length<that.page_size){
+              that.iscomplete = true;
+              that.isempty = false;
+            }else if(!res.content.length){
+              that.isempty = true;
             }else{
-              emptyStatus({
-                iscomplete:false,
-                isempty:false
-              })
+              that.iscomplete = false;
+              that.isempty = false;
             }
           }else{
-            if(!res.content.length || res.content.length<that.page_size){
-              emptyStatus({
-                iscomplete:true,
-                isempty:false
-              })
+            if(res.content.length<that.page_size){
+              that.iscomplete = true;
+              that.isempty = false;
+            }else{
+              that.iscomplete = false;
+              that.isempty = false;
             }
           }
-          that.$set(that,'list',[...list])
-        }).catch(()=>{
 
+          const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
+          that.list = [...list];
         })
       }else{
         Toast('您访问的页面不存在，将自动跳转')
@@ -261,17 +238,17 @@ export default {
         }, 1500);
       }
     },
-    //获取参数
-    getParams(data={}){
-      const {mode,page,page_size,addr,type,keywords,pattern} = this;
-      const params = {
-        mode,page,page_size,addr,type,keywords,pattern,...data
-      }
-      return {...params}
+
+    //重置page
+    onreset(){
+      this.page = 1;
+      //重置滚动位置
+      document.documentElement.scrollTop = 0;
     },
 
     //搜索
     onSearch(){
+      this.onreset()
       if(Object.keys(window.$nuxt.$store.state.userinfo).length  == 0){
         this.$router.push('/login')
         return false
@@ -283,14 +260,13 @@ export default {
         Toast('搜索关键词必须包含中文才能进行搜索!')
         return false
       }
-      const params = this.getParams();
+
       this.list = []
-      this.getList({params},true)
+      this.getList()
     },
     listScroll(){
       this.page += 1;
-      const params = this.getParams({page:this.page});
-      this.getList({params},false)
+      this.getList()
     },
     //得到电话号码并显示
     getObj(obj,yue){
