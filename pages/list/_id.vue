@@ -169,7 +169,6 @@ export default {
             //接口请求
             this.addr = Data.id;
             //本地存储
-            this.loading = true;
             this.getList()
           break;
           //机械
@@ -211,8 +210,6 @@ export default {
         this.$axios.get('/index/list',{params}).then(res=>{
           that.loading = false;
           if(that.page == 1){
-            //重置滚动位置
-            document.documentElement.scrollTop = 0;
             if(res.content.length && res.content.length<that.page_size){
               that.iscomplete = true;
               that.isempty = false;
@@ -246,6 +243,8 @@ export default {
     //重置page
     onreset(){
       this.page = 1;
+      //重置滚动位置
+      document.documentElement.scrollTop = 0;
     },
 
     //搜索
