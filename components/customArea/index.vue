@@ -51,7 +51,6 @@ export default {
     if(this.whearth_storage){ //是否要从本地存储获取值
       if(all_area){
         //本地存储是否有全国的数据
-        this.onSelect("isSelect_area", false, {id: 1, name: "全国", pid: "0"});
         this.provinceChosedIndex=0;
         this.intData = {id: 1, name: "全国", pid: "0"};
         return

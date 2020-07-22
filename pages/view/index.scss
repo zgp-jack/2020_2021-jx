@@ -166,18 +166,22 @@
         color: #525252;
         font-size: 0.22rem;
         line-height: 0.4rem;
+        letter-spacing: 0.021rem;
+      }
+      .show_spot{
+        max-height: 1.2rem;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
-        letter-spacing: 0.021rem;
       }
       .show-all-text{
         position: absolute;
         background-color: #fff;
         font-size: 0.22rem;
         right: 0;
+        width: 5.6em;
         bottom: 0.4rem;
       }
     }
@@ -185,14 +189,16 @@
       margin-bottom: 0.36rem;
       padding: 0.37rem 0 0.17rem 0;
       border-bottom: 1px solid #eee;
-      flex-wrap: wrap;
-      display: flex;
-      justify-content: space-between;
+
       div{
         margin-bottom: 0.2rem;
         width: 2.2rem;
         height: 2.2rem;
-
+        float: left;
+        margin-right:0.19rem;
+        &:nth-of-type(3n){
+          margin-right: 0;
+        }
       }
     }
     .address{
@@ -204,7 +210,7 @@
     }
   }
   .reminder{
-   
+
     height: 4rem;
     .inner{
       background-color: #fff;

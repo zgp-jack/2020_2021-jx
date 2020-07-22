@@ -1,9 +1,9 @@
 <template>
     <van-swipe class="my-swipe"  indicator-color="white" width="7.5rem" :autoplay="3000" ref="resize">
       <van-swipe-item v-for="(item,index) in banner_data " :key="index">
-        <a :href="item.href">
+        <router-link :to="item.href">
           <img :src="item.img" alt="">
-        </a>
+        </router-link>
       </van-swipe-item>
 
     </van-swipe>

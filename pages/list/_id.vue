@@ -215,7 +215,7 @@ export default {
       if(this.mode==1||this.mode==2||this.mode==3||this.mode==4){
         const that = this;
         this.$axios.get('/index/list',{...params}).then(res=>{
-          console.log(res)
+
           if(that.loading){
             that.loading = false;
           }
