@@ -145,10 +145,13 @@ export default {
       this.selectJixieData = JSON.parse(mechanic_child);
     }
   },
+  mounted() {
+    window.addEventListener('scroll',this.my_scroll);
+  },
   methods: {
     // 滚动
     my_scroll(e){
-        const {scrollTop} = e.currentTarget;
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
         this.$refs.mychild.handleScroll(scrollTop);
     },
     //控制赛选框显示隐藏
