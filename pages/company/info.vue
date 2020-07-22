@@ -29,7 +29,7 @@
               <div>
                   <p>联系方式</p>
                   <p class="contact" v-if="!showphone">{{list.contact}}</p>
-                  <p class="contact" v-else>{{phone}}</p>
+                  <p class="contact" v-else @click="tel">{{phone}}</p>
                   <button class="contact_chakan" @click="showNumber(list.uu_id)" v-if="!showphone">查看完整号码</button>
               </div>
               <div>
@@ -103,6 +103,7 @@
 <script>
 import Header from '../../components/header'
 import emptyMsg from '../../components/emptyMsg/index'
+import {callPhoneFn} from '../../static/utils/utils';
 import {Toast} from 'vant';
 export default {
   created(){
@@ -136,6 +137,9 @@ export default {
     }
   },
   methods:{
+    tel(){
+      callPhoneFn(this.phone)
+    },
     machinery(){
       this.barshow = true
     },

@@ -80,6 +80,7 @@ import BottomTop from '../../components/bottom-topbar/index'
 import Newgift from '../../components/new_gift/index'
 import {bance} from '../../static/utils/utils.js';
 export default {
+  name:'list',
   data() {
     return {
       lost:false,

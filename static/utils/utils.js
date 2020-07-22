@@ -154,8 +154,8 @@ export function GetUser(page,callback){
     page.$axios.get('/user/get-userinfo').then(res=>{
       if(res.code==200){
         window.$nuxt.$store.commit('setUserinfo',res.content)
+        callback && callback()
       }
-      callback && callback()
     })
   }else{
     callback && callback()
@@ -167,9 +167,11 @@ export function GetUser(page,callback){
   @parmes: that : this
            url : 需要跳转的路径，默认/login登录页
 */
-export function whetherLogin(that,url="/login"){
+export function whetherLogin(that,url){
   if(!that) return false;
-  if (!window.$nuxt.$store.userinfo){
+  if (JSON.stringify(window.$nuxt.$store.state.userinfo)==='{}'){
+    that.$router.push("/login")
+  }else if(url){
     that.$router.push(url)
   }
 }
@@ -199,4 +201,15 @@ export function getNovicePoint(){
 export function setNovicePoint(guideObject){
   if(!guideObject) return false;
   window.localStorage.setItem("guide",JSON.stringify(guideObject))
+}
+
+//解决浏览器缓存
+export function timestamp(url){
+     var getTimestamp=new Date().getTime();
+     if(url.indexOf("?")>-1){
+       url=url+"&t="+getTimestamp
+     }else{
+      url=url+"?t="+getTimestamp
+    }
+  return url;
 }

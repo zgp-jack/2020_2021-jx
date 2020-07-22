@@ -68,7 +68,6 @@ import {callPhoneFn,whetherLogin} from '../../static/utils/utils'
 export default {
   created(){
     this.userInfo = window.$nuxt.$store.state.userinfo;
-    console.log(window.$nuxt.$store.state.userinfo)
   },
   beforeCreate(){
     //判断登录
@@ -145,7 +144,6 @@ export default {
     },
     menusGo(i){
     switch (i) {
-
           case 0:
             this.$router.push('/user/get')
           break;

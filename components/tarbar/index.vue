@@ -2,14 +2,14 @@
 
 <template>
     <div class="tarbar">
-        <nuxt-link v-for="(item,index) in list" :to="item.path" :key="index">
+        <div v-for="(item,index) in list" :to="item.path" :key="index" :class="path==item.path?'nuxt-link-active':''" @click="onskip(item.path)">
           <img :src="path==item.path?item.img:item.img_hui">{{item.name}}
-        </nuxt-link>
+        </div>
     </div>
 </template>
 
 <script>
-
+import { whetherLogin } from "../../static/utils/utils.js";
 export default {
   data() {
     return {
@@ -42,15 +42,19 @@ export default {
       path: this.$route.path
     };
   },
-  methods: {
-    onback() {
-      if (this.onskip) {
-        this.onskip();
-        return false;
+  methods:{
+    onskip(path){
+      const {base} = this.$router.history;
+      let url = base?window.location.origin + base + path:window.location.origin+path
+      if(url !==window.location.href){
+        if(path == '/user'){
+        whetherLogin(this,path)
+        return false
       }
-      this.$router.go(-1);
+        window.location.href = url
+      }
     }
-  },
+  }
 };
 </script>
 

@@ -1,7 +1,7 @@
 <!-- 单页面机械类型选择 -->
 <template>
     <div :class="['mechanics_select_box',isShow?'mechanics_show':'']">
-        <Header title="机械类型选择" :onskip="onclose" ensure_text="确定" :onEnsure="selectd"/>
+        <Header title="机械类型选择" :onskip="onclose" ensure_text="确定" @getParentFn="selectd"/>
         <div class="mechanics-inner">
             <div class="top">
                 <div class="title">
@@ -36,19 +36,17 @@ export default {
   data() {
     return {
         clas:[],
-        list:[],
         selectData:[],
+        readOnlyClasData:[],
         oldSelectData:[],
         isShow:false,
     };
   },
   created(){
       let clas = deepCopy(window.$nuxt.$store.state.clas);
-      let list = deepCopy(window.$nuxt.$store.state.clas);
       clas.splice(0,1)
-      list.splice(0,1)
-      this.$set(this,'clas',[...clas])
-      this.$set(this,'list',[...list]);
+      this.$set(this,'clas',deepCopy(clas))
+      this.readOnlyClasData = deepCopy(clas);
       if(this.default_Mechanical){
           this.default_Mechanical.forEach(item=>{
               this.colorSelect({...item})
@@ -104,7 +102,7 @@ export default {
           that.$set(that,'clas',[...clas])
       },
 
-      isAdd(data,add){
+      isAdd(data,add){          
           const selectData = deepCopy(this.selectData)
           if(add){
               selectData.push(data)
@@ -126,13 +124,11 @@ export default {
       },
       //关闭后的回调
       onclose(){
-          const {oldSelectData,onShow,isAdd,selectData,colorSelect,list} = this;
-          this.clas=list
-          selectData.length && selectData.forEach(element => {
-              isAdd(element,false)
-          });
-          oldSelectData.length && oldSelectData.map(item=>{
-              colorSelect(item)
+          const {oldSelectData,onShow,selectData,colorSelect,readOnlyListData,readOnlyClasData,} = this;
+          this.clas = deepCopy(readOnlyClasData);
+          this.selectData = []
+          oldSelectData && oldSelectData.forEach(item=>{
+              colorSelect({...item,color:false})
           })
           onShow(false)
       }

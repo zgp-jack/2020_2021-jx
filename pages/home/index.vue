@@ -95,6 +95,7 @@ import Newgift from '../../components/new_gift/index'
 import {getNovicePoint,setNovicePoint} from '../../static/utils/utils.js';
 import home_novice_point from '../../components/page-novice-point/index.vue'
 export default {
+  name:'home',
   components: {
     Tarbar: Tarbar,
     "van-swipe": Swipe,
@@ -181,7 +182,6 @@ export default {
       listData(params={},cityData){
         const that = this;
         that.$axios.get('/index/home',{params}).then(res=>{
-            console.log(res)
             that.$set(that, "list", {...res.content});
             //新手礼包
             that.show_gift_alert = that.list.welfareDialog;
@@ -223,7 +223,6 @@ export default {
   },
   mounted() {
     this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
-    console.log(this.list)
   }
 
 }
