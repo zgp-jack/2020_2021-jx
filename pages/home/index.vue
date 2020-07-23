@@ -149,7 +149,6 @@ export default {
     this.novice_point = getNovicePoint();
     //显示新手指引
     this.novicePointFn()
-
   },
   methods:{
     novicePointHiddenFn(open){

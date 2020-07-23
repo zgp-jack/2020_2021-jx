@@ -1,6 +1,6 @@
 @import '../../assets/css/style.scss';
 .father{
-    @include box_inner($bottom:0rem,$padding-bottom:1rem,$top:1rem);
+    @include box_inner($bottom:0rem,$padding-bottom:0rem,$top:1rem);
 
     .border-btn{
         border-bottom: 1px solid rgba(238,238,238,1);

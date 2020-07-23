@@ -190,8 +190,8 @@ export default {
         // }else{
         //   return false
         // }
-        const {is_deleted,uu_id,type} = item
-        if(is_deleted == 0 && this.mode == 0){
+        const {is_company,uu_id,type} = item
+        if(is_company == 0 && this.mode == 0){
             this.$router.push({
               path:'/view',
               query:{
@@ -199,7 +199,7 @@ export default {
                 mode:type
               }
             })
-        }else if(is_deleted == 1){
+        }else if(is_company== 1){
           Toast('此条信息已删除!')
         }
       }

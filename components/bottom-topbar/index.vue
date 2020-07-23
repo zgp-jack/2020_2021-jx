@@ -93,7 +93,13 @@ export default {
       },
       // 跳转发布页
       fabugo(){
-        this.$router.push({path:'/user/release/1',query:{show:true}})
+        this.$router.push({
+           name:'user-release-id',
+           params:{
+           show:true,
+           id:1
+          }
+        })
       },
        handle(show){
           this.box_show = show
