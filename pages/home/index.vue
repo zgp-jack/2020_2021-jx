@@ -59,7 +59,7 @@
       </router-link>
     </div>
     <div class="list_title" :class="{list_title_fixed:whether_fixed}" ref="list_title">
-      <div v-for="(itme,index) in title_data" v-on:click="changeTitle(index)" :key="index">
+      <div v-for="(itme,index) in title_data" v-on:click="changeTitle(index,itme.key)" :key="index">
          <span  :class="title_active == index ? 'active' : '' ">{{itme.name}}</span>
       </div>
     </div>
@@ -72,7 +72,7 @@
         <div v-if="(item.type == 2 || item.type == 3) && list[title_data[title_active].key].length>0">
           <seccondListItem @giveParent="getObj" v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="{item,index}"/>
         </div>
-         <!-- <EmptyMsg :empty1="iscomplete" :empty2="isempty"/> -->
+         <EmptyMsg :empty2="isempty"/>
         <p class="more" v-if="list[title_data[title_active].key].length>0" @click="Jump_page(title_data[title_active].type)">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
@@ -95,7 +95,8 @@ import call_confirm from '../../components/call_confirm/call_confirm'
 import BottomTop from '../../components/bottom-topbar/index'
 import Newgift from '../../components/new_gift/index'
 import {getNovicePoint,setNovicePoint} from '../../static/utils/utils.js';
-import home_novice_point from '../../components/page-novice-point/index.vue'
+import home_novice_point from '../../components/page-novice-point/index.vue';
+import EmptyMsg from '../../components/emptyMsg';
 export default {
   name:'home',
   components: {
@@ -111,7 +112,8 @@ export default {
     'van-popup':Popup,
     [Dialog.Component.name]: Dialog.Component,
     Newgift,
-    "home-novice-point":home_novice_point
+    "home-novice-point":home_novice_point,
+    EmptyMsg
   },
   data(){
     return{
@@ -136,7 +138,6 @@ export default {
       },
       whether_fixed:false, //标题是否要固定
       scroll_tops:300,  //滚动的位置
-      iscomplete:false, //是否加载完成
       isempty:false, //数据是否为空
       show_gift:true, //新手大礼包
       show_gift_alert:false,//新手大礼包
@@ -159,8 +160,19 @@ export default {
         this.novice_point_alert = true;
       }
     },
-    changeTitle(index){
+    //切换标题
+    changeTitle(index,type){
        this.title_active = index;
+       this.listDataIsEmpty(type)
+    },
+    //数据是否为空
+    listDataIsEmpty(type){
+      console.log(this.list[type])
+      if(this.list[type].length == 0){
+        this.isempty = true;
+      }else{
+         this.isempty = false;
+      }
     },
     // 选择城市
     chooseArea(){
@@ -173,12 +185,10 @@ export default {
         if (cityData) {
           this.selectAreaData = {...cityData}
           //接口请求
-
           this.listData({area:cityData.id},cityData)
         }
       },
       onisclose(type) {
-
         let flag = this.isSelect_area ? false : true;
         this.onSelect(type, flag);
       },
@@ -186,12 +196,13 @@ export default {
       listData(params={},cityData){
         const that = this;
         that.$axios.get('/index/home',{params}).then(res=>{
-
             that.$set(that, "list", {...res.content});
             //新手礼包
             that.show_gift_alert = that.list.welfareDialog;
             //本地储存
-            window.localStorage.setItem('city',JSON.stringify(cityData))
+            window.localStorage.setItem('city',JSON.stringify(cityData));
+            //初始化是否有数据
+            that.listDataIsEmpty('tenant')
         })
       },
       // 滚动显示隐藏
