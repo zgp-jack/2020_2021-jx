@@ -124,11 +124,6 @@ export default {
           this.province = {...item[0]};
           //在存一个省份在本地
           window.sessionStorage.setItem('flag_province',JSON.stringify(item[0]))
-        }else{
-          this.province = {
-            id: "26",
-            name: "四川"
-          }
         }
       }
     },
@@ -137,8 +132,8 @@ export default {
 
       if(index != null){
         //设置本地存储
-        window.sessionStorage.setItem('province',JSON.stringify(this.province));
-        window.sessionStorage.setItem('city',JSON.stringify(item));
+        window.sessionStorage.setItem('province',JSON.stringify(this.city[this.provinceChosedIndex][0]));
+        window.sessionStorage.setItem('city',JSON.stringify(this.city[this.provinceChosedIndex][index]));
         //把全国的本地储存清空
         window.sessionStorage.setItem('all','');
       }

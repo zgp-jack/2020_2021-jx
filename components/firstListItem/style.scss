@@ -3,12 +3,15 @@
   background:#fff;
   height: 2.5rem;
   width: 100%;
-  margin-bottom:0.15rem;
+  margin-top:0.2rem;
   padding: 0 0.29rem;
+  &:nth-of-type(1){
+    margin-top: 0;
+  }
   .title{
     height: 0.75rem;
     border-bottom: 0.01rem solid #f7f6f6;
-    font-size: 0.27rem;
+    font-size: 0.3rem;
     font-weight: bold;
     line-height: 0.75rem;
     position: relative;
@@ -62,8 +65,8 @@
       p{
         float: left;
         &:nth-of-type(1){
-          max-width: 3.68rem;
-         overflow: hidden;
+          width: 3rem;
+          overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
           margin-right: 0.05rem;
