@@ -11,7 +11,7 @@ export default function ({$axios,redirect,store}) {
     // request拦截器
     let globalLoading = true;
     $axios.onRequest(config => {
-        config.url += `?source=M`;
+        config.url.includes('?')?config.url +='&source=M' : config.url += `?source=M`;
         const {params,data} = config;
         if(params && params.globalLoading === false){
             globalLoading = false
