@@ -64,18 +64,6 @@ export default {
             province,
             city:JSON.parse(storage_city),
           };
-        }else{
-           //为空就是用vuex的数据或者另一个本地存储
-          let flag_province = window.sessionStorage.getItem('flag_province');
-          let province = window.$nuxt.$store.state.default_addr.province;
-
-          if(flag_province){
-            province = JSON.parse(flag_province);
-          }
-          default_addr = {
-            province,
-            city:JSON.parse(storage_city),
-          };
         }
       }else{
         default_addr = this.default_data?this.default_data:window.$nuxt.$store.state.default_addr;
@@ -118,13 +106,6 @@ export default {
         }
         this.$set(this, "provinceChosedIndex", index);
         this.cityChosed(null);
-
-        if(item){
-          //将选择的省份存在data变量中
-          this.province = {...item[0]};
-          //在存一个省份在本地
-          window.sessionStorage.setItem('flag_province',JSON.stringify(item[0]))
-        }
       }
     },
     //城市选择

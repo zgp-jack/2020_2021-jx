@@ -151,6 +151,8 @@ export default {
     this.novicePointFn()
   },
   methods:{
+    
+    //关闭指引弹窗
     novicePointHiddenFn(open){
       this.novice_point_alert = open
     },
@@ -167,7 +169,6 @@ export default {
     },
     //数据是否为空
     listDataIsEmpty(type){
-      console.log(this.list[type])
       if(this.list[type].length == 0){
         this.isempty = true;
       }else{

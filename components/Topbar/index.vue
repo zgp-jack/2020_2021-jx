@@ -52,7 +52,6 @@ export default {
   },
   created() {
   	this.contact = window.$nuxt.$store.state.contact;
-    console.log(this.contact)
   },
   data(){
     return{

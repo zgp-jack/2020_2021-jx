@@ -59,12 +59,11 @@
                     <div class="row-right">
                          <input type="text" ref="company_username" class="textInput" v-model="company_username" maxlength="10" placeholder="企业法人姓名">
                     </div>
-
                 </div>
                 <div class="corm-row">
                     <div class="row-left"><span class="f-red">*</span>联系电话</div>
                     <div class="row-right">
-                         <input type="text" class="textInput" ref="company_tel" v-model="company_tel" maxlength="11" placeholder="企业联系电话">
+                         <input type="number" class="textInput" ref="company_tel" v-model="company_tel" maxlength="11" placeholder="企业联系电话">
                     </div>
 
                 </div>
@@ -72,7 +71,6 @@
             <div class="union-title">企业认证(上传企业认证资质获得鱼泡专属认证)</div>
             <div class="from-row">
                 <div class="corm-row">
-
                     <div class="row-left"><span class="f-red">*</span>营业执照</div>
                     <div class="row-right">
                      <van-uploader :after-read="uploadLicense" multiple :max-count="1">
@@ -177,81 +175,44 @@ export default {
             area_text:'',
             area_id:{},
             modify_data:{}, //修改页面的初始数据
-
         }
     },
     props:['info'],
     created() {
-      if(this.info){
-         this.getParentData(this.info);
-      }
-
+      if(this.info) this.getParentData(this.info);
     },
     methods:{
       //上传logo
       uploadLogo(file) {
-        uploadPictures(this,file.file).then(res=>{
-          if(res.code == 200){
-            this.upload_logo=[{
-              src:res.content.server,
-              img:res.content.value
-            }]
-          }
-        })
+        this.uploadAllImages(file,'upload_logo')
       },
       //上传营业执照
       uploadLicense(file){
-        uploadPictures(this,file.file).then(res=>{
-          if(res.code == 200){
-            this.upload_license.push({
-              src:res.content.server,
-              img:res.content.value
-            })
-          }
-        })
+        this.uploadAllImages(file,'upload_license')
       },
       //上传机构代码
       uploadMechanism(file){
-        uploadPictures(this,file.file).then(res=>{
-          if(res.code == 200){
-            this.upload_mechanism.push({
-              src:res.content.server,
-              img:res.content.value
-            })
-          }
-        })
+        this.uploadAllImages(file,'upload_mechanism')
       },
       //上传税务登记
       uploadRevenue(file){
-        uploadPictures(this,file.file).then(res=>{
-          if(res.code == 200){
-            this.upload_revenue.push({
-              src:res.content.server,
-              img:res.content.value
-            })
-          }
-        })
+        this.uploadAllImages(file,'upload_revenue')
       },
       //上传身份证正面
       uploadIdCard(file){
-        uploadPictures(this,file.file).then(res=>{
-           if(res.code == 200){
-             this.upload_id_card.push({
-               src:res.content.server,
-               img:res.content.value
-             })
-           }
-        })
+        this.uploadAllImages(file,'upload_id_card')
       },
       //上传身份证反面
       uploadHandCard(file){
+        this.uploadAllImages(file,'upload_hand_card')
+      },
+      //上传封装
+      uploadAllImages(file,target){
         uploadPictures(this,file.file).then(res=>{
-          if(res.code == 200){
-            this.upload_hand_card.push({
-              src:res.content.server,
-              img:res.content.value
-            })
-          }
+          this[target].push({
+             src:res.content.server,
+             img:res.content.value
+           })
         })
       },
       //预览图片
@@ -270,20 +231,16 @@ export default {
           /* 手机格式验证 */
           const cellphoneCheck = {
             message: '手机格式不正确',
-            pattern: /^(1[3-8][0-9])\d{8}$/
+            pattern: /^(1[3-9][0-9])\d{8}$/
           }
           /* 空格验证 */
           const spaceCheck = /^\S+$/;
-
           /* 数字字母中文 */
           const publicText = /^[A-Za-z0-9\u4e00-\u9fa5]+$/;
-
           /* 只能输入数字 */
           const numberCheck = /^[0-9]+$/;
-
           /* 只能输入字母 */
           const onlyLetter = /^[A-Za-z]+$/;
-
           /* 全中文或者字母 */
           const only_letter_number=(str)=>{
             if(numberCheck.test(str) || onlyLetter.test(str)){
@@ -292,9 +249,6 @@ export default {
               return false
             }
           }
-          // 特殊符号
-          var special = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
-
           /* 不支持全数字、空格、特殊符号 */
           const publicCheck=(str)=>{
           if(!numberCheck.test(str) && !onlyLetter.test(str) && publicText.test(str)){
@@ -302,6 +256,39 @@ export default {
             }else{
               return false
             }
+          }
+          if(this.company_name.length < 5 || this.company_name.length > 20){
+             this.alert('请输入5~20字企业名称','company_name');
+            return false;
+          }else if(!publicCheck(this.company_name) || onlyLetter.test(this.company_name) || !chinese.test(this.company_name)){
+            this.alert('请输入中文企业名称','company_name')
+            return false;
+          }
+          if(!this.area_id.area){
+            this.alert('请选择企业所在地',()=>{this.$refs.area.onShow(true)});
+            return false;
+          }
+          if(this.detail_addr<5){
+            this.alert('请完整填写地址信息','detail_addr');
+            return false;
+          }else if( !publicCheck(this.detail_addr)){
+            this.alert('地址信息格式错误','detail_addr')
+            return false;
+          }
+          if(this.detail_company < 10){
+            this.alert('请详细介绍贵司业务情况不少于10字','detail_company');
+            return false
+          }else if(onlyLetter.test(this.detail_company) || !chinese.test(this.detail_company)){
+            this.alert('企业介绍必须为中文','detail_company');
+            return false
+          }
+          if(!publicCheck(this.company_username) || !(this.company_username.length >= 2 && this.company_username.length <= 10)){
+            this.alert('请正确输入联系姓名','company_username');
+            return false;
+          }
+          if(!cellphoneCheck.pattern.test(this.company_tel)){
+            this.alert('请输入正确的联系电话','company_tel');
+            return false;
           }
           if(this.upload_license.length==0){
             this.alert('请上传营业执照');
@@ -315,41 +302,6 @@ export default {
             this.alert('请上传身份证反面照');
             return false;
           }
-
-          if(this.company_name.length < 5 || this.company_name.length > 20){
-             this.alert('请输入5~20字企业名称','company_name');
-            return false;
-          }else if(!publicCheck(this.company_name) || onlyLetter.test(this.company_name) || !chinese.test(this.company_name)){
-            this.alert('请输入中文企业名称','company_name')
-            return false;
-          }
-
-          if(this.detail_addr<5){
-            this.alert('请完整填写地址信息','detail_addr');
-            return false;
-          }else if( !publicCheck(this.detail_addr)){
-            this.alert('地址信息格式错误','detail_addr')
-            return false;
-          }
-
-          if(this.detail_company < 10){
-            this.alert('请详细介绍贵司业务情况不少于10字','detail_company');
-            return false
-          }else if(onlyLetter.test(this.detail_company) || !chinese.test(this.detail_company)){
-            this.alert('企业介绍必须为中文','detail_company');
-            return false
-          }
-
-          if(!publicCheck(this.company_username) || !(this.company_username.length >= 2 && this.company_username.length <= 10)){
-            alert('请正确输入联系姓名','company_username');
-            return false;
-          }
-
-          if(!cellphoneCheck.pattern.test(this.company_tel)){
-            alert('请输入正确的联系电话','company_tel');
-            return false;
-          }
-
           let arr_license = new Array('','','');
           arr_license[0] = this.upload_license[0].img
           if(this.upload_revenue[0]){
@@ -396,9 +348,8 @@ export default {
           title:'提示',
           message:msg
         }).then(()=>{
-          if(flag){
-            this.$refs[flag].focus();
-          }
+          if(typeof flag == "string") this.$refs[flag].focus();
+          else if(typeof flag == "function") flag();
         })
       },
       //地区选择显示隐藏
@@ -425,7 +376,6 @@ export default {
         this.detail_company = company.desc;
         this.company_username = company.uname;
         this.company_tel = company.contact;
-
         //logo
         if(company.logo.server){
           this.upload_logo = [{
@@ -468,7 +418,6 @@ export default {
         }
       }
     },
-
 }
 </script>
 
