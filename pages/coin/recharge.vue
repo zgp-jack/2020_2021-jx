@@ -51,7 +51,6 @@
 </template>
 
 <script>
-// import wx from 'weixin-js-sdk';
 import {Toast} from 'vant';
 export default {
     components:{
@@ -85,14 +84,15 @@ export default {
       },
       //发起充值
       submit(){
+        const {rehIndex,math_num_list} = this;
         let config = {
             headers:{'Content-Type':'application/x-www-form-urlencoded'},
         };
-        this.$axios.post('/coin/recharge?amount=29',config).then(res=>{
+        this.$axios.post('/coin/recharge?amount='+math_num_list[rehIndex],config).then(res=>{
            if(res.code == 200){
              let {appid,noncestr,orderid,partnerid,prepayid,sign,timestamp} = res.content;
             //暂时做不了后端接口需要写m端的
-            window.location.href = `https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=${prepayid}&package=${package}&redirect_url=http://192.168.1.98:3000/dist/coin/recharge`
+            window.location.href = `https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=${prepayid}&package=${res.content.package}&redirect_url=http://192.168.1.98:3000/dist/coin/recharge`
             // let wx = {}
             // if (process.client) {
             //   wx = require('weixin-js-sdk')
