@@ -65,10 +65,15 @@
         margin-right: 0.15rem;
       }
       .tel-icon{
-        height: 0.42rem;
-        width: 0.42rem;
-        border-radius: 50%;
-        background: url(../../assets/img/home-images/icon-tel_03.png) 0 0 / 0.42rem 0.42rem no-repeat;
+        width: 0.7rem;
+        span{
+          float: right;
+          height: 0.42rem;
+          width: 0.42rem;
+          border-radius: 50%;
+          background: url(../../assets/img/home-images/icon-tel_03.png) 0 0 / 0.42rem 0.42rem no-repeat;
+        }
+
       }
     }
     .position-time{

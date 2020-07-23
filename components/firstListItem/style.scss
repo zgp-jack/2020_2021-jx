@@ -73,11 +73,15 @@
         }
         &:nth-of-type(3){
           float: right;
-          width: 0.42rem;
-          height: 0.42rem;
-          border-radius: 50%;
-          background-image: url(../../assets/img/home-images/icon-tel_03.png);
-          background-size: 0.42rem 0.42rem;
+          width: 0.7rem;
+          span{
+            float: right;
+            width: 0.42rem;
+            height: 0.42rem;
+            border-radius: 50%;
+            background-image: url(../../assets/img/home-images/icon-tel_03.png);
+            background-size: 0.42rem 0.42rem;
+          }
         }
       }
 
