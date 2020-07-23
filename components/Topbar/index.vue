@@ -73,7 +73,7 @@ export default {
      Copynum(this,this.contact.wx_service)
     },
     cell(){
-      callPhoneFn()
+      callPhoneFn(this.contact.contact)
     },
     hander(hide){
       this.show = hide
