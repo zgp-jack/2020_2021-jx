@@ -24,6 +24,9 @@ const store =()=>new Vuex.Store({
         //图片地址服务/file_domain
         img_server:'',
 
+        //联系方式
+        contact:'',
+
     },
     mutations:{
         //获取机械类型
@@ -46,6 +49,10 @@ const store =()=>new Vuex.Store({
         //设置图片服务地址
         setImgServer(state,str){
             state.img_server = str
+        },
+        //设置联系方式
+        setContact(state,obj){
+            state.contact = {...obj}
         }
     },
   })
