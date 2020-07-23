@@ -148,7 +148,6 @@ export default {
     this.novice_point = getNovicePoint();
     //显示新手指引
     this.novicePointFn()
-
   },
   methods:{
     novicePointHiddenFn(open){
@@ -179,7 +178,7 @@ export default {
         }
       },
       onisclose(type) {
-        
+
         let flag = this.isSelect_area ? false : true;
         this.onSelect(type, flag);
       },

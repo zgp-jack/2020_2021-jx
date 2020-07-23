@@ -78,7 +78,6 @@ import SeccondListItem from '../../components/seccondListItem';
 import EmptyMsg from '../../components/emptyMsg';
 import BottomTop from '../../components/bottom-topbar/index'
 import Newgift from '../../components/new_gift/index'
-import {bance} from '../../static/utils/utils.js';
 export default {
   name:'list',
   data() {
@@ -278,7 +277,6 @@ export default {
           this.$set(this,'list',[...list])
       }
       this.lost = yue
-      bance(this,yue,obj.id)
     }
   },
 };
