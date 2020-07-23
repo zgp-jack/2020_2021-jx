@@ -73,6 +73,11 @@ export default {
         that.numberServers+=1
       }
       GetUser(that,callback);
+    },
+
+    //获取微信号/客服电话
+    getcontact(){
+      
     }
   },
   computed: {

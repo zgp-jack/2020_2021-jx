@@ -6,23 +6,25 @@
         <div class="select_inner clearfix" @click="onisclose('isSelect_jixie')"><i class="iconfont icon-down fr" :class="{'rotate':isSelect_jixie}"/><p class="fr">{{selectJixieData.name || '所有机械'}}</p></div>
     </div>
     <div class="father">
-      <van-list
-        v-model="listLoading"
-        :finished="iscomplete"
-        @load="getList">
-        <div class="list-company" v-for="(item,i) in list" :key="i">
-          <div class="company-info" @click="godetail(item.uu_id)">
-              <div class="imgs">
-                <img :src="[item.cover?item.cover:'http://statics.zhaogongdi.com/common/default_header.png']">
-              </div>
-              <div class="info">
-                  <div class="name">{{item.name}}</div>
-                  <div class="gong-img">11</div>
-                  <div class="area">{{item.area}}</div>
-              </div>
+      <van-pull-refresh v-model="listLoading" @refresh="onRefresh">
+        <van-list
+          v-model="listLoading"
+          :finished="iscomplete"
+          @load="getList">
+          <div class="list-company" v-for="(item,i) in list" :key="i">
+            <div class="company-info" @click="godetail(item.uu_id)">
+                <div class="imgs">
+                  <img :src="[item.cover?item.cover:'http://statics.zhaogongdi.com/common/default_header.png']">
+                </div>
+                <div class="info">
+                    <div class="name">{{item.name}}</div>
+                    <div class="gong-img">11</div>
+                    <div class="area">{{item.area}}</div>
+                </div>
+            </div>
           </div>
-        </div>
-      </van-list>
+        </van-list>
+      </van-pull-refresh>
       <emptyMsg  :empty1='iscomplete && !More' :empty2='More'/>
     </div>
 
@@ -38,16 +40,14 @@
 <script>
 import Header from '../../../components/header';
 import emptyMsg from '../../../components/emptyMsg/index';
-import {List } from 'vant';
+import {List,PullRefresh } from 'vant';
 import CustomArea from '../../../components/customArea';
 import CustomMechanicalType from '../../../components/customMechanicalType';
 export default {
-    created(){
-      // this.getList()
-    },
     components:{
         Header,
         'van-list':List,
+        'van-pull-refresh':PullRefresh,
         emptyMsg,
         CustomArea,
         CustomMechanicalType
@@ -73,72 +73,85 @@ export default {
       }
     },
     methods:{
-      /*
-      reload  true重新加载
-      */
-      getList(reload){
-          if(reload)this.list=[];
-          this.listLoading = true
-          let params = {page:this.page,area:this.area,type:this.type,page_size:this.page_size}
-          this.$axios.get('/company',{params}).then(res=>{
-            if(res.code == 200 ){
-              if(!res.content.length && this.page == 1){
-                this.More = true;
-              }
-              else if(res.content.length<10 && res.content.length){
-                this.iscomplete = true;
-                this.More = false;
+ 
+      getList(){
+        this.listLoading = true
+        let params = {page:this.page,area:this.area,type:this.type,page_size:this.page_size};
+        const that = this;
+        this.$axios.get('/company',{params}).then(res=>{
+          if(res.code == 200 ){
+            if(that.page == 1){
+              if(res.content.length && res.content.length<that.page_size){
+                that.iscomplete = true;
+                that.More = false;
+              }else if(!res.content.length){
+                that.More = true;
               }else{
-                this.More = false;
-                this.iscomplete = false;
-                this.page++
+                that.iscomplete = false;
+                that.More = false;
               }
-              this.listLoading = false;
-              this.list = !this.list.length?[...res.content]:[...this.list,...res.content]
+            }else{
+              if(res.content.length<that.page_size){
+                that.iscomplete = true;
+                that.More = false;
+              }else{
+                that.iscomplete = false;
+                that.More = false;
+              }
             }
-          })
-        },
-        godetail(id){
-          this.$router.push({
-            path:'/company/info',
-            query:{id:id}
-          })
-        },
-        onisclose(type) {
-          let flag = this[type] ? false : true;
-          this.onSelect(type, flag);
-        },
-        //控制赛选框显示隐藏
-    onSelect(type, flag, Data) {
-      if(flag){
-        this.closeAll(type)
-      }
-      this.$set(this, type, flag);
-      // 关闭弹框请求接口
-      if(Data){
-        this.page = 1;
-        switch(type){
-          case 'isSelect_area' :
-            this.selectAreaData = { ...Data };
-            //接口请求
-            this.area = Data.id;
-            this.getList(true)
-          break;
-          //机械
-          case 'isSelect_jixie' :
-            this.selectJixieData = { ...Data };
-            //接口请求
-            this.type = Data.id;
-            this.getList(true)
-          break;
+            const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
+            this.page +=1 ;
+            that.listLoading = false;
+            that.list = [...list];
+          }
+        })
+      },
+      godetail(id){
+        this.$router.push({
+          path:'/company/info',
+          query:{id:id}
+        })
+      },
+      onisclose(type) {
+        let flag = this[type] ? false : true;
+        this.onSelect(type, flag);
+      },
+      //控制赛选框显示隐藏
+      onSelect(type, flag, Data) {
+        if(flag){
+          this.closeAll(type)
         }
+        this.$set(this, type, flag);
+        // 关闭弹框请求接口
+        if(Data){
+          this.page = 1;
+          switch(type){
+            case 'isSelect_area' :
+              this.selectAreaData = { ...Data };
+              //接口请求
+              this.area = Data.id;
+              this.getList()
+            break;
+            //机械
+            case 'isSelect_jixie' :
+              this.selectJixieData = { ...Data };
+              //接口请求
+              this.type = Data.id;
+              this.getList()
+            break;
+          }
+        }
+      },
+      closeAll(type){
+        type !=='isSelect_area' && this.isSelect_area && this.$set(this, 'isSelect_area', false);
+        type !=='isSelect_jixie' && this.isSelect_jixie && this.$set(this, 'isSelect_jixie', false);
+      },
+      //下拉刷新
+      onRefresh(){
+        this.page = 1;
+        this.getList()
       }
-    },
-    closeAll(type){
-      type !=='isSelect_area' && this.isSelect_area && this.$set(this, 'isSelect_area', false);
-      type !=='isSelect_jixie' && this.isSelect_jixie && this.$set(this, 'isSelect_jixie', false);
-    },
-  }
+    }
 }
 </script>
 
