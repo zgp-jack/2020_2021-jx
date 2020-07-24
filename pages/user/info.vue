@@ -72,7 +72,7 @@ export default {
       },
       // 修改头像
       ChangeHeader(file){
-        uploadPictures(this,file).then(res =>{
+        uploadPictures(this,file.file).then(res =>{
            if(res){
              const params = {header:res.content.value}
              this.$axios.get('/user/update-header',{params}).then( res => {

@@ -65,10 +65,15 @@
                   <input type="text" maxlength="20" placeholder="机械类型+工作地点" v-model="title">
                 </div>
               </div>
-              <div class="form_row desc">
+              <div class="form_row desc textarea">
                 <div class="notice">{{page_info.notice_text}}</div>
-                <textarea maxlength="500" :placeholder="page_info.desc" v-model="desc"></textarea>
-                <div style="text-align: right;"><span>{{descLength}}</span>/500</div>
+                <textarea maxlength="500" :placeholder="page_info.desc" v-model="desc">
+
+                </textarea>
+                <span class="textarea_msg">
+                  {{desc.length +'/500'}}
+                </span>
+
               </div>
             </div>
             <div class="public-style">
@@ -143,10 +148,19 @@
                 <span class="capt fr" @click="sendCapt">{{get_captcha_msg}}</span>
               </div>
             </div>
-            <div class="form_row desc">
+            <div class="form_row desc textarea">
               <div class="notice">{{page_info.notice_text}}</div>
+<<<<<<< HEAD
               <textarea maxlength="500" :placeholder="page_info.desc" v-model="desc"></textarea>
               <div style="text-align: right;"><span>{{descLength}}</span>/500</div>
+=======
+              <textarea maxlength="500" :placeholder="page_info.desc" v-model="desc">
+
+              </textarea>
+              <span class="textarea_msg" v-if="desc">
+                {{desc.length +'/500'}}
+              </span>
+>>>>>>> 8a46956a414afa57196a93cb1d6874e18a100fce
             </div>
           </div>
 

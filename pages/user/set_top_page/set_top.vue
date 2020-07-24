@@ -425,7 +425,7 @@
        text-align: center;
      }
      .set_rule{
-       width: 2.8rem;
+       width: 3rem;
        height: 0.4rem;
        margin: 0.4rem auto;
        color: #333;
@@ -513,7 +513,7 @@
     .content{
       width: 100%;
       overflow-y: auto;
-      height: calc(100vh - 5rem);
+      height:8rem;
       li{
         float: left;
         margin-right: 0.4rem;
@@ -531,7 +531,7 @@
       }
       .active{background-color: #ffa926;color: #fff;}
     }
-    .sure-btn{width: 7rem;height: 2rem;position: absolute;bottom: 0;box-sizing: border-box;}
+    .sure-btn{width: 7rem;height: 2rem;position:fixed;bottom:-0.5rem;box-sizing: border-box; z-index:50;}
     .sure-btn p{width: 5rem;height: 0.9rem;border-radius: 0.5rem;background-color: #ffa926;text-align: center;font-size: 0.4rem;line-height: 0.9rem;color: #fff;margin: 0 auto;}
    }
 </style>

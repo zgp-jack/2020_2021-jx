@@ -72,6 +72,15 @@
               }
             }
         }
+        .textarea{
+          position: relative;
+          padding-bottom: 0.4rem;
+          .textarea_msg{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+          }
+        }
         .desc{
           display: block;
           height: auto;

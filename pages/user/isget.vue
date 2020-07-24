@@ -14,6 +14,7 @@
               </div>
 
           </div>
+         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
           <van-list
           v-if="list.length"
           v-model="listLoading"
@@ -40,6 +41,7 @@
           </van-list>
            <emptyMsg  :empty1='true' v-if='More'/>
            <emptyMsg  :empty2='true' v-if='Moreimg'/>
+         </van-pull-refresh>
           <van-popup v-model="show" position="bottom" :style="{height:'30%'}">
               <van-datetime-picker
                 v-model="currentDate"
@@ -66,7 +68,7 @@
 <script>
 import Header from '../../components/header'
 import Vue from 'vue'
-import { Popup,DatetimePicker,Picker,List, Toast} from 'vant';
+import { Popup,DatetimePicker,Picker,List, Toast,PullRefresh} from 'vant';
 import {formatDate} from '../../static/utils/utils'
 import emptyMsg from '../../components/emptyMsg/index'
 Vue.use(Popup);
@@ -85,6 +87,7 @@ export default {
         Header,
         emptyMsg,
         'van-list':List,
+        'van-pull-refresh':PullRefresh,
     },
     data(){
         return{
@@ -106,10 +109,19 @@ export default {
             list:[],
             listLoading:false,
             iscomplete:false,
-            mode:0
+            mode:0,
+            isLoading:false
         }
     },
     methods:{
+      // 下拉刷新
+      onRefresh(){
+         this.page = 1
+         this.list = []
+         this.More = false
+         this.getrec()
+         this.isLoading= false;
+      },
         showPopup(){
             this.show = true
         },

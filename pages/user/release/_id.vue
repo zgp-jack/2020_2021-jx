@@ -36,7 +36,7 @@
                         <span @click.stop="refuse(item)" v-if="item.check == 0" class="list_item_reason fr"><img src="../../../assets/img/user_release/warning.png" alt=""> 查看被拒原因</span>
                         <span v-if="item.etime && item.check!=='0' && item.end !='2' && item.top" class="list_item_time fr">{{item.etime}} 到期</span>
                     </div>
-                    <img @click.stop="changeSateFn(item)" class="status" :src="item.check!='2'?status[item.check].url:changeStatus[mode][item.end].url" alt="">
+                    <img @click.stop="changeSateFn(item,index)" class="status" :src="item.check!='2'?status[item.check].url:changeStatus[mode][item.end].url" alt="">
                 </div>
             </van-list>
             <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
@@ -241,7 +241,7 @@ export default {
           }
         },
         //改变状态
-        changeSateFn(item){
+        changeSateFn(item,index){
           let str = "已租到";
           let that = this;
           if(item.check == 0 || item.check == 1){
@@ -269,7 +269,7 @@ export default {
                 type: 0
               }
               that.$axios.get('/user/change-status',{params}).then(res=>{
-                that.findItem(res,"end",2,item)
+                that.findItem(res,"end",2,item,index)
               })
                }).catch(() => {
                  // on cancel
