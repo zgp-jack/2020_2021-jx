@@ -17,6 +17,9 @@ const rem = `(function (doc, win) {
   doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);`
 
+
+const env = process.env.NODE_ENV
+
 export default {
 
   /*
@@ -72,19 +75,16 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy'
   ],
-  // axios: {
-  //   prefix: 'http://jxapi.kkbbi.com',        
-  //   proxy: true 
-  // },
   axios: {
-    proxy: true,
-    prefix: '/api/',
-    credentials: true
+    // credentials: true,
+    proxy: env === "development" ? true : false,
+    prefix: env === "development" ? '/api' : '',
+    // baseURL: env === "development" || env === "staging" ? "http://jxapi.kkbbi.com/" : "https://api.zhaogongdi.com/"
+    baseURL:'http://jxapi.kkbbi.com/',
   },
   proxy: {
     '/api/': {
       target: 'http://jxapi.kkbbi.com/', // 目标服务器ip
-      // target:'https://api.zhaogongdi.com/',
       pathRewrite: {
         '^/api/': '/',
         changeOrigin: true
@@ -95,9 +95,21 @@ export default {
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
-  build: {},
+  build: {
+    // analyze: env === 'staging', // 分析打包情况的配置
+    // assetFilter: function(assetFilename) {
+    //   return assetFilename.endsWith('.js')
+    // },
+    // extractCSS: true,
+    // filenames: {
+    //   chunk: ({isDev}) => isDev ? '[name].js' : '[id].[chunkhash].js',
+    //   css: ({isDev}) => isDev ? '[name].css' : '[contenthash].css'
+    // }
+  },
   router: {
-    base: '/dist'
+    mode: 'hash',
+    base: env === "development" ?'/dist':'./'
+    // base: '/dist',
   },
 
 }
