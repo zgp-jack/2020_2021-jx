@@ -96,20 +96,9 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
-    // analyze: env === 'staging', // 分析打包情况的配置
-    // assetFilter: function(assetFilename) {
-    //   return assetFilename.endsWith('.js')
-    // },
-    // extractCSS: true,
-    // filenames: {
-    //   chunk: ({isDev}) => isDev ? '[name].js' : '[id].[chunkhash].js',
-    //   css: ({isDev}) => isDev ? '[name].css' : '[contenthash].css'
-    // }
   },
   router: {
-    mode: 'hash',
-    base: env === "development" ?'/dist':'./'
-    // base: '/dist',
+    base: env === "development" ?'/dist':'/',
   },
 
 }
