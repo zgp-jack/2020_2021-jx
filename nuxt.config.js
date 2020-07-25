@@ -17,6 +17,9 @@ const rem = `(function (doc, win) {
   doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);`
 
+
+const env = process.env.NODE_ENV
+
 export default {
 
   /*
@@ -72,19 +75,16 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy'
   ],
-  // axios: {
-  //   prefix: 'http://jxapi.kkbbi.com',        
-  //   proxy: true 
-  // },
   axios: {
-    proxy: true,
-    prefix: '/api/',
-    credentials: true
+    // credentials: true,
+    proxy: env === "development" ? true : false,
+    prefix: env === "development" ? '/api' : '',
+    // baseURL: env === "development" || env === "staging" ? "http://jxapi.kkbbi.com/" : "https://api.zhaogongdi.com/"
+    baseURL:'http://jxapi.kkbbi.com/',
   },
   proxy: {
     '/api/': {
       target: 'http://jxapi.kkbbi.com/', // 目标服务器ip
-      // target:'https://api.zhaogongdi.com/',
       pathRewrite: {
         '^/api/': '/',
         changeOrigin: true
@@ -95,9 +95,10 @@ export default {
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
-  build: {},
+  build: {
+  },
   router: {
-    base: '/dist'
+    base: env === "development" ?'/dist':'/',
   },
 
 }
