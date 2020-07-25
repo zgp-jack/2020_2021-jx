@@ -83,19 +83,18 @@ export default {
         let page = this.page
         let page_size = this.page_size
         this.$axios.get('/user/collect-list',{params:{mode:modes,page,page_size}}).then(res=>{
-          this.listLoading = false;
-          !res.content.next?(this.iscomplete=true,res.content.list.length!=0 && !res.content.next ?this.More = true:this.More = false):(this.iscomplete=false)
-          res.content.list.length<=0?(this.Moreimg=true,this.More=false):(this.Moreimg=false)
-          list = !list.length?[...res.content.list]:[...list,...res.content.list]
-          this.isLoading && (this.isLoading = false);
-          this.$set(this,'list',[...list])
-          this.page++
+        this.listLoading = false;
+        !res.content.next?(this.iscomplete=true,res.content.list.length!=0 && !res.content.next ?this.More = true:this.More = false):(this.iscomplete=false)
+        res.content.list.length<=0?(this.Moreimg=true,this.More=false):(this.Moreimg=false)
+        list = this.page==1?[...res.content.list]:[...list,...res.content.list]
+        this.isLoading && (this.isLoading = false);
+        this.$set(this,'list',[...list])
+        this.page++
         })
       },
       // 下拉刷新
        onRefresh() {
          this.page = 1
-         this.list = []
          this.More = false
          this.getcollect(this.modeler);
          this.isLoading= false;
@@ -104,7 +103,6 @@ export default {
       getcoll(mode){
          if(this.modeler == mode) return false;
          this.page = 1;
-         this.list = []
          this.More = false
          this.getcollect(mode)
          this.modeler = mode

@@ -117,7 +117,6 @@ export default {
       // 下拉刷新
       onRefresh(){
          this.page = 1
-         this.list = []
          this.More = false
          this.getrec()
          this.isLoading= false;
@@ -175,33 +174,21 @@ export default {
           if(this.classification == '全部分类') this.fenleiindex = ''
           let params = {type:this.mode,page:this.page,page_size:this.page_size,date:this.valuetime,category:this.fenleiindex}
           this.$axios.get('/coin/record',{params}).then(res=>{
-              console.log(res)
-              this.listLoading = false
-              this.list = !this.list.length?[...res.content.list]:[...this.list,...res.content.list]
-              res.content.list.length>=10?(this.iscomplete = false,this.page++):(this.iscomplete = true,this.More = true)
-              this.list.length<=0?(this.Moreimg = true,this.More=false):(this.Moreimg = false)
+          console.log(res)
+          this.listLoading = false
+          this.list = this.page == 1?[...res.content.list]:[...this.list,...res.content.list]
+          res.content.list.length>=10?(this.iscomplete = false,this.page++):(this.iscomplete = true,this.More = true)
+          this.list.length<=0?(this.Moreimg = true,this.More=false):(this.Moreimg = false)
           })
         },
         // 点击获取数据
         getcoll(){
          this.page = 1;
-         this.list = []
          this.More = false
          this.getrec()
       },
       // 跳转
       go(item){
-        // if(this.mode == 0){
-        //   this.$router.push({
-        //     path:'/view',
-        //     query:{
-        //       info:id,
-        //       mode:1
-        //     }
-        // })
-        // }else{
-        //   return false
-        // }
         const {is_company,uu_id,type} = item
         if(is_company == 0 && this.mode == 0){
             this.$router.push({
