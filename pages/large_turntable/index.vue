@@ -6,7 +6,7 @@
         <div class="turntable-box-out"></div>
         <div class="turntable-box-img"></div>
         <div class="turntable-btn">
-          <div class="turntable-btn-click"></div>
+          <div class="turntable-btn-click" @click="startTurnTbale"></div>
         </div>
 
       </div>
@@ -32,9 +32,7 @@
       <div class="turntable-orderbox">
         <div class="turntable-order" onclick="gailu">
           <ul class="turntable-order-lists" id="orderlsits">
-             <li class="turntable-order-item">恭喜 "张先生" 中奖 ! 获得 300 鱼泡币</li>
-             <li class="turntable-order-item">恭喜 "张先生" 中奖 ! 获得 300 鱼泡币</li>
-             <li class="turntable-order-item">恭喜 "张先生" 中奖 ! 获得 300 鱼泡币</li>
+             <li class="turntable-order-item" v-for="(item,index) in nameArr">恭喜 "{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币</li>
           </ul>
         </div>
       </div>
@@ -43,7 +41,45 @@
   </div>
 </template>
 <script>
-
+  import { NoticeBar } from 'vant';
+  export default{
+    data(){
+      return{
+        firstName : "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜戚谢邹喻柏水窦章云苏潘葛奚范彭郎鲁韦昌马苗凤花方俞任袁柳酆鲍史唐费廉岑薛雷贺倪汤滕殷罗毕郝邬安常乐于时傅皮卞齐康伍余元卜顾孟平黄和穆萧尹姚邵湛汪祁毛禹狄米贝明臧计伏成戴谈宋茅庞熊纪舒屈项祝董梁杜阮蓝闵席季麻强贾路娄危江童颜郭梅盛林刁钟徐邱骆高夏蔡田樊胡凌霍虞万支柯昝管卢莫经房裘缪干解应宗丁宣贲邓郁单杭洪包诸左石崔吉钮龚程嵇邢滑裴陆荣翁荀羊於惠甄曲家封芮羿储靳汲邴糜松井段富巫乌焦巴弓牧隗山谷车侯宓蓬全郗班仰秋仲伊宫宁仇栾暴甘钭厉戎祖武符刘景詹束龙叶幸司韶郜黎蓟薄印宿白怀蒲邰从鄂索咸籍赖卓蔺屠蒙池乔阴鬱胥能苍双闻莘党翟谭贡劳逄姬申扶堵冉宰郦雍卻璩桑桂濮牛寿通边扈燕冀郏浦尚农温别庄晏柴瞿阎充慕连茹习宦艾鱼容向古易",
+        lastName : ["先生", "先生", "先生", "先生", "先生", "先生", "先生", "女士", "女士", "女士"],
+        integralArr : [1,3,10,100,300],
+        firstNameArr:[],
+        nameArr:[],
+      }
+    },
+    created() {
+      this.firstNameArr = this.firstName.split("");
+      this.getNameArr();
+    },
+    methods:{
+      //随机数
+      getRand(start, end) {
+        if (start == 0) return Math.floor((end + 1) * Math.random());
+        return Math.floor(Math.random() * end + 1);
+      },
+      getNameArr(){
+        let nameNum = 200;
+        var firstLen = this.firstName.length - 1;
+        var lastLen = this.lastName.length - 1;
+        for(let i = 0; i < nameNum; i++){
+          var nameStr = this.firstNameArr[this.getRand(0, firstLen)] + this.lastName[this.getRand(0, lastLen)];
+          var integral = this.integralArr[this.getRand(0, this["integralArr"].length - 1)];
+          this.nameArr.push({ name: nameStr, integral: integral })
+        }
+      },
+      startTurnTbale(){
+         this.$axios.post('/turn-table/do-lottery').then(res=>{
+           console.log(res)
+           debugger
+         })
+      },
+    }
+  }
 </script>
 
 <style>
