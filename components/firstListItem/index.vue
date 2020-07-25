@@ -13,8 +13,10 @@
       <div class="right-inner">
         <div class="basic-info">
            <p class="userName">{{data.item.user}}</p>
-           <p class="userTel">{{data.item.status == 2 ? data.item.tel.slice(0,7) + "***" : data.item.tel}}</p>
-           <p class="tel-icon"  @click.prevent ="callPhone(data.item.tel,data.item.uu,data.item.mode,data.index)" v-show="!(data.item.is_mine || data.item.status == 2)"></p>
+           <p class="userTel">{{data.item.status == 2 ? data.item.tel.slice(0,7) + "****" : data.item.tel}}</p>
+           <p class="tel-icon"  @click.prevent ="callPhone(data.item.tel,data.item.uu,data.item.mode,data.index)" v-show="!(data.item.is_mine || data.item.status == 2)">
+             <span></span>
+           </p>
         </div>
         <div class="type-class">
           <a href="javascript:;"  v-for="(itemSon,i) in data.item.class" :key="i">{{itemSon.name}}</a>

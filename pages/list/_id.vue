@@ -40,23 +40,26 @@
        <!-- 呼出 -->
        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
         <div v-if="(mode==1 || mode==4)">
-
-          <van-list
-            v-model="loading"
-            :finished="iscomplete || isempty"
-            @load="listScroll"
-          >
-            <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}" v-if="list.length"/>
-          </van-list>
-          </div>
-          <div v-if="(mode==2 || mode==3)">
+          <van-pull-refresh v-model="loading" @refresh="onrefresh">
             <van-list
               v-model="loading"
               :finished="iscomplete || isempty"
               @load="listScroll"
             >
-            <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}" v-if="list.length"/>
-          </van-list>
+              <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}" v-if="list.length"/>
+            </van-list>
+          </van-pull-refresh>
+          </div>
+          <div v-if="(mode==2 || mode==3)">
+            <van-pull-refresh v-model="loading" @refresh="onrefresh">
+              <van-list
+                v-model="loading"
+                :finished="iscomplete || isempty"
+                @load="listScroll"
+              >
+                <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}" v-if="list.length"/>
+              </van-list>
+            </van-pull-refresh>
 
         </div>
 
@@ -69,7 +72,7 @@
 
 <script>
 import Tarbar from "../../components/tarbar";
-import { Search,Uploader,Toast,List} from "vant";
+import { Search,Uploader,Toast,List,PullRefresh} from "vant";
 import CustomArea from "../../components/customArea";
 import CustomMechanicalType from "../../components/customMechanicalType";
 import Topbar from "../../components/Topbar";
@@ -128,6 +131,7 @@ export default {
     SeccondListItem,
     EmptyMsg,
     'van-list':List,
+    'van-pull-refresh':PullRefresh,
     BottomTop,
     Newgift
   },
@@ -173,12 +177,14 @@ export default {
           //机械
           case 'isSelect_jixie' :
             this.selectJixieData = { ...Data };
+            this.type = Data.id;
             //接口请求
             this.getList()
           break;
           case 'isSelect_sort' :
             this.selectSortData = { ...Data };
             this.sort_index = Data.id;
+            this.pattern =  Data.id;
             //接口请求
             this.getList()
           break;
@@ -236,6 +242,11 @@ export default {
           this.$router.push('/list/1')
         }, 1500);
       }
+    },
+
+    onrefresh(){
+      this.onreset()
+      this.getList()
     },
 
     //重置page

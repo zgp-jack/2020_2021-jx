@@ -86,13 +86,12 @@ export default {
                that.$router.go(-1);
             }
             GetUser(that,callback)
-          }else if(res.code == 500){
+          }else{
             Toast(res.msg)
           }
         })
       },
       call_costum(tel){
-        console.log(12)
         window.location.href = "tel:"+tel;
       }
     }

@@ -13,7 +13,9 @@
         <div class="basic-info fl">
            <p class="userName fl">{{data.item.user}}</p>
            <p class="userTel fl">{{data.item.status == 2 ? data.item.tel.slice(0,7) + "***" : data.item.tel}}</p>
-           <p class="tel-icon fr"  @click.prevent="callPhone(data.item.tel,data.item.uu,data.item.mode,data.index)" v-show="!(data.item.is_mine || data.item.status == 2)"></p>
+           <p class="tel-icon fr"  @click.prevent="callPhone(data.item.tel,data.item.uu,data.item.mode,data.index)" v-show="!(data.item.is_mine || data.item.status == 2)">
+             <span></span>
+           </p>
         </div>
         <div class="position-time">
           <div class="position fl">

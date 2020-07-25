@@ -20,7 +20,7 @@
             }
             #{'/deep/'} {
                 .van-field__left-icon .van-icon{
-                    font-size: 0.28rem;
+                    font-size: 0.3rem;
                 }
             }
             .search_text{
@@ -75,7 +75,7 @@
 }
 
 .list_data{
-    @include static_inner($top:calc(1.91rem + 2px))
+    @include static_inner($top:1.91rem)
 }
 
 //排序
@@ -93,7 +93,7 @@
 
 //机械选择/地区选择
 #{'/deep/'} .model_mask{
-    top:calc(1.91rem + 2px);
+    top:1.91rem;
     transition: all 0.3s ease-in-out 0s;
     .selectd{
         height: 0;

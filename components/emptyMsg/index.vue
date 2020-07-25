@@ -8,20 +8,21 @@
             <p>{{text || '暂无此类数据'}}</p>
         </div>
     </div>
-        
+
 </template>
 
 <style lang='scss' scoped>
     .emptyMsg{
         text-align: center;
-        font-size: 0.37rem;
+        font-size: 0.33rem;
         color: #666;
         img{
             width: 4rem;
             height: auto;
         }
         p{
-            line-height: 1rem;
+            line-height: 0.6rem;
+            padding: 0.2rem 0;
         }
     }
 </style>

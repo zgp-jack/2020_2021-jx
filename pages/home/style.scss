@@ -77,7 +77,7 @@
     border-top-left-radius: 0.23rem;
     border-top-right-radius: 0.23rem;
     background: #fff;
-    margin-bottom: 0.14rem;
+    margin-bottom: 0.2rem;
     display: flex;
     flex-wrap: wrap;
     a{
@@ -103,7 +103,7 @@
     z-index:90;
     width: 100%;
     background-color: #f6f6f6;
-    margin-bottom: 0.14rem;
+    margin-bottom: 0.2rem;
     display: flex;
     div{
       width: 25%;
@@ -132,13 +132,14 @@
     width: 100%;
     overflow: hidden;
     .more{
-      height: 0.77rem;
+      height: 0.9rem;
       background-color: #fff;
       text-align: center;
-      line-height: 0.77rem;
+      line-height: 0.9rem;
       color: #f99a05;
-      font-size: 0.24rem;
-      margin-bottom: 0.5rem;
+      font-size: 0.28rem;
+      margin-bottom: 0.3rem;
+      margin-top: 0.2rem;
     }
   }
 

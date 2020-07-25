@@ -88,9 +88,7 @@
          <p class="alread_complate" v-else>{{"已租到"}}</p>
        </div>
     </div>
-
     <!-- 举报弹框 -->
-    <!-- <van-dialog /> -->
     <pageView v-if="novice_point_alert" @novicePointHiddens="novicePointHiddens" :show = 'novice_point_alert' />
   </div>
 
@@ -99,10 +97,8 @@
 <script>
   import VerticalBanner from "../../components/vertical_banner";
   import pageView from "../../components/page-view";
-  import { Dialog,ImagePreview,Toast } from 'vant';
-  import {showPhoneFn,callPhoneFn} from '../../static/utils/utils.js';
-  import {getNovicePoint,setNovicePoint} from '../../static/utils/utils.js';
-
+  import { Dialog, ImagePreview,Toast } from 'vant';
+  import {showPhoneFn, callPhoneFn, whetherLogin, getNovicePoint, setNovicePoint} from '../../static/utils/utils.js';
   export default{
     data(){
       return{
@@ -117,7 +113,8 @@
         state_text:"已出租",
         go_release:false, //去发布
         go_settop:false,  //去置顶
-        show_wath_all:false
+        show_wath_all:false,
+        novice_point_alert:true
       }
     },
     components:{
@@ -129,7 +126,6 @@
     created(){
       let guide = getNovicePoint();
       if(!guide.detail) this.novice_point_alert = false
-      let that = this;
       //参数不完整跳转首页
       if(!(this.$route.query.info && this.$route.query.mode)){
         window.location.replace('/dist/home')
@@ -141,60 +137,55 @@
        //根据参数请求数据
         this.$axios.get('/index/new-view',{params}).then(res=>{
           if(res.code == 200){
-             that.$set(that,'detail_info',{...res.content})
+             this.$set(this,'detail_info',{...res.content})
              // 状态的显示
-             that.allState(res.content);
+             this.allState(res.content);
              //获取详情的高度
-             that.detailContnetHeight()
+             this.detailContnetHeight()
           }else if(res.code == 500){
             Dialog.alert({
               title:"提示",
               message:res.msg,
             }).then(res=>{
-              that.$router.go(-1)
+              this.$router.go(-1)
             })
           }
         })
       }
-
     },
     methods:{
+      // 关闭弹窗
+      novicePointHiddens(page){
+        this.novice_point_alert = page
+      },
+      //显示查看全部按钮
       detailContnetHeight(){
         setTimeout(()=>{
-           let detail_content_height = this.$refs.detail_content.offsetHeight;
-           let maxHeight = parseFloat(document.documentElement.style.fontSize) * 1.2;
+           let detail_content_height = this.$refs.detail_content.offsetHeight,
+               maxHeight = parseFloat(document.documentElement.style.fontSize) * 1.2;
            if(detail_content_height>maxHeight){
              this.show_wath_all = true;
            }
         },0)
-
       },
       // 改变标题
       changeTitle(mode){
-        if(mode == 1){
-          this.title = "机械求租详情"
-        }else if(mode == 2){
-          this.title = "机械出租详情"
-        }else if(mode == 3){
-          this.title = "机械转让详情"
-        }else if(mode == 4){
-          this.title = "机械求购详情"
-        }
+        if(mode == 1) this.title = "机械求租详情";
+        else if(mode == 2) this.title = "机械出租详情";
+        else if(mode == 3) this.title = "机械转让详情";
+        else if(mode == 4) this.title = "机械求购详情"
       },
       //状态的显示
       allState(obj){
         //是否是新用户
-        if(this.detail_info.roofTag == 1){
-           this.go_release = true;
-        }else if(this.detail_info.roofTag == 2){
-          this.go_settop = true;
-        }else if(this.detail_info.roofTag == 0){
+        if(this.detail_info.roofTag == 1) this.go_release = true;
+        else if(this.detail_info.roofTag == 2) this.go_settop = true;
+        else if(this.detail_info.roofTag == 0){
           this.go_release = true;
           this.go_settop = true;
         }
         //是否已经收藏
         this.is_collection = obj.collection;
-
         //该信息是不是自己的
         if(obj.is_author){
            this.is_mine = true;
@@ -218,36 +209,34 @@
           this.call_phone = true;
           return false
         }
-
       },
       //查看完整电话
       showPhone(id){
-        let that = this;
         //判断是否登录
-        if(!"login"){
-          this.$router.push("/login")
-          return false;
-        }
+        whetherLogin(this)
         let params = {
           id,
           mode:this.mode,
         };
         //进行ajax请求完整的电话号码
-        showPhoneFn(that,Toast,params,(tel)=>{
-          that.show_complete_tel = false;
-          that.call_phone = true;
-          that.detail_info.phone = tel;
+        showPhoneFn(this,Toast,params,(tel)=>{
+          this.show_complete_tel = false;
+          this.call_phone = true;
+          this.detail_info.phone = tel;
         })
       },
       //拨打电话
       callPhone(id){
-        if(!this.call_phone) {
-          this.showPhone(id)
+        if(this.call_phone) {
+          callPhoneFn(this.detail_info.phone)
           return false;
+        }else{
+          this.showPhone(id);
         }
       },
       //投诉
       reportFn(phone){
+        whetherLogin(this)
         // 判断是否已完成
         if(this.detail_info.status == 2){
           Dialog.alert({
@@ -269,7 +258,6 @@
             query:this.$route.query
           })
         }
-
       },
       //查看全部
       watchAll(){
@@ -278,7 +266,6 @@
       //展示图片
       showImage(index){
         let that = this;
-        // 查看图片
         ImagePreview({images:that.detail_info.images,startPosition:index,closeable:true})
       },
       //分享
@@ -288,15 +275,13 @@
       //收藏
       cellectFn(id){
         let that = this;
-         let data = {
+        let data = {
            id,
            mode:this.$route.query.mode,
            type:(this.is_collection ? "2" : "1")
          }
-         console.log(data)
          //发起ajax请求
          this.$axios.post('/index/collection',{data:JSON.stringify(data)}).then(res=>{
-           // console.log(res)
            if(res.code == 200){
               Dialog.alert({
                 title:"温馨提示",
