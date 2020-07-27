@@ -43,7 +43,7 @@ export default {
     };
   },
   created(){
-      let clas = deepCopy(window.$nuxt.$store.state.clas);
+      let clas = deepCopy(this.$nuxt.$store.state.clas);
       clas.splice(0,1)
       this.$set(this,'clas',deepCopy(clas))
       this.readOnlyClasData = deepCopy(clas);

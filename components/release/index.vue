@@ -265,7 +265,7 @@ export default {
             desc:'请简要描述设备型号和机械年份，我们将为您快速匹配交易方'
           }
         }
-        let {tel} = window.$nuxt.$store.state.userinfo;
+        let {tel} = this.$nuxt.$store.state.userinfo;
         this.phon = tel;
         this.oldPhon = tel;
       },
@@ -496,7 +496,7 @@ export default {
     },
     computed:{
       imgserver(){
-        return window.$nuxt.$store.state.img_server
+        return this.$nuxt.$store.state.img_server
       }
     }
 }

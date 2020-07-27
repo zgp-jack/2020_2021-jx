@@ -259,7 +259,7 @@ export default {
     //搜索
     onSearch(){
       this.onreset()
-      if(Object.keys(window.$nuxt.$store.state.userinfo).length  == 0){
+      if(Object.keys(this.$nuxt.$store.state.userinfo).length  == 0){
         this.$router.push('/login')
         return false
       }

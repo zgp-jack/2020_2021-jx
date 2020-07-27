@@ -66,12 +66,12 @@ export default {
           };
         }
       }else{
-        default_addr = this.default_data?this.default_data:window.$nuxt.$store.state.default_addr;
+        default_addr = this.default_data?this.default_data:that.$nuxt.$store.state.default_addr;
       }
     }else{
-      default_addr = this.default_data?this.default_data:window.$nuxt.$store.state.default_addr;
+      default_addr = this.default_data?this.default_data:that.$nuxt.$store.state.default_addr;
     }
-    const city = window.$nuxt.$store.state.city;
+    const city = that.$nuxt.$store.state.city;
     const chose_area = default_addr.province.id - 1;
     //只有父选项并且有默认值的情况下
     default_addr.city ? city[chose_area].find((item, index) => {
@@ -130,7 +130,7 @@ export default {
   },
   computed: {
     city() {
-      return window.$nuxt.$store.state.city;
+      return this.$nuxt.$store.state.city;
     }
   }
 };

@@ -44,7 +44,7 @@ export default {
         if(res.code == 200){
           let result = StorageType(res.content,'0')
           let types = { 'type': [{id: 0, name: "所有机械", pid: "0"}].concat(result.par), 'clas': [{}].concat(result.son)}
-          window.$nuxt.$store.commit('setMechanics',types)
+          that.$nuxt.$store.commit('setMechanics',types)
           that.numberServers+=1
         }
       })
@@ -60,10 +60,10 @@ export default {
             default_cover,default_header
           }
           const contacts = {contact,wx_service};
-          window.$nuxt.$store.commit('setPortrait',default_portrait)
-          window.$nuxt.$store.commit('setDefaultAddr',addr)
-          window.$nuxt.$store.commit('setImgServer',file_domain)
-          window.$nuxt.$store.commit('setContact',{...contacts})
+          that.$nuxt.$store.commit('setPortrait',default_portrait)
+          that.$nuxt.$store.commit('setDefaultAddr',addr)
+          that.$nuxt.$store.commit('setImgServer',file_domain)
+          that.$nuxt.$store.commit('setContact',{...contacts})
         }
       })
     },
