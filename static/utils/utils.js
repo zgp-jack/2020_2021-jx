@@ -153,7 +153,7 @@ export function GetUser(page,callback){
   if(ssoToken){
     page.$axios.get('/user/get-userinfo').then(res=>{
       if(res.code==200){
-        window.$nuxt.$store.commit('setUserinfo',res.content)
+        page.$nuxt.$store.commit('setUserinfo',res.content)
         callback && callback(res.content)
       }
     })
@@ -170,7 +170,7 @@ export function GetUser(page,callback){
 export function whetherLogin(that,url){
   if(!that) return false;
 
-  if (JSON.stringify(window.$nuxt.$store.state.userinfo)==='{}'){
+  if (JSON.stringify(that.$nuxt.$store.state.userinfo)==='{}'){
     that.$router.push("/login")
   }else if(url){
     that.$router.push(url)

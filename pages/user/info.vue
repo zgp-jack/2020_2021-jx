@@ -45,7 +45,7 @@ export default {
     },
     computed:{
         userinfo(){
-          return window.$nuxt.$store.state.userinfo
+          return this.$nuxt.$store.state.userinfo
         }
     },
     methods:{
@@ -66,7 +66,7 @@ export default {
         this.$axios.post('/user/update-name',{name:Newname}).then( res => {
               if(res){
                 Toast('修改成功')
-                window.$nuxt.$store.state.userinfo.name = Newname
+                this.$nuxt.$store.state.userinfo.name = Newname
               }
         })
       },
@@ -76,7 +76,7 @@ export default {
            if(res){
              const params = {header:res.content.value}
              this.$axios.get('/user/update-header',{params}).then( res => {
-                 window.$nuxt.$store.state.userinfo.header = res.content
+                 this.$nuxt.$store.state.userinfo.header = res.content
              })
            }else{
              Toast('头像修改失败,请稍后再试')

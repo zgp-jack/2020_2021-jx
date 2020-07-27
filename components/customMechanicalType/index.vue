@@ -24,7 +24,6 @@
 </style>
 
 <script>
-import { mapMutations, mapState, mapGetters } from "vuex";
 import Tarbar from "../../components/tarbar";
 import { Search } from "vant";
 import { constants } from "zlib";
@@ -98,10 +97,10 @@ export default {
   },
   computed: {
     clas() {
-      return window.$nuxt.$store.state.clas;
+      return this.$nuxt.$store.state.clas;
     },
     type(){
-        return window.$nuxt.$store.state.type;
+        return this.$nuxt.$store.state.type;
     }
   }
 };

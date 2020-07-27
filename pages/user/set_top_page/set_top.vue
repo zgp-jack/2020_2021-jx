@@ -154,7 +154,7 @@
       for(var i = 1; i <= 30;i++){
         this.columns.push(i+"天")
       }
-       let arr = window.$nuxt.$store.state.area;
+       let arr = this.$nuxt.$store.state.area;
        let newArr = arr.map((item)=>{
         item.addColor=false;
          return item
