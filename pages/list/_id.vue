@@ -39,7 +39,7 @@
       <Topbar/>
        <!-- 呼出 -->
        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
-        <div v-if="(mode==1 || mode==4)">
+        <div v-if="(mode==1 || mode==4) && list.length">
           <van-pull-refresh v-model="loading" @refresh="onrefresh">
             <van-list
               v-model="loading"
@@ -49,8 +49,8 @@
               <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}" v-if="list.length"/>
             </van-list>
           </van-pull-refresh>
-          </div>
-          <div v-if="(mode==2 || mode==3)">
+        </div>
+        <div v-if="(mode==2 || mode==3) && list.length">
             <van-pull-refresh v-model="loading" @refresh="onrefresh">
               <van-list
                 v-model="loading"
@@ -135,7 +135,7 @@ export default {
     BottomTop,
     Newgift
   },
-  created(){
+  beforeMount(){
     
   },
   mounted() {

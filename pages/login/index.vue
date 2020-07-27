@@ -40,7 +40,7 @@ export default {
     beforeCreate() {
       whetherLogin(this)
     },
-    created(){
+    beforeMount(){
 
     },
     data(){

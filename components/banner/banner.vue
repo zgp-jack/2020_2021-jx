@@ -22,7 +22,7 @@
       "van-swipe": Swipe,
       "van-swipe-item" : SwipeItem,
     },
-    created(){
+    beforeMount(){
       //轮播图数据
       this.banner_data = this.$props.obj;
     },

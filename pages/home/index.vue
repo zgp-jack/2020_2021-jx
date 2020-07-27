@@ -145,7 +145,7 @@ export default {
       novice_point_alert:false
     }
   },
-  created(){
+  beforeMount(){
 
   },
   mounted() {

@@ -38,7 +38,7 @@
                     <div class="row-left"><span class="f-red">*</span>机械规模</div>
                     <div class="row-right">
                         <select name="scale" class="textInput" v-model="number">
-                            <option selected value="1"> < 20台 </option>
+                            <option selected value="1"> &lt; 20台 </option>
                             <option value="2">20~39台</option>
                             <option value="3">40~59台</option>
                             <option value="4">60~99台</option>
@@ -178,7 +178,7 @@ export default {
         }
     },
     props:['info'],
-    created() {
+    beforeMount() {
       if(this.info) this.getParentData(this.info);
     },
     methods:{
