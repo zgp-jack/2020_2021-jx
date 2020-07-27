@@ -123,7 +123,7 @@
       [ImagePreview.Component.name]: ImagePreview.Component,
       pageView
     },
-    created(){
+    mounted(){
       let guide = getNovicePoint();
       if(!guide.detail) this.novice_point_alert = false
       //参数不完整跳转首页

@@ -136,19 +136,10 @@ export default {
     Newgift
   },
   created(){
-    const mode = this.$route.params.id;
-    this.mode = mode;
-    //获取本地存储机械类型
-    let all = window.sessionStorage.getItem('mechanic_all');
-    let mechanic_child = window.sessionStorage.getItem('mechanic_child');
-    if(all){
-      this.type = JSON.parse(all).id;
-    }else if(mechanic_child){
-      this.type = JSON.parse(mechanic_child).id;
-      this.selectJixieData = JSON.parse(mechanic_child);
-    }
+    
   },
   mounted() {
+    this.int()
     window.addEventListener('scroll',this.my_scroll);
   },
   methods: {
@@ -286,6 +277,19 @@ export default {
           this.$set(this,'list',[...list])
       }
       this.lost = yue
+    },
+    int(){
+      const mode = this.$route.params.id;
+      this.mode = mode;
+      //获取本地存储机械类型
+      let all = window.sessionStorage.getItem('mechanic_all');
+      let mechanic_child = window.sessionStorage.getItem('mechanic_child');
+      if(all){
+        this.type = JSON.parse(all).id;
+      }else if(mechanic_child){
+        this.type = JSON.parse(mechanic_child).id;
+        this.selectJixieData = JSON.parse(mechanic_child);
+      }
     }
   },
 };

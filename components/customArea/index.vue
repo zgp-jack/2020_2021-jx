@@ -39,7 +39,7 @@ export default {
       whearth_storage:false,
     };
   },
-  created() {
+  mounted() {
     if(this.$props.whearthStorage){
       this.whearth_storage = true;
     }
@@ -84,14 +84,14 @@ export default {
     :
     that.$set(that, "intData", default_addr.province);
     default_addr.province && this.$set(this, "provinceChosedIndex", chose_area);
-  },
-  mounted() {
+
     this.onSelect(
       "isSelect_area",
       false,
       this.intData
     );
   },
+
   methods: {
     //大城市选择
     provinceChosed(index,item) {

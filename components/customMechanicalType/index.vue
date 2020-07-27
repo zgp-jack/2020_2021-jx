@@ -37,7 +37,7 @@ export default {
       whearth_storage:false,
     };
   },
-  created() {
+  mounted() {
     //是否要改机械类型的样式
     this.whearth_storage = this.$props.whearthStorage;
     if(this.whearth_storage){

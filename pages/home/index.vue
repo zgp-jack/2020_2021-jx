@@ -145,7 +145,10 @@ export default {
       novice_point_alert:false
     }
   },
-  created() {
+  created(){
+
+  },
+  mounted() {
     this.novice_point = getNovicePoint();
     //显示新手指引
     this.novicePointFn()
@@ -239,9 +242,11 @@ export default {
       },
   },
   mounted() {
-    this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
-    //监听document上的滚动事件
-    document.addEventListener('scroll',this.my_scroll)
+    setTimeout(()=>{
+      this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
+      //监听document上的滚动事件
+      document.addEventListener('scroll',this.my_scroll)
+    },0)
   }
 
 }
