@@ -188,7 +188,7 @@
 <script>
 import MechanicalType from '../../components/mechanicalType';
 import PickerArea from '../../components/pickerArea';
-import {CellphoneCheck,IncludeChinese,OnlyChinese} from '../../static/utils/validator.js';
+import {CellphoneCheck,IncludeChinese,OnlyChinese,whetherLogin} from '../../static/utils/validator.js';
 import {Toast,Uploader,ImagePreview,Dialog} from 'vant';
 import {uploadPictures} from '../../static/utils/utils.js';
 export default {
@@ -230,6 +230,7 @@ export default {
       this.mode = this.$route.query.mode;
       this.initPage(this.mode);
       this.isEditor();
+      if(whetherLogin(this) == false) return false;
     },
     methods:{
       onMechanicsShow(flag){

@@ -36,7 +36,7 @@
 
 <script>
 import Sign from '../../components/Sign'
-import {coinget} from '../../static/utils/utils'
+import {coinget,whetherLogin} from '../../static/utils/utils'
 export default {
     props:['showWant','qiandao','hiddenAll',"showAlert"],
     components:{
@@ -83,6 +83,7 @@ export default {
         },
         //去签到
       go_sign(){
+        if(whetherLogin(this) == false) return false;
         const that = this
         this.box_show = true
         coinget(that)
@@ -93,6 +94,7 @@ export default {
       },
       // 跳转发布页
       fabugo(){
+        if(whetherLogin(this) == false) return false;
         this.$router.push({
            name:'user-release-id',
            params:{

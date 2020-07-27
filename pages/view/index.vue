@@ -236,7 +236,7 @@
       },
       //投诉
       reportFn(phone){
-        whetherLogin(this)
+        if(whetherLogin(this) == false) return
         // 判断是否已完成
         if(this.detail_info.status == 2){
           Dialog.alert({

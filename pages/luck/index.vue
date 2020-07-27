@@ -4,7 +4,7 @@
     <div class="turntable-container">
       <div class="turntable-box">
         <div class="turntable-box-out"></div>
-        <div class="turntable-box-img"></div>
+        <div class="turntable-box-img" :class='[is_rotate?"luck-rotate":""]' :style="{transfrom:'rotate('+rotate+'deg)'}"></div>
         <div class="turntable-btn">
           <div class="turntable-btn-click" @click="startTurnTbale"></div>
         </div>
@@ -16,12 +16,12 @@
 
       <div class="turntable-tasks">
         <div class="turntable-task-item">
-          <span>看视频(<span id="overvideo">0</span>/<span id="allvideo">0</span>)</span>
-          <div class="turntable-task-video" data-end="0" >去观看</div>
+          <span>看视频(<span id="overvideo">{{content.viewVideoNumber}}</span>/<span id="allvideo">1</span>)</span>
+          <div class="turntable-task-video" @click="watchVideo" data-end="0" >去观看</div>
         </div>
         <div class="turntable-task-item">
-          <span>分享好友(<span id="overshare">0</span>/<span id="allshare">0</span>)</span>
-          <div class="turntable-task-share" onclick="appShare()">去分享</div>
+          <span>分享好友(<span id="overshare">{{content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
+          <div class="turntable-task-share" @click="shareGoodFirend">去分享</div>
         </div>
       </div>
 
@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-  import { NoticeBar } from 'vant';
+  import { NoticeBar,Dialog,Toast } from 'vant';
   export default{
     data(){
       return{
@@ -50,11 +50,19 @@
         integralArr : [1,3,10,100,300],
         firstNameArr:[],
         nameArr:[],
+        content:{
+          lotteryNumber:0,//该用户剩余抽奖次数
+          viewVideoNumber:0,//该用户剩余看视频次数
+          shareNumber:0, //该用户剩余分享次数
+        },
+        rotate:0,
+        is_rotate:false,
       }
     },
     created() {
       this.firstNameArr = this.firstName.split("");
       this.getNameArr();
+      this.initUserInfo();
     },
     methods:{
       //随机数
@@ -62,6 +70,16 @@
         if (start == 0) return Math.floor((end + 1) * Math.random());
         return Math.floor(Math.random() * end + 1);
       },
+      //获取用户信息
+      initUserInfo(){
+        this.$axios.post("/turn-table/get-user-lottery-info").then(res=>{
+          if(res.code == 200){
+            console.log(res)
+            this.content = {...res.content};
+          }
+        })
+      },
+      //得到姓名
       getNameArr(){
         let nameNum = 200;
         var firstLen = this.firstName.length - 1;
@@ -72,11 +90,38 @@
           this.nameArr.push({ name: nameStr, integral: integral })
         }
       },
+      //点击抽奖
       startTurnTbale(){
          this.$axios.post('/turn-table/do-lottery').then(res=>{
            console.log(res)
-           debugger
+           if(res.code == 500) {
+               Dialog.alert({
+                 title:"谢谢参与",
+                 message:res.msg,
+               })
+           }else if(res.code == 200){
+             this.is_rotate = true;
+             this.rotate = (res.content.prizeKey*60) + 2160;
+           }
          })
+      },
+      //看视频
+      watchVideo(){
+        this.$axios.post('/turn-table/view-video',{hamapi:"1247427"}).then(res=>{
+          Dialog.confirm({
+            title:"谢谢参与",
+            message:res.msg,
+          }).then(()=>{
+             console.log('fenx')
+          }).catch(()=>{
+             console.log('取消')
+          })
+          console.log(res)
+        })
+      },
+      //分享好友
+      shareGoodFirend(){
+        console.log("点击了分享好友")
       },
     }
   }
@@ -122,10 +167,14 @@
   height: 6rem;
   left: 0;
   top: 0;
-  background: url('http://cdn.yupao.com/newyupao/images/m-turntable-in.png') no-repeat;
+  background: url('http://statics.zhaogongdi.com/common/lucky.png') no-repeat;
   background-size: 100% 100%;
   transform-origin: center;
 }
+.luck-rotate{
+    transform: rotate(2160deg);
+    transition: 2s;
+  }
 .turntable-btn {
   position: absolute;
   width: 6rem;
@@ -265,4 +314,5 @@
     vertical-align: middle;
     margin-left: 0.2rem;
   }
+
 </style>

@@ -40,7 +40,7 @@
 <script>
   import { Dialog,Toast } from 'vant';
   import call_confirm from '../call_confirm/call_confirm';
-  import {callPhoneFn,showPhoneFn} from '../../static/utils/utils.js';
+  import {callPhoneFn,showPhoneFn,whetherLogin} from '../../static/utils/utils.js';
   export default{
    props:['data'],
    components:{
@@ -67,10 +67,7 @@
         callPhone(phone,id,mode,index){
           let that = this;
           //判断是否登录
-          if(!"login"){
-            this.$router.replace("/login")
-            return false;
-          }
+          if(whetherLogin(this) == false) return false;
           //判断是否查看了完整的电话号码
           let reg = /\*+/;
           if(!reg.test(phone)){
