@@ -50,7 +50,7 @@ export default {
   components:{
     Copy
   },
-  created() {
+  beforeMount() {
   	this.contact = this.$nuxt.$store.state.contact;
   },
   data(){

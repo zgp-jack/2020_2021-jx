@@ -82,7 +82,7 @@ import Header from '../../components/header';
 import { ImagePreview,Dialog  } from 'vant';
 import {callPhoneFn} from '../../static/utils/utils.js'
 export default {
-    created(){
+    beforeMount(){
       //是否是跳转页面带来的数据
       if(this.$route.params.data){
         this.data = {...this.$route.params.data}

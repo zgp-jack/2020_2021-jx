@@ -51,7 +51,7 @@
         item_flag:{}
       }
     },
-    created(){
+    beforeMount(){
       this.default_img= this.$store.state.default_portrait.default_cover
     },
     methods:{

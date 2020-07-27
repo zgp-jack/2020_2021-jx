@@ -225,7 +225,7 @@ export default {
           images:[],//相关图片，无图片则为 null 有图片时其格式为 "image1,image2,image3" 最多九张 (求租 与 求购 信息不使用)字符串逗号隔开
       }
     },
-    created() {
+    beforeMount() {
       this.mode = this.$route.query.mode;
       this.initPage(this.mode);
       this.isEditor();

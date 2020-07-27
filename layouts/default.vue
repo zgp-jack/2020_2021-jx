@@ -2,8 +2,8 @@
 <template>
   <div>
     <div class='layout' numberServers="3">
-      <nuxt keep-alive :keep-alive-props="{ include: includeArr }"/>
       <Loading v-if="numberServers!=3"/>
+      <nuxt keep-alive :keep-alive-props="{ include: includeArr }"/>
     </div>
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {
   mounted() {
     this.getUser()
   },
-  created(){
+  beforeMount(){
     //获取机械类型
     this.getMechanics()
     //获取默认头像、地区

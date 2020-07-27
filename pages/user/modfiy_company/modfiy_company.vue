@@ -17,7 +17,7 @@
          show:false,
       }
     },
-    created() {
+    beforeMount() {
       //ajax请求需要修改的数据
         this.$axios.post('/company/mine').then(res=>{
           if(res.code == 200){

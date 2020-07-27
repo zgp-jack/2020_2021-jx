@@ -16,7 +16,7 @@ export default {
         show:false
       }
     },
-    created(){
+    beforeMount(){
         this.mode = this.$route.query.mode;
         this.info = this.$route.query.id;
         this.getData()
