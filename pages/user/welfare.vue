@@ -65,7 +65,7 @@
 import Headers from '../../components/header'
 import emptyMsg from '../../components/emptyMsg/index'
 export default {
-    created(){
+    beforeMount(){
       this.getWelfare()
     },
     components:{

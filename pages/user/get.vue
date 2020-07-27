@@ -43,7 +43,7 @@
 import Headers from '../../components/header'
 import Sign from '../../components/Sign'
 export default {
-    created(){
+    beforeMount(){
 
     },
     components:{

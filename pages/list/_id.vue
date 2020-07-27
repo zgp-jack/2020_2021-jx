@@ -39,7 +39,7 @@
       <Topbar/>
        <!-- 呼出 -->
        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
-        <div v-if="(mode==1 || mode==4)">
+        <div v-if="(mode==1 || mode==4) && list.length">
           <van-pull-refresh v-model="loading" @refresh="onrefresh">
             <van-list
               v-model="loading"
@@ -49,8 +49,8 @@
               <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}" v-if="list.length"/>
             </van-list>
           </van-pull-refresh>
-          </div>
-          <div v-if="(mode==2 || mode==3)">
+        </div>
+        <div v-if="(mode==2 || mode==3) && list.length">
             <van-pull-refresh v-model="loading" @refresh="onrefresh">
               <van-list
                 v-model="loading"
@@ -135,20 +135,11 @@ export default {
     BottomTop,
     Newgift
   },
-  created(){
-    const mode = this.$route.params.id;
-    this.mode = mode;
-    //获取本地存储机械类型
-    let all = window.sessionStorage.getItem('mechanic_all');
-    let mechanic_child = window.sessionStorage.getItem('mechanic_child');
-    if(all){
-      this.type = JSON.parse(all).id;
-    }else if(mechanic_child){
-      this.type = JSON.parse(mechanic_child).id;
-      this.selectJixieData = JSON.parse(mechanic_child);
-    }
+  beforeMount(){
+    
   },
   mounted() {
+    this.int()
     window.addEventListener('scroll',this.my_scroll);
   },
   methods: {
@@ -286,6 +277,19 @@ export default {
           this.$set(this,'list',[...list])
       }
       this.lost = yue
+    },
+    int(){
+      const mode = this.$route.params.id;
+      this.mode = mode;
+      //获取本地存储机械类型
+      let all = window.sessionStorage.getItem('mechanic_all');
+      let mechanic_child = window.sessionStorage.getItem('mechanic_child');
+      if(all){
+        this.type = JSON.parse(all).id;
+      }else if(mechanic_child){
+        this.type = JSON.parse(mechanic_child).id;
+        this.selectJixieData = JSON.parse(mechanic_child);
+      }
     }
   },
 };

@@ -19,7 +19,7 @@ export default {
 
 <style lang='scss' scoped>
     .model_mask{
-        background-color: rgba(0, 0, 0,0.01);
+        background-color: #fff;
         .van-loading{
             position: absolute;
             z-index: 1000;

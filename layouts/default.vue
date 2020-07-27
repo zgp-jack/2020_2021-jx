@@ -1,22 +1,23 @@
 <!-- keep-alive -->
 <template>
-  <div class='layout'>
-    <nuxt v-if="isShow && numberServers==3" keep-alive :keep-alive-props="{ include: includeArr }"/>
-    <Loading v-else-if="!isShow"/>
+  <div>
+    <div class='layout' numberServers="3">
+      <Loading v-if="numberServers!=3"/>
+      <nuxt keep-alive :keep-alive-props="{ include: includeArr }"/>
+    </div>
   </div>
 </template>
 
 <script>
 import Loading from "../components/loading";
 import {StorageType} from '../static/exports/area_type.js';
-import {mapState} from 'vuex';
 import {getCookie,GetUser} from '../static/utils/utils.js';
 
 export default {
+  layout: 'index',
   data() {
     return {
       isShow: false,
-      value1:0,
       numberServers:0,
       includeArr: ['list','home'] // 需要缓存的组件名数组
     };
@@ -26,11 +27,8 @@ export default {
   },
   mounted() {
     this.getUser()
-    setTimeout(() => {
-      this.$set(this, "isShow", true);
-    }, 10);
   },
-  created(){
+  beforeMount(){
     //获取机械类型
     this.getMechanics()
     //获取默认头像、地区
@@ -96,5 +94,6 @@ export default {
 .model_mask {
   width: 100%;
   left: 0;
+  z-index: 70;
 }
 </style>

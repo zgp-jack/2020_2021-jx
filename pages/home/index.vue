@@ -145,10 +145,17 @@ export default {
       novice_point_alert:false
     }
   },
-  created() {
+  beforeMount(){
     this.novice_point = getNovicePoint();
     //显示新手指引
     this.novicePointFn()
+  },
+  mounted() {
+    setTimeout(()=>{
+      this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
+      //监听document上的滚动事件
+      document.addEventListener('scroll',this.my_scroll)
+    },0)
   },
   methods:{
     
@@ -238,11 +245,6 @@ export default {
         this.$set(this,'list',{...list})
       },
   },
-  mounted() {
-    this.scroll_tops = this.$refs.banner.offsetHeight + this.$refs.menus.offsetHeight;
-    //监听document上的滚动事件
-    document.addEventListener('scroll',this.my_scroll)
-  }
 
 }
 </script>

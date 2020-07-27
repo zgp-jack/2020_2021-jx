@@ -24,7 +24,7 @@ export default {
         title:'联系我们'
       }
     },
-    created(){
+    beforeMount(){
       this.$axios.get('/index/get-yupao').then(res=>{
         this.contat = {...res.content}
       })

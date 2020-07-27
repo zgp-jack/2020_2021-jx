@@ -226,7 +226,7 @@ export default {
           descLength:0,//详情简介里文字的长度
       }
     },
-    created() {
+    beforeMount() {
       this.mode = this.$route.query.mode;
       this.initPage(this.mode);
       this.isEditor();
