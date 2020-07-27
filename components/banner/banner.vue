@@ -24,8 +24,12 @@
     },
     created(){
       //轮播图数据
-      this.banner_data = this.$props.obj
-      
+      this.banner_data = this.$props.obj;
+    },
+    mounted(){
+      setTimeout(()=>{
+        this.$refs.resize.resize()
+      },0)
     },
     props:['obj']
   }
