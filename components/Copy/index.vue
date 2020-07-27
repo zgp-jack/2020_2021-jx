@@ -27,7 +27,15 @@ export default {
     },
     methods:{
         hander(){
-          this.$emit('hander',false)
+          this.$emit('hander',false);
+
+          document.addEventListener(
+              "WeixinJSBridgeReady",
+              function() {
+                 WeixinJSBridge.call("closeWindow");
+              },
+             false
+           );
         }
     }
 }

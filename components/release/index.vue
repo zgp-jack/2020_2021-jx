@@ -150,17 +150,12 @@
             </div>
             <div class="form_row desc textarea">
               <div class="notice">{{page_info.notice_text}}</div>
-<<<<<<< HEAD
-              <textarea maxlength="500" :placeholder="page_info.desc" v-model="desc"></textarea>
-              <div style="text-align: right;"><span>{{descLength}}</span>/500</div>
-=======
               <textarea maxlength="500" :placeholder="page_info.desc" v-model="desc">
 
               </textarea>
-              <span class="textarea_msg" v-if="desc">
+              <span class="textarea_msg">
                 {{desc.length +'/500'}}
               </span>
->>>>>>> 8a46956a414afa57196a93cb1d6874e18a100fce
             </div>
           </div>
 
@@ -340,7 +335,6 @@ export default {
           closeable: true,
         });
       },
-
       //请求拦截
       requstIntercept(){
         let {
@@ -401,7 +395,6 @@ export default {
           if (mode != 1 && images.length) data.cover = images[0];
            images.length && (data.images = images.map(item=>item).join(','));
         }
-
         params.mode = mode;
         data.title = title;
         data.type = Mechanical.map(item=>item.id).join(',');
@@ -414,7 +407,6 @@ export default {
 
         return {params,data}
       },
-
       //创建/编辑提交
       createSubmit(){
         const that = this;
@@ -438,7 +430,6 @@ export default {
         }
 
       },
-
       requstCreate(params={}){
         const that = this;
         that.$axios.post(!that.editorData?'/user/create':'/user/update',!that.editorData?{...params}:{...params,data_id:that.$route.query.id}).then(res=>{
