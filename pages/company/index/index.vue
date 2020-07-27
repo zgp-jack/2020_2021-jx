@@ -18,7 +18,10 @@
                 </div>
                 <div class="info">
                     <div class="name">{{item.name}}</div>
-                    <div class="gong-img">11</div>
+                    <div class="gong-img">
+                      <span class="iconfont  icon-gongying gongying"></span>
+                      <span class="iconfont  icon-VIP-tongguo vip" v-if="item.authenticate==2"></span>
+                    </div>
                     <div class="area">{{item.area}}</div>
                 </div>
             </div>
@@ -73,7 +76,7 @@ export default {
       }
     },
     methods:{
- 
+
       getList(){
         this.listLoading = true
         let params = {page:this.page,area:this.area,type:this.type,page_size:this.page_size};

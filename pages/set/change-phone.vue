@@ -55,7 +55,7 @@ export default {
         Toast('请输入正确的电话号码')
         return false;
       }
-      if(this.phone == window.$nuxt.$store.state.userinfo.tel){
+      if(this.phone == this.$nuxt.$store.state.userinfo.tel){
         Toast('不能输入您正在使用的电话号码')
         return false;
       }
@@ -87,7 +87,7 @@ export default {
     SavePhone(){
       let phone = this.phone
       let captcha = this.captcha
-      let user_phone = window.$nuxt.$store.state.userinfo.tel
+      let user_phone = this.$nuxt.$store.state.userinfo.tel
           if(phone == user_phone){
             Toast('不能输入您正在使用的电话号码')
             return false;

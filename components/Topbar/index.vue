@@ -51,7 +51,7 @@ export default {
     Copy
   },
   created() {
-  	this.contact = window.$nuxt.$store.state.contact;
+  	this.contact = this.$nuxt.$store.state.contact;
   },
   data(){
     return{

@@ -53,7 +53,7 @@ export default {
       },
       created(){
         //获取用户信息
-        this.$set(this,"userInfo",window.$nuxt.$store.state.userinfo);
+        this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
         //请求
         let params = {mode:1};
         let that = this;

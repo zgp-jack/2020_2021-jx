@@ -88,6 +88,8 @@
          <p class="alread_complate" v-else>{{"已租到"}}</p>
        </div>
     </div>
+    <!-- 举报弹框 -->
+    <pageView v-if="novice_point_alert" @novicePointHiddens="novicePointHiddens" :show = 'novice_point_alert' />
   </div>
 
 </template>
@@ -111,7 +113,8 @@
         state_text:"已出租",
         go_release:false, //去发布
         go_settop:false,  //去置顶
-        show_wath_all:false
+        show_wath_all:false,
+        novice_point_alert:true
       }
     },
     components:{
@@ -151,6 +154,10 @@
       }
     },
     methods:{
+      // 关闭弹窗
+      novicePointHiddens(page){
+        this.novice_point_alert = page
+      },
       //显示查看全部按钮
       detailContnetHeight(){
         setTimeout(()=>{

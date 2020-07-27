@@ -29,7 +29,7 @@ export default {
   created(){
 
       let newData = [];
-      let {city} = window.$nuxt.$store.state;
+      let {city} = this.$nuxt.$store.state;
       city = city.slice(1);
 
       let newCity = [];

@@ -68,7 +68,7 @@ import {callPhoneFn,whetherLogin,GetUser} from '../../static/utils/utils'
 export default {
   created(){
     // this.userInfo = window.$nuxt.$store.state.userinfo;
-    this.contact = window.$nuxt.$store.state.contact;
+    this.contact = this.$nuxt.$store.state.contact;
     GetUser(this,(res) => {
       this.userInfo = res
     })
@@ -163,7 +163,7 @@ export default {
       },
       // 打电话
      tel(){
-        console.log(window.$nuxt.$store.state.userinfo)
+        console.log(this.$nuxt.$store.state.userinfo)
         callPhoneFn(15608008605)
        },
        harvest(mode){
