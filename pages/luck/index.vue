@@ -3,20 +3,20 @@
     <div class="head"></div>
     <div class="turntable-container">
       <div class="turntable-box">
-        <div class="turntable-box-out"></div>
-        <div class="turntable-box-img" :class='[is_rotate?"luck-rotate":""]' :style="{transfrom:'rotate('+rotate+'deg)'}"></div>
+        <div class="turntable-box-out" :class='[is_rotate?"luck-rotate":""]' :style="{'transform':is_rotate?'rotate('+rotate+'deg)':''}"></div>
+        <div class="turntable-box-img" :class='[is_rotate?"luck-rotate":""]' :style="{'transform':is_rotate?'rotate('+rotate+'deg)':''}"></div>
         <div class="turntable-btn">
           <div class="turntable-btn-click" @click="startTurnTbale"></div>
         </div>
 
       </div>
-      <div class="turntable-timesbox">我的抽奖次数：<span id="turntable-times">0</span>次
-        <span onclick="userGetTimes()" class="turntable-span-img"></span>
+      <div class="turntable-timesbox">我的抽奖次数：<span id="turntable-times">{{content.lotteryNumber}}</span>次
+        <span @click='userSeeVideo' class="turntable-span-img"></span>
       </div>
 
       <div class="turntable-tasks">
         <div class="turntable-task-item">
-          <span>看视频(<span id="overvideo">{{content.viewVideoNumber}}</span>/<span id="allvideo">1</span>)</span>
+          <span>看视频(<span id="overvideo">{{content.viewVideoNumber}}</span>/<span id="allvideo">50</span>)</span>
           <div class="turntable-task-video" @click="watchVideo" data-end="0" >去观看</div>
         </div>
         <div class="turntable-task-item">
@@ -92,7 +92,9 @@
       },
       //点击抽奖
       startTurnTbale(){
-         this.$axios.post('/turn-table/do-lottery').then(res=>{
+        let {lotteryNumber} = this.content
+        if(lotteryNumber){
+           this.$axios.post('/turn-table/do-lottery').then(res=>{
            console.log(res)
            if(res.code == 500) {
                Dialog.alert({
@@ -100,29 +102,79 @@
                  message:res.msg,
                })
            }else if(res.code == 200){
-             this.is_rotate = true;
-             this.rotate = (res.content.prizeKey*60) + 2160;
+             this.is_rotate = true
+             const {prizeKey} = res.content
+             let rotates = 0
+             switch (prizeKey) {
+                        case 0 : rotates = 60 //0
+                        break;
+                        case 1 : rotates= 120 //1
+                        break;
+                        case 2 : rotates = -120 //3
+                        break;
+                        case 3 : rotates = -60 //10
+                        break;
+                        case 4 : rotates = -180 //100
+                        break;
+                        case 5 : rotates = 0 //300
+                        break;
+                            }
+             this.rotate = 9*360+rotates
+             this.content.lotteryNumber -=1
            }
          })
+         this.is_rotate = false
+        }
       },
       //看视频
       watchVideo(){
         this.$axios.post('/turn-table/view-video',{hamapi:"1247427"}).then(res=>{
-          Dialog.confirm({
-            title:"谢谢参与",
+          if(res.code == 200){
+            Dialog.confirm({
+            title:"恭喜你，获得1次抽奖机会。继续观看视频，中奖几率更高哦。",
             message:res.msg,
           }).then(()=>{
-             console.log('fenx')
+             let {lotteryNumber,viewVideoNumber} = this.content
+              lotteryNumber +=1
+              viewVideoNumber -=1
           }).catch(()=>{
              console.log('取消')
           })
-          console.log(res)
+          }
+           if(res.code == 500){
+          Dialog.alert({
+            title:"谢谢参与",
+            message:res.msg,
+          })
+        }
         })
       },
       //分享好友
       shareGoodFirend(){
         console.log("点击了分享好友")
       },
+      // 获取次数
+      intercept(){
+        const {lotteryNumber,viewVideoNumber} = this.content;
+        if(!lotteryNumber && !viewVideoNumber){
+          Dialog.alert({
+            title:'谢谢参与',
+            message:'今日获取抽奖次数已达上限，请明天再来'
+          })
+          this.userSeeVideo()
+          return false
+        }
+        return true
+      },
+      // 看视频
+      userSeeVideo(){
+        if(!this.intercept()){
+          return false
+        }else{
+          alert('观看视频中..')
+          return true
+        }
+      }
     }
   }
 </script>
@@ -172,8 +224,7 @@
   transform-origin: center;
 }
 .luck-rotate{
-    transform: rotate(2160deg);
-    transition: 2s;
+    transition: 5s;
   }
 .turntable-btn {
   position: absolute;
