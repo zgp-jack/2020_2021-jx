@@ -244,7 +244,7 @@ export default {
     onreset(){
       this.page = 1;
       //重置滚动位置
-      document.documentElement.scrollTop = 0;
+      this.list = []
     },
 
     //搜索
