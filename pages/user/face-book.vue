@@ -27,7 +27,9 @@
             <p>
               <span>*</span>
                我们一直都在努力做的更好，只为能够给您提供更好的服务。为用户提供良好的线上机械租赁环境是我们奋斗目标！若是我们有什么做的不好的，请一定赐教。为提高沟通效率，建议您添加 客服微信 或者 拨打客服电话。 客服微信号：
-               <span class="main_textc"  @click="Copy">{{contact.wx_service}}</span>
+               <!-- <span class="main_textc"  @click="Copy">{{contact.wx_service}}</span> -->
+               <!-- 这里写死 -->
+               <span class="main_textc"  @click="Copy">13060002541</span>
                客服电话
                <span class="main_textc" @click="tel(contact.contact)" >{{contact.contact}}</span>
             </p>
@@ -60,7 +62,7 @@ export default {
     }
   },
   created() {
-    this.contact = window.$nuxt.$store.state.contact;
+    this.contact = this.$nuxt.$store.state.contact;
   },
   methods:{
     submit(){
@@ -99,7 +101,8 @@ export default {
     },
     Copy(){
       this.show = true
-      Copynum(this,this.contact.wx_service)
+      // Copynum(this,this.contact.wx_service)
+      Copynum(13060002541)
     },
     hander(hide){
         this.show = hide

@@ -37,12 +37,12 @@ export default function ({$axios,redirect,store}) {
 
     })
     $axios.onError(error => {
-        globalLoading && Toast.clear()
+        Toast.clear()
         return {data:{error:'error'}}
     })
     // response拦截器
     $axios.interceptors.response.use(response => {
-        globalLoading && Toast.clear()
+        Toast.clear()
         if (response.status == 200) {
             if (response.data.code==300){
                 Toast('账号异常')

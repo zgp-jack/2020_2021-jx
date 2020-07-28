@@ -21,7 +21,7 @@
     </div>
 
     <!-- 地区选择 -->
-    <CustomArea whearthStorage="true" :onSelect="onSelect" :isSelect_area="isSelect_area"/>
+    <CustomArea whearthStorage="true" :onSelect="onSelect" :isSelect_area="isSelect_area" v-if="default_addr.city"/>
 
     <!-- 机械类型选择 -->
     <CustomMechanicalType whearthStorage="true" :onSelect="onSelect" :isSelect_jixie="isSelect_jixie"/>
@@ -244,7 +244,7 @@ export default {
     onreset(){
       this.page = 1;
       //重置滚动位置
-      document.documentElement.scrollTop = 0;
+      this.list = []
     },
 
     //搜索
@@ -292,6 +292,11 @@ export default {
       }
     }
   },
+  computed:{
+    default_addr(){
+      return this.$nuxt.$store.state.default_addr
+    }
+  }
 };
 </script>
 

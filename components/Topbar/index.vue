@@ -50,14 +50,10 @@ export default {
   components:{
     Copy
   },
-  beforeMount() {
-  	this.contact = this.$nuxt.$store.state.contact;
-  },
   data(){
     return{
         bar_show:false,
         show:false,
-        contact:''
     }
   },
   methods:{
@@ -78,7 +74,12 @@ export default {
     hander(hide){
       this.show = hide
     }
-  }
+  },
+  computed:{
+    contact(){
+      return this.$nuxt.$store.state.contact;
+    }
+  },
 }
 </script>
 

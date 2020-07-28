@@ -22,7 +22,8 @@
         </div>
 
 
-        <div class="father" v-if="list.length">
+        <div class="father" v-if="mode==1 || mode==2 || mode==3 || mode==4">
+          <van-pull-refresh v-model="loading" @refresh="onrefresh">
             <van-list
                 v-model="loading"
                 :finished="iscomplete"
@@ -39,7 +40,9 @@
                     <img @click.stop="changeSateFn(item,index)" class="status" :src="item.check!='2'?status[item.check].url:changeStatus[mode][item.end].url" alt="">
                 </div>
             </van-list>
-            <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
+          </van-pull-refresh>
+          <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
+
         </div>
          <BottomTop  ref="child" :hiddenAll="true" />
   </div>
@@ -49,7 +52,7 @@
 import collHead from '../../../components/collection-head';
 import EmptyMsg from '../../../components/emptyMsg';
 import {formatDate,setNovicePoint,getNovicePoint} from '../../../static/utils/utils.js';
-import { Toast,List,Dialog  } from 'vant';
+import { Toast,List,Dialog,PullRefresh } from 'vant';
 import BottomTop from '../../../components/bottom-topbar/index.vue';
 
 
@@ -59,8 +62,7 @@ export default {
       this.Topmaskr = true
     }
     this.mode = this.$route.params.id;
-    let params = this.getParams({})
-    this.getData(params)
+    this.getData()
     if((this.mode == 1 || this.mode == 4)){
       let guide = getNovicePoint();
       this.mask_want = guide.userBuy;
@@ -70,6 +72,7 @@ export default {
     components:{
         collHead,
         'van-list':List,
+        'van-pull-refresh':PullRefresh,
         EmptyMsg,
         [Dialog.Component.name]: Dialog.Component,
         BottomTop
@@ -137,26 +140,38 @@ export default {
         Topmask(){
           this.Topmaskr =false
         },
-        getData(params){
+        getData(){
             const that = this;
-            let {mode} = that
+            const {mode,page,page_size} = that;
+            const params = {mode,page,page_size,globalLoading:false};
+            that.loading = true;
             if(mode==1 || mode ==2 || mode==3 || mode==4){
                 that.$axios.get('/user/create-list',{params}).then(res=>{
-                    !that.loading && (that.loading = false);
-                    if(res.content){
-                        const {page_size,page,list} = that;
-                        if(res.content.length < this.page_size){
-                            that.$set(that,'iscomplete',true)
-                        }
-                        if(!res.content.length && page==1){
-                            that.$set(that,'isempty',true)
-                        }
-                        if(page==1){
-                            that.$set(that,'list',res.content);
+                    that.loading && (that.loading = false);
+                    if(res.code == 200){
+                      if(that.page == 1){
+                        if(res.content.length && res.content.length<that.page_size){
+                          that.iscomplete = true;
+                          that.isempty = false;
+                        }else if(!res.content.length){
+                          that.isempty = true;
                         }else{
-                            that.$set(that,'list',[...list,...res.content]);
+                          that.iscomplete = false;
+                          that.isempty = false;
                         }
-                    }
+                      }else{
+                        if(res.content.length<that.page_size){
+                          that.iscomplete = true;
+                          that.isempty = false;
+                        }else{
+                          that.iscomplete = false;
+                          that.isempty = false;
+                        }
+                      }
+
+                      const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
+                      that.list = [...list];
+                  }
                 })
             }else{
                 Toast({message:'您访问的页面不存在，将自动跳转',duration:500,onClose:()=>{
@@ -164,10 +179,9 @@ export default {
                 }})
             }
         },
-        getParams(updataParams={}){
-            const {mode,page,page_size} = this;
-            let newParams = {mode,page,page_size,...updataParams}
-            return newParams
+        onrefresh(){
+          this.page = 1;
+          this.getData()
         },
         onServers(mode){
             this.$router.replace({path:'/user/release/'+mode});
@@ -175,8 +189,7 @@ export default {
         listScroll(){
             this.page += 1;
             this.loading = true;
-            const params = this.getParams({});
-            this.getData(params)
+            this.getData()
 
         },
         onSkip(key,data){
