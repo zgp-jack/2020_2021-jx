@@ -60,7 +60,7 @@ export default {
     }
   },
   created() {
-    this.contact = window.$nuxt.$store.state.contact;
+    this.contact = this.$nuxt.$store.state.contact;
   },
   methods:{
     submit(){
