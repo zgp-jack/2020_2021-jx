@@ -10,7 +10,8 @@
               <van-list
       v-model="listLoading"
       :finished="iscomplete"
-      @load="getcollect">
+      @load="getcollect"
+      loading-text="加载中...">
            <div class="collection_item" v-for="(item,i) in list" :key='i'>
               <div class="top">
                 <p>{{item.title}}</p>
