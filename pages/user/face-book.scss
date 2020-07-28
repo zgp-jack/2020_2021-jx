@@ -31,8 +31,10 @@
               }
           }
           .img{
+
             display: flex;
               .upload_control{
+                position: relative;
                 width: 30%;
                 background-color: #f2f2f2;
                 border-radius:0.1rem;
@@ -43,10 +45,10 @@
                 justify-content: center;
                 height: 1.5rem;
                 padding:0.25rem 0;
-                margin-right: 2%;
+                margin-left: 0.2rem;
                   img{
                     display: block;
-                    width: 42%;
+                    width: 100%;
                     height:0.75rem;
                   }
                   span{
@@ -54,6 +56,30 @@
                       text-align: center;
                       color: #999
                   }
+                  .van-uploader{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 1.5rem;
+                    opacity: 0;
+                  }
+              }
+              .choosedImg{
+                position: relative;
+                width: 30%;
+                height: 1.5rem;
+                margin-right: 0.2rem;
+                span{
+                  position: absolute;
+                  font-size: 0.4rem;
+                  right: -0.1rem;
+                  top: -0.1rem;
+                  color: #aaa;
+                }
+                &:nth-last-child(1){
+                  margin: 0;
+                }
               }
           }
     }

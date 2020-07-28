@@ -39,7 +39,7 @@ import collHead from '../../components/collection-head'
 import emptyMsg from '../../components/emptyMsg/index'
 import { PullRefresh,Toast,List } from 'vant';
 export default {
-    created(){
+    beforeMount(){
       this.getcollect()
     },
     components:{

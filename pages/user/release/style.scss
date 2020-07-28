@@ -27,14 +27,14 @@
             position: relative;
                .title-h3{
                 height: 0.48rem;
-                font-size:0.4rem;
+                font-size:0.35rem;
                 color: #000;
-                font-weight: bold;
+                font-weight: 500;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
                 width: 80%;
-                margin-bottom: 0.3rem;
+                margin-bottom: 0.1rem;
                }
                .intruduce{
                 line-height:0.38rem;
@@ -47,10 +47,9 @@
                 -webkit-box-orient: vertical;
                }
                .opearting{
-                margin-top: 0.25rem;
+                margin-top: 0.15rem;
                 border-top: 1px dashed #b0afaf;
-                padding-top: 0.25rem;
-                height: 0.7rem;
+                padding-top: 0.15rem;
                 vertical-align: bottom;
                 font-size: 0.3rem;
                 span{
@@ -60,11 +59,14 @@
                 }
                   .modify{
                     color: #bab9b9;
+                    float: left;
                   }
                   .list_item_editor{
                     color: #101010;
+                    float: left;
                   }
                   .list_item_top{
+                    float: left;
                     margin-left: 0.3rem;
                     color: #FFAA27;
                      border: 1px solid #FFAA27;

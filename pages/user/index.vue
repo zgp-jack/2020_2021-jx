@@ -66,7 +66,7 @@
 import Tarbar from '../../components/tarbar'
 import {callPhoneFn,whetherLogin,GetUser} from '../../static/utils/utils'
 export default {
-  created(){
+  beforeMount(){
     // this.userInfo = window.$nuxt.$store.state.userinfo;
     this.contact = this.$nuxt.$store.state.contact;
     GetUser(this,(res) => {

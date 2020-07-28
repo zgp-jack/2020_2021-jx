@@ -17,7 +17,7 @@
 <script>
 import {Popup} from 'vant';
 export default {
-  created(){
+  beforeMount(){
     // this.listData()
   },
   props:['home','lost'],

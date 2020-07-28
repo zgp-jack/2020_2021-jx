@@ -1,6 +1,6 @@
 <template>
     <div>
-      <Copy :Copys = 'Copys' :show = 'show' @hander = 'hander'/>
+      <Copy :Copys = 'contact.wx_service' :show = 'show' @hander = 'hander'/>
       <Headers :title="title"/>
       <div class="father">
         <div class="form">
@@ -9,9 +9,16 @@
               <span class="sishu">{{test.length}}/120</span>
             </div>
             <div class="img">
-              <div class="upload_control">
-                <img src="http://statics.zhaogongdi.com/xcx/camera.png">
-                <span>照片</span>
+               <div class="choosedImg" v-show="images.length" v-for="(item,index) in images" :key='index'>
+                  <img :src="item.server" alt="">
+                  <span class="iconfont icon-cuo" @click="closeImage(index)"></span>
+                </div>
+              <div class="upload_control" v-show="images.length != 3">
+                  <div class="chooseImg">
+                    <img src="http://statics.zhaogongdi.com/xcx/camera.png">
+                    <van-uploader :after-read="uploadImg" :max-count="3" />
+                    </van-uploader>
+                </div>
               </div>
             </div>
         </div>
@@ -20,9 +27,9 @@
             <p>
               <span>*</span>
                我们一直都在努力做的更好，只为能够给您提供更好的服务。为用户提供良好的线上机械租赁环境是我们奋斗目标！若是我们有什么做的不好的，请一定赐教。为提高沟通效率，建议您添加 客服微信 或者 拨打客服电话。 客服微信号：
-               <span class="main_textc"  @click="Copy">{{Copys}}</span>
+               <span class="main_textc"  @click="Copy">{{contact.wx_service}}</span>
                客服电话
-               <span class="main_textc" @click="tel(phone)" >{{phone}}</span>
+               <span class="main_textc" @click="tel(contact.contact)" >{{contact.contact}}</span>
             </p>
         </div>
       </div>
@@ -33,21 +40,27 @@
 import Headers from '../../components/header'
 import Copy from '../../components/Copy'
 import {callPhoneFn,Copynum} from '../../static/utils/utils'
-import {Toast} from 'vant'
+import {uploadPictures} from '../../static/utils/utils.js';
+import {Toast,Uploader } from 'vant'
 export default {
   components:{
     Headers,
-    Copy
+    Copy,
+    "van-uploader":Uploader
   },
   data(){
     return{
         title:'意见反馈',
         test:'',
         submits:false,
-        phone:15608008605,
-        Copys:13060002541,
-        show:false
+        show:false,
+        contact:'',
+        fileList:[],
+        images:[]
     }
+  },
+  created() {
+    this.contact = window.$nuxt.$store.state.contact;
   },
   methods:{
     submit(){
@@ -58,6 +71,14 @@ export default {
       if(this.test.length<15){
         Toast('至少要输入不少于15个字才能进行提交')
         return false
+      }
+      let arr = [];
+      for(var i = 0; i < this.images.length; i++){
+        arr.push(this.images[i].value)
+      }
+      let data = {
+         msg:this.test,
+         images:arr.join()
       }
       this.$axios.post('/user/face-book',{msg:this.test}).then(res=>{
         if(res.code == 200){
@@ -78,12 +99,25 @@ export default {
     },
     Copy(){
       this.show = true
-      Copynum(this,this.Copys)
+      Copynum(this,this.contact.wx_service)
     },
     hander(hide){
         this.show = hide
+    },
+    //上传图片
+    uploadImg(file){
+     uploadPictures(this,file.file).then(res=>{
+       if(res.code == 200){
+         this.images.push(res.content)
+       }
+     })
+    },
+    closeImage(index){
+      this.images.splice(index,1)
     }
-  }
+
+  },
+
 }
 </script>
 

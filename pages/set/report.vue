@@ -51,7 +51,7 @@ export default {
             userInfo:{}
         }
       },
-      created(){
+      beforeMount(){
         //获取用户信息
         this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
         //请求

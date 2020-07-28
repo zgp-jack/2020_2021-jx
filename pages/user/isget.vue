@@ -76,7 +76,7 @@ Vue.use(Popup);
 Vue.use(DatetimePicker);
 Vue.use(Picker)
 export default {
-    created(){
+    beforeMount(){
       this.mode = this.$route.query.mode
       if(this.mode == 1){
         this.fenleiindex = ''

@@ -123,7 +123,7 @@
       [ImagePreview.Component.name]: ImagePreview.Component,
       pageView
     },
-    created(){
+    mounted(){
       let guide = getNovicePoint();
       if(!guide.detail) this.novice_point_alert = false
       //参数不完整跳转首页
@@ -236,7 +236,7 @@
       },
       //投诉
       reportFn(phone){
-        whetherLogin(this)
+        if(whetherLogin(this) == false) return
         // 判断是否已完成
         if(this.detail_info.status == 2){
           Dialog.alert({

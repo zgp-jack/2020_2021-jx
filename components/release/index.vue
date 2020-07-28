@@ -70,9 +70,10 @@
                 <textarea maxlength="500" :placeholder="page_info.desc" v-model="desc">
 
                 </textarea>
-                <span class="textarea_msg" v-if="desc">
+                <span class="textarea_msg">
                   {{desc.length +'/500'}}
                 </span>
+
               </div>
             </div>
             <div class="public-style">
@@ -152,7 +153,7 @@
               <textarea maxlength="500" :placeholder="page_info.desc" v-model="desc">
 
               </textarea>
-              <span class="textarea_msg" v-if="desc">
+              <span class="textarea_msg">
                 {{desc.length +'/500'}}
               </span>
             </div>
@@ -187,7 +188,7 @@
 <script>
 import MechanicalType from '../../components/mechanicalType';
 import PickerArea from '../../components/pickerArea';
-import {CellphoneCheck,IncludeChinese,OnlyChinese} from '../../static/utils/validator.js';
+import {CellphoneCheck,IncludeChinese,OnlyChinese,whetherLogin} from '../../static/utils/validator.js';
 import {Toast,Uploader,ImagePreview,Dialog} from 'vant';
 import {uploadPictures} from '../../static/utils/utils.js';
 export default {
@@ -210,7 +211,6 @@ export default {
           areaData:{},//地区选择数据
           default_areaData:null,//默认地区
           get_captcha_msg: '获取验证码',
-
           mode:1,
           title:'',//标题-用户输入，长度至少4个字符，且必须包含中文
           //type:'',//机械类型——用户选择 可多选 使用 , 隔开
@@ -223,12 +223,14 @@ export default {
           desc:'',//详情介绍——用户输入，长度至少15个字符，且必须包含中文
           capt:'',//短信验证码——当联系人电话不同于用户电话号码（若修改 则需要既不同于用户电话号码 又不同于 修改之前的电话号码）时 ，必须有此值，验证电话号码
           images:[],//相关图片，无图片则为 null 有图片时其格式为 "image1,image2,image3" 最多九张 (求租 与 求购 信息不使用)字符串逗号隔开
+          descLength:0,//详情简介里文字的长度
       }
     },
-    created() {
+    beforeMount() {
       this.mode = this.$route.query.mode;
       this.initPage(this.mode);
       this.isEditor();
+      if(whetherLogin(this) == false) return false;
     },
     methods:{
       onMechanicsShow(flag){
@@ -294,7 +296,7 @@ export default {
         }else{
           Toast(CellphoneCheck.message)
         }
-        
+
       },
       countDown(){
         let number = 60;
@@ -334,7 +336,6 @@ export default {
           closeable: true,
         });
       },
-
       //请求拦截
       requstIntercept(){
         let {
@@ -363,7 +364,7 @@ export default {
           return false;
         }
         if (JSON.stringify(areaData)==='{}') {
-          Toast('请选择交易地区'); 
+          Toast('请选择交易地区');
           that.onPickerAreaShow(true)
           return false;
         }
@@ -384,18 +385,17 @@ export default {
           }
         }
         if (!IncludeChinese(desc) || desc.length < 15) {
-          Toast('详细描述内容不能少于15个字且必须包含汉字'); 
+          Toast('详细描述内容不能少于15个字且必须包含汉字');
           return false;
         }
         if (mode != 4) {
           if((mode == 2 || mode == 3) && !images.length){
-            Toast('请上传图片'); 
+            Toast('请上传图片');
             return false;
           }
           if (mode != 1 && images.length) data.cover = images[0];
            images.length && (data.images = images.map(item=>item).join(','));
         }
-        
         params.mode = mode;
         data.title = title;
         data.type = Mechanical.map(item=>item.id).join(',');
@@ -405,10 +405,9 @@ export default {
         data.user = user;
         data.phon = phon;
         data.desc = desc;
-       
+
         return {params,data}
       },
-
       //创建/编辑提交
       createSubmit(){
         const that = this;
@@ -430,15 +429,14 @@ export default {
         }else{
           that.requstCreate(newData)
         }
-        
-      },
 
+      },
       requstCreate(params={}){
         const that = this;
         that.$axios.post(!that.editorData?'/user/create':'/user/update',!that.editorData?{...params}:{...params,data_id:that.$route.query.id}).then(res=>{
           if (res.code == 200) {
             function jump(paramsUrl){
-              that.$router.replace('/user/release/' + paramsUrl) 
+              that.$router.replace('/user/release/' + paramsUrl)
             }
 
             const modeText = [
@@ -457,7 +455,7 @@ export default {
             ]
             const rexpText = that.title.match(/(求租|需要|急需|找|出租|闲置|待租|出售|转让|卖|买|求购|急购)/g);
 
-            Dialog.confirm({
+            Dialog.alert({
               title: '温馨提示',
               message: '发布成功',
             }).then(()=>{
@@ -467,9 +465,9 @@ export default {
                     return item
                   }
                 })
-                jump(fondText.mode) 
+                jump(fondText.mode)
               }else{
-                jump(params.mode) 
+                jump(params.mode)
               }
             })
 
@@ -497,6 +495,11 @@ export default {
     computed:{
       imgserver(){
         return this.$nuxt.$store.state.img_server
+      }
+    },
+    watch:{
+      desc(value){
+        this.descLength = value.length
       }
     }
 }

@@ -30,7 +30,7 @@
     mounted() {
 
     },
-    created(){
+    beforeMount(){
     },
     methods:{
       //一键发布

@@ -44,7 +44,7 @@ export default {
   components:{
     Headers
   },
-  created(){
+  beforeMount(){
   },
     data(){
         return{

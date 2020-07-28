@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {Toast} from 'vant';
+import {Toast,Dialog} from 'vant';
   export default{
     data(){
       return{
@@ -42,9 +42,15 @@ import {Toast} from 'vant';
         let news= {old_pass:this.origin_pass,new_pass:this.news_pass}
         let data = JSON.stringify(news)
         console.log(news)
+		debugger
         this.$axios.post('/user/app-updatekey',{data}).then(res=>{
           if(res.code == 200){
-            Toast(res.msg)
+            Dialog.alert({
+              title:"提示",
+              message:"修改成功",
+            }).then(()=>{
+              this.$router.go(-1)
+            })
           }
           if(res.code == 500){
             Toast(res.msg)

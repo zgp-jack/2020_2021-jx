@@ -42,7 +42,7 @@ export default {
   components:{
     Headers
   },
-  created(){
+  beforeMount(){
   },
     data(){
         return{
@@ -61,10 +61,11 @@ export default {
       sub(){
         let time =formatDate(new Date(),'yyyy-MM-dd')
         let token = md5('APp_YUpAO_UseR_KeY'+this.tel+time).substring(0, 18)
-        let data = {phone:this.tel,user_token:'',user_pass:this.password,captcha:this.check_code}
+        let data = {phone:this.tel,user_token:token,user_pass:this.password,captcha:this.check_code}
         let datas = JSON.stringify(data)
         console.log(datas)
-        this.$axios.post('/user/app-reset',{datas}).then(res =>{
+        debugger
+        this.$axios.post('/user/app-reset',{data:JSON.stringify(data)}).then(res =>{
           console.log(res)
         })
       },

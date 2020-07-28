@@ -106,7 +106,7 @@ import emptyMsg from '../../components/emptyMsg/index'
 import {callPhoneFn} from '../../static/utils/utils';
 import {Toast} from 'vant';
 export default {
-  created(){
+  beforeMount(){
     this.uu_id = this.$route.query.id
     this.getnew()
     this.machineryfile()

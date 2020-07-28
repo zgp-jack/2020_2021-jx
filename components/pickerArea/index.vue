@@ -26,7 +26,7 @@ export default {
     "van-picker": Picker,
     'van-popup':Popup
   },
-  created(){
+  beforeMount(){
 
       let newData = [];
       let {city} = this.$nuxt.$store.state;

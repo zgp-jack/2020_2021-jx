@@ -55,7 +55,7 @@ import {Toast} from 'vant';
 export default {
     components:{
     },
-    created(){
+    mounted(){
       this.recharge()
     },
     data(){

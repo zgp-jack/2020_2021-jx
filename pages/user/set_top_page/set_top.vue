@@ -150,7 +150,7 @@
     components:{
       "van-picker":Picker
     },
-    created() {
+    beforeMount() {
       for(var i = 1; i <= 30;i++){
         this.columns.push(i+"天")
       }

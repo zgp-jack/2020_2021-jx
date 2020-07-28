@@ -4,9 +4,9 @@
     <div class="turntable-container">
       <div class="turntable-box">
         <div class="turntable-box-out"></div>
-        <div class="turntable-box-img"></div>
+        <div class="turntable-box-img" :class='[is_rotate?"luck-rotate":""]' :style="{transfrom:'rotate('+rotate+'deg)'}"></div>
         <div class="turntable-btn">
-          <div class="turntable-btn-click"></div>
+          <div class="turntable-btn-click" @click="startTurnTbale"></div>
         </div>
 
       </div>
@@ -16,12 +16,12 @@
 
       <div class="turntable-tasks">
         <div class="turntable-task-item">
-          <span>看视频(<span id="overvideo">0</span>/<span id="allvideo">0</span>)</span>
-          <div class="turntable-task-video" data-end="0" >去观看</div>
+          <span>看视频(<span id="overvideo">{{content.viewVideoNumber}}</span>/<span id="allvideo">1</span>)</span>
+          <div class="turntable-task-video" @click="watchVideo" data-end="0" >去观看</div>
         </div>
         <div class="turntable-task-item">
-          <span>分享好友(<span id="overshare">0</span>/<span id="allshare">0</span>)</span>
-          <div class="turntable-task-share" onclick="appShare()">去分享</div>
+          <span>分享好友(<span id="overshare">{{content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
+          <div class="turntable-task-share" @click="shareGoodFirend">去分享</div>
         </div>
       </div>
 
@@ -32,9 +32,7 @@
       <div class="turntable-orderbox">
         <div class="turntable-order" onclick="gailu">
           <ul class="turntable-order-lists" id="orderlsits">
-             <li class="turntable-order-item">恭喜 "张先生" 中奖 ! 获得 300 鱼泡币</li>
-             <li class="turntable-order-item">恭喜 "张先生" 中奖 ! 获得 300 鱼泡币</li>
-             <li class="turntable-order-item">恭喜 "张先生" 中奖 ! 获得 300 鱼泡币</li>
+             <li class="turntable-order-item" v-for="(item,index) in nameArr">恭喜 "{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币</li>
           </ul>
         </div>
       </div>
@@ -43,7 +41,90 @@
   </div>
 </template>
 <script>
-
+  import { NoticeBar,Dialog,Toast } from 'vant';
+  export default{
+    data(){
+      return{
+        firstName : "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜戚谢邹喻柏水窦章云苏潘葛奚范彭郎鲁韦昌马苗凤花方俞任袁柳酆鲍史唐费廉岑薛雷贺倪汤滕殷罗毕郝邬安常乐于时傅皮卞齐康伍余元卜顾孟平黄和穆萧尹姚邵湛汪祁毛禹狄米贝明臧计伏成戴谈宋茅庞熊纪舒屈项祝董梁杜阮蓝闵席季麻强贾路娄危江童颜郭梅盛林刁钟徐邱骆高夏蔡田樊胡凌霍虞万支柯昝管卢莫经房裘缪干解应宗丁宣贲邓郁单杭洪包诸左石崔吉钮龚程嵇邢滑裴陆荣翁荀羊於惠甄曲家封芮羿储靳汲邴糜松井段富巫乌焦巴弓牧隗山谷车侯宓蓬全郗班仰秋仲伊宫宁仇栾暴甘钭厉戎祖武符刘景詹束龙叶幸司韶郜黎蓟薄印宿白怀蒲邰从鄂索咸籍赖卓蔺屠蒙池乔阴鬱胥能苍双闻莘党翟谭贡劳逄姬申扶堵冉宰郦雍卻璩桑桂濮牛寿通边扈燕冀郏浦尚农温别庄晏柴瞿阎充慕连茹习宦艾鱼容向古易",
+        lastName : ["先生", "先生", "先生", "先生", "先生", "先生", "先生", "女士", "女士", "女士"],
+        integralArr : [1,3,10,100,300],
+        firstNameArr:[],
+        nameArr:[],
+        content:{
+          lotteryNumber:0,//该用户剩余抽奖次数
+          viewVideoNumber:0,//该用户剩余看视频次数
+          shareNumber:0, //该用户剩余分享次数
+        },
+        rotate:0,
+        is_rotate:false,
+      }
+    },
+    created() {
+      this.firstNameArr = this.firstName.split("");
+      this.getNameArr();
+      this.initUserInfo();
+    },
+    methods:{
+      //随机数
+      getRand(start, end) {
+        if (start == 0) return Math.floor((end + 1) * Math.random());
+        return Math.floor(Math.random() * end + 1);
+      },
+      //获取用户信息
+      initUserInfo(){
+        this.$axios.post("/turn-table/get-user-lottery-info").then(res=>{
+          if(res.code == 200){
+            console.log(res)
+            this.content = {...res.content};
+          }
+        })
+      },
+      //得到姓名
+      getNameArr(){
+        let nameNum = 200;
+        var firstLen = this.firstName.length - 1;
+        var lastLen = this.lastName.length - 1;
+        for(let i = 0; i < nameNum; i++){
+          var nameStr = this.firstNameArr[this.getRand(0, firstLen)] + this.lastName[this.getRand(0, lastLen)];
+          var integral = this.integralArr[this.getRand(0, this["integralArr"].length - 1)];
+          this.nameArr.push({ name: nameStr, integral: integral })
+        }
+      },
+      //点击抽奖
+      startTurnTbale(){
+         this.$axios.post('/turn-table/do-lottery').then(res=>{
+           console.log(res)
+           if(res.code == 500) {
+               Dialog.alert({
+                 title:"谢谢参与",
+                 message:res.msg,
+               })
+           }else if(res.code == 200){
+             this.is_rotate = true;
+             this.rotate = (res.content.prizeKey*60) + 2160;
+           }
+         })
+      },
+      //看视频
+      watchVideo(){
+        this.$axios.post('/turn-table/view-video',{hamapi:"1247427"}).then(res=>{
+          Dialog.confirm({
+            title:"谢谢参与",
+            message:res.msg,
+          }).then(()=>{
+             console.log('fenx')
+          }).catch(()=>{
+             console.log('取消')
+          })
+          console.log(res)
+        })
+      },
+      //分享好友
+      shareGoodFirend(){
+        console.log("点击了分享好友")
+      },
+    }
+  }
 </script>
 
 <style>
@@ -86,10 +167,14 @@
   height: 6rem;
   left: 0;
   top: 0;
-  background: url('http://cdn.yupao.com/newyupao/images/m-turntable-in.png') no-repeat;
+  background: url('http://statics.zhaogongdi.com/common/lucky.png') no-repeat;
   background-size: 100% 100%;
   transform-origin: center;
 }
+.luck-rotate{
+    transform: rotate(2160deg);
+    transition: 2s;
+  }
 .turntable-btn {
   position: absolute;
   width: 6rem;
@@ -229,4 +314,5 @@
     vertical-align: middle;
     margin-left: 0.2rem;
   }
+
 </style>

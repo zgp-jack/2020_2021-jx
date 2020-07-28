@@ -168,13 +168,14 @@ export function GetUser(page,callback){
            url : 需要跳转的路径，默认/login登录页
 */
 export function whetherLogin(that,url){
-  if(!that) return false;
+  if(!that) return ;
 
   if (JSON.stringify(that.$nuxt.$store.state.userinfo)==='{}'){
-    that.$router.push("/login")
+    that.$router.push("/login");
+    return false;
   }else if(url){
-    that.$router.push(url)
-
+    that.$router.push(url);
+    return true;
   }
 }
 

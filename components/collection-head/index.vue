@@ -7,7 +7,7 @@
 <script>
 export default {
     props:['arr'],
-    created(){
+    beforeMount(){
         this.$set(this,'ActiveIndex',this.arr[0].id)
     },
     data(){
