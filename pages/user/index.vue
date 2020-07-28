@@ -64,7 +64,7 @@
 
 <script>
 import Tarbar from '../../components/tarbar'
-import {callPhoneFn,whetherLogin,GetUser} from '../../static/utils/utils'
+import {callPhoneFn,GetUser} from '../../static/utils/utils'
 export default {
   beforeMount(){
     // this.userInfo = window.$nuxt.$store.state.userinfo;
@@ -74,8 +74,7 @@ export default {
     })
   },
   beforeCreate(){
-    //判断登录
-     whetherLogin(this)
+
   },
   data(){
     return{
