@@ -63,8 +63,6 @@ export default {
         let token = md5('APp_YUpAO_UseR_KeY'+this.tel+time).substring(0, 18)
         let data = {phone:this.tel,user_token:token,user_pass:this.password,captcha:this.check_code}
         let datas = JSON.stringify(data)
-        console.log(datas)
-        debugger
         this.$axios.post('/user/app-reset',{data:JSON.stringify(data)}).then(res =>{
           console.log(res)
         })
