@@ -22,7 +22,7 @@
         </div>
 
 
-        <div class="father" v-if="list.length">
+        <div class="father" v-if="mode==1 || mode==2 || mode==3 || mode==4">
           <van-pull-refresh v-model="loading" @refresh="onrefresh">
             <van-list
                 v-model="loading"
@@ -143,7 +143,7 @@ export default {
         getData(){
             const that = this;
             const {mode,page,page_size} = that;
-            const params = {mode,page,page_size};
+            const params = {mode,page,page_size,globalLoading:false};
             that.loading = true;
             if(mode==1 || mode ==2 || mode==3 || mode==4){
                 that.$axios.get('/user/create-list',{params}).then(res=>{
