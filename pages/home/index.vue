@@ -3,7 +3,7 @@
   <div class="container" @scroll="my_scroll">
     <!-- 底部导航 -->
     <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
-    <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" whearthStorage = 'true' />
+    <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" whearthStorage = 'true' v-if="default_addr.city"/>
 	  <div id="head" ref="head">
       <div class="left_dom fl">
         <h1 class="fl">
@@ -245,6 +245,11 @@ export default {
         this.$set(this,'list',{...list})
       },
   },
+  computed:{
+    default_addr(){
+      return this.$nuxt.$store.state.default_addr
+    }
+  }
 
 }
 </script>
