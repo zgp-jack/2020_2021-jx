@@ -41,8 +41,6 @@ import {Toast,Dialog} from 'vant';
         }
         let news= {old_pass:this.origin_pass,new_pass:this.news_pass}
         let data = JSON.stringify(news)
-        console.log(news)
-		debugger
         this.$axios.post('/user/app-updatekey',{data}).then(res=>{
           if(res.code == 200){
             Dialog.alert({
