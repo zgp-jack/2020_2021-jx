@@ -75,7 +75,7 @@
              </span>
              <b>分享</b>
            </p>
-           <p class="report" @click="reportFn()">
+           <p class="report" @click="reportFn(detail_info.phone)">
              <span>
                <img src="../../assets/img/detail/report.png" alt="">
              </span>
