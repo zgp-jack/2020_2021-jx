@@ -31,7 +31,7 @@
                <!-- 这里写死 -->
                <span class="main_textc"  @click="Copy">13060002541</span>
                客服电话
-               <span class="main_textc" @click="tel(contact.contact)" >{{contact.contact}}</span>
+               <span class="main_textc" @click="tel(contact.contact)" >{{contacts.contact}}</span>
             </p>
         </div>
       </div>
@@ -62,7 +62,7 @@ export default {
     }
   },
   created() {
-    this.contact = this.$nuxt.$store.state.contact;
+
   },
   methods:{
     submit(){
@@ -102,7 +102,7 @@ export default {
     Copy(){
       this.show = true
       // Copynum(this,this.contact.wx_service)
-      Copynum(13060002541)
+      Copynum(this,13060002541)
     },
     hander(hide){
         this.show = hide
@@ -120,6 +120,11 @@ export default {
     }
 
   },
+  computed:{
+    contacts(){
+      return this.$nuxt.$store.state.contact;
+    }
+  }
 
 }
 </script>
