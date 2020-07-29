@@ -13,7 +13,7 @@
         <div class="date-content">
           <div class="date"  @click="chooseTime">
             <span>置顶天数：</span>
-            <input type="text" disabled="disabled" :value="day" placeholder="点击选择置顶时间">
+            <input type="text" disabled="disabled" :value="day" placeholder="请选择置顶到期时间">
           </div>
           <div class="score">
             <span>消耗积分：</span>
