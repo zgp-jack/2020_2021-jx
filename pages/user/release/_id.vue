@@ -90,7 +90,6 @@ export default {
             isshow:true,
             Topmaskr:false,
             list:[],
-
             //参数
             mode:'',
             page:1,
@@ -284,19 +283,14 @@ export default {
               that.$axios.get('/user/change-status',{params}).then(res=>{
                 that.findItem(res,"end",2,item,index)
               })
-               }).catch(() => {
-                 // on cancel
-               });
-
+               })
           }else if(item.check == 2 && item.end == 2){
             //该判断 已经完成的数据
             Dialog.alert({
               title: '提示',
               message: '已完成信息不支持切换状态，点击修改信息可重新提交发布',
               confirmButtonColor:"#ffa926"
-            }).then(() => {
-              // on close
-            });
+            })
           }
         },
         //修改提示
@@ -321,14 +315,12 @@ export default {
             path:'/common/update?mode='+this.mode,
             query:{
               id:item.uu_id,
-              // type:this.mode
             }
           })
 
         },
         //拒绝原因
         refuse(item){
-          console.log(item)
           Dialog.alert({
             title:"提示",
             message:item.fail_reason,

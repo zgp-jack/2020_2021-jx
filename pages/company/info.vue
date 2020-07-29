@@ -156,7 +156,6 @@ export default {
     // 查看电话
     showNumber(id){
         this.$axios.post('/company/get-contact',{companyId:id}).then(res=>{
-            console.log(res)
             if(res.code == 200){
               this.phone = res.content
               this.showphone = true

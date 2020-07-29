@@ -83,7 +83,6 @@ export default {
        getWelfare(){
           this.$axios.post('/user-welfare/welfare-list').then(res=>{
               this.list = res.content
-              console.log(this.list)
           })
        },
        //点击去使用

@@ -64,11 +64,9 @@ export default {
         let data = {phone:this.tel,user_token:token,user_pass:this.password,captcha:this.check_code}
         let datas = JSON.stringify(data)
         this.$axios.post('/user/app-reset',{data:JSON.stringify(data)}).then(res =>{
-          console.log(res)
         })
       },
       getCheck(){
-        console.log(1)
         if(!this.get_captcha) return false;
           const params = {phone:this.tel}
           this.$axios.get('/index/send-message',{params}).then(res=>{
