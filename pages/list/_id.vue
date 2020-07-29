@@ -142,7 +142,6 @@ export default {
       that.keywords = '';
       that.query.keywords = '';
       that.int()
-      that.$router.push(that.$route.path)
     }
   },
   beforeMount(){
