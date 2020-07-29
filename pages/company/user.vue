@@ -123,7 +123,7 @@ export default {
             this.company = {...res.content.company}
             this.licenses = {...res.content.licenses}
           }else if(res.code == 505){
-            this.$router.push("/user/company")
+            this.$router.replace("/user/company")
           }
 
         })

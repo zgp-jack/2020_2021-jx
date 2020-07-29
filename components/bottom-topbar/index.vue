@@ -59,7 +59,8 @@ export default {
         showButton:true,
         box_on:true,
         box_show:false,
-        play:true
+        play:true,
+        showPlay:''
     }
   },
   methods:{
@@ -83,15 +84,13 @@ export default {
           this.lists_show = false
         },
         Isgo(link){
+          if(whetherLogin(this)==false) return false;
           this.$router.push(link)
         },
         //去签到
       go_sign(){
-         if(!this.play){
-            this.$router.push('/user/invitation')
-          }else{
-            this.$router.push('/luck')
-          }
+        if(whetherLogin(this)==false) return false;
+        this.$router.push('/user/get')
       },
       // 去下载
       AppGo(url){
@@ -113,10 +112,10 @@ export default {
       },
       // 游戏状态
       palygame(){
-        this.$axios.post('/turn-table/get-lottery-status').then(res=>{
-          const {showPlay} = res.content
-          this.play = showPlay
-        })
+        // this.$axios.post('/turn-table/get-lottery-status').then(res=>{
+        //   const {showPlay} = res.content
+        //   this.play = showPlay
+        // })
       }
   }
 }

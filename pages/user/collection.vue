@@ -40,7 +40,7 @@ import emptyMsg from '../../components/emptyMsg/index'
 import { PullRefresh,Toast,List } from 'vant';
 export default {
     beforeMount(){
-      this.getcollect()
+      this.getcollect();
     },
     components:{
         Headers,

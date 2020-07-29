@@ -57,13 +57,13 @@
                 <div class="corm-row">
                     <div class="row-left"><span class="f-red">*</span>联系人</div>
                     <div class="row-right">
-                         <input type="text" ref="company_username" class="textInput" v-model="company_username" maxlength="10" placeholder="企业法人姓名">
+                         <input type="text" ref="company_username" class="textInput" v-model="company_username" maxlength="10" placeholder="请输入联系人姓名">
                     </div>
                 </div>
                 <div class="corm-row">
                     <div class="row-left"><span class="f-red">*</span>联系电话</div>
                     <div class="row-right">
-                         <input type="number" class="textInput" ref="company_tel" v-model="company_tel" maxlength="11" placeholder="企业联系电话">
+                         <input type="number" class="textInput" ref="company_tel" v-model="company_tel" maxlength="11" placeholder="请输入联系电话">
                     </div>
 
                 </div>
@@ -257,10 +257,17 @@ export default {
               return false
             }
           }
-          if(this.company_name.length < 5 || this.company_name.length > 20){
+
+          let count = 0;
+          for(let i = 0; i < this.company_name.length; i++){
+            if(chinese.test(this.company_name[i])){
+              count ++;
+            }
+          }
+          if(this.company_name.length > 20 || count < 5){
              this.alert('请输入5~20字企业名称','company_name');
             return false;
-          }else if(!publicCheck(this.company_name) || onlyLetter.test(this.company_name) || !chinese.test(this.company_name)){
+          }else if(!publicCheck(this.company_name)){
             this.alert('请输入中文企业名称','company_name')
             return false;
           }
@@ -268,10 +275,17 @@ export default {
             this.alert('请选择企业所在地',()=>{this.$refs.area.onShow(true)});
             return false;
           }
-          if(this.detail_addr<5){
+
+          let addr_num_count = 0;
+          for(let i = 0; i < this.detail_addr.length; i++){
+            if(chinese.test(this.detail_addr[i])){
+              addr_num_count ++;
+            }
+          }
+          if(addr_num_count < 5){
             this.alert('请完整填写地址信息','detail_addr');
             return false;
-          }else if( !publicCheck(this.detail_addr)){
+          }else if( onlyLetter.test(this.detail_addr) || !chinese.test(this.detail_addr)){
             this.alert('地址信息格式错误','detail_addr')
             return false;
           }

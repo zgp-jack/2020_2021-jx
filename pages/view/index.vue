@@ -213,7 +213,8 @@
       //查看完整电话
       showPhone(id){
         //判断是否登录
-        whetherLogin(this)
+        if(whetherLogin(this) == false) return false;
+
         let params = {
           id,
           mode:this.mode,
@@ -236,7 +237,7 @@
       },
       //投诉
       reportFn(phone){
-        if(whetherLogin(this) == false) return
+        if(whetherLogin(this) == false) return;
         // 判断是否已完成
         if(this.detail_info.status == 2){
           Dialog.alert({
@@ -270,10 +271,12 @@
       },
       //分享
       shareFn(){
+        if(whetherLogin(this) == false) return;
         this.$router.push("/user/invitation")
       },
       //收藏
       cellectFn(id){
+        if(whetherLogin(this) == false) return;
         let that = this;
         let data = {
            id,

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Header :title="title" go_home_page="true"/>
+      <Header :title="title" go_home_page="false"/>
       <div class="father">
           <div class="form">
             <div class="form-row">
@@ -37,12 +37,7 @@ import md5 from 'js-md5';
 import {setCookie,GetUser,whetherLogin} from '../../static/utils/utils.js';
 import {Toast} from 'vant';
 export default {
-    beforeCreate() {
-      whetherLogin(this)
-    },
-    beforeMount(){
 
-    },
     data(){
         return{
           title:'登录_鱼泡机械',
