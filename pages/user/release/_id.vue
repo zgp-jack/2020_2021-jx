@@ -51,7 +51,7 @@
 <script>
 import collHead from '../../../components/collection-head';
 import EmptyMsg from '../../../components/emptyMsg';
-import {formatDate,setNovicePoint,getNovicePoint} from '../../../static/utils/utils.js';
+import {formatDate,setNovicePoint,getNovicePoint,whetherLogin} from '../../../static/utils/utils.js';
 import { Toast,List,Dialog,PullRefresh } from 'vant';
 import BottomTop from '../../../components/bottom-topbar/index.vue';
 
@@ -68,6 +68,9 @@ export default {
       this.mask_want = guide.userBuy;
       this.mask_tencent = guide.lease;
     }
+    whetherLogin(this,'',()=>{
+      this.$router.replace('/login')
+    })
   },
     components:{
         collHead,

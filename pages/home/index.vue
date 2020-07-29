@@ -123,7 +123,7 @@ export default {
       //轮播图数据
       banner_children:[{
           img:"http://statics.zhaogongdi.com/images/banner/20190624/558TWm1561367968.png",
-          href:"/coin/get/",
+          href:"",
         },{
           img:"http://statics.zhaogongdi.com/images/banner/20190815/0t7W171565854698.png",
           href:"/user/invitation/",

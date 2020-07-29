@@ -169,11 +169,11 @@ export function GetUser(page,callback){
 */
 export function whetherLogin(that,url,callback){
   if(!that) return ;
-  if(typeof callback == "function"){
-	  callback();
-	  return false;
-  }
   if (JSON.stringify(that.$nuxt.$store.state.userinfo)==='{}'){
+    if(typeof callback == "function"){
+      callback();
+      return false;
+    }
     that.$router.push("/login");
     return false;
   }else if(url){

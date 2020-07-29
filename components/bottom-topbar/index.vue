@@ -84,10 +84,12 @@ export default {
           this.lists_show = false
         },
         Isgo(link){
+          if(whetherLogin(this)==false) return false;
           this.$router.push(link)
         },
         //去签到
       go_sign(){
+        if(whetherLogin(this)==false) return false;
          if(!this.play){
             this.$router.push('/user/invitation')
           }else{
