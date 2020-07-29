@@ -19,7 +19,8 @@
           v-if="list.length"
           v-model="listLoading"
           :finished="iscomplete"
-          @load="getrec">
+          @load="getrec"
+          :loading-text="text">
           <div class="consume-content" v-for="(item,i) in list" :key="i" @click="go(item)">
               <div class="consume-content-one">
                   <div class="consume-content-img"><img :src="item.icon"></div>
@@ -110,7 +111,8 @@ export default {
             listLoading:false,
             iscomplete:false,
             mode:0,
-            isLoading:false
+            isLoading:false,
+            text:'加载中...'
         }
     },
     methods:{
@@ -175,9 +177,9 @@ export default {
           let params = {type:this.mode,page:this.page,page_size:this.page_size,date:this.valuetime,category:this.fenleiindex}
           this.$axios.get('/coin/record',{params}).then(res=>{
           console.log(res)
-          this.listLoading = false
           this.list = this.page == 1?[...res.content.list]:[...this.list,...res.content.list]
           res.content.list.length>=10?(this.iscomplete = false,this.page++):(this.iscomplete = true,this.More = true)
+          this.listLoading = false
           this.list.length<=0?(this.Moreimg = true,this.More=false):(this.Moreimg = false)
           })
         },
