@@ -41,7 +41,9 @@
           mode:this.$props.userInfo.mode
         }
         //进行ajax请求,获取完整的电话号码  ---- 进行打电话
-        showPhoneFn(that,Toast,data)
+        showPhoneFn(that,Toast,data,function(complatePhone){
+          console.log(complatePhone)
+        })
       },
     }
 
