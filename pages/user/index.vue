@@ -55,7 +55,7 @@
         </div>
         <!-- 客服电话 -->
         <div class="server_tel" @click="tel">
-          客服电话:&nbsp;{{contact.contact}}
+          客服电话:&nbsp;{{contacts.contact}}
         </div>
     </div>
     <Tarbar/>
@@ -64,18 +64,15 @@
 
 <script>
 import Tarbar from '../../components/tarbar'
-import {callPhoneFn,whetherLogin,GetUser} from '../../static/utils/utils'
+import {callPhoneFn,GetUser} from '../../static/utils/utils'
 export default {
   beforeMount(){
-    // this.userInfo = window.$nuxt.$store.state.userinfo;
-    this.contact = this.$nuxt.$store.state.contact;
     GetUser(this,(res) => {
       this.userInfo = res
     })
   },
   beforeCreate(){
-    //判断登录
-     whetherLogin(this)
+
   },
   data(){
     return{
@@ -175,6 +172,9 @@ export default {
         userinfo(){
           let userInfo = {...this.userInfo}
           return userInfo
+        },
+        contacts(){
+          return this.$nuxt.$store.state.contact
         }
   }
 

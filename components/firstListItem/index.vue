@@ -96,7 +96,9 @@
               id,
               mode
             };
+            
             showPhoneFn(that,Toast,data)
+            debugger
           }
         },
         //状态显示的图片
