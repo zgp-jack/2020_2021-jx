@@ -26,6 +26,7 @@
 
 <script>
 import Header from '../../components/header'
+import {whetherLogin} from '../../static/utils/utils.js';
 export default {
     components:{
         Header
@@ -34,6 +35,11 @@ export default {
         return{
             title:'个人设置'
         }
+    },
+    beforeCreate() {
+      whetherLogin(this,'',()=>{
+        this.$router.replace('/login')
+      })
     },
     methods:{
       signOut(){

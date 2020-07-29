@@ -64,9 +64,13 @@
 <script>
 import Headers from '../../components/header'
 import emptyMsg from '../../components/emptyMsg/index'
+import {whetherLogin} from '../../static/utils/utils.js';
 export default {
     beforeMount(){
-      this.getWelfare()
+      whetherLogin(this,'',()=>{
+        this.$router.replace('/login')
+      })
+      this.getWelfare();
     },
     components:{
         Headers,
