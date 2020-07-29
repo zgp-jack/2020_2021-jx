@@ -39,57 +39,19 @@ export default {
       whearth_storage:false,
     };
   },
-  mounted() {
-    if(this.$props.whearthStorage){
-      this.whearth_storage = true;
-    }
+  activated(){
     const that = this;
-    let default_addr={}
-    let storage_city = window.sessionStorage.getItem('city');
-    let storage_province = window.sessionStorage.getItem('province');
-    let all_area = window.sessionStorage.getItem('all');
-    if(this.whearth_storage){ //是否要从本地存储获取值
-      if(all_area){
-        //本地存储是否有全国的数据
-        this.provinceChosedIndex=0;
-        this.intData = {id: 1, name: "全国", pid: "0"};
-        return
-      }else if(storage_city){
-        //本地存储有城市数据的时候
-        //省份是否为空  ---- 上来直接选择城市，没有选择省，这时省份就为空
-        let province = JSON.parse(storage_province);
-        if(province.id){
-          // 不为空就赋本地的数据
-          default_addr = {
-            province,
-            city:JSON.parse(storage_city),
-          };
-        }
-      }else{
-        default_addr = this.default_data?this.default_data:that.$nuxt.$store.state.default_addr;
-      }
-    }else{
-      default_addr = this.default_data?this.default_data:that.$nuxt.$store.state.default_addr;
+    if(that.$route.query['keep-alive'] === false){
+      setTimeout(() => {
+        that.int()
+      }, 200);
     }
-    const city = that.$nuxt.$store.state.city;
-    const chose_area = default_addr.province.id - 1;
-    //只有父选项并且有默认值的情况下
-    default_addr.city ? city[chose_area].find((item, index) => {
-      if (item.id == default_addr.city.id) {
-        that.$set(that, "intData", item);
-        this.$set(this, "cityChosedIndex", index);
-        return false;
-      }
-    })
-    :
-    that.$set(that, "intData", default_addr.province);
-    default_addr.province && this.$set(this, "provinceChosedIndex", chose_area);
-
-    this.onSelect(
-      "isSelect_area",
-      false,
-      this.intData
-    );
+  },
+  beforeMount() {
+    const that = this;
+    if(that.$route.query['keep-alive'] !== false){
+      that.int()
+    }
   },
 
   methods: {
@@ -125,7 +87,60 @@ export default {
           false,
           this.city[this.provinceChosedIndex][index]
         );
-    }
+    },
+
+    int(){
+      if(this.$props.whearthStorage){
+        this.whearth_storage = true;
+      }
+      const that = this;
+      let default_addr={}
+      let storage_city = window.sessionStorage.getItem('city');
+      let storage_province = window.sessionStorage.getItem('province');
+      let all_area = window.sessionStorage.getItem('all');
+      if(this.whearth_storage){ //是否要从本地存储获取值
+        if(all_area){
+          //本地存储是否有全国的数据
+          this.provinceChosedIndex=0;
+          this.intData = {id: 1, name: "全国", pid: "0"};
+          return
+        }else if(storage_city){
+          //本地存储有城市数据的时候
+          //省份是否为空  ---- 上来直接选择城市，没有选择省，这时省份就为空
+          let province = JSON.parse(storage_province);
+          if(province.id){
+            // 不为空就赋本地的数据
+            default_addr = {
+              province,
+              city:JSON.parse(storage_city),
+            };
+          }
+        }else{
+          default_addr = this.default_data?this.default_data:that.$nuxt.$store.state.default_addr;
+        }
+      }else{
+        default_addr = this.default_data?this.default_data:that.$nuxt.$store.state.default_addr;
+      }
+      const city = that.$nuxt.$store.state.city;
+      const chose_area = default_addr.province.id - 1;
+      //只有父选项并且有默认值的情况下
+      default_addr.city ? city[chose_area].find((item, index) => {
+        if (item.id == default_addr.city.id) {
+          that.$set(that, "intData", item);
+          this.$set(this, "cityChosedIndex", index);
+          return false;
+        }
+      })
+      :
+      that.$set(that, "intData", default_addr.province);
+      default_addr.province && this.$set(this, "provinceChosedIndex", chose_area);
+
+      this.onSelect(
+        "isSelect_area",
+        false,
+        this.intData
+      );
+    },
 
   },
   computed: {

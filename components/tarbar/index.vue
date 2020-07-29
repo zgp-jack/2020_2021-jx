@@ -44,15 +44,24 @@ export default {
   },
   methods:{
     onskip(path){
-      const {base} = this.$router.history;
-      let url = base?window.location.origin + base + path:window.location.origin+path
-      if(url !==window.location.href){
-        if(path == '/user'){
-        whetherLogin(this,path)
-        return false
+      // const {base} = this.$router.history;
+      // let url = base?window.location.origin + base + path:window.location.origin+path
+      // if(url !==window.location.href){
+      //   if(path == '/user'){
+      //   whetherLogin(this,path)
+      //   return false
+      // }
+      //   window.location.href = url
+      // }
+      if(path=='/user'){
+        this.$router.push(path)
+      }else{
+        this.$router.push({
+          path,
+          query:{'keep-alive':false}
+        })
       }
-        window.location.href = url
-      }
+      
     }
   }
 };
