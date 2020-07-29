@@ -25,7 +25,7 @@
         <img src="http://statics.zhaogongdi.com/common/list_upload_app.png">
       </div>
       <!-- 签到 -->
-    <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao" v-if="hiddenAll==undefined"></div>
+    <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao" v-if="hiddenAll==undefined" :style="{'background-image':!play?'url('+require('../../assets/img/fenxiang.png'):''}"></div>
 
     <!-- <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao">
     </div> -->
@@ -38,6 +38,9 @@
 import Sign from '../../components/Sign'
 import {coinget,whetherLogin} from '../../static/utils/utils'
 export default {
+    created(){
+      this.palygame()
+    },
     props:['showWant','qiandao','hiddenAll',"showAlert"],
     components:{
       Sign
@@ -55,7 +58,8 @@ export default {
         lists_show:false,
         showButton:true,
         box_on:true,
-        box_show:false
+        box_show:false,
+        play:true
     }
   },
   methods:{
@@ -83,10 +87,11 @@ export default {
         },
         //去签到
       go_sign(){
-        if(whetherLogin(this) == false) return false;
-        const that = this
-        this.box_show = true
-        coinget(that)
+         if(!this.play){
+            this.$router.push('/user/invitation')
+          }else{
+            this.$router.push('/luck')
+          }
       },
       // 去下载
       AppGo(url){
@@ -105,6 +110,13 @@ export default {
       },
        handle(show){
           this.box_show = show
+      },
+      // 游戏状态
+      palygame(){
+        this.$axios.post('/turn-table/get-lottery-status').then(res=>{
+          const {showPlay} = res.content
+          this.play = showPlay
+        })
       }
   }
 }
