@@ -41,7 +41,7 @@
 <script>
 import Headers from '../../components/header'
 import Copy from '../../components/Copy'
-import {callPhoneFn,Copynum,uploadPictures,whetherLogin} from '../../static/utils/utils'
+import {callPhoneFn,Copynum,uploadPictures} from '../../static/utils/utils'
 import {Toast,Uploader } from 'vant'
 export default {
   components:{
@@ -59,11 +59,6 @@ export default {
         fileList:[],
         images:[]
     }
-  },
-  beforeCreate() {
-    whetherLogin(this,'',()=>{
-      this.$router.replace('/login')
-    })
   },
   methods:{
     submit(){

@@ -38,13 +38,9 @@ import Headers from '../../components/header'
 import collHead from '../../components/collection-head'
 import emptyMsg from '../../components/emptyMsg/index'
 import { PullRefresh,Toast,List } from 'vant';
-import {whetherLogin} from '../../static/utils/utils.js';
 export default {
     beforeMount(){
       this.getcollect();
-      whetherLogin(this,'',()=>{
-        this.$router.replace('/login')
-      })
     },
     components:{
         Headers,

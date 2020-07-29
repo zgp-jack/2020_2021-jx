@@ -90,11 +90,7 @@ export default {
         //去签到
       go_sign(){
         if(whetherLogin(this)==false) return false;
-         if(!this.play){
-            this.$router.push('/user/invitation')
-          }else{
-            this.$router.push('/luck')
-          }
+        this.$router.push('/user/get')
       },
       // 去下载
       AppGo(url){

@@ -68,9 +68,6 @@ export default {
       this.mask_want = guide.userBuy;
       this.mask_tencent = guide.lease;
     }
-    whetherLogin(this,'',()=>{
-      this.$router.replace('/login')
-    })
   },
     components:{
         collHead,

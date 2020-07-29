@@ -71,10 +71,10 @@ export default {
       this.userInfo = res
     })
   },
-  beforeCreate(){
-    whetherLogin(this,'',()=>{
+  mounted(){
+    if(!document.cookie.includes("ssoToken")){
       this.$router.replace("/login")
-    })
+    }
   },
   data(){
     return{
