@@ -158,7 +158,7 @@ export default {
     },0)
   },
   methods:{
-    
+
     //关闭指引弹窗
     novicePointHiddenFn(open){
       this.novice_point_alert = open
@@ -230,13 +230,16 @@ export default {
       //查看更多机械  跳转页面
       Jump_page(type){
         if(type == 1){
-          this.$router.replace("/list/1")
+          this.$router.replace({
+            path:"/list/1",
+            query:{"keep-alive":false}
+          })
         }else if(type == 2){
-          this.$router.replace("/list/2")
+          this.$router.replace({path:"/list/2",query:{"keep-alive":false}})
         }else if(type == 3){
-          this.$router.replace("/list/3")
+           this.$router.replace({path:"/list/3",query:{"keep-alive":false}})
         }else if(type == 4){
-          this.$router.replace("/list/4")
+           this.$router.replace({path:"/list/4",query:{"keep-alive":false}})
         }
       },
       getObj(obj){

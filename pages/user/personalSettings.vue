@@ -38,11 +38,13 @@ export default {
     methods:{
       signOut(){
         //清除token
-        document.cookie = "ssoToken"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/dist/user';
         document.cookie = "ssoToken"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/dist';
+        document.cookie = "ssoToken"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
         //清除七天不提示弹框
         document.cookie = "havaSeven"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
-        this.$router.push("/login")
+        let {base} = this.$router.history;
+        let url = base?window.location.origin + base +'/login':window.location.origin+'/login'
+        window.location.href = url
       }
     }
 }

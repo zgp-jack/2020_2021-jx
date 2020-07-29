@@ -29,7 +29,6 @@ export function showPhoneFn(that,Toast,data,bool=false){
   */
 
   that.$axios.post('/index/get-contact',{data:JSON.stringify(data)}).then(res=>{
-    console.log(res)
     if(res.code == 200){
       if(typeof bool == "function"){
         bool(res.content)
