@@ -23,7 +23,7 @@
       <Banner :obj="banner_children"></Banner>
     </div>
     <div class="menus" ref="menus">
-      <router-link  to="/list/1" >
+      <router-link  :to="{path:'/list/1',query:{'keep-alive':false}}" >
         <img src="http://statics.zhaogongdi.com/xcx/index_tenant.png" alt="">
         <span>机械求租</span>
       </router-link>
@@ -32,7 +32,7 @@
         <span>发布求租</span>
       </router-link>
 
-      <router-link  to="/list/2" >
+      <router-link  :to="{path:'/list/2',query:{'keep-alive':false}}" >
         <img src="http://statics.zhaogongdi.com/xcx/index_mahcine.png" alt="">
         <span>机械出租</span>
       </router-link>
@@ -41,11 +41,11 @@
         <img src="../../assets/img/home-images/Lark20200608-172704.png" alt="">
         <span>招聘机手</span>
       </a>
-      <router-link  to="/list/3" >
+      <router-link  :to="{path:'/list/3',query:{'keep-alive':false}}" >
         <img src="http://statics.zhaogongdi.com/xcx/index_ershou.png" alt="">
         <span> 机械转让</span>
       </router-link>
-      <router-link  to="/list/4" >
+      <router-link  :to="{path:'/list/4',query:{'keep-alive':false}}" >
          <img src="http://statics.zhaogongdi.com/xcx/index_want.png" alt="">
          <span> 机械求购</span>
       </router-link>

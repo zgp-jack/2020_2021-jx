@@ -135,11 +135,23 @@ export default {
     BottomTop,
     Newgift
   },
+  activated(){
+    const that = this;
+    if(that.$route.query['keep-alive'] === false){
+      //初始化值
+      that.keywords = '';
+      that.query.keywords = '';
+      that.int()
+      that.$router.push(that.$route.path)
+    }
+  },
   beforeMount(){
     
   },
   mounted() {
-    this.int()
+    if(this.$route.query['keep-alive'] !== false){
+      this.int()
+    }
     window.addEventListener('scroll',this.my_scroll);
   },
   methods: {
