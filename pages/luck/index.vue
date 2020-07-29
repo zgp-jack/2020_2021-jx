@@ -4,23 +4,23 @@
     <div class="turntable-container">
       <div class="turntable-box">
         <div class="turntable-box-out"></div>
-        <div class="turntable-box-img" :class='[is_rotate?"luck-rotate":""]' :style="{transfrom:'rotate('+rotate+'deg)'}"></div>
+        <div class="turntable-box-img" :class='[is_rotate?"luck-rotate":""]' :style="{transform:'rotate('+rotate+'deg)'}"></div>
         <div class="turntable-btn">
           <div class="turntable-btn-click" @click="startTurnTbale"></div>
         </div>
 
       </div>
-      <div class="turntable-timesbox">我的抽奖次数：<span id="turntable-times">0</span>次
+      <div class="turntable-timesbox">我的抽奖次数：<span id="turntable-times">{{content.lotteryNumber}}</span>次
         <span onclick="userGetTimes()" class="turntable-span-img"></span>
       </div>
 
       <div class="turntable-tasks">
         <div class="turntable-task-item">
-          <span>看视频(<span id="overvideo">{{content.viewVideoNumber}}</span>/<span id="allvideo">1</span>)</span>
+          <span>看视频(<span id="overvideo">{{4 - content.viewVideoNumber}}</span>/<span id="allvideo">4</span>)</span>
           <div class="turntable-task-video" @click="watchVideo" data-end="0" >去观看</div>
         </div>
         <div class="turntable-task-item">
-          <span>分享好友(<span id="overshare">{{content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
+          <span>分享好友(<span id="overshare">{{1 - content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
           <div class="turntable-task-share" @click="shareGoodFirend">去分享</div>
         </div>
       </div>
