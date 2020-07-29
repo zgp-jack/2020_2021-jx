@@ -18,7 +18,7 @@
     components:{
        "van-dialog": Dialog.Component,
     },
-    props:['userInfo'],
+    props:['data'],
     data(){
       return{
         show:true,
@@ -37,13 +37,11 @@
            document.cookie = "havaSeven" + "=" + future + ";expires=" + new Date(future)+";path=/";
         }
         let data = {
-          id:this.$props.userInfo.id,
-          mode:this.$props.userInfo.mode
+          id:this.$props.data.id,
+          mode:this.$props.data.mode
         }
         //进行ajax请求,获取完整的电话号码  ---- 进行打电话
-        showPhoneFn(that,Toast,data,function(complatePhone){
-          console.log(complatePhone)
-        })
+        showPhoneFn(that,Toast,data)
       },
     }
 

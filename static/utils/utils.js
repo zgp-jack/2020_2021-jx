@@ -36,7 +36,7 @@ export function showPhoneFn(that,Toast,data,bool=false){
       }else{
         callPhoneFn(res.content)
         that.tel = res.content;
-        that.giveParentPhone({tel:res.content,id:data.id,index:that.$props.userInfo.index,mode:data.mode})
+        that.giveParentPhone({tel:res.content,id:data.id,index:that.$props.data.index,mode:data.mode})
       }
     }else if(res.code == 300){
       Toast(res.msg);
