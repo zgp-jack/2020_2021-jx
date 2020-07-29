@@ -33,7 +33,7 @@
       </div>
     </nuxt-link>
     <!-- 弹框 -->
-    <call-confirm @phoneNunber="getPhone" :userInfo="item_flag" v-if="show" />
+    <call-confirm @phoneNunber="getPhone" :data="item_flag" v-if="show" />
   </div>
 </template>
 
@@ -96,10 +96,12 @@
               id,
               mode
             };
-            
             showPhoneFn(that,Toast,data)
-            debugger
           }
+        },
+        //勾选了七天不提示弹框后调用的函数
+        giveParentPhone(obj){
+          this.getPhone(obj)
         },
         //状态显示的图片
         stateImage(){
