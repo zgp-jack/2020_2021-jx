@@ -10,9 +10,9 @@
                     <div @click="ChangeHeader">修改头像</div>
                     </van-uploader>
                 </div>
-                <div class="nickName reset-psd" style="padding-left:0.3rem;">
+                <div class="nickName reset-psd" style="padding-left:0.3rem;" @click="userName">
                     <span style="letter-spacing:36px;">昵称</span>
-                    <input type="text" :value='userinfo.name' @keyup.enter = 'UpdateName(userinfo.name)' ref="getValue" />
+                    <span>{{userinfo.name}}</span>
                 </div>
                 <div class="nickName reset-psd">
                     <span>手机号码</span>
@@ -24,23 +24,29 @@
                      <i class="icon"></i>
                 </div>
         </div>
+        <van-dialog v-model="show" title="修改姓名" show-cancel-button width="260px" @confirm="()=>onConfirm(userinfo.name)" confirmButtonColor='#FFA926'>
+          <p class="namestype">请输入您的名字(2-5)个字</p>
+          <input type="text" :placeholder="userinfo.name" class="typein" ref="getValue">
+        </van-dialog>
     </div>
 </template>
 
 <script>
 import Headers from '../../components/header'
-import {Toast,Uploader} from 'vant';
+import {Toast,Uploader,Dialog} from 'vant';
 import Vue from 'vue';
 import {uploadPictures} from '../../static/utils/utils'
 Vue.use(Uploader)
 export default {
     components:{
-        Headers
+        Headers,
+        [Dialog.Component.name]: Dialog.Component,
     },
     data(){
         return{
             title:'鱼泡机械-个人资料',
             username:'',
+            show:false
         }
     },
     computed:{
@@ -52,10 +58,28 @@ export default {
       modfiy(){
         this.$router.push('/user/modfiy_password/modfiy_password')
       },
-      // 修改昵称
-      UpdateName(info){
+      // 修改头像
+      ChangeHeader(file){
+        uploadPictures(this,file.file).then(res =>{
+           if(res){
+             const params = {header:res.content.value}
+             this.$axios.get('/user/update-header',{params}).then( res => {
+                this.$nuxt.$store.state.userinfo.header = res.content
+             })
+           }else{
+             Toast('头像修改失败,请稍后再试')
+           }
+        })
+      },
+      phone(){
+       this.$router.push('/set/change-phone')
+      },
+      userName(){
+        this.show = true
+      },
+      onConfirm(info){
         let Newname = this.$refs.getValue.value
-        if(!Newname || Newname.split(" ").join("").length == 0){
+        if((Newname.length<2 || Newname.length>5) || Newname.split(" ").join("").length == 0){
           Toast('请输入正确昵称')
           return false
         }
@@ -69,22 +93,6 @@ export default {
                 this.$nuxt.$store.state.userinfo.name = Newname
               }
         })
-      },
-      // 修改头像
-      ChangeHeader(file){
-        uploadPictures(this,file.file).then(res =>{
-           if(res){
-             const params = {header:res.content.value}
-             this.$axios.get('/user/update-header',{params}).then( res => {
-                 this.$nuxt.$store.state.userinfo.header = res.content
-             })
-           }else{
-             Toast('头像修改失败,请稍后再试')
-           }
-        })
-      },
-      phone(){
-       this.$router.push('/set/change-phone')
       }
     }
 }

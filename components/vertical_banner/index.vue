@@ -15,6 +15,7 @@
 
 <script>
   import { Swipe , SwipeItem } from 'vant'
+  import {whetherLogin} from '../../static/utils/utils'
   import BottomTop from '../../components/bottom-topbar/index';
   export default{
     data(){
@@ -38,6 +39,7 @@
         this.$refs.child.list_show();
       },
       go_set_top(){
+        if(whetherLogin(this) == false) return false;
         this.$router.push('/user/release/'+this.$route.query.mode)
       }
     },

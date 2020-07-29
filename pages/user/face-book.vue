@@ -41,8 +41,7 @@
 <script>
 import Headers from '../../components/header'
 import Copy from '../../components/Copy'
-import {callPhoneFn,Copynum} from '../../static/utils/utils'
-import {uploadPictures} from '../../static/utils/utils.js';
+import {callPhoneFn,Copynum,uploadPictures} from '../../static/utils/utils'
 import {Toast,Uploader } from 'vant'
 export default {
   components:{
@@ -60,9 +59,6 @@ export default {
         fileList:[],
         images:[]
     }
-  },
-  created() {
-
   },
   methods:{
     submit(){

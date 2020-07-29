@@ -29,7 +29,6 @@ export function showPhoneFn(that,Toast,data,bool=false){
   */
 
   that.$axios.post('/index/get-contact',{data:JSON.stringify(data)}).then(res=>{
-    console.log(res)
     if(res.code == 200){
       if(typeof bool == "function"){
         bool(res.content)
@@ -166,11 +165,15 @@ export function GetUser(page,callback){
   未登录跳转页面
   @parmes: that : this
            url : 需要跳转的路径，默认/login登录页
+		   callback:自定义跳转的函数
 */
-export function whetherLogin(that,url){
+export function whetherLogin(that,url,callback){
   if(!that) return ;
-
   if (JSON.stringify(that.$nuxt.$store.state.userinfo)==='{}'){
+    if(typeof callback == "function"){
+      callback();
+      return false;
+    }
     that.$router.push("/login");
     return false;
   }else if(url){
