@@ -78,4 +78,29 @@
         .nones{
             margin-top:0.2rem;
         }
+        .submit{
+          width: 5.14rem;
+          margin: 0.86rem auto 10rpx;
+          line-height:0.88rem;
+          background-color: #FFA926;
+          color: #fff;
+          font-size:0.36rem;
+          text-align: center;
+          border-radius:0.44rem;
+          box-shadow: 0 0.11rem 0.22rem 0 rgba(179,119,28,0.24);
+        }
+}
+.namestype{
+  padding-left:0.7rem;
+  color:#7D7D7D;
+  font-size:0.2rem;
+  margin:0.3rem 0;
+}
+.typein{
+  display: block;
+  width:3.9rem;
+  margin: 0 auto;
+  border: 1px solid #eee;
+  line-height:0.8rem;
+  margin-bottom:0.5rem;
 }
