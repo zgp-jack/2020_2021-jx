@@ -103,6 +103,11 @@ export default {
           //本地存储是否有全国的数据
           this.provinceChosedIndex=0;
           this.intData = {id: 1, name: "全国", pid: "0"};
+          this.onSelect(
+            "isSelect_area",
+            false,
+            this.intData
+          );
           return
         }else if(storage_city){
           //本地存储有城市数据的时候
