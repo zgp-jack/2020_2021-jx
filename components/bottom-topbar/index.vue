@@ -59,7 +59,8 @@ export default {
         showButton:true,
         box_on:true,
         box_show:false,
-        play:true
+        play:true,
+        showPlay:''
     }
   },
   methods:{
@@ -113,10 +114,10 @@ export default {
       },
       // 游戏状态
       palygame(){
-        this.$axios.post('/turn-table/get-lottery-status').then(res=>{
-          const {showPlay} = res.content
-          this.play = showPlay
-        })
+        // this.$axios.post('/turn-table/get-lottery-status').then(res=>{
+        //   const {showPlay} = res.content
+        //   this.play = showPlay
+        // })
       }
   }
 }

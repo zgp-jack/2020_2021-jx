@@ -165,10 +165,14 @@ export function GetUser(page,callback){
   未登录跳转页面
   @parmes: that : this
            url : 需要跳转的路径，默认/login登录页
+		   callback:自定义跳转的函数
 */
-export function whetherLogin(that,url){
+export function whetherLogin(that,url,callback){
   if(!that) return ;
-
+  if(typeof callback == "function"){
+	  callback();
+	  return false;
+  }
   if (JSON.stringify(that.$nuxt.$store.state.userinfo)==='{}'){
     that.$router.push("/login");
     return false;
