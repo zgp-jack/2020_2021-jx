@@ -1,8 +1,8 @@
 <template>
     <van-swipe class="my-swipe"  indicator-color="white" width="7.5rem" :autoplay="3000" ref="resize">
       <van-swipe-item v-for="(item,index) in banner_data " :key="index">
-        <router-link :to="item.href">
-          <img :src="item.img" alt="">
+        <router-link :to="item.url">
+          <img :src="item.image" alt="">
         </router-link>
       </van-swipe-item>
 
