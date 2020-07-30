@@ -1,6 +1,6 @@
 <template>
     <div class="model_mask">
-        <van-loading type="spinner" color="#FFAA26" size="32px"/>
+        <img src="../../assets/img/index_loading.gif" alt="加载中..." v-show="show">
     </div>
 </template>
 
@@ -8,25 +8,29 @@
 import { Loading } from "vant";
 export default {
   data() {
-    return {};
+    return {
+        show:false,
+    };
   },
-  components: {
-    "van-loading": Loading
-  }
+  beforeMount(){
+    this.show = true
+  },
 };
 </script>
 
 
-<style lang='scss' scoped>
+<style scoped>
     .model_mask{
+        display: flex;
         background-color: #fff;
-        .van-loading{
-            position: absolute;
-            z-index: 1000;
-            top: calc(50% - 15px);
-            left: calc(50% - 15px);
-            line-height: 30px;
-            text-align: center;
-        }
+        align-items: center;
+        z-index: 1001 !important;
+    }
+    img{
+        width: 7.5rem;
+        height: 5.62rem;
+    }
+    .van-toast--loading{
+        z-index: 1000 !important;
     }
 </style>
