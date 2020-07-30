@@ -40,7 +40,7 @@
       },
       go_set_top(){
         if(whetherLogin(this) == false) return false;
-        this.$router.push('/user/release/'+this.$route.query.mode)
+        this.$router.push({path:'/user/release/',query:{mode:this.$route.query.mode}})
       }
     },
     props:['type','go_release','go_settop']

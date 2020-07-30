@@ -1,5 +1,5 @@
 <template>
-    <Release />
+    <Release v-if="clas.length && userinfo!=='{}'"/>
 </template>
 
 <script>
@@ -14,6 +14,14 @@ export default {
       }
     },
     methods:{
+    },
+    computed:{
+      userinfo(){
+        return JSON.stringify(this.$nuxt.$store.state.userinfo);
+      },
+      clas(){
+        return this.$nuxt.$store.state.clas
+      }
     }
 }
 </script>
