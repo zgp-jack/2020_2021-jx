@@ -34,6 +34,20 @@
 import Sign from '../../components/Sign'
 import {coinget,whetherLogin} from '../../static/utils/utils'
 export default {
+  watch: {
+  $route: {
+    handler: function(val, oldVal){
+     if(val.name == 'user-release'){
+       this.show = true
+     }
+    },
+    // 深度观察监听
+    deep: true
+  }
+},
+    created(){
+      this.palygame()
+    },
     props:['showWant','qiandao','hiddenAll',"showAlert"],
     components:{
       Sign
@@ -53,7 +67,8 @@ export default {
         box_on:true,
         box_show:false,
         play:true,
-        showPlay:''
+        showPlay:'',
+        show:false
     }
   },
   methods:{
@@ -92,13 +107,7 @@ export default {
       // 跳转发布页
       fabugo(){
         if(whetherLogin(this) == false) return false;
-        this.$router.push({
-           name:'user-release-id',
-           params:{
-           show:true,
-           id:1
-          }
-        })
+        this.$router.push({path:'/user/release/',query:{mode:1,show:true}})
       },
        handle(show){
           this.box_show = show
