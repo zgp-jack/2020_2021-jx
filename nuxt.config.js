@@ -35,7 +35,7 @@ export default {
     title: '机械租赁|机械库|机械出租|供应商|机械二手交易|机械设备转让|机械求购-鱼泡机械网',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0"' },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' },
       { hid: 'description', name: 'description', content: '鱼泡机械网提供挖掘机、推土机、铣刨机、平地机等各种工程机械出租、机械租赁服务，方便建筑工人、施工队高效快捷地寻找靠谱的建筑工程机械。' },
       { name: "keywords", content: "鱼泡机械网，求租机械，求租信息，机械出租，机械供应商，二手机械交易，二手机械信息，机械设备转让，机械设备求购" },
       { "http-equiv": "X-UA-Compatible", content: "IE=edge" }

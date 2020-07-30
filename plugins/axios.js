@@ -9,8 +9,9 @@ import {getCookie,setCookie} from '../static/utils/utils';
 
 export default function ({$axios,redirect,store}) {
     // request拦截器
-    let globalLoading = true;
+    let globalLoading;
     $axios.onRequest(config => {
+        globalLoading = true;
         config.url.includes('?')?config.url +='&source=M' : config.url += `?source=M`;
         const {params,data} = config;
         if(params && params.globalLoading === false){
@@ -26,15 +27,14 @@ export default function ({$axios,redirect,store}) {
             config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
         }
         globalLoading && Toast.loading({
-            mask: true,
             message: '加载中...',
             duration: 0,
+            loadingType: 'spinner',
         });
         const ssoToken = getCookie('ssoToken');
         if(ssoToken){
             config.headers.common['x-token'] = ssoToken;
         }
-
     })
     $axios.onError(error => {
         Toast.clear()

@@ -79,7 +79,7 @@ export default {
 
       getList(){
         this.listLoading = true
-        let params = {page:this.page,area:this.area,type:this.type,page_size:this.page_size};
+        let params = {page:this.page,area:this.area,type:this.type,page_size:this.page_size,globalLoading:false};
         const that = this;
         this.$axios.get('/company',{params}).then(res=>{
           if(res.code == 200 ){
