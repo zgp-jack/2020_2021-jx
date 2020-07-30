@@ -1,5 +1,5 @@
 <template>
-    <Release :editorData="editorData" v-if="show"/>
+    <Release :editorData="editorData" v-if="show && clas.length && userinfo!=='{}'"/>
 </template>
 
 <script>
@@ -30,6 +30,14 @@ export default {
                     this.show = true;
                 }
             })
+        },
+    },
+    computed:{
+        userinfo(){
+            return JSON.stringify(this.$nuxt.$store.state.userinfo);
+        },
+        clas(){
+            return this.$nuxt.$store.state.clas
         }
     }
 }

@@ -438,7 +438,7 @@ export default {
         that.$axios.post(!that.editorData?'/user/create':'/user/update',!that.editorData?{...params}:{...params,data_id:that.$route.query.id}).then(res=>{
           if (res.code == 200) {
             function jump(paramsUrl){
-              that.$router.replace('/user/release/' + paramsUrl)
+              that.$router.replace({path:'/user/release',query:{mode:paramsUrl}})
             }
 
             const modeText = [
