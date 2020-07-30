@@ -19,7 +19,7 @@ export default {
 </script>
 
 
-<style >
+<style scoped>
     .model_mask{
         display: flex;
         background-color: #fff;
