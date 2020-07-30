@@ -25,8 +25,7 @@
                 </div>
         </div>
         <van-dialog v-model="show" title="修改姓名" show-cancel-button width="260px" @confirm="()=>onConfirm(userinfo.name)" confirmButtonColor='#FFA926'>
-          <p class="namestype">请输入您的名字(2-5)个字</p>
-          <input type="text" :placeholder="userinfo.name" class="typein" ref="getValue">
+          <input type="text" placeholder="请输入您的名字(2-5)个字" class="typein" ref="getValue">
         </van-dialog>
     </div>
 </template>
