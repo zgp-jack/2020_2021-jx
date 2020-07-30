@@ -22,7 +22,7 @@
         </div>
 
 
-        <div class="father" v-if="mode==1 || mode==2 || mode==3 || mode==4">
+        <div class="father">
           <van-pull-refresh v-model="loading" @refresh="onrefresh">
             <van-list
                 v-model="loading"
@@ -57,17 +57,29 @@ import BottomTop from '../../../components/bottom-topbar/index.vue';
 
 
 export default {
+  watch: {
+    $route (to, from) {
+      if(to.fullPath.includes('/user/release')){
+        if(to.params.show){
+          this.Topmaskr = true
+        }
+        this.mode = to.query.mode;
+        this.int()
+        this.list = [];
+        this.page = 1;
+        this.iscomplete = false,
+        this.isempty = false,//数据是否为空
+        this.getData()
+      }
+    }
+  },
   beforeMount(){
     if(this.$route.params.show){
       this.Topmaskr = true
     }
-    this.mode = this.$route.params.id;
+    this.mode = this.$route.query.mode;
+    this.int()
     this.getData()
-    if((this.mode == 1 || this.mode == 4)){
-      let guide = getNovicePoint();
-      this.mask_want = guide.userBuy;
-      this.mask_tencent = guide.lease;
-    }
   },
     components:{
         collHead,
@@ -173,18 +185,24 @@ export default {
                       that.list = [...list];
                   }
                 })
-            }else{
-                Toast({message:'您访问的页面不存在，将自动跳转',duration:500,onClose:()=>{
-                    that.$router.replace({path:'/user/release/1'});
-                }})
             }
+            else{
+                that.$router.replace({path:'/user/release/1'});
+            }
+        },
+        int(){
+          if((this.mode == 1 || this.mode == 4)){
+            let guide = getNovicePoint();
+            this.mask_want = guide.userBuy;
+            this.mask_tencent = guide.lease;
+          }
         },
         onrefresh(){
           this.page = 1;
           this.getData()
         },
         onServers(mode){
-            this.$router.replace({path:'/user/release/'+mode});
+            this.$router.replace({path:'/user/release/',query:{mode}});
         },
         listScroll(){
             this.page += 1;
