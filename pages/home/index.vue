@@ -76,7 +76,7 @@
         <p class="more" v-if="list[title_data[title_active].key].length>0" @click="Jump_page(title_data[title_active].type)">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
-      <Newgift v-if="show_gift_alert"/>
+      <Newgift v-if="show_gift_alert" @giftAlertHidden="giftAlertFn"/>
 
       <!-- 新手指引 -->
       <home-novice-point v-if="novice_point_alert" @novicePointHidden="novicePointHiddenFn" />
@@ -148,7 +148,7 @@ export default {
   beforeMount(){
     this.novice_point = getNovicePoint();
     //显示新手指引
-    this.novicePointFn()
+
   },
   mounted() {
     setTimeout(()=>{
@@ -158,16 +158,20 @@ export default {
     },0)
   },
   methods:{
-
     //关闭指引弹窗
     novicePointHiddenFn(open){
-      this.novice_point_alert = open
+      this.novice_point_alert = open;
     },
     //指引弹窗显示
     novicePointFn(){
       if(this.novice_point.home && this.show_gift_alert == false){
         this.novice_point_alert = true;
       }
+    },
+    //新手礼包状态
+    giftAlertFn(open){
+      this.show_gift_alert = open;
+      this.novicePointFn();
     },
     //切换标题
     changeTitle(index,type){
@@ -207,6 +211,7 @@ export default {
             that.$set(that, "list", {...res.content});
             //新手礼包
             that.show_gift_alert = that.list.welfareDialog;
+            this.novicePointFn()
             //本地储存
             window.localStorage.setItem('city',JSON.stringify(cityData));
             //初始化是否有数据

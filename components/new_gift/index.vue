@@ -52,6 +52,7 @@ export default {
 
         }else if(need == "close"){
           this.show_gift_alert = false
+          this.$emit("giftAlertHidden",false);
         }
       },
        //立即领取
