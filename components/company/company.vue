@@ -338,7 +338,6 @@ export default {
             id_card:this.upload_id_card[0].img,
             hand_card:this.upload_hand_card[0].img
           }
-          console.log(data)
           this.$axios.post('/company/save',{data:JSON.stringify(data)}).then(res=>{
             if(res.code == 200){
               //跳转页面
