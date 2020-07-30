@@ -147,8 +147,6 @@ export default {
   },
   beforeMount(){
     this.novice_point = getNovicePoint();
-    //显示新手指引
-
   },
   mounted() {
     setTimeout(()=>{
@@ -158,9 +156,19 @@ export default {
     },0)
   },
   methods:{
+    //有弹框时不能滚动窗口
+    cannotScrollWindow(){
+      // debugger
+      if(this.show_gift_alert || this.novice_point_alert){
+        document.documentElement.style.position = "fixed";
+      }else{
+        document.documentElement.style.position = "static";
+      }
+    },
     //关闭指引弹窗
     novicePointHiddenFn(open){
       this.novice_point_alert = open;
+      this.cannotScrollWindow();
     },
     //指引弹窗显示
     novicePointFn(){
@@ -172,6 +180,7 @@ export default {
     giftAlertFn(open){
       this.show_gift_alert = open;
       this.novicePointFn();
+      this.cannotScrollWindow();
     },
     //切换标题
     changeTitle(index,type){
@@ -211,7 +220,8 @@ export default {
             that.$set(that, "list", {...res.content});
             //新手礼包
             that.show_gift_alert = that.list.welfareDialog;
-            this.novicePointFn()
+            this.novicePointFn();
+            this.cannotScrollWindow();
             //本地储存
             window.localStorage.setItem('city',JSON.stringify(cityData));
             //初始化是否有数据
