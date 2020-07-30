@@ -29,11 +29,12 @@
               </div>
               <div class="form_row">
                 <div class="notice">结算方式</div>
-                <div class="content">
+                <div class="content" style="display:flex">
                   <select name="method" v-model="meth">
                     <option value="1">现款</option>
                     <option value="3">协商付款</option>
                   </select>
+                  <i class="iconfont icon-down" />
                 </div>
               </div>
             </div>
@@ -62,7 +63,7 @@
               <div class="form_row">
                 <div class="notice">标题名称</div>
                 <div class="content">
-                  <input type="text" maxlength="20" placeholder="机械类型+工作地点" v-model="title">
+                  <input type="text" maxlength="20" placeholder="请输入标题" v-model="title">
                 </div>
               </div>
               <div class="form_row desc textarea">
