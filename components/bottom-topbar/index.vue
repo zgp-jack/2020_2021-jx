@@ -26,10 +26,6 @@
       </div>
       <!-- 签到 -->
     <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao" v-if="hiddenAll==undefined" :style="{'background-image':!play?'url('+require('../../assets/img/fenxiang.png'):''}"></div>
-
-    <!-- <div class="sign" @click="go_sign" :class="isshow==false?'right-show':''" v-show="qiandao">
-    </div> -->
-
     <Sign :boxon = 'box_on' :boxshow = 'box_show' @handle = 'handle' v-show="qiandao"/>
   </div>
 </template>
@@ -116,13 +112,6 @@ export default {
        handle(show){
           this.box_show = show
       },
-      // 游戏状态
-      palygame(){
-        // this.$axios.post('/turn-table/get-lottery-status').then(res=>{
-        //   const {showPlay} = res.content
-        //   this.play = showPlay
-        // })
-      }
   }
 }
 </script>

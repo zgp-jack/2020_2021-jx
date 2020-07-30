@@ -13,7 +13,7 @@
         <div class="date-content">
           <div class="date"  @click="chooseTime">
             <span>置顶天数：</span>
-            <input type="text" disabled="disabled" :value="day" placeholder="请选择置顶到期时间">
+            <input type="text" disabled="disabled" :value="day" placeholder="请选择置顶天数">
           </div>
           <div class="score">
             <span>消耗积分：</span>
@@ -359,9 +359,7 @@
       bottom: 0;
     }
  }
-
   .main{
-
     padding-left: 0.4rem;
     padding-top:1.31rem;
     .set_area{font-size: 0.3rem;display: block;margin-bottom: 0.5rem;}
@@ -404,7 +402,7 @@
        .date,.score{
          height: 0.9rem;
          line-height: 0.9rem;
-         border-bottom: 1px solid #ccc;
+         border-bottom: 1px solid #DCDCDC;
          box-sizing: border-box;
          font-size: 0.3rem;
        }

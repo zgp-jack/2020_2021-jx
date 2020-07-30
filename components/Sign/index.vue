@@ -24,7 +24,6 @@ export default {
     },
     methods:{
       peoples(){
-        console.log(1)
       },
       box(){
        this.$emit('handle',false)

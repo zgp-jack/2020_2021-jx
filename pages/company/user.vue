@@ -88,7 +88,6 @@ export default {
         this.data = {...this.$route.params.data}
         this.company = {...this.$route.params.data.company}
         this.licenses = {...this.$route.params.data.licenses}
-
       }else{
         this.getmine();
       }

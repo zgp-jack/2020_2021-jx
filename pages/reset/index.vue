@@ -74,7 +74,6 @@ export default {
         })
       },
       getCheck(){
-        console.log(1)
         if(!this.get_captcha) return false;
           const params = {phone:this.tel}
           this.$axios.get('/index/send-message',{params}).then(res=>{

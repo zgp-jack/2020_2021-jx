@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="banner" ref="banner">
-      <Banner :obj="banner_children"></Banner>
+      <Banner v-if="banner_children.length" :obj="banner_children"></Banner>
     </div>
     <div class="menus" ref="menus">
       <router-link  :to="{path:'/list/1',query:{'keep-alive':false}}" >
@@ -76,7 +76,7 @@
         <p class="more" v-if="list[title_data[title_active].key].length>0" @click="Jump_page(title_data[title_active].type)">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
-      <Newgift v-if="show_gift_alert"/>
+      <Newgift v-if="show_gift_alert" @giftAlertHidden="giftAlertFn"/>
 
       <!-- 新手指引 -->
       <home-novice-point v-if="novice_point_alert" @novicePointHidden="novicePointHiddenFn" />
@@ -121,13 +121,7 @@ export default {
       title_data:[{name:"机械求租",type:1,key:'tenant'},{name:"机械出租",type:2,key:'machine'},{name:"机械转让",type:3,key:'ershou'},{name:"机械求购",type:4,key:'want'}],
       title_active:0,
       //轮播图数据
-      banner_children:[{
-          img:"http://statics.zhaogongdi.com/images/banner/20190624/558TWm1561367968.png",
-          href:"",
-        },{
-          img:"http://statics.zhaogongdi.com/images/banner/20190815/0t7W171565854698.png",
-          href:"/user/invitation/",
-        }],
+      banner_children:[],
       isSelect_area:false,
       selectAreaData:{},
       list:{ //首页列表内容的数据
@@ -147,8 +141,6 @@ export default {
   },
   beforeMount(){
     this.novice_point = getNovicePoint();
-    //显示新手指引
-    this.novicePointFn()
   },
   mounted() {
     setTimeout(()=>{
@@ -158,16 +150,31 @@ export default {
     },0)
   },
   methods:{
-
+    //有弹框时不能滚动窗口
+    cannotScrollWindow(){
+      // debugger
+      if(this.show_gift_alert || this.novice_point_alert){
+        document.documentElement.style.position = "fixed";
+      }else{
+        document.documentElement.style.position = "static";
+      }
+    },
     //关闭指引弹窗
     novicePointHiddenFn(open){
-      this.novice_point_alert = open
+      this.novice_point_alert = open;
+      this.cannotScrollWindow();
     },
     //指引弹窗显示
     novicePointFn(){
       if(this.novice_point.home && this.show_gift_alert == false){
         this.novice_point_alert = true;
       }
+    },
+    //新手礼包状态
+    giftAlertFn(open){
+      this.show_gift_alert = open;
+      this.novicePointFn();
+      this.cannotScrollWindow();
     },
     //切换标题
     changeTitle(index,type){
@@ -207,6 +214,9 @@ export default {
             that.$set(that, "list", {...res.content});
             //新手礼包
             that.show_gift_alert = that.list.welfareDialog;
+            this.novicePointFn();
+            this.cannotScrollWindow();
+            this.banner_children = [...res.content.banner];
             //本地储存
             window.localStorage.setItem('city',JSON.stringify(cityData));
             //初始化是否有数据
