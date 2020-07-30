@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {Popup} from 'vant';
+import {Popup,Dialog} from 'vant';
 export default {
   beforeMount(){
     // this.listData()
@@ -68,6 +68,7 @@ export default {
               title: '温馨提示',
               message: '您已经领取过该福利了',
             })
+            this.$emit("giftAlertHidden",false);
             that.show_gift_alert = false
           }
         })
