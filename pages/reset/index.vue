@@ -59,12 +59,18 @@ export default {
     },
     methods:{
       sub(){
-        let time =formatDate(new Date(),'yyyy-MM-dd')
+        let time =formatDate(new Date(),'yyyyMMdd')
         let token = md5('APp_YUpAO_UseR_KeY'+this.tel+time).substring(0, 18)
         let data = {phone:this.tel,user_token:token,user_pass:this.password,captcha:this.check_code}
         let datas = JSON.stringify(data)
         this.$axios.post('/user/app-reset',{data:JSON.stringify(data)}).then(res =>{
-          console.log(res)
+          const {code} = res
+          if(code == 200){
+            Toast('修改成功')
+            this.$router.push('/login')
+          }else{
+            Toast('修改失败,请核对您的手机号和验证码')
+          }
         })
       },
       getCheck(){

@@ -60,7 +60,7 @@ export default {
   watch: {
     $route (to, from) {
       if(to.fullPath.includes('/user/release')){
-        if(to.params.show){
+        if(to.query.show){
           this.Topmaskr = true
         }
         this.mode = to.query.mode;
@@ -74,7 +74,8 @@ export default {
     }
   },
   beforeMount(){
-    if(this.$route.params.show){
+    console.log(this.$route.query.show)
+    if(this.$route.query.show){
       this.Topmaskr = true
     }
     this.mode = this.$route.query.mode;
@@ -91,6 +92,9 @@ export default {
     },
     mounted () {
         this.$refs.collHead.onchangeIndex(this.mode)
+    },
+    destroyed(){
+      this.Topmaskr =false
     },
     data(){
         return{
@@ -150,7 +154,8 @@ export default {
            setNovicePoint(guide)
         },
         Topmask(){
-          this.Topmaskr =false
+        this.Topmaskr =false
+
         },
         getData(){
             const that = this;
