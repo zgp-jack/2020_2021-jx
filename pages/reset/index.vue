@@ -70,8 +70,7 @@ export default {
           this.alertFn('密码格式错误')
           return false;
         }
-        let time =formatDate(new Date(),'yyyyMMdd')
-        let token = md5('APp_YUpAO_UseR_KeY'+this.tel+time).substring(0, 18)
+        let token = this.tokenss()
         let data = {phone:this.tel,user_token:token,user_pass:this.password,captcha:this.check_code}
         let datas = JSON.stringify(data)
         this.$axios.post('/user/app-reset',{data:JSON.stringify(data)}).then(res =>{
@@ -86,8 +85,9 @@ export default {
       },
       getCheck(){
         if(!this.get_captcha) return false;
-          const params = {phone:this.tel}
-          this.$axios.get('/index/send-message',{params}).then(res=>{
+          let token = this.tokenss()
+          const params = {phone:this.tel,token,mode:1}
+          this.$axios.get('/user/get-captcha',{params}).then(res=>{
           if(res.code == 200){
             this.countDown(60)
           }else{
@@ -112,6 +112,11 @@ export default {
           title:'提示',
           message:msg
         })
+      },
+      tokenss(){
+        let time =formatDate(new Date(),'yyyyMMdd')
+        let token = md5('APp_YUpAO_UseR_KeY'+this.tel+time).substring(0, 18)
+        return token
       }
     }
 }
