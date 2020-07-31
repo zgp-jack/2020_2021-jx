@@ -3,11 +3,20 @@ export const CellphoneCheck = {
     message: '手机格式不正确',
     pattern: /^[1]\d{10}$/
 };
-
+// 验证码验证
+export const Callcap = {
+  message:'验证码格式不正确',
+  pattern: /^\d{6}$/
+}
 // 手机格式验证
 export const no_strict_phoneCheck = {
   message: '手机格式不正确',
   pattern: /^[1]\d{9,10}$/
+};
+// 密码格式验证
+export const nopass = {
+  message: '密码格式不正确',
+  pattern: /^(\w){6}$/
 };
 
 /* 包含中文 */

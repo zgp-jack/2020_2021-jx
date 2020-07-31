@@ -1,7 +1,7 @@
 <template>
   <div>
     <Headers :title="title"/>
-      <div class="father">
+      <div class="fathers">
           <div class="title">
             选择举报原因
           </div>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <Headers :title="title"/>
-        <div class="father">
+        <div class="fathers">
             <div class="info">
                 <div class="headers reset-psd">
                     <div class="header-img" :style="{backgroundImage:`url(${userinfo.header})`}">

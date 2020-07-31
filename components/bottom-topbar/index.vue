@@ -45,7 +45,7 @@ export default {
     deep: true
   }
 },
-  
+
     props:['showWant','qiandao','hiddenAll',"showAlert"],
     components:{
       Sign

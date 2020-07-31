@@ -5,7 +5,7 @@
           <div class="form">
             <div class="form-row">
               <i class="iconfont icon-shouji54"></i>
-              <input type="number"  placeholder="请输入你的手机号" autocomplete="off" v-model="tel" maxlength="11">
+              <input type="tel"  placeholder="请输入你的手机号" autocomplete="off" v-model="tel" maxlength="11">
             </div>
             <div class="form-row">
               <i class="iconfont icon-yanzheng"></i>
@@ -14,7 +14,7 @@
             </div>
             <div class="form-row">
               <i class="iconfont icon-mima"></i>
-              <input type="password"  placeholder="请输入设置您的密码" autocomplete="off" v-model="password" maxlength="16">
+              <input type="password"  placeholder="请输入设置您的密码" autocomplete="off" v-model="password">
             </div>
           </div>
           <div class="submit" @click="sub">提交</div>
@@ -37,7 +37,8 @@
 import Headers from '../../components/header'
 import md5 from 'js-md5';
 import {formatDate} from '../../static/utils/utils.js';
-import {Toast} from 'vant';
+import {Toast,Dialog} from 'vant';
+import {CellphoneCheck,Callcap,nopass} from '../../static/utils/validator';
 export default {
   components:{
     Headers
@@ -59,6 +60,16 @@ export default {
     },
     methods:{
       sub(){
+        if(!CellphoneCheck.pattern.test(this.tel)){
+          this.alertFn('请输入正确的电话号码')
+          return false;
+        }else if(this.check_code < 6 && !Callcap.pattern.test(this.check_code)){
+          this.alertFn('验证码格式错误')
+          return false;
+        }else if(this.password < 6 && !nopass.pattern.test(this.password)){
+          this.alertFn('密码格式错误')
+          return false;
+        }
         let time =formatDate(new Date(),'yyyyMMdd')
         let token = md5('APp_YUpAO_UseR_KeY'+this.tel+time).substring(0, 18)
         let data = {phone:this.tel,user_token:token,user_pass:this.password,captcha:this.check_code}
@@ -69,7 +80,7 @@ export default {
             Toast('修改成功')
             this.$router.push('/login')
           }else{
-            Toast('修改失败,请核对您的手机号和验证码')
+            Toast('修改失败')
           }
         })
       },
@@ -95,7 +106,13 @@ export default {
             this.countDown(index-1)
           },1000)
         }
-    }
+    },
+    alertFn(msg){
+        Dialog.alert({
+          title:'提示',
+          message:msg
+        })
+      }
     }
 }
 </script>

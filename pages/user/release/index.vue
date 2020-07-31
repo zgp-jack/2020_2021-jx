@@ -90,9 +90,6 @@ export default {
     mounted () {
         this.$refs.collHead.onchangeIndex(this.mode)
     },
-    destroyed(){
-      this.Topmaskr =false
-    },
     data(){
         return{
             title:'我的发布',
@@ -103,6 +100,7 @@ export default {
             isshow:true,
             Topmaskr:false,
             list:[],
+
             //参数
             mode:'',
             page:1,
@@ -328,12 +326,14 @@ export default {
             path:'/common/update?mode='+this.mode,
             query:{
               id:item.uu_id,
+              // type:this.mode
             }
           })
 
         },
         //拒绝原因
         refuse(item){
+          console.log(item)
           Dialog.alert({
             title:"提示",
             message:item.fail_reason,
