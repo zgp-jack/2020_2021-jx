@@ -9,7 +9,7 @@
             </div>
             <div class="form-row">
               <i class="iconfont icon-shouji54"></i>
-              <input type="number"  placeholder="请输入你的手机号" autocomplete="off" v-model="register_data.phone"  maxlength="11">
+              <input type="tel"  placeholder="请输入你的手机号" autocomplete="off" v-model="register_data.phone"  maxlength="11">
             </div>
             <div class="form-row">
               <i class="iconfont icon-yanzheng"></i>
@@ -61,7 +61,8 @@ export default {
             user_pass:''
           },
           countDown:60,
-          reg: /^[1][3,4,5,7,8,9][0-9]{9}$/
+          reg: /^[1][3,4,5,7,8,9][0-9]{9}$/,
+          newdatas:''
         }
     },
     methods:{
@@ -77,7 +78,6 @@ export default {
           return false;
         }
         //发送ajax请求
-
         this.isCaptcha = false;
         timer = setInterval(()=>{
           this.countDown--;
@@ -86,6 +86,15 @@ export default {
             clearInterval(timer)
           }
         },1000)
+        let token = this.tokenss()
+        const params = {phone:this.register_data.phone,token,mode:0}
+        this.$axios.get('/user/get-captcha',{params}).then(res=>{
+          if(res.code == 200){
+            alert('发送成功')
+          }else{
+            Toast(res.msg)
+          }
+      })
       },
       //点击注册
       registerFn(){
@@ -109,8 +118,7 @@ export default {
         // let month = date.getMonth()+1;
         // let day = date.getDate();
         // let {data} = {...this.register_data}
-        let time =formatDate(new Date(),'yyyyMMdd')
-        let token = md5('APp_YUpAO_UseR_KeY'+this.register_data.phone+time).substring(0, 18)
+        let token = this.tokenss()
         let data = {phone:this.register_data.phone,user_token:token,user_name:this.register_data.user_name,user_pass:this.register_data.user_pass,captcha:this.register_data.captcha}
         let datas = JSON.stringify(data)
         this.$axios.post('/user/app-register',{data:JSON.stringify(data)}).then(res =>{
@@ -130,6 +138,11 @@ export default {
           title:'提示',
           message:msg
         })
+      },
+      tokenss(){
+         let time =formatDate(new Date(),'yyyyMMdd')
+         let token = md5('APp_YUpAO_UseR_KeY'+this.register_data.phone+time).substring(0, 18)
+         return token
       }
     }
 }
