@@ -146,6 +146,7 @@
 import Header from '../../components/header'
 import { Uploader,Area,Dialog,ImagePreview  } from 'vant';
 import {uploadPictures} from '../../static/utils/utils.js';
+import {CellphoneCheck} from '../../static/utils/validator.js';
 import PickerArea from '../pickerArea/index.vue'
 export default {
     components:{
@@ -228,11 +229,6 @@ export default {
       submit(){
         /* 包含中文 */
           const chinese = /[\u4e00-\u9fa5]+/;
-          /* 手机格式验证 */
-          const cellphoneCheck = {
-            message: '手机格式不正确',
-            pattern: /^(1[3-9][0-9])\d{8}$/
-          }
           /* 空格验证 */
           const spaceCheck = /^\S+$/;
           /* 数字字母中文 */
@@ -300,7 +296,7 @@ export default {
             this.alert('请正确输入联系姓名','company_username');
             return false;
           }
-          if(!cellphoneCheck.pattern.test(this.company_tel)){
+          if(!CellphoneCheck.pattern.test(this.company_tel)){
             this.alert('请输入正确的联系电话','company_tel');
             return false;
           }

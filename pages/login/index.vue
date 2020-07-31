@@ -5,7 +5,7 @@
           <div class="form">
             <div class="form-row">
               <i class="iconfont icon-shouji54"></i>
-              <input type="number" id="username" placeholder="手机号码" autocomplete="off" v-model="users" maxlength="11" @input="user_name()">
+              <input type="tel" id="username" placeholder="手机号码" autocomplete="off" v-model="users" maxlength="11" @input="user_name()">
             </div>
             <div class="form-row">
               <i class="iconfont icon-mima"></i>
@@ -36,6 +36,7 @@
 import md5 from 'js-md5';
 import {setCookie,GetUser,whetherLogin} from '../../static/utils/utils.js';
 import {Toast} from 'vant';
+import {CellphoneCheck,nopass} from '../../static/utils/validator';
 export default {
 
     data(){
@@ -54,7 +55,7 @@ export default {
       user_name(){
         let userTest = /^1[34578]\d{9}$/
         let userName = this.users
-        if(userName !='' && userTest.test(userName) && userName.length == 11){
+        if(userName !='' && CellphoneCheck.pattern.test(userName) && userName.length == 11){
           this.userright = true
         }else{
           this.userright = false
@@ -62,7 +63,7 @@ export default {
       },
       user_pass(){
         let userPass = this.password
-        if(userPass.length>=6){
+        if(userPass.length>=6 && nopass.pattern.test(userPass)){
           this.pass = true
         }else{
           this.pass = false
