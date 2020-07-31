@@ -45,9 +45,7 @@ export default {
     deep: true
   }
 },
-    created(){
-      // this.palygame()
-    },
+
     props:['showWant','qiandao','hiddenAll',"showAlert"],
     components:{
       Sign

@@ -39,7 +39,9 @@
 
 <script>
 import Headers from '../../components/header';
-import {Dialog} from 'vant'
+import {Dialog,Toast} from 'vant'
+import md5 from 'js-md5';
+import {formatDate} from '../../static/utils/utils.js';
 export default {
   components:{
     Headers
@@ -102,11 +104,25 @@ export default {
           return false;
         }
         //生成user_token
-        let date = new Date();
-        let year = date.getFullYear();
-        let month = date.getMonth()+1;
-        let day = date.getDate();
-        let {data} = {...this.register_data}
+        // let date = new Date();
+        // let year = date.getFullYear();
+        // let month = date.getMonth()+1;
+        // let day = date.getDate();
+        // let {data} = {...this.register_data}
+        let time =formatDate(new Date(),'yyyyMMdd')
+        let token = md5('APp_YUpAO_UseR_KeY'+this.register_data.phone+time).substring(0, 18)
+        let data = {phone:this.register_data.phone,user_token:token,user_name:this.register_data.user_name,user_pass:this.register_data.user_pass,captcha:this.register_data.captcha}
+        let datas = JSON.stringify(data)
+        this.$axios.post('/user/app-register',{data:JSON.stringify(data)}).then(res =>{
+          const {code} = res
+          if(code == 200){
+            Toast('注册成功')
+            this.$router.push('/login')
+          }else{
+            Toast(res.msg)
+          }
+        })
+
 
       },
       alertFn(msg){
