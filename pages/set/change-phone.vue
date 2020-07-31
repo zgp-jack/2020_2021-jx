@@ -5,13 +5,13 @@
           <div class="input_line">
             <span>手机号</span>
             <div>
-                <input type="number" maxlength="11" placeholder="请输入手机号" v-model="phone" @input="PhoneInput">
+                <input type="tel" maxlength="11" placeholder="请输入手机号" v-model="phone" @input="PhoneInput">
             </div>
           </div>
           <div class="input_line">
             <span>验证码</span>
             <div class="captcha">
-                <input type="number" maxlength="6" placeholder="请输入验证码" v-model="captcha">
+                <input type="text" maxlength="6" placeholder="请输入验证码" v-model="captcha">
                 <p class="main_backc" @click="GetCaptcha">{{captcha_text}}</p>
             </div>
           </div>
@@ -22,6 +22,7 @@
 
 <script>
 import Headers from '../../components/header'
+import {CellphoneCheck,Callcap,nopass} from '../../static/utils/validator';
 import {Toast} from 'vant';
 export default {
   components:{
@@ -39,20 +40,22 @@ export default {
   },
   methods:{
     PhoneInput(){
-      if(/^[1][3-9][0-9]{9}$/.test(this.phone)){
+      if(CellphoneCheck.pattern.test(this.phone)){
         const params = {phone:this.phone}
         this.$axios.get('/user/check-phone',{params}).then(res=>{
             if(res.code == 10409){
               Toast(res.msg)
               this.captcha_pass = false
+            }else{
+              this.captcha_pass = true
             }
         })
       }
     },
     GetCaptcha(){
       if(!this.get_captcha) return false;
-      if(!/^[1][3,4,5,7,8,9][0-9]{9}$/.test(this.phone)){
-        Toast('请输入正确的电话号码')
+      if(!CellphoneCheck.pattern.test(this.phone)){
+        Toast(CellphoneCheck.message)
         return false;
       }
       if(this.phone == this.$nuxt.$store.state.userinfo.tel){
@@ -92,12 +95,12 @@ export default {
             Toast('不能输入您正在使用的电话号码')
             return false;
           }
-          if(!/^[1][3,4,5,7,8,9][0-9]{9}$/.test(phone)){
+          if(!CellphoneCheck.pattern.test(phone)){
             Toast('请输入正确的电话号码')
             return false;
           }
-          if(captcha.length<6){
-            Toast('请输入完整的短信验证码')
+          if(captcha.length<6 && !Callcap.pattern.test(captcha)){
+            Toast(Callcap.message)
             return false;
           }
           this.$axios.post('/user/change-phone',{phone,captcha}).then(res=>{
@@ -116,7 +119,7 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
 @import '../../assets/css/style.scss';
 .father{
   @include box_inner($bottom:0rem,$padding-bottom:0.5rem,$top:1.1rem);
