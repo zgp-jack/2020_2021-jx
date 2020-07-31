@@ -20,8 +20,6 @@
               </div>
             </div>
         </div>
-
-
         <div class="father">
           <van-pull-refresh v-model="loading" @refresh="onrefresh">
             <van-list
@@ -74,7 +72,6 @@ export default {
     }
   },
   beforeMount(){
-    console.log(this.$route.query.show)
     if(this.$route.query.show){
       this.Topmaskr = true
     }
@@ -152,7 +149,6 @@ export default {
         },
         Topmask(){
         this.Topmaskr =false
-
         },
         getData(){
             const that = this;
@@ -237,9 +233,7 @@ export default {
                 that.$axios.get('user/cancel-top',{params}).then(res=>{
                   that.findItem(res,"top",false,item,index)
                 })
-              }).catch(() => {
-                 // on cancel
-               });
+              })
           }else{
             //去置顶页面
             let params = {
@@ -283,40 +277,31 @@ export default {
             return false;
           }else if(item.check == 2 && item.end == 1){
             //等待完成的数据
-            if(this.mode == 1){
-              str = '已租到'
-            }else if(this.mode == 2){
-              str = "已出租"
-            }else {
-              str = "已完成"
-            }
+            if(this.mode == 1) str = '已租到'
+            else if(this.mode == 2) str = "已出租"
+            else str = "已完成"
              Dialog.confirm({
                title: '提示',
                message: '你的信息状态将变更为'+str+'，列表不在展示你发布的信息',
                confirmButtonColor:"#ffa926"
              }).then(() => {
-              //进行ajax请求，改变状态
-              let params = {
-                mode: that.mode,
-                info: item.uu_id,
-                type: 0
-              }
-              that.$axios.get('/user/change-status',{params}).then(res=>{
-                that.findItem(res,"end",2,item,index)
-              })
-               }).catch(() => {
-                 // on cancel
-               });
-
+                //进行ajax请求，改变状态
+                let params = {
+                  mode: that.mode,
+                  info: item.uu_id,
+                  type: 0
+                }
+                that.$axios.get('/user/change-status',{params}).then(res=>{
+                  that.findItem(res,"end",2,item,index)
+                })
+             })
           }else if(item.check == 2 && item.end == 2){
             //该判断 已经完成的数据
             Dialog.alert({
               title: '提示',
               message: '已完成信息不支持切换状态，点击修改信息可重新提交发布',
               confirmButtonColor:"#ffa926"
-            }).then(() => {
-              // on close
-            });
+            })
           }
         },
         //修改提示
