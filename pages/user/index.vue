@@ -72,9 +72,7 @@ export default {
     })
   },
   mounted(){
-    if(!document.cookie.includes("ssoToken")){
-      this.$router.replace("/login")
-    }
+    if(!document.cookie.includes("ssoToken")) this.$router.replace("/login");
   },
   data(){
     return{
@@ -112,72 +110,66 @@ export default {
     // 跳转
     isGo(i){
       switch (i) {
-           case 0:
-            this.$router.push('/user/collection')
-          break;
-           case 1:
-            this.$router.push({path:'/user/release/',query:{mode:1}})
-          break;
-          case 2:
-            this.$router.push('/user/welfare')
-          break;
-          case 3:
-            //ajax请求
-            this.$axios.post('/company/mine').then(res=>{
-              if(res.code == 200){
-                this.$router.push({name:'company-user',params:{data:res.content}})
-              }else if(res.code == 505){
-                this.$router.push('/user/company')
-              }else{
-                this.$router.push('/user/company')
-              }
-            })
-            return
-
-          break;
-          case 4:
-            this.$router.push('/user/face-book')
-          break;
-           case 5:
-            this.$router.push('/user/personalSettings')
-          break;
-          default:
-          break;
+       case 0:
+        this.$router.push('/user/collection')
+        break;
+       case 1:
+        this.$router.push({path:'/user/release/',query:{mode:1}})
+        break;
+      case 2:
+        this.$router.push('/user/welfare')
+        break;
+      case 3:
+        //ajax请求
+        this.$axios.post('/company/mine').then(res=>{
+          if(res.code == 200) this.$router.push({name:'company-user',params:{data:res.content}})
+          else if(res.code == 505) this.$router.push('/user/company')
+          else this.$router.push('/user/company')
+        })
+        return
+        break;
+      case 4:
+        this.$router.push('/user/face-book')
+        break;
+       case 5:
+        this.$router.push('/user/personalSettings')
+        break;
+      default:
+      break;
       }
     },
     menusGo(i){
     switch (i) {
-          case 0:
-            this.$router.push('/user/get')
-          break;
-          case 1:
-            this.$router.push({path:'/user/isget',query:{mode:0}})
-          break;
-           case 2:
-            this.$router.push({path:'/user/isget',query:{mode:1}})
-          break;
-          default:
-          break;
-          }
-      },
+      case 0:
+        this.$router.push('/user/get')
+        break;
+      case 1:
+        this.$router.push({path:'/user/isget',query:{mode:0}})
+        break;
+      case 2:
+        this.$router.push({path:'/user/isget',query:{mode:1}})
+        break;
+      default:
+      break;
+      }
+    },
       // 打电话
-     tel(){
-        console.log(this.$nuxt.$store.state.userinfo)
-        callPhoneFn(15608008605)
-       },
-       harvest(mode){
-          if(mode == 0)this.$router.push({path:'/user/isget',query:{mode:mode}})
-          if(mode == 1)this.$router.push({path:'/user/isget',query:{mode:mode}})
-       }
+    tel(){
+      callPhoneFn(15608008605)
+    },
+    harvest(mode){
+      if(mode == 0)this.$router.push({path:'/user/isget',query:{mode:mode}})
+      if(mode == 1)this.$router.push({path:'/user/isget',query:{mode:mode}})
+    }
   },
   computed:{
-        userinfo(){
-          let userInfo = {...this.userInfo}
-          return userInfo
-        },
-        contacts(){
-          return this.$nuxt.$store.state.contact
-        }
+    userinfo(){
+      let userInfo = {...this.userInfo}
+      return userInfo
+    },
+    contacts(){
+      return this.$nuxt.$store.state.contact
+    }
   }
 
 }

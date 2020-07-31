@@ -152,7 +152,6 @@ export default {
   methods:{
     //有弹框时不能滚动窗口
     cannotScrollWindow(){
-      // debugger
       if(this.show_gift_alert || this.novice_point_alert){
         document.documentElement.style.position = "fixed";
       }else{
@@ -231,26 +230,15 @@ export default {
       },
       //固定标题
       fixed_title(top_position){
-         if(top_position >= this.scroll_tops){
-            this.whether_fixed = true
-         }else{
-           this.whether_fixed = false
-         }
+         if(top_position >= this.scroll_tops) this.whether_fixed = true;
+         else this.whether_fixed = false
       },
       //查看更多机械  跳转页面
       Jump_page(type){
-        if(type == 1){
-          this.$router.replace({
-            path:"/list/1",
-            query:{"keep-alive":false}
-          })
-        }else if(type == 2){
-          this.$router.replace({path:"/list/2",query:{"keep-alive":false}})
-        }else if(type == 3){
-           this.$router.replace({path:"/list/3",query:{"keep-alive":false}})
-        }else if(type == 4){
-           this.$router.replace({path:"/list/4",query:{"keep-alive":false}})
-        }
+        if(type == 1) this.$router.replace({path:"/list/1",query:{"keep-alive":false}})
+        else if(type == 2) this.$router.replace({path:"/list/2",query:{"keep-alive":false}})
+        else if(type == 3) this.$router.replace({path:"/list/3",query:{"keep-alive":false}})
+        else if(type == 4)  this.$router.replace({path:"/list/4",query:{"keep-alive":false}})
       },
       getObj(obj){
         const {list,title_data,title_active} = this;
