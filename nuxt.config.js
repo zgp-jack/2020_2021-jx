@@ -41,7 +41,8 @@ export default {
       { "http-equiv": "X-UA-Compatible", content: "IE=edge" }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: 'http://statics.zhaogongdi.com/common/jixie_app_logo.png' }
+      { rel: 'icon', type: 'image/x-icon', href: 'http://statics.zhaogongdi.com/common/jixie_app_logo.png' },
+      { rel: 'stylesheet', href:'https://cdn.jsdelivr.net/npm/vant@2.9/lib/index.css'}
     ],
     script: [
       { innerHTML: rem, type: 'text/javascript', charset: 'utf-8' }
@@ -52,7 +53,7 @@ export default {
   ** Global CSS
   */
   css: [
-    'vant/lib/index.css',
+    // 'vant/lib/index.css',
     '~assets/css/reset.css',
     '~assets/css/iconfont.css',
   ],

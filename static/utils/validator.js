@@ -1,7 +1,13 @@
 // 手机格式验证
 export const CellphoneCheck = {
     message: '手机格式不正确',
-    pattern: /^[1][3,4,5,7,8,9][0-9]{9}$/
+    pattern: /^[1]\d{10}$/
+};
+
+// 手机格式验证
+export const no_strict_phoneCheck = {
+  message: '手机格式不正确',
+  pattern: /^[1]\d{9,10}$/
 };
 
 /* 包含中文 */
