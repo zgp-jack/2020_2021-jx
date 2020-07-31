@@ -215,12 +215,18 @@ export default {
             that.show_gift_alert = that.list.welfareDialog;
             this.novicePointFn();
             this.cannotScrollWindow();
-            this.banner_children = [...res.content.banner];
+            this.formDataBannerData(res);
             //本地储存
             window.localStorage.setItem('city',JSON.stringify(cityData));
             //初始化是否有数据
             that.listDataIsEmpty('tenant')
         })
+      },
+      //格式化banner数据
+      formDataBannerData(res){
+        let bannerData = [...res.content.banner]
+        bannerData[1].url = "/user/get"
+        this.banner_children = [...bannerData];
       },
       // 滚动显示隐藏
       my_scroll(e){
