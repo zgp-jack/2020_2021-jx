@@ -46,7 +46,7 @@ export default {
   }
 },
     created(){
-      this.palygame()
+      // this.palygame()
     },
     props:['showWant','qiandao','hiddenAll',"showAlert"],
     components:{
