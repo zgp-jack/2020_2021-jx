@@ -12,6 +12,7 @@
 import Loading from "../components/loading";
 import {StorageType} from '../static/exports/area_type.js';
 import {getCookie,GetUser,isWeixin} from '../static/utils/utils.js';
+import area from '../static/exports/area_type';
 
 export default {
   layout: 'index',
@@ -35,6 +36,7 @@ export default {
       const ssoToken = getCookie('ssoToken');
       const {code,state} = this.$route.query;
       const that = this;
+      that.getArea()
       if(weixin && !ssoToken && !code && !state){
         that.authorization()
       }else{
@@ -85,6 +87,11 @@ export default {
         that.numberServers+=1
       }
       GetUser(that,callback);
+    },
+
+    getArea(){
+      const area_type = area.get_area()
+      this.$nuxt.$store.commit('setArea',area_type)
     },
 
     //微信授权
