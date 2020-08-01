@@ -42,7 +42,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'http://statics.zhaogongdi.com/common/jixie_app_logo.png' },
-      { rel: 'stylesheet', href:'https://cdn.jsdelivr.net/npm/vant@2.9/lib/index.css'}
+      { rel: 'stylesheet', href:'https://cdn.jsdelivr.net/npm/vant@2.8/lib/index.css'}
     ],
     script: [
       { innerHTML: rem, type: 'text/javascript', charset: 'utf-8' }
