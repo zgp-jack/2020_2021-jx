@@ -24,8 +24,8 @@
                      <i class="icon"></i>
                 </div>
         </div>
-        <van-dialog v-model="show" title="修改姓名" show-cancel-button width="260px" @confirm="()=>onConfirm(userinfo.name)" confirmButtonColor='#FFA926'>
-          <input type="text" placeholder="请输入您的名字(2-5)个字" class="typein" ref="getValue">
+        <van-dialog v-model="show" title="修改姓名" show-cancel-button width="260px" confirmButtonColor='#FFA926' :before-close="onBeforeClose" @cancel='Cloes'>
+          <input type="text" :value="userinfo.name" class="typein" ref="getValue">
         </van-dialog>
     </div>
 </template>
@@ -78,7 +78,8 @@ export default {
       },
       onConfirm(info){
         let Newname = this.$refs.getValue.value
-        if((Newname.length<2 || Newname.length>5) || Newname.split(" ").join("").length == 0){
+        let reg = /\s+/
+        if((Newname.length<2 || Newname.length>5) || reg.test(Newname) == true){
           Toast('请输入正确昵称')
           return false
         }
@@ -92,6 +93,16 @@ export default {
                 this.$nuxt.$store.state.userinfo.name = Newname
               }
         })
+      },
+      onBeforeClose(action, done){
+        if(action == 'confirm' && this.onConfirm(this.userinfo.name) == false){
+          return done(false)
+        }else{
+          return done()
+        }
+      },
+      Cloes(done){
+       this.show = false
       }
     }
 }
