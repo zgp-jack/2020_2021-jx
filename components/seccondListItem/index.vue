@@ -6,7 +6,7 @@
       </div>
       <div class="right-inner fl">
         <div class="title">
-          <span>{{data.item.title}}</span>
+          <h1>{{data.item.title}}</h1>
           <b class="complate-state" :style="{'background-image': 'url('+require('../../assets/img/other/leased.png')}" v-if="(data.item.mode == 2 && data.item.status == 2)"></b>
           <b class="complate-state" :style="{'background-image': 'url('+require('../../assets/img/other/finished.png')}" v-if="(data.item.mode == 3 && data.item.status==2)"></b>
         </div>

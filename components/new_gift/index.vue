@@ -46,7 +46,6 @@ export default {
       },
     //关闭新手大礼包
       close_gift_alert(e,need){
-
         e.stopPropagation()
         let classText = e.target.className;
         if(classText.includes('van-fade-leave-active') && need == "bg"){

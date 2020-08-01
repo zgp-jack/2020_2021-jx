@@ -4,9 +4,9 @@
     <!-- <Harbar :title="title"/> -->
     <div class="container">
         <div class="head">
-            <div class="title">
+            <h1 class="title">
               个人中心
-            </div>
+            </h1>
             <div class="user">
                 <div class="top">
                     <img :src="userinfo.header"/>

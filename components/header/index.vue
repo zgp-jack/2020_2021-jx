@@ -1,7 +1,7 @@
 <template>
     <header class="header" >
         <span class="header_lefticon"><van-icon name="arrow-left" @click='onback'/></span>
-        <p>{{title}}</p>
+        <h1>{{title}}</h1>
         <p class="confirm" v-if="ensure_text" @click="onEnsure">{{ensure_text}}</p>
     </header>
 </template>

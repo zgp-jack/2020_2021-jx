@@ -12,12 +12,13 @@
     height: 0.75rem;
     border-bottom: 0.01rem solid #f7f6f6;
     font-size: 0.3rem;
-    font-weight: bold;
     line-height: 0.75rem;
     position: relative;
     width: 100%;
     margin-bottom: 0.17rem;
-    span{
+    h1{
+      font-weight: bold;
+      font-size: 0.3rem;
       display: inline-block;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -115,7 +116,7 @@
 		font-size: 0.27rem;
       }
       .position{
-		
+
       }
       .time{
 
