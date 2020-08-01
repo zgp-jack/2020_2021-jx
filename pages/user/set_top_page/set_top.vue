@@ -16,8 +16,8 @@
             <input type="text" disabled="disabled" :value="day" placeholder="请选择置顶天数">
           </div>
           <div class="score">
-            <span>消耗积分：</span>
-            <div>{{integral}}分</div>
+            <span>消耗鱼泡币：</span>
+            <div>{{integral}}币</div>
           </div>
         </div>
         <div class="set-btn" @click="sureSetTop">确定置顶</div>
@@ -321,7 +321,7 @@
            Toast.success('置顶成功');
            setTimeout(()=>{
              that.$router.go(-1);
-           },2000)
+           },1500)
           }else if(res.code == 303){
             Toast.fail(res.msg)
           }else{
@@ -403,14 +403,15 @@
       .set_data{font-size: 0.3rem;display: block;margin-top: 0.2rem;margin-bottom: 0.5rem;clear: both;padding-top: 0.5rem;}
      .date-content{
        margin-bottom: 0.5rem;
-       height: 1.8rem;
+       height: 2rem;
        padding-left: 0.1rem;
        box-sizing: border-box;
        width: 6.7rem;
+       padding: 0 0.2rem;
        background-color: #fff;
        .date,.score{
-         height: 0.9rem;
-         line-height: 0.9rem;
+         height: 1rem;
+         line-height: 1rem;
          border-bottom: 1px solid #DCDCDC;
          box-sizing: border-box;
          font-size: 0.3rem;
