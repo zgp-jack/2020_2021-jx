@@ -49,7 +49,7 @@ export default {
         }
     },
     beforeMount(){
-      this.authorization()
+
     },
     methods:{
       user_name(){
@@ -93,13 +93,6 @@ export default {
       call_costum(tel){
         window.location.href = "tel:"+tel;
       },
-      authorization(){
-        const ua = navigator.userAgent.toLowerCase();
-        const isWeixin = ua.includes('micromessenger');
-        if (isWeixin) {
-          window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97877fe3b35187a7&scope=snsapi_userinfo&redirect_uri=http://jxm.kkbbi.com/&response_type=code&state=wx';
-        }
-      }
     }
 }
 </script>

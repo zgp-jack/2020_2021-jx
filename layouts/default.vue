@@ -11,7 +11,7 @@
 <script>
 import Loading from "../components/loading";
 import {StorageType} from '../static/exports/area_type.js';
-import {getCookie,GetUser} from '../static/utils/utils.js';
+import {getCookie,GetUser,isWeixin} from '../static/utils/utils.js';
 
 export default {
   layout: 'index',
@@ -25,16 +25,28 @@ export default {
   components: {
     Loading
   },
-  mounted() {
-    this.getUser()
-  },
   beforeMount(){
-    //获取机械类型
-    this.getMechanics()
-    //获取默认头像、地区
-    this.getDefaultData()
+    this.int()
   },
   methods:{
+    //初始化
+    int(){
+      const weixin = isWeixin();
+      const ssoToken = getCookie('ssoToken');
+      const {code,state} = this.$route.query;
+      const that = this;
+      if(weixin && !ssoToken && !code && !state){
+        that.authorization()
+      }else{
+        //获取机械类型
+        that.getMechanics()
+        //获取默认头像、地区
+        that.getDefaultData()
+
+        that.getUser()
+      }
+    },
+
     //获取机械类型
     getMechanics(){
       const that = this;
@@ -75,10 +87,11 @@ export default {
       GetUser(that,callback);
     },
 
-    //获取微信号/客服电话
-    getcontact(){
-      
-    }
+    //微信授权
+    authorization(){
+      let url = encodeURI('http://jxm.kkbbi.com/');
+      window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97877fe3b35187a7&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=${url}#wechat_redirect`;
+    },
   },
   computed: {
   },
