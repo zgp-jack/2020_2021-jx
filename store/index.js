@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import area from '../static/exports/area_type';
 const area_type = area.get_area()
-
 Vue.use(Vuex);
 
 const store =()=>new Vuex.Store({

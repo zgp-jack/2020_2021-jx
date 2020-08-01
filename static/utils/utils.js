@@ -219,3 +219,16 @@ export function timestamp(url){
     }
   return url;
 }
+
+//判断是否是微信环境
+export function isWeixin(callback){
+  const ua = navigator.userAgent.toLowerCase();
+  const weixin = ua.includes('micromessenger');
+  if(weixin){
+    callback && callback(true)
+    return true
+  }else{
+    callback && callback(false)
+    return false
+  }
+}

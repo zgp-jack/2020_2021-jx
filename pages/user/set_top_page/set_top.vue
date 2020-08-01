@@ -115,13 +115,14 @@
          <p @click="sureChoose">确定</p>
        </div>
      </div>
-     <div class="data_alert" v-show="show_data_alert">
+      <div class="data_alert" v-show="show_data_alert">
         <van-picker
           title="标题"
           show-toolbar
           :columns="columns"
           @confirm="onConfirm"
           @cancel="onCancel"
+          item-height="44px"
         />
      </div>
 
@@ -180,7 +181,6 @@
       chooseTime(){
         this.show_data_alert = true;
       },
-
       //点击选中城市
       selectedArea(item){
         let that = this;
@@ -316,7 +316,6 @@
           dayNum:this.day,
           area:areaId.slice(0,areaId.length-1)
         }
-        console.log(data)
         this.$axios.post('/user/new-set-top-do',{...data}).then(res=>{
           if(res.code == 200){
            Toast.success('置顶成功');
@@ -339,12 +338,21 @@
       },
       sure_data(){
         this.countIntegral(this.day);
+      },
+      show_data_alert(val){
+        if(val) {
+          let lis = document.getElementsByClassName("van-picker-column__item");
+          for(let i = 0; i < lis.length; i++){
+            lis[i].style.height = "44px"
+          }
+        }
       }
     }
   }
 </script>
 
 <style lang="scss" scoped="scoped">
+
  .data_alert{
    position: fixed;
    width: 7.5rem;
@@ -358,6 +366,7 @@
       width: 7.5rem;
       bottom: 0;
     }
+
  }
   .main{
     padding-left: 0.4rem;
