@@ -12,9 +12,7 @@ export default function ({$axios,redirect,store}) {
     let globalLoading;
     $axios.onRequest(config => {
         globalLoading = true;
-        // if(!config.url.includes('api.weixin')){
-            config.url.includes('?')?config.url +='&source=M' : config.url += `?source=M`;
-        // }
+        config.url.includes('?')?config.url +='&source=M' : config.url += `?source=M`;
         const {params,data} = config;
         if(params && params.globalLoading === false){
             globalLoading = false
