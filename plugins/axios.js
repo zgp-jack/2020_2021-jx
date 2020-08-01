@@ -12,7 +12,9 @@ export default function ({$axios,redirect,store}) {
     let globalLoading;
     $axios.onRequest(config => {
         globalLoading = true;
-        config.url.includes('?')?config.url +='&source=M' : config.url += `?source=M`;
+        // if(!config.url.includes('api.weixin')){
+            config.url.includes('?')?config.url +='&source=M' : config.url += `?source=M`;
+        // }
         const {params,data} = config;
         if(params && params.globalLoading === false){
             globalLoading = false
@@ -38,7 +40,7 @@ export default function ({$axios,redirect,store}) {
     })
     $axios.onError(error => {
         Toast.clear()
-        return {data:{error:'error'}}
+        return error
     })
     // response拦截器
     $axios.interceptors.response.use(response => {
