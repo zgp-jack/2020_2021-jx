@@ -3,7 +3,7 @@
     <nuxt-link :to="{path:'/view/',query:{info:data.item.uu,mode:data.item.mode}}">
       <div class="title">
         <b class="seting-top" v-if="data.item.top"></b>
-        <span>{{data.item.title}}</span>
+        <h1>{{data.item.title}}</h1>
         <b class="complate-state" :style="{'background-image': 'url('+require('../../assets/img/other/rented.png')}" v-if="(data.item.mode == 1 && data.item.status == 2)"></b>
         <b class="complate-state" :style="{'background-image': 'url('+require('../../assets/img/other/finished.png')}" v-if="(data.item.mode == 4 && data.item.status==2)"></b>
       </div>

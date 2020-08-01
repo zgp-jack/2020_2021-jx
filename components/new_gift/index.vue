@@ -49,7 +49,7 @@ export default {
         e.stopPropagation()
         let classText = e.target.className;
         if(classText.includes('van-fade-leave-active') && need == "bg"){
-
+          this.$emit("giftAlertHidden",false);
         }else if(need == "close"){
           this.show_gift_alert = false
           this.$emit("giftAlertHidden",false);
@@ -74,6 +74,11 @@ export default {
         })
       }
 
+  },
+  watch:{
+    show_gift(value){
+      console.log(value)
+    }
   }
 }
 </script>

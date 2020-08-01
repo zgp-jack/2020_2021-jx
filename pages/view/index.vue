@@ -7,7 +7,7 @@
        </div>
        <div class="content">
           <div class="title-time">
-            <p class="title">{{detail_info.title}}</p>
+            <h1 class="title">{{detail_info.title}}</h1>
             <p class="time">发布时间：{{detail_info.time}}</p>
           </div>
           <div class="user-info">
@@ -30,13 +30,13 @@
             <div class="tips">联系我时，请说明是在<b style="color:red">“鱼泡机械”</b>上看到的</div>
           </div>
           <div class="machine-type">
-            <p class="title">机械类型</p>
+            <h2 class="title">机械类型</h2>
             <div class="type-list">
               <b v-for="(item,index) in detail_info.class" :key="index">{{item.name}}</b>
             </div>
           </div>
           <div class="detail-info" :style="{'margin-bottom': (detail_info.images && detail_info.images.length>0 ? '' : '0.35rem')}">
-            <p class="title">详情信息</p>
+            <h2 class="title">详情信息</h2>
             <p class="detail-content" :class="{'show_spot':show_wath_all}" ref="detail_content">{{detail_info.desc}}</p>
             <p class="show-all-text" v-if="show_wath_all" @click="watchAll">... <b style="color: #f60;">查看全部</b></p>
           </div>
@@ -47,7 +47,7 @@
 
           </div>
           <div class="address">
-            <p class="title">所在地址</p>
+            <h2 class="title">所在地址</h2>
             <p class="addree-info">{{detail_info.area}}</p>
           </div>
        </div>

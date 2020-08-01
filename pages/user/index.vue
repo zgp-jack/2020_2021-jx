@@ -4,16 +4,16 @@
     <!-- <Harbar :title="title"/> -->
     <div class="container">
         <div class="head">
-            <div class="title">
+            <h1 class="title">
               个人中心
-            </div>
+            </h1>
             <div class="user">
                 <div class="top">
                     <img :src="userinfo.header"/>
                     <div class="userinfo">
-                      <p>{{userinfo.name}}</p>
-                      <p>
-                        <span>用户编号:</span>
+                      <h3>{{userinfo.name}}</h3>
+                      <h3 style="display:inline-block;">用户编号:</h3>
+                      <p style="display:inline-block;">
                         <span class="main_textc">
                           {{userinfo.id}}
                         </span>
