@@ -11,9 +11,9 @@
                 <div class="top">
                     <img :src="userinfo.header"/>
                     <div class="userinfo">
-                      <p>{{userinfo.name}}</p>
-                      <p>
-                        <span>用户编号:</span>
+                      <h3>{{userinfo.name}}</h3>
+                      <h3 style="display:inline-block;">用户编号:</h3>
+                      <p style="display:inline-block;">
                         <span class="main_textc">
                           {{userinfo.id}}
                         </span>
