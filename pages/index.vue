@@ -8,7 +8,6 @@
 export default {
   /* 后续再优化 */
   beforeCreate(){
-    debugger
     
     const that = this;
     const {code,state} = this.$route.query;
