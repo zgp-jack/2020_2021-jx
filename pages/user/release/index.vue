@@ -30,7 +30,7 @@
                     <div class="title-h3">{{item.title}}</div>
                     <div class="intruduce">{{item.desc}}</div>
                     <div class="opearting clearfix">
-                        <span @click.stop="goModifyPage(item)" :class="[(item.check==0) || !(item.end==2||item.check==1)?'list_item_editor':'modify']" >修改信息</span>
+                        <span @click.stop="goModifyPage(item)" :class="[(item.check==1) ? 'modify':'list_item_editor']" >修改信息</span>
                         <span class="list_item_top" @click.stop="goSettingFn($event,item,index)" v-if="item.check!='0' && item.end!='2'">{{item.top?'取消置顶':!item.top_over_due?'继续置顶':'去置顶'}}</span>
                         <span @click.stop="refuse(item)" v-if="item.check == 0" class="list_item_reason fr"><img src="../../../assets/img/user_release/warning.png" alt=""> 查看被拒原因</span>
                         <span v-if="item.etime && item.check!=='0' && item.end !='2' && item.top" class="list_item_time fr">{{item.etime}} 到期</span>
@@ -181,6 +181,8 @@ export default {
 
                       const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
                       that.list = [...list];
+                  }else{
+                    that.isempty = true;
                   }
                 })
             }
@@ -236,10 +238,7 @@ export default {
               })
           }else{
             //去置顶页面
-            let params = {
-              info: item.uu_id,
-              mode: that.mode
-            }
+            let params = {info: item.uu_id,mode: that.mode};
             that.$axios.get('/user/set-top',{params}).then(res=>{
                 if(res.code == 8639){
                 this.$router.push({
@@ -294,7 +293,7 @@ export default {
                 that.$axios.get('/user/change-status',{params}).then(res=>{
                   that.findItem(res,"end",2,item,index)
                 })
-             })
+             }).catch(()=>{})
           }else if(item.check == 2 && item.end == 2){
             //该判断 已经完成的数据
             Dialog.alert({
@@ -306,14 +305,15 @@ export default {
         },
         //修改提示
         goModifyPage(item){
-          if(item.check == 1 || item.end == 2) {
+          if(item.check == 1) {
             if(item.check == 1 && item.end == 1){
               Dialog.alert({
                 title: '温馨提示',
                 message: "审核中的信息不能修改",
                 confirmButtonColor:"#ffa926"
               })
-            }else if(item.check == 2 && item.end == 2){
+            }
+            else if(item.check == 2 && item.end == 2){
               Dialog.alert({
                 title: '温馨提示',
                 message: "已经完成的信息无法修改哦",
