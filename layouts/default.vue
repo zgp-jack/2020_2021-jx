@@ -1,7 +1,7 @@
 <!-- keep-alive -->
 <template>
   <div>
-    <div class='layout' numberServers="3">
+    <div class='layout'>
       <Loading v-if="numberServers!=3"/>
       <nuxt keep-alive :keep-alive-props="{ include: includeArr }"/>
     </div>

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Headers from '../../components/header'
+import Headers from '../../components/header';
 export default {
   components:{
     Headers
@@ -24,14 +24,26 @@ export default {
         title:'联系我们'
       }
     },
-    asyncData(page){
-      return page.app.$axios.get('/index/get-yupao').then(res=>{
-        return {
-          contat : {...res.content}
-        }
-      })
+    async asyncData(page){
+      // debugger
+      // try{
+        // let contat = await page.app.$axios.get('/index/get-yupao').then(res=>{
+        //   if(res.code==200){
+        //     return {
+        //       ...res.content
+        //     }
+        //   }
+        // })
+        // return {contat}
+      // }catch{
+
+      // }
+      
     },
     beforeMount(){
+      this.$axios.get('/index/get-yupao').then(res=>{
+        this.contat = {...res.content}
+      })
     }
 }
 </script>
