@@ -1,5 +1,5 @@
 <template>
-    <header class="header" >
+    <header class="header" :style="{'background-color':color?color:'#FFAA26'}">
         <span class="header_lefticon"><van-icon name="arrow-left" @click='onback'/></span>
         <p>{{title}}</p>
         <p class="confirm" v-if="ensure_text" @click="onEnsure">{{ensure_text}}</p>
@@ -16,7 +16,10 @@ import { Icon } from 'vant';
 
 Vue.use(Icon);
 export default {
-    props:['title','onskip','ensure_text','getParentFn'],
+    props:['title','onskip','ensure_text','getParentFn','color'],
+    created(){
+      console.log(this.color)
+    },
     data(){
         return{
 
@@ -28,10 +31,10 @@ export default {
                 this.onskip()
                 return false;
             }
-          
+
               this.$router.go(-1)
-            
-            
+
+
         },
 		onEnsure(){
 			this.$emit('getParentFn')
