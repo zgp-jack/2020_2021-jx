@@ -1,9 +1,11 @@
 <template>
   <div class="large-turntable">
-    <div class="head"></div>
+    <div class="head">
+      <Headers :title="title" :onskip = 'onskip' color ="#FB471E"/>
+    </div>
     <div class="turntable-container">
       <div class="turntable-box">
-        <div class="turntable-box-out"></div>
+        <div class="turntable-box-out" :class='[is_rotate?"luck-rotate":""]' :style="{transform:'rotate('+rotate+'deg)'}"></div>
         <div class="turntable-box-img" :class='[is_rotate?"luck-rotate":""]' :style="{transform:'rotate('+rotate+'deg)'}"></div>
         <div class="turntable-btn">
           <div class="turntable-btn-click" @click="startTurnTbale"></div>
@@ -11,17 +13,17 @@
 
       </div>
       <div class="turntable-timesbox">我的抽奖次数：<span id="turntable-times">{{content.lotteryNumber}}</span>次
-        <span onclick="userGetTimes()" class="turntable-span-img"></span>
+        <span @click="appWatchVideo" class="turntable-span-img"></span>
       </div>
 
       <div class="turntable-tasks">
         <div class="turntable-task-item">
-          <span>看视频(<span id="overvideo">{{4 - content.viewVideoNumber}}</span>/<span id="allvideo">4</span>)</span>
-          <div class="turntable-task-video" @click="watchVideo" data-end="0" >去观看</div>
+          <span>看视频(<span id="overvideo">{{content.viewVideoNumber}}</span>/<span id="allvideo">4</span>)</span>
+          <div class="turntable-task-video" @click="appWatchVideo" data-end="0" >去观看</div>
         </div>
         <div class="turntable-task-item">
-          <span>分享好友(<span id="overshare">{{1 - content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
-          <div class="turntable-task-share" @click="shareGoodFirend">去分享</div>
+          <span>分享好友(<span id="overshare">{{content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
+          <div class="turntable-task-share"  @click="appShare">去分享</div>
         </div>
       </div>
 
@@ -32,7 +34,7 @@
       <div class="turntable-orderbox">
         <div class="turntable-order" onclick="gailu">
           <ul class="turntable-order-lists" id="orderlsits">
-             <li class="turntable-order-item" v-for="(item,index) in nameArr">恭喜 "{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币</li>
+             <li class="turntable-order-item" v-for="(item,index) in nameArr" :key="index">恭喜 "{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币</li>
           </ul>
         </div>
       </div>
@@ -42,7 +44,24 @@
 </template>
 <script>
   import { NoticeBar,Dialog,Toast } from 'vant';
+  import jsBridge from '../../static/utils/JSbridge';
+  import Headers from '../../components/header'
+  let bridge;
   export default{
+    components:{
+      Headers
+    },
+    // head () {
+    //     return {
+    //         script: [{
+    //         src: 'static/utils/JSbridge.js'
+    //       },{
+    //         src: '/js/map.js',
+    //         async: false,
+    //         defer: true  // 延迟加载
+    //       }]
+    //     }
+    // },　　　　
     data(){
       return{
         firstName : "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜戚谢邹喻柏水窦章云苏潘葛奚范彭郎鲁韦昌马苗凤花方俞任袁柳酆鲍史唐费廉岑薛雷贺倪汤滕殷罗毕郝邬安常乐于时傅皮卞齐康伍余元卜顾孟平黄和穆萧尹姚邵湛汪祁毛禹狄米贝明臧计伏成戴谈宋茅庞熊纪舒屈项祝董梁杜阮蓝闵席季麻强贾路娄危江童颜郭梅盛林刁钟徐邱骆高夏蔡田樊胡凌霍虞万支柯昝管卢莫经房裘缪干解应宗丁宣贲邓郁单杭洪包诸左石崔吉钮龚程嵇邢滑裴陆荣翁荀羊於惠甄曲家封芮羿储靳汲邴糜松井段富巫乌焦巴弓牧隗山谷车侯宓蓬全郗班仰秋仲伊宫宁仇栾暴甘钭厉戎祖武符刘景詹束龙叶幸司韶郜黎蓟薄印宿白怀蒲邰从鄂索咸籍赖卓蔺屠蒙池乔阴鬱胥能苍双闻莘党翟谭贡劳逄姬申扶堵冉宰郦雍卻璩桑桂濮牛寿通边扈燕冀郏浦尚农温别庄晏柴瞿阎充慕连茹习宦艾鱼容向古易",
@@ -57,12 +76,25 @@
         },
         rotate:0,
         is_rotate:false,
+        userInfo:{},
+        title:'鱼泡机械-幸运大转盘'
       }
     },
     created() {
       this.firstNameArr = this.firstName.split("");
       this.getNameArr();
       this.initUserInfo();
+    },
+    beforeMount(){
+      // let bridge= document.createElement('script')
+      // bridge.src = '/dist/static/utils/JSbridge.js'
+      // bridge.src = '/dist/static/utils/JSbridge'
+      // document.documentElement.append(bridge)
+      bridge = jsBridge();
+      this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
+    },
+    mounted(){
+      this.getAPPDate()
     },
     methods:{
       //随机数
@@ -92,16 +124,21 @@
       },
       //点击抽奖
       startTurnTbale(){
-        let {lotteryNumber} = this.content
-        if(lotteryNumber){
+          //  const that = this;
+           if(this.is_rotate) return false
+           if(!this.intercept()){
+             return false
+           }
            this.$axios.post('/turn-table/do-lottery').then(res=>{
-           console.log(res)
-           if(res.code == 500) {
-               Dialog.alert({
-                 title:"谢谢参与",
-                 message:res.msg,
-               })
-           }else if(res.code == 200){
+           console.log(this.content.lotteryNumber)
+           if(res.code == 500){
+              Dialog.confirm({
+              title:"提示",
+              message:res.msg,
+          })
+           }
+           if(res.code == 200 || this.content.lotteryNumber>0){
+             console.log(res)
              this.is_rotate = true
              const {prizeKey} = res.content
              let rotates = 0
@@ -121,60 +158,161 @@
                             }
              this.rotate = 9*360+rotates
              this.content.lotteryNumber -=1
+             setTimeout(()=>{
+              Dialog.confirm({
+              title:"提示",
+              message:res.msg,
+              }).then(()=>{
+                this.rotate = 0
+                this.is_rotate = false
+              })
+             },5200)
            }
+
          })
-         this.is_rotate = false
-        }
       },
-      //看视频
-      watchVideo(){
-        this.$axios.post('/turn-table/view-video',{hamapi:"1247427"}).then(res=>{
+      // 看视频
+      appWatchVideo(ad){
+        if(!this.intercept()){
+          return false
+        }
+        if(this.content.viewVideoNumber == 0  && this.content.shareNumber>0){
+          Dialog.confirm({
+            title:"提示",
+            message:"分享给微信好友，可再获得1次抽奖机会",
+            cancelButtonText: '取消',
+            confirmButtonText: '去分享'
+          }).then(function(){
+            bridge.callHandler('share')
+          })
+          return false
+          //分享和看视频的次数都已经用完了
+        }else if(this.content.viewVideoNumber == 0 && this.content.shareNumber == 0 ){
+            Dialog.alert({
+            title:"提示",
+            message:"今日抽奖次数已达上限，请明天再来",
+            confirmButtonColor:"#EF9F38",
+          })
+          return false
+        }
+        bridge.callHandler('playVideo',{type:ad})
+      },
+      //看视频成功的回调
+      watchVideo(ad){
+          let that = this
+          that.$axios.post('/turn-table/view-video',{hamapi:this.userInfo.id}).then(res=>{
+          that.content.lotteryNumber +=1
+          that.content.viewVideoNumber -=1
           if(res.code == 200){
             Dialog.confirm({
             title:"恭喜你，获得1次抽奖机会。继续观看视频，中奖几率更高哦。",
             message:res.msg,
+            cancelButtonText: '去抽奖',
+            confirmButtonText: '继续观看',
+            confirmButtonColor:"#EF9F38",
           }).then(()=>{
-             let {lotteryNumber,viewVideoNumber} = this.content
-              lotteryNumber +=1
-              viewVideoNumber -=1
+           bridge.callHandler('playVideo',{"type":ad})
           }).catch(()=>{
              console.log('取消')
           })
           }
-           if(res.code == 500){
+          if(res.code == 500){
           Dialog.alert({
             title:"谢谢参与",
             message:res.msg,
+          })
+          that.content.viewVideoNumber = 0
+        }
+        if(that.content.viewVideoNumber ==0 && that.content.shareNumber >0 ){
+            Dialog.confirm({
+            title:"小妙招",
+            message:'恭喜你，获得1次抽奖机会。分享给好友可再获得1次抽奖机会。',
+            confirmButtonText: '去分享',
+            confirmButtonColor:"#EF9F38",
+          }).then(()=>{
+           bridge.callHandler('share')
           })
         }
         })
       },
       //分享好友
-      shareGoodFirend(){
-        console.log("点击了分享好友")
+      appShare(){
+        if(this.content.viewVideoNumber == 0 && this.content.shareNumber>0){
+          Dialog.confirm({
+            title:"提示",
+            message:'分享给微信好友，可再获得1次抽奖机会。',
+            confirmButtonText: '去分享',
+            cancelButtonText: '取消',
+          }).then(function(){
+            bridge.callHandler('share')
+          })
+        }
+      },
+      // 分享成功后的回调
+      shareEndAction(){
+        let that = this
+        this.$axios.post('/turn-table/turn-share',{hamapi:this.userInfo.id}).then(function(res){
+          if(res.code == 200){
+            that.content.lotteryNumber +=1
+            that.content.shareNumber-=1
+            Dialog.confirm({
+            title:"分享成功",
+            message:'获得1次抽奖机会。',
+            confirmButtonText: '去抽奖',
+            confirmButtonColor:"#EF9F38",
+          })
+          }else if(res.code == 500){
+            Dialog.alert({
+                title:'提示',
+                message:res.msg,
+                confirmButtonText:"确定",
+            })
+            that.content.shareNumber = 0
+          }
+        })
       },
       // 获取次数
       intercept(){
-        const {lotteryNumber,viewVideoNumber} = this.content;
-        if(!lotteryNumber && !viewVideoNumber){
+        if(this.content.lotteryNumber ==0 &&  this.content.viewVideoNumber ==0){
           Dialog.alert({
             title:'谢谢参与',
             message:'今日获取抽奖次数已达上限，请明天再来'
           })
-          this.userSeeVideo()
           return false
         }
         return true
       },
-      // 看视频
-      userSeeVideo(){
-        if(!this.intercept()){
-          return false
-        }else{
-          alert('观看视频中..')
-          return true
-        }
-      }
+      // 返回上级
+      onskip(){
+        let that = this
+        that.$axios.post('/turn-table/quit',{hamapi:this.userInfo.id}).then(function(res){
+          if(res.code == 200){
+            that.$router.go(-1)
+            return false
+          }
+          if(res.code == 500){
+            Dialog.confirm({
+            title:"提示",
+            message:res.msg,
+            confirmButtonText: '继续抽奖',
+            cancelButtonText: '下次再来',
+          }).catch(function(){
+            that.$router.go(-1)
+          })
+          }
+        })
+      },
+      // APP 调js
+      getAPPDate(){
+        bridge.registerHandler('stopPlayVideo',function(ad){
+          // 视频观看完成
+          this.watchVideo(ad)
+        })
+        bridge.registerHandler('shareEndAction',function(){
+          // 分享成功
+          this.shareEndAction()
+        })
+      },
     }
   }
 </script>
