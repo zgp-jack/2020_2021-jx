@@ -17,11 +17,11 @@
       <div class="turntable-tasks">
         <div class="turntable-task-item">
           <span>看视频(<span id="overvideo">{{4-content.viewVideoNumber}}</span>/<span id="allvideo">4</span>)</span>
-          <div class="turntable-task-video" @click="appWatchVideo" data-end="0" >去观看</div>
+          <div :class="content.viewVideoNumber==0?'turntable-task-hui':''" @click="content.viewVideoNumber==0?()=>{}:appWatchVideo()" data-end="0" >去观看</div>
         </div>
         <div class="turntable-task-item">
           <span>分享好友(<span id="overshare">{{1-content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
-          <div class="turntable-task-share"  @click="appShare">去分享</div>
+          <div :class="content.shareNumber==0?'turntable-task-hui':''"  @click="content.shareNumber==0?()=>{}:appShare()">去分享</div>
         </div>
       </div>
 
@@ -223,48 +223,43 @@
           that.content.lotteryNumber +=1
           that.content.viewVideoNumber -=1
           if(res.code == 200){
-            Dialog.confirm({
-            title:"恭喜你，获得1次抽奖机会。继续观看视频，中奖几率更高哦。",
-            message:res.msg,
-            cancelButtonText: '去抽奖',
-            confirmButtonText: '继续观看',
-            confirmButtonColor:"#EF9F38",
-          }).then(()=>{
-           bridge.callHandler('playVideo',{"type":ad})
-          }).catch(()=>{
-             console.log('取消')
-          })
+            if(that.content.viewVideoNumber ==0 && that.content.shareNumber >0 ){
+                Dialog.confirm({
+                title:"小妙招",
+                message:'恭喜你，获得1次抽奖机会。分享给好友可再获得1次抽奖机会。',
+                confirmButtonText: '去分享',
+                confirmButtonColor:"#EF9F38",
+              }).then(()=>{
+                bridge.callHandler('share')
+              })
+            }else{
+              Dialog.confirm({
+                title:"提示",
+                message:res.msg,
+                cancelButtonText: '去抽奖',
+                confirmButtonText: '继续观看',
+                confirmButtonColor:"#EF9F38",
+              }).then(()=>{
+              bridge.callHandler('playVideo',{"type":ad})
+              }).catch(()=>{
+                console.log('取消')
+              })
+            }
           }
           if(res.code == 500){
-          Dialog.alert({
-            title:"谢谢参与",
-            message:res.msg,
-          })
-          that.content.viewVideoNumber = 0
-        }
-        if(that.content.viewVideoNumber ==0 && that.content.shareNumber >0 ){
-            Dialog.confirm({
-            title:"小妙招",
-            message:'恭喜你，获得1次抽奖机会。分享给好友可再获得1次抽奖机会。',
-            confirmButtonText: '去分享',
-            confirmButtonColor:"#EF9F38",
-          }).then(()=>{
-           bridge.callHandler('share')
-          })
-        }
+            Dialog.alert({
+              title:"谢谢参与",
+              message:res.msg,
+            })
+            that.content.viewVideoNumber = 0
+          }
         })
       },
       //分享好友
       appShare(){
-        if(this.content.viewVideoNumber == 0 && this.content.shareNumber>0){
-          Dialog.confirm({
-            title:"提示",
-            message:'分享给微信好友，可再获得1次抽奖机会。',
-            confirmButtonText: '去分享',
-            cancelButtonText: '取消',
-          }).then(function(){
-            bridge.callHandler('share')
-          })
+        if(this.content.shareNumber>0){
+          bridge.callHandler('share');
+          return false;
         }
       },
       // 分享成功后的回调
@@ -490,6 +485,10 @@
     background-color: #fc6441;
     border-radius: 3px;
     font-size: 0.3rem;
+  }
+  .turntable-task-item .turntable-task-hui{
+    background-color: #635050;
+    color: #F0ECE9;
   }
   .turntable-task-item .turntable-task-dis{
     background-color: #ddd;
