@@ -303,23 +303,32 @@
       },
       // 返回上级
       goBack(){
-        let that = this
-        that.$axios.post('/turn-table/quit',{hamapi:this.userInfo.id}).then(function(res){
+        let that = this;
+        let data = {
+            "returnTimes": 0,
+            "msg": '',
+        }
+        //{hamapi:this.userInfo.id}
+        that.$axios.post('/turn-table/quit').then(function(res){
           if(res.code == 200){
-            that.$router.go(-1)
-            return false
-
+            data.returnTimes = 0;
           }
           if(res.code == 500){
-            Dialog.confirm({
-            title:"提示",
-            message:res.msg,
-            confirmButtonText: '继续抽奖',
-            cancelButtonText: '下次再来',
-          }).catch(function(){
-            that.$router.go(-1)
-          })
+            // Dialog.confirm({
+            //   title:"提示",
+            //   message:res.msg,
+            //   confirmButtonText: '继续抽奖',
+            //   cancelButtonText: '下次再来',
+            // }).catch(function(){
+            //   // that.$router.go(-1)
+            // })
+            data.returnTimes = 1;
+            data.msg = res.msg;
           }
+          window.WebViewJavascriptBridge.callHandler(
+            'finish'
+            , data
+          );
         })
       },
       // APP 调js
@@ -333,7 +342,7 @@
           // 分享成功
           that.shareEndAction()
         })
-        bridge.registerHandler('goBack',function(){
+        bridge.registerHandler('getUserReturnTimes',function(){
           that.goBack()
         })
       },
