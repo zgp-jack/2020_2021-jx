@@ -89,7 +89,6 @@
             setTimeout(()=>{
                 that.show = !(that.show);
             },20)
-
           }else{
             //调用请求获取完整的电话号码
             let data = {
