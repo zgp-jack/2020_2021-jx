@@ -317,9 +317,10 @@
   }
 </script>
 
-<style>
-  .head{
-    height: 1.01rem;
+<style scoped lang='scss'>
+  #{'/deep/'} .head{
+    height: 1rem;
+    overflow: hidden;
     width: 100%;
   }
   .large-turntable{
