@@ -76,7 +76,7 @@
         <p class="more" v-if="list[title_data[title_active].key].length>0" @click="Jump_page(title_data[title_active].type)">查看更多{{title_data[title_active].name}}信息</p>
       </div>
     </div>
-      <Newgift v-if="show_gift_alert" @giftAlertHidden="giftAlertFn"/>
+      <!-- <Newgift v-if="show_gift_alert" @giftAlertHidden="giftAlertFn"/> -->
 
       <!-- 新手指引 -->
       <home-novice-point v-if="novice_point_alert" @novicePointHidden="novicePointHiddenFn" />

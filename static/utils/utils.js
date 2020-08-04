@@ -42,24 +42,24 @@ export function showPhoneFn(that,Toast,data,bool=false){
     }else if(res.code == 303){
       Dialog.confirm({
         title: '提示',
-        message: '鱼泡币不足?领取礼包,可免费查看电话',
-        confirmButtonText:'领礼包',
+        message: '鱼泡币不足，是否前往获取？',
+        confirmButtonText:'是',
         confirmButtonColor:'#FFA926',
-        cancelButtonText:"去充值"
       }).then(()=>{
-        const params = {welfareId:1}
-        that.$axios.get('/user-welfare/get-welfare',{params}).then(res =>{
-          if(res.code == 200){
-            that.$router.push('/user/get')
-          }
-          if(res.code == 500){
-            Toast(res.msg)
-            return false
-          }
-        })
+        // const params = {welfareId:1}
+        // that.$axios.get('/user-welfare/get-welfare',{params}).then(res =>{
+        //   if(res.code == 200){
+        //     that.$router.push('/user/get')
+        //   }
+        //   if(res.code == 500){
+        //     Toast(res.msg)
+        //     return false
+        //   }
+        // })
+        that.$router.push('/user/get')
       })
       .catch(()=>{
-        that.$router.push('/user/get')
+        
       })
     }
   })
