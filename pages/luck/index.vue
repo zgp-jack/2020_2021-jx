@@ -308,7 +308,6 @@
             "returnTimes": 0,
             "msg": '',
         }
-        //{hamapi:this.userInfo.id}
         that.$axios.post('/turn-table/quit').then(function(res){
           if(res.code == 200){
             data.returnTimes = 0;
@@ -348,13 +347,22 @@
       },
 
       videoType(){
-        let num=Math.floor(Math.random()*3+1);
-        let type = {
-          '1':'tx',
-          '2':'tt1',
-          '3':'tt2',
+        // content:{
+        //   lotteryNumber:0,//该用户剩余抽奖次数
+        //   viewVideoNumber:0,//该用户剩余看视频次数
+        //   shareNumber:0, //该用户剩余分享次数
+        // },
+        // let num=Math.floor(Math.random()*4+1);
+        const {lotteryNumber,viewVideoNumber,shareNumber} = this.content;
+        //判断用户看了多少次，看了3次第4次播放腾讯的
+        let num = 5 - lotteryNumber - viewVideoNumber - shareNumber;
+        let type;
+        switch((num+1)%4){
+          case 0 : type = 'tx'
+          break;
+          default: type = 'tt'
         }
-        return type[num]
+        return type
       },
     }
   }

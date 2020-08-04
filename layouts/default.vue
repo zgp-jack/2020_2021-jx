@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class='layout'>
-      <Loading v-if="numberServers!=3"/>
+      <Loading v-if="numberServers!=3 && isLoading"/>
       <nuxt keep-alive :keep-alive-props="{ include: includeArr }"/>
     </div>
   </div>
@@ -20,13 +20,20 @@ export default {
     return {
       isShow: false,
       numberServers:0,
-      includeArr: ['list','home'] // 需要缓存的组件名数组
+      includeArr: ['list','home'], // 需要缓存的组件名数组
+      isLoading:true,
     };
   },
   components: {
     Loading
   },
   beforeMount(){
+    const {path} = this.$route;
+    if(path.includes('/luck')){
+      // 大转盘不需要请求这些接口,其他页面通过路由跳转的都需要，不会重复请求
+      this.isLoading = false;
+      return false;
+    }
     this.int()
   },
   methods:{
