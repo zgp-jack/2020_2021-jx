@@ -77,15 +77,12 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy'
   ],
-  edv:{
-    BASE_URL:'http://jxapi.kkbbi.com/',
-  },
   axios: {
     // credentials: true,
     proxy: env === "development" ? true : false,
     prefix: env === "development" ? '/api' : '',
     // baseURL: env === "development" || env === "staging" ? "http://jxapi.kkbbi.com/" : "https://api.zhaogongdi.com/"
-    baseURL:process.env.BASE_URL,
+    baseURL:'http://jxapi.kkbbi.com/',
   },
   proxy: {
     '/api/': {
