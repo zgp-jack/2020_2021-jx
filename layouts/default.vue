@@ -2,7 +2,8 @@
 <template>
   <div>
     <div class='layout'>
-      <Loading v-if="isLoading && numberServers!=3"/>
+      <!-- 线上有bug，isLoading为false不隐藏，用style来写 -->
+      <Loading v-if="numberServers!=3 && isLoading" :style="{'display':isLoading?'flex':'none'}"/>
       <nuxt keep-alive :keep-alive-props="{ include: includeArr }"/>
     </div>
   </div>
