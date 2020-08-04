@@ -41,7 +41,7 @@
           </van-swipe>
         </div>
       </div>
-      <div class="turntable-tips" >本活动兑换奖品由鱼泡网提供，奖品发放及后续服务均由产品赞助方鱼泡网提供，与Apple Inc.无关。</div>
+      <div class="turntable-tips" v-if="isiOS">本活动兑换奖品由鱼泡网提供，奖品发放及后续服务均由产品赞助方鱼泡网提供，与Apple Inc.无关。</div>
     </div>
   </div>
 </template>
@@ -72,6 +72,7 @@
         userInfo:{},
         title:'鱼泡机械-幸运大转盘',
         ad:'',//视频id
+        isiOS:false,
       }
     },
     // 过滤器
@@ -89,6 +90,7 @@
       this.initUserInfo();
 
       bridge = jsBridge();
+      this.isiOS = bridge.isiOS
       this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
       const { ad } = this.$route.params;
       this.ad = ad;
@@ -543,7 +545,6 @@
     color: white;
     text-align: center;
     font-size: 0.26rem;
-    display: none;
   }
   .turntable-span-img{
     display: inline-block;
