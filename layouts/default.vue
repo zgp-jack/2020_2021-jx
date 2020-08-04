@@ -26,14 +26,13 @@ export default {
   components: {
     Loading
   },
-  beforeMount(){
+  //mounted里操作，不然dom没有渲染出来
+  mounted(){
     const {path} = this.$route;
     const that = this;
     if(path.includes('/luck')){
       // 大转盘不需要请求这些接口,其他页面通过路由跳转的都需要，不会重复请求,因为nuxt渲染机制，需要改成异步的
-      setTimeout(() => {
-        that.numberServers = 3
-      }, 0);
+      that.numberServers = 3
     }else{
       that.int()
     }

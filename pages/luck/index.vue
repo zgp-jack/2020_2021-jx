@@ -71,7 +71,6 @@
         is_rotate:false,
         userInfo:{},
         title:'鱼泡机械-幸运大转盘',
-        ad:'',//视频id
         isiOS:false,
       }
     },
@@ -90,12 +89,10 @@
       this.initUserInfo();
 
       bridge = jsBridge();
-      this.isiOS = bridge.isiOS
       this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
-      const { ad } = this.$route.params;
-      this.ad = ad;
     },
     mounted(){
+      this.isiOS = bridge.isiOS
       this.getAPPDate()
       setTimeout(()=>{
         this.$refs.resize.resize()
