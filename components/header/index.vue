@@ -18,7 +18,6 @@ Vue.use(Icon);
 export default {
     props:['title','onskip','ensure_text','getParentFn','color'],
     created(){
-      console.log(this.color)
     },
     data(){
         return{
