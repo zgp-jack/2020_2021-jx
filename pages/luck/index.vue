@@ -1,8 +1,6 @@
 <template>
   <div class="large-turntable">
-    <div class="head">
-      <Headers :title="title" :onskip = 'onskip' color ="#FB471E"/>
-    </div>
+
     <div class="turntable-container">
       <div class="turntable-box">
         <div class="turntable-box-out" :class='[is_rotate?"luck-rotate":""]' :style="{transform:'rotate('+rotate+'deg)'}"></div>
@@ -18,11 +16,11 @@
 
       <div class="turntable-tasks">
         <div class="turntable-task-item">
-          <span>看视频(<span id="overvideo">{{content.viewVideoNumber}}</span>/<span id="allvideo">4</span>)</span>
+          <span>看视频(<span id="overvideo">{{4-content.viewVideoNumber}}</span>/<span id="allvideo">4</span>)</span>
           <div class="turntable-task-video" @click="appWatchVideo" data-end="0" >去观看</div>
         </div>
         <div class="turntable-task-item">
-          <span>分享好友(<span id="overshare">{{content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
+          <span>分享好友(<span id="overshare">{{1-content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
           <div class="turntable-task-share"  @click="appShare">去分享</div>
         </div>
       </div>
@@ -45,23 +43,8 @@
 <script>
   import { NoticeBar,Dialog,Toast } from 'vant';
   import jsBridge from '../../static/utils/JSbridge';
-  import Headers from '../../components/header'
   let bridge;
-  export default{
-    components:{
-      Headers
-    },
-    // head () {
-    //     return {
-    //         script: [{
-    //         src: 'static/utils/JSbridge.js'
-    //       },{
-    //         src: '/js/map.js',
-    //         async: false,
-    //         defer: true  // 延迟加载
-    //       }]
-    //     }
-    // },　　　　
+  export default{　
     data(){
       return{
         firstName : "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜戚谢邹喻柏水窦章云苏潘葛奚范彭郎鲁韦昌马苗凤花方俞任袁柳酆鲍史唐费廉岑薛雷贺倪汤滕殷罗毕郝邬安常乐于时傅皮卞齐康伍余元卜顾孟平黄和穆萧尹姚邵湛汪祁毛禹狄米贝明臧计伏成戴谈宋茅庞熊纪舒屈项祝董梁杜阮蓝闵席季麻强贾路娄危江童颜郭梅盛林刁钟徐邱骆高夏蔡田樊胡凌霍虞万支柯昝管卢莫经房裘缪干解应宗丁宣贲邓郁单杭洪包诸左石崔吉钮龚程嵇邢滑裴陆荣翁荀羊於惠甄曲家封芮羿储靳汲邴糜松井段富巫乌焦巴弓牧隗山谷车侯宓蓬全郗班仰秋仲伊宫宁仇栾暴甘钭厉戎祖武符刘景詹束龙叶幸司韶郜黎蓟薄印宿白怀蒲邰从鄂索咸籍赖卓蔺屠蒙池乔阴鬱胥能苍双闻莘党翟谭贡劳逄姬申扶堵冉宰郦雍卻璩桑桂濮牛寿通边扈燕冀郏浦尚农温别庄晏柴瞿阎充慕连茹习宦艾鱼容向古易",
@@ -77,7 +60,8 @@
         rotate:0,
         is_rotate:false,
         userInfo:{},
-        title:'鱼泡机械-幸运大转盘'
+        title:'鱼泡机械-幸运大转盘',
+        ad:'',//视频id
       }
     },
     created() {
@@ -86,12 +70,10 @@
       this.initUserInfo();
     },
     beforeMount(){
-      // let bridge= document.createElement('script')
-      // bridge.src = '/dist/static/utils/JSbridge.js'
-      // bridge.src = '/dist/static/utils/JSbridge'
-      // document.documentElement.append(bridge)
       bridge = jsBridge();
       this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
+      const { ad } = this.$route.params;
+      this.ad = ad;
     },
     mounted(){
       this.getAPPDate()
@@ -172,7 +154,7 @@
          })
       },
       // 看视频
-      appWatchVideo(ad){
+      appWatchVideo(ad=this.ad){
         if(!this.intercept()){
           return false
         }
@@ -198,7 +180,7 @@
         bridge.callHandler('playVideo',{type:ad})
       },
       //看视频成功的回调
-      watchVideo(ad){
+      watchVideo(ad=this.ad){
           let that = this
           that.$axios.post('/turn-table/view-video',{hamapi:this.userInfo.id}).then(res=>{
           that.content.lotteryNumber +=1
@@ -283,12 +265,13 @@
         return true
       },
       // 返回上级
-      onskip(){
+      goBack(){
         let that = this
         that.$axios.post('/turn-table/quit',{hamapi:this.userInfo.id}).then(function(res){
           if(res.code == 200){
             that.$router.go(-1)
             return false
+
           }
           if(res.code == 500){
             Dialog.confirm({
@@ -312,7 +295,11 @@
           // 分享成功
           this.shareEndAction()
         })
+        bridge.registerHandler('goBack',function(){
+          this.goBack()
+        })
       },
+
     }
   }
 </script>
