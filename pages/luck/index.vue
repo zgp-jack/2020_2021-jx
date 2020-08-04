@@ -85,11 +85,13 @@
       }
     },
     created() {
+      
+    },
+    beforeMount(){
       this.firstNameArr = this.firstName.split("");
       this.getNameArr();
       this.initUserInfo();
-    },
-    beforeMount(){
+      
       bridge = jsBridge();
       this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
       const { ad } = this.$route.params;
