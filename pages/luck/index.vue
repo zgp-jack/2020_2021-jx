@@ -39,10 +39,6 @@
               </div>
             </van-swipe-item>
           </van-swipe>
-
-          <!-- <ul class="turntable-order-lists" id="orderlsits">
-             <li class="turntable-order-item" v-for="(item,index) in nameArr" :key="index">恭喜 "{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币</li>
-          </ul> -->
         </div>
       </div>
       <div class="turntable-tips" >本活动兑换奖品由鱼泡网提供，奖品发放及后续服务均由产品赞助方鱼泡网提供，与Apple Inc.无关。</div>
@@ -91,7 +87,7 @@
       this.firstNameArr = this.firstName.split("");
       this.getNameArr();
       this.initUserInfo();
-      
+
       bridge = jsBridge();
       this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
       const { ad } = this.$route.params;
@@ -182,6 +178,9 @@
               }).then(()=>{
                 this.rotate = 0
                 this.is_rotate = false
+              }).catch(()=>{
+                this.rotate = 0
+                this.is_rotate = false
               })
              },5200)
            }
@@ -189,11 +188,12 @@
          })
       },
       // 看视频
-      appWatchVideo(ad=this.ad){
-        if(!this.intercept()){
+      appWatchVideo(){
+        const that = this;
+        if(!that.intercept()){
           return false
         }
-        if(this.content.viewVideoNumber == 0  && this.content.shareNumber>0){
+        if(that.content.viewVideoNumber == 0  && that.content.shareNumber>0){
           Dialog.confirm({
             title:"提示",
             message:"分享给微信好友，可再获得1次抽奖机会",
@@ -204,7 +204,7 @@
           })
           return false
           //分享和看视频的次数都已经用完了
-        }else if(this.content.viewVideoNumber == 0 && this.content.shareNumber == 0 ){
+        }else if(that.content.viewVideoNumber == 0 && that.content.shareNumber == 0 ){
             Dialog.alert({
             title:"提示",
             message:"今日抽奖次数已达上限，请明天再来",
@@ -212,12 +212,14 @@
           })
           return false
         }
+        let ad = that.videoType();
         bridge.callHandler('playVideo',{type:ad})
       },
       //看视频成功的回调
-      watchVideo(ad=this.ad){
-          let that = this
-          that.$axios.post('/turn-table/view-video',{hamapi:this.userInfo.id}).then(res=>{
+      watchVideo(){
+          let that = this;
+          let ad = that.videoType();
+          that.$axios.post('/turn-table/view-video',{hamapi:that.userInfo.id}).then(res=>{
           that.content.lotteryNumber +=1
           that.content.viewVideoNumber -=1
           if(res.code == 200){
@@ -322,19 +324,29 @@
       },
       // APP 调js
       getAPPDate(){
-        bridge.registerHandler('stopPlayVideo',function(ad){
+        const that = this;
+        bridge.registerHandler('stopPlayVideo',function(){
           // 视频观看完成
-          this.watchVideo(ad)
+          that.watchVideo()
         })
         bridge.registerHandler('shareEndAction',function(){
           // 分享成功
-          this.shareEndAction()
+          that.shareEndAction()
         })
         bridge.registerHandler('goBack',function(){
-          this.goBack()
+          that.goBack()
         })
       },
 
+      videoType(){
+        let num=Math.floor(Math.random()*3+1);
+        let type = {
+          '1':'tx',
+          '2':'tt1',
+          '3':'tt2',
+        }
+        return type[num]
+      },
     }
   }
 </script>
