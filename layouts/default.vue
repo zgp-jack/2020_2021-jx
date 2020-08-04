@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class='layout'>
-      <Loading v-if="numberServers!=3 && isLoading"/>
+      <Loading v-if="isLoading && numberServers!=3"/>
       <nuxt keep-alive :keep-alive-props="{ include: includeArr }"/>
     </div>
   </div>
@@ -31,7 +31,7 @@ export default {
     const {path} = this.$route;
     if(path.includes('/luck')){
       // 大转盘不需要请求这些接口,其他页面通过路由跳转的都需要，不会重复请求
-      this.isLoading = false;
+      this.$set(this,'isLoading',false)
       return false;
     }
     this.int()
