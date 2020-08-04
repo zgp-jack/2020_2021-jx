@@ -17,11 +17,11 @@
       <div class="turntable-tasks">
         <div class="turntable-task-item">
           <span>看视频(<span id="overvideo">{{4-content.viewVideoNumber}}</span>/<span id="allvideo">4</span>)</span>
-          <div class="turntable-task-video" @click="appWatchVideo" data-end="0" >去观看</div>
+          <div :class="content.viewVideoNumber==0?'turntable-task-hui':''" @click="content.viewVideoNumber==0?()=>{}:appWatchVideo()" data-end="0" >去观看</div>
         </div>
         <div class="turntable-task-item">
           <span>分享好友(<span id="overshare">{{1-content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
-          <div class="turntable-task-share"  @click="appShare">去分享</div>
+          <div :class="content.shareNumber==0?'turntable-task-hui':''"  @click="content.shareNumber==0?()=>{}:appShare()">去分享</div>
         </div>
       </div>
 
@@ -39,13 +39,9 @@
               </div>
             </van-swipe-item>
           </van-swipe>
-
-          <!-- <ul class="turntable-order-lists" id="orderlsits">
-             <li class="turntable-order-item" v-for="(item,index) in nameArr" :key="index">恭喜 "{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币</li>
-          </ul> -->
         </div>
       </div>
-      <div class="turntable-tips" >本活动兑换奖品由鱼泡网提供，奖品发放及后续服务均由产品赞助方鱼泡网提供，与Apple Inc.无关。</div>
+      <div class="turntable-tips" v-if="isiOS">本活动兑换奖品由鱼泡网提供，奖品发放及后续服务均由产品赞助方鱼泡网提供，与Apple Inc.无关。</div>
     </div>
   </div>
 </template>
@@ -75,7 +71,7 @@
         is_rotate:false,
         userInfo:{},
         title:'鱼泡机械-幸运大转盘',
-        ad:'',//视频id
+        isiOS:false,
       }
     },
     // 过滤器
@@ -85,17 +81,18 @@
       }
     },
     created() {
+      
+    },
+    beforeMount(){
       this.firstNameArr = this.firstName.split("");
       this.getNameArr();
       this.initUserInfo();
-    },
-    beforeMount(){
+
       bridge = jsBridge();
       this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
-      const { ad } = this.$route.params;
-      this.ad = ad;
     },
     mounted(){
+      this.isiOS = bridge.isiOS
       this.getAPPDate()
       setTimeout(()=>{
         this.$refs.resize.resize()
@@ -180,6 +177,9 @@
               }).then(()=>{
                 this.rotate = 0
                 this.is_rotate = false
+              }).catch(()=>{
+                this.rotate = 0
+                this.is_rotate = false
               })
              },5200)
            }
@@ -187,11 +187,12 @@
          })
       },
       // 看视频
-      appWatchVideo(ad=this.ad){
-        if(!this.intercept()){
+      appWatchVideo(){
+        const that = this;
+        if(!that.intercept()){
           return false
         }
-        if(this.content.viewVideoNumber == 0  && this.content.shareNumber>0){
+        if(that.content.viewVideoNumber == 0  && that.content.shareNumber>0){
           Dialog.confirm({
             title:"提示",
             message:"分享给微信好友，可再获得1次抽奖机会",
@@ -202,7 +203,7 @@
           })
           return false
           //分享和看视频的次数都已经用完了
-        }else if(this.content.viewVideoNumber == 0 && this.content.shareNumber == 0 ){
+        }else if(that.content.viewVideoNumber == 0 && that.content.shareNumber == 0 ){
             Dialog.alert({
             title:"提示",
             message:"今日抽奖次数已达上限，请明天再来",
@@ -210,57 +211,54 @@
           })
           return false
         }
+        let ad = that.videoType();
         bridge.callHandler('playVideo',{type:ad})
       },
       //看视频成功的回调
-      watchVideo(ad=this.ad){
-          let that = this
-          that.$axios.post('/turn-table/view-video',{hamapi:this.userInfo.id}).then(res=>{
+      watchVideo(){
+          let that = this;
+          let ad = that.videoType();
+          that.$axios.post('/turn-table/view-video',{hamapi:that.userInfo.id}).then(res=>{
           that.content.lotteryNumber +=1
           that.content.viewVideoNumber -=1
           if(res.code == 200){
-            Dialog.confirm({
-            title:"恭喜你，获得1次抽奖机会。继续观看视频，中奖几率更高哦。",
-            message:res.msg,
-            cancelButtonText: '去抽奖',
-            confirmButtonText: '继续观看',
-            confirmButtonColor:"#EF9F38",
-          }).then(()=>{
-           bridge.callHandler('playVideo',{"type":ad})
-          }).catch(()=>{
-             console.log('取消')
-          })
+            if(that.content.viewVideoNumber ==0 && that.content.shareNumber >0 ){
+                Dialog.confirm({
+                title:"小妙招",
+                message:'恭喜你，获得1次抽奖机会。分享给好友可再获得1次抽奖机会。',
+                confirmButtonText: '去分享',
+                confirmButtonColor:"#EF9F38",
+              }).then(()=>{
+                bridge.callHandler('share')
+              })
+            }else{
+              Dialog.confirm({
+                title:"提示",
+                message:res.msg,
+                cancelButtonText: '去抽奖',
+                confirmButtonText: '继续观看',
+                confirmButtonColor:"#EF9F38",
+              }).then(()=>{
+              bridge.callHandler('playVideo',{"type":ad})
+              }).catch(()=>{
+                console.log('取消')
+              })
+            }
           }
           if(res.code == 500){
-          Dialog.alert({
-            title:"谢谢参与",
-            message:res.msg,
-          })
-          that.content.viewVideoNumber = 0
-        }
-        if(that.content.viewVideoNumber ==0 && that.content.shareNumber >0 ){
-            Dialog.confirm({
-            title:"小妙招",
-            message:'恭喜你，获得1次抽奖机会。分享给好友可再获得1次抽奖机会。',
-            confirmButtonText: '去分享',
-            confirmButtonColor:"#EF9F38",
-          }).then(()=>{
-           bridge.callHandler('share')
-          })
-        }
+            Dialog.alert({
+              title:"谢谢参与",
+              message:res.msg,
+            })
+            that.content.viewVideoNumber = 0
+          }
         })
       },
       //分享好友
       appShare(){
-        if(this.content.viewVideoNumber == 0 && this.content.shareNumber>0){
-          Dialog.confirm({
-            title:"提示",
-            message:'分享给微信好友，可再获得1次抽奖机会。',
-            confirmButtonText: '去分享',
-            cancelButtonText: '取消',
-          }).then(function(){
-            bridge.callHandler('share')
-          })
+        if(this.content.shareNumber>0){
+          bridge.callHandler('share');
+          return false;
         }
       },
       // 分享成功后的回调
@@ -299,40 +297,67 @@
       },
       // 返回上级
       goBack(){
-        let that = this
-        that.$axios.post('/turn-table/quit',{hamapi:this.userInfo.id}).then(function(res){
+        let that = this;
+        let data = {
+            "returnTimes": 0,
+            "msg": '',
+        }
+        that.$axios.post('/turn-table/quit').then(function(res){
           if(res.code == 200){
-            that.$router.go(-1)
-            return false
-
+            data.returnTimes = 0;
           }
           if(res.code == 500){
-            Dialog.confirm({
-            title:"提示",
-            message:res.msg,
-            confirmButtonText: '继续抽奖',
-            cancelButtonText: '下次再来',
-          }).catch(function(){
-            that.$router.go(-1)
-          })
+            // Dialog.confirm({
+            //   title:"提示",
+            //   message:res.msg,
+            //   confirmButtonText: '继续抽奖',
+            //   cancelButtonText: '下次再来',
+            // }).catch(function(){
+            //   // that.$router.go(-1)
+            // })
+            data.returnTimes = 1;
+            data.msg = res.msg;
           }
+          window.WebViewJavascriptBridge.callHandler(
+            'finish'
+            , data
+          );
         })
       },
       // APP 调js
       getAPPDate(){
-        bridge.registerHandler('stopPlayVideo',function(ad){
+        const that = this;
+        bridge.registerHandler('stopPlayVideo',function(){
           // 视频观看完成
-          this.watchVideo(ad)
+          that.watchVideo()
         })
         bridge.registerHandler('shareEndAction',function(){
           // 分享成功
-          this.shareEndAction()
+          that.shareEndAction()
         })
-        bridge.registerHandler('goBack',function(){
-          this.goBack()
+        bridge.registerHandler('getUserReturnTimes',function(){
+          that.goBack()
         })
       },
 
+      videoType(){
+        // content:{
+        //   lotteryNumber:0,//该用户剩余抽奖次数
+        //   viewVideoNumber:0,//该用户剩余看视频次数
+        //   shareNumber:0, //该用户剩余分享次数
+        // },
+        // let num=Math.floor(Math.random()*4+1);
+        const {lotteryNumber,viewVideoNumber,shareNumber} = this.content;
+        //判断用户看了多少次，看了3次第4次播放腾讯的
+        let num = 5 - lotteryNumber - viewVideoNumber - shareNumber;
+        let type;
+        switch((num+1)%4){
+          case 0 : type = 'tx'
+          break;
+          default: type = 'tt'
+        }
+        return type
+      },
     }
   }
 </script>
@@ -460,6 +485,10 @@
     border-radius: 3px;
     font-size: 0.3rem;
   }
+  .turntable-task-item .turntable-task-hui{
+    background-color: #635050;
+    color: #F0ECE9;
+  }
   .turntable-task-item .turntable-task-dis{
     background-color: #ddd;
     color: #777;
@@ -513,7 +542,6 @@
     color: white;
     text-align: center;
     font-size: 0.26rem;
-    display: none;
   }
   .turntable-span-img{
     display: inline-block;
