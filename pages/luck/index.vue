@@ -31,9 +31,18 @@
       </div>
       <div class="turntable-orderbox">
         <div class="turntable-order" onclick="gailu">
-          <ul class="turntable-order-lists" id="orderlsits">
+          <van-swipe class="my-swipe turntable-order-lists" :autoplay="3000" indicator-color="white" id="orderlsits" vertical style="height: 3.35rem;" :touchable="false" duration="1000" ref="resize">
+            <!-- vertical -->
+            <van-swipe-item v-for="(item,index) in renderNameArr" :key="index" class="turntable-order-item">
+              <div class="turntable-order-item" v-for="(item,index) in item" :key="index">
+                恭喜 "{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币
+              </div>
+            </van-swipe-item>
+          </van-swipe>
+
+          <!-- <ul class="turntable-order-lists" id="orderlsits">
              <li class="turntable-order-item" v-for="(item,index) in nameArr" :key="index">恭喜 "{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币</li>
-          </ul>
+          </ul> -->
         </div>
       </div>
       <div class="turntable-tips" >本活动兑换奖品由鱼泡网提供，奖品发放及后续服务均由产品赞助方鱼泡网提供，与Apple Inc.无关。</div>
@@ -41,10 +50,14 @@
   </div>
 </template>
 <script>
-  import { NoticeBar,Dialog,Toast } from 'vant';
+  import { NoticeBar,Dialog,Toast,Swipe,SwipeItem } from 'vant';
   import jsBridge from '../../static/utils/JSbridge';
   let bridge;
   export default{　
+    components:{
+      'van-swipe':Swipe,
+      'van-swipe-item':SwipeItem,
+    },
     data(){
       return{
         firstName : "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜戚谢邹喻柏水窦章云苏潘葛奚范彭郎鲁韦昌马苗凤花方俞任袁柳酆鲍史唐费廉岑薛雷贺倪汤滕殷罗毕郝邬安常乐于时傅皮卞齐康伍余元卜顾孟平黄和穆萧尹姚邵湛汪祁毛禹狄米贝明臧计伏成戴谈宋茅庞熊纪舒屈项祝董梁杜阮蓝闵席季麻强贾路娄危江童颜郭梅盛林刁钟徐邱骆高夏蔡田樊胡凌霍虞万支柯昝管卢莫经房裘缪干解应宗丁宣贲邓郁单杭洪包诸左石崔吉钮龚程嵇邢滑裴陆荣翁荀羊於惠甄曲家封芮羿储靳汲邴糜松井段富巫乌焦巴弓牧隗山谷车侯宓蓬全郗班仰秋仲伊宫宁仇栾暴甘钭厉戎祖武符刘景詹束龙叶幸司韶郜黎蓟薄印宿白怀蒲邰从鄂索咸籍赖卓蔺屠蒙池乔阴鬱胥能苍双闻莘党翟谭贡劳逄姬申扶堵冉宰郦雍卻璩桑桂濮牛寿通边扈燕冀郏浦尚农温别庄晏柴瞿阎充慕连茹习宦艾鱼容向古易",
@@ -52,6 +65,7 @@
         integralArr : [1,3,10,100,300],
         firstNameArr:[],
         nameArr:[],
+        renderNameArr:[],
         content:{
           lotteryNumber:0,//该用户剩余抽奖次数
           viewVideoNumber:0,//该用户剩余看视频次数
@@ -62,6 +76,12 @@
         userInfo:{},
         title:'鱼泡机械-幸运大转盘',
         ad:'',//视频id
+      }
+    },
+    // 过滤器
+    filters:{
+      currens(val){
+        console.log(val)
       }
     },
     created() {
@@ -77,6 +97,9 @@
     },
     mounted(){
       this.getAPPDate()
+      setTimeout(()=>{
+        this.$refs.resize.resize()
+      },0)
     },
     methods:{
       //随机数
@@ -101,8 +124,18 @@
         for(let i = 0; i < nameNum; i++){
           var nameStr = this.firstNameArr[this.getRand(0, firstLen)] + this.lastName[this.getRand(0, lastLen)];
           var integral = this.integralArr[this.getRand(0, this["integralArr"].length - 1)];
-          this.nameArr.push({ name: nameStr, integral: integral })
+          this.nameArr.push({ name: nameStr, integral: integral });
         }
+        let newarr =[]
+        let arr = [];
+        this.nameArr.forEach((element,index) => {
+          arr.push(element)
+          if((index+1) % 4 ==0 ){
+            newarr.push([...arr])
+            arr=[]
+          }
+        });
+        this.renderNameArr = newarr;
       },
       //点击抽奖
       startTurnTbale(){

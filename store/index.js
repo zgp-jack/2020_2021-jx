@@ -1,14 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import area from '../static/exports/area_type';
-const area_type = area.get_area()
 Vue.use(Vuex);
 
 const store =()=>new Vuex.Store({
     state:{
         //地区
-        city:area_type.city,
-        area:area_type.area,
+        city:[],
+        area:[],
         //机械类型
         type:[],
         clas:[],
@@ -52,6 +50,12 @@ const store =()=>new Vuex.Store({
         //设置联系方式
         setContact(state,obj){
             state.contact = {...obj}
+        },
+
+        //设置地区选择
+        setArea(state,obj){
+            state.city = [...obj.city];
+            state.area = [...obj.area];
         }
     },
   })

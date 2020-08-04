@@ -36,11 +36,6 @@ export default {
             title:'个人设置'
         }
     },
-    beforeCreate() {
-      whetherLogin(this,'',()=>{
-        this.$router.replace('/login')
-      })
-    },
     methods:{
       signOut(){
         //清除token

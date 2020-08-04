@@ -39,25 +39,25 @@
       <Topbar/>
        <!-- 呼出 -->
        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
-        <div v-if="(mode==1 || mode==4) && list.length">
+        <div v-if="(mode==1 || mode==4)">
           <van-pull-refresh v-model="loading" @refresh="onrefresh">
             <van-list
               v-model="loading"
               :finished="iscomplete || isempty"
               @load="listScroll"
             >
-              <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}" v-if="list.length"/>
+              <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
             </van-list>
           </van-pull-refresh>
         </div>
-        <div v-if="(mode==2 || mode==3) && list.length">
+        <div v-if="(mode==2 || mode==3)">
             <van-pull-refresh v-model="loading" @refresh="onrefresh">
               <van-list
                 v-model="loading"
                 :finished="iscomplete || isempty"
                 @load="listScroll"
               >
-                <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}" v-if="list.length"/>
+                <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
               </van-list>
             </van-pull-refresh>
 
@@ -110,7 +110,7 @@ export default {
       list:[],
 
       iscomplete:false,//是否加载完成
-      isempty:false,//数据是否为空
+      isempty:true,//数据是否为空/避免重复请求
 
       search_placeholder:{
         '1':'找活，找工程',
@@ -211,32 +211,37 @@ export default {
       if(this.mode==1||this.mode==2||this.mode==3||this.mode==4){
         const that = this;
         const {mode,page,page_size,addr,type,keywords,pattern} = that;
-        let params = {mode,page,page_size,addr,type,keywords,pattern}
+        let params = {mode,page,page_size,addr,type,keywords,pattern,globalLoading:false}
 
         this.$axios.get('/index/list',{params}).then(res=>{
-          that.loading = false;
-          if(that.page == 1){
-            if(res.content.length && res.content.length<that.page_size){
-              that.iscomplete = true;
-              that.isempty = false;
-            }else if(!res.content.length){
-              that.isempty = true;
+          if(res.code){
+            that.loading = false;
+            if(that.page == 1){
+              if(res.content.length && res.content.length<that.page_size){
+                that.iscomplete = true;
+                that.isempty = false;
+              }else if(!res.content.length){
+                that.isempty = true;
+              }else{
+                that.iscomplete = false;
+                that.isempty = false;
+              }
             }else{
-              that.iscomplete = false;
-              that.isempty = false;
+              if(res.content.length<that.page_size){
+                that.iscomplete = true;
+                that.isempty = false;
+              }else{
+                that.iscomplete = false;
+                that.isempty = false;
+              }
             }
-          }else{
-            if(res.content.length<that.page_size){
-              that.iscomplete = true;
-              that.isempty = false;
-            }else{
-              that.iscomplete = false;
-              that.isempty = false;
-            }
-          }
 
-          const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
-          that.list = [...list];
+            const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
+            that.list = [...list];
+            }else{
+              that.isempty = false;
+            }
+          
         })
       }else{
         Toast('您访问的页面不存在，将自动跳转')
@@ -255,7 +260,9 @@ export default {
     onreset(){
       this.page = 1;
       //重置滚动位置
-      this.list = []
+      this.list = [];
+      this.iscomplete = false;
+      this.isempty = false;
     },
 
     //搜索
