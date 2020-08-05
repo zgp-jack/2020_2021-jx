@@ -21,7 +21,7 @@
         </div>
         <div class="turntable-task-item">
           <span>分享好友(<span id="overshare">{{1-content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
-          <div :class="content.shareNumber==0?'turntable-task-hui':''"  @click="content.shareNumber==0?()=>{}:appShare()">去分享</div>
+          <div :class="content.shareNumber==0?'turntable-task-hui':''"  @click="appShare">去分享</div>
         </div>
       </div>
 
@@ -127,6 +127,7 @@
         let arr = [];
         this.nameArr.forEach((element,index) => {
           arr.push(element)
+          console.log(arr)
           if((index+1) % 4 ==0 ){
             newarr.push([...arr])
             arr=[]
@@ -142,14 +143,19 @@
            if(!this.intercept()){
              return false
            }
-           this.$axios.post('/turn-table/do-lottery').then(res=>{
-           console.log(this.content.lotteryNumber)
-           if(res.code == 500){
+           let ad = that.videoType();
+           if(this.content.lotteryNumber ==0){
               Dialog.confirm({
               title:"提示",
-              message:res.msg,
-          })
+              message:"抽奖次数不足，请获取抽奖次数后再来试试吧",
+              confirmButtonColor:"#EF9F38",
+              }).then(()=>{
+               bridge.callHandler('playVideo',{type:ad})
+              })
            }
+           this.$axios.post('/turn-table/do-lottery').then(res=>{
+           console.log(this.content.lotteryNumber)
+
            if(res.code == 200 || this.content.lotteryNumber>0){
              console.log(res)
              this.is_rotate = true
@@ -257,10 +263,7 @@
       },
       //分享好友
       appShare(){
-        if(this.content.shareNumber>0){
           bridge.callHandler('share');
-          return false;
-        }
       },
       // 分享成功后的回调
       shareEndAction(){
