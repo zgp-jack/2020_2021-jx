@@ -13,7 +13,7 @@
            </ul>
          </div>
          <div class="title">充值明细</div>
-        <div v-for="(item,i) in math_num_list" :key="i" v-if='i==rehIndex'>
+        <div v-for="(item,i) in math_num_list" :key="i" v-if='i==liIndex'>
          <div class="recharge-details">
             <p>
                充值金额
@@ -72,7 +72,6 @@ export default {
     methods:{
       choses(index){
         this.liIndex = index
-        this.rehIndex = index
       },
       // 获取数据
       recharge(){
