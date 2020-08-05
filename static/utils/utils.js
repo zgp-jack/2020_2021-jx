@@ -232,3 +232,5 @@ export function isWeixin(callback){
     return false
   }
 }
+
+export const serverUrl = 'http://jxapi.kkbbi.com/'

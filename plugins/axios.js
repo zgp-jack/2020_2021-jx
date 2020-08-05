@@ -3,7 +3,7 @@
     params,data(参数)
 */
 
-import {Toast} from 'vant';
+import {Toast,Dialog} from 'vant';
 import qs from 'qs';
 import {getCookie,setCookie} from '../static/utils/utils';
 
@@ -12,8 +12,12 @@ export default function ({$axios,redirect,store}) {
     let globalLoading;
     $axios.onRequest(config => {
         globalLoading = true;
-        config.url.includes('?')?config.url +='&source=M' : config.url += `?source=M`;
         const {params,data} = config;
+
+        if(!config.url.includes('source')){
+            config.url.includes('?')?config.url +='&source=M' : config.url += `?source=M`;
+        }
+
         if(params && params.globalLoading === false){
             globalLoading = false
             delete params.globalLoading
@@ -43,6 +47,10 @@ export default function ({$axios,redirect,store}) {
     // response拦截器
     $axios.interceptors.response.use(response => {
         Toast.clear()
+        // Dialog.confirm({
+        //     title:"提交成功",
+        //     message:'response.status:'+response.status + 'response.statusText:'+response.statusText + 'response:'+JSON.stringify(response),
+        // })
         if (response.status == 200) {
             if (response.data.code==300){
                 Toast('账号异常')
@@ -67,6 +75,13 @@ export default function ({$axios,redirect,store}) {
                 })
             }
         } else {
+            // Toast('response.status:'+response.status + 'response.statusText:'+response.statusText)
+            // Dialog.confirm({
+            //     title:"提交成功",
+            //     message:'您提交的申请，需要核实人员核实之后才能通过，工作人员将在一个工作日之内联系您，请保持电话畅通，客服电话：15608008605',
+            //     cancelButtonText:"稍后再去",
+            //     confirmButtonText:"联系客服"
+            // })
             Toast('网络请求失败')
         }
         return response.data
