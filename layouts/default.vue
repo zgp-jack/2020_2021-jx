@@ -1,8 +1,8 @@
 <!-- keep-alive -->
 <template>
   <div>
-    <div class='layout' numberServers="3">
-      <Loading v-if="numberServers!=3"/>
+    <div class='layout'>
+      <Loading v-if="numberServers!=3" />
       <nuxt keep-alive :keep-alive-props="{ include: includeArr }"/>
     </div>
   </div>
@@ -12,6 +12,7 @@
 import Loading from "../components/loading";
 import {StorageType} from '../static/exports/area_type.js';
 import {getCookie,GetUser,isWeixin} from '../static/utils/utils.js';
+import area from '../static/exports/area_type';
 
 export default {
   layout: 'index',
@@ -19,14 +20,22 @@ export default {
     return {
       isShow: false,
       numberServers:0,
-      includeArr: ['list','home'] // 需要缓存的组件名数组
+      includeArr: ['list','home'], // 需要缓存的组件名数组
     };
   },
   components: {
     Loading
   },
-  beforeMount(){
-    this.int()
+  //mounted里操作，不然dom没有渲染出来
+  mounted(){
+    const {path} = this.$route;
+    const that = this;
+    if(path.includes('/luck')){
+      // 大转盘不需要请求这些接口,其他页面通过路由跳转的都需要，不会重复请求,因为nuxt渲染机制，需要改成异步的
+      that.numberServers = 3
+    }else{
+      that.int()
+    }
   },
   methods:{
     //初始化
@@ -35,6 +44,7 @@ export default {
       const ssoToken = getCookie('ssoToken');
       const {code,state} = this.$route.query;
       const that = this;
+      that.getArea()
       if(weixin && !ssoToken && !code && !state){
         that.authorization()
       }else{
@@ -85,6 +95,11 @@ export default {
         that.numberServers+=1
       }
       GetUser(that,callback);
+    },
+
+    getArea(){
+      const area_type = area.get_area()
+      this.$nuxt.$store.commit('setArea',area_type)
     },
 
     //微信授权

@@ -32,7 +32,7 @@
     </div>
 
     <!-- 地区选择 -->
-    <CustomArea :onSelect="onSelect" :isSelect_area="isSelect_area" onlyFather = 'true' :default_data="CustomArea_default_data"/>
+    <CustomArea :onSelect="onSelect" :isSelect_area="isSelect_area" onlyFather = 'true' :default_data="CustomArea_default_data" v-if="default_addr.city"/>
 
     <!-- 机械类型选择 -->
     <CustomMechanicalType :onSelect="onSelect" :isSelect_jixie="isSelect_jixie" onlyFather = 'true'/>
@@ -73,6 +73,11 @@ export default {
         isSelect_jixie: false,
 
         CustomArea_default_data:{province:{id: 1,name: '全国',pid: '0'}}
+      }
+    },
+    computed:{
+      default_addr(){
+        return this.$nuxt.$store.state.default_addr
       }
     },
     methods:{
