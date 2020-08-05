@@ -127,6 +127,7 @@
         let arr = [];
         this.nameArr.forEach((element,index) => {
           arr.push(element)
+          console.log(arr)
           if((index+1) % 4 ==0 ){
             newarr.push([...arr])
             arr=[]
