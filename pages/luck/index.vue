@@ -81,7 +81,7 @@
       }
     },
     created() {
-      
+
     },
     beforeMount(){
       this.firstNameArr = this.firstName.split("");
@@ -133,6 +133,7 @@
           }
         });
         this.renderNameArr = newarr;
+        console.log(this.renderNameArr)
       },
       //点击抽奖
       startTurnTbale(){

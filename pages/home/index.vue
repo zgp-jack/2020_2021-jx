@@ -152,7 +152,7 @@ export default {
   methods:{
     //有弹框时不能滚动窗口
     cannotScrollWindow(){
-      if(this.novice_point_alert){
+      if(this.show_gift_alert || this.novice_point_alert){
         document.documentElement.style.position = "fixed";
       }else{
         document.documentElement.style.position = "static";
@@ -173,7 +173,7 @@ export default {
     giftAlertFn(open){
       this.show_gift_alert = open;
       this.novicePointFn();
-      // this.cannotScrollWindow();
+      this.cannotScrollWindow();
     },
     //切换标题
     changeTitle(index,type){
@@ -214,7 +214,7 @@ export default {
             //新手礼包
             that.show_gift_alert = that.list.welfareDialog;
             this.novicePointFn();
-            // this.cannotScrollWindow();
+            this.cannotScrollWindow();
             this.formDataBannerData(res);
             //本地储存
             window.localStorage.setItem('city',JSON.stringify(cityData));
