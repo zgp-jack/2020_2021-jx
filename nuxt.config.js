@@ -17,8 +17,9 @@ const rem = `(function (doc, win) {
   doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);`
 
+import {serverUrl} from './static/utils/utils';
+const env = process.env.NODE_ENV;
 
-const env = process.env.NODE_ENV
 
 export default {
 
@@ -82,11 +83,11 @@ export default {
     proxy: env === "development" ? true : false,
     prefix: env === "development" ? '/api' : '',
     // baseURL: env === "development" || env === "staging" ? "http://jxapi.kkbbi.com/" : "https://api.zhaogongdi.com/"
-    baseURL:'http://jxapi.kkbbi.com/',
+    baseURL:serverUrl,
   },
   proxy: {
     '/api/': {
-      target: 'http://jxapi.kkbbi.com/', // 目标服务器ip
+      target: serverUrl, // 目标服务器ip
       pathRewrite: {
         '^/api/': '/',
         changeOrigin: true

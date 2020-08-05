@@ -52,6 +52,7 @@
 
 <script>
 import {Toast} from 'vant';
+import { isWeixin } from '../../static/utils/utils';
 export default {
     components:{
     },
@@ -83,15 +84,43 @@ export default {
       },
       //发起充值
       submit(){
+        const that = this;
         const {rehIndex,math_num_list} = this;
-        let config = {
-            headers:{'Content-Type':'application/x-www-form-urlencoded'},
-        };
-        this.$axios.post('/coin/recharge?amount='+math_num_list[rehIndex],config).then(res=>{
+        // let config = {
+        //     headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        // };
+        let isweixins = isWeixin()?'wx':'M';
+        that.$axios.post('/coin/create-recharge?amount='+math_num_list[rehIndex]+'&source='+ isweixins).then(res=>{
            if(res.code == 200){
-             let {appid,noncestr,orderid,partnerid,prepayid,sign,timestamp} = res.content;
+             const {type,url,no} = res.content;
+             if(type == 'h5'){
+               let num = 0;
+               let timer = setInterval(()=>{
+                 that.$axios.post('/coin/check-order',{order:no}).then(res=>{
+                   num += 1;
+                   if(res.code==200 || res.code == 500){
+                     if(res.content.status == 1){
+                       clearInterval(timer)
+                       Toast({
+                         message: res.code==200?'支付成功':'支付失败',
+                         duration:1000,
+                         onClose:()=>{
+                           window.history.back(-1)
+                         }
+                       })
+                     }
+                   }
+                   if(num == 200){
+                      clearInterval(timer)
+                   }
+                 })
+               },3000)
+             }
+             window.location.href = url
+            //  debugger
+            //  let {appid,noncestr,orderid,partnerid,prepayid,sign,timestamp} = res.content;
             //暂时做不了后端接口需要写m端的
-            window.location.href = `https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=${prepayid}&package=${res.content.package}&redirect_url=http://192.168.1.98:3000/dist/coin/recharge`
+            // window.location.href = `https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=${prepayid}&package=${res.content.package}&redirect_url=http://192.168.1.98:3000/dist/coin/recharge`
             // let wx = {}
             // if (process.client) {
             //   wx = require('weixin-js-sdk')
