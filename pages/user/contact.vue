@@ -14,6 +14,7 @@
 
 <script>
 import Headers from '../../components/header';
+import axios from 'axios';
 export default {
   components:{
     Headers
@@ -24,27 +25,33 @@ export default {
         title:'联系我们'
       }
     },
-    async asyncData(page){
-      // debugger
-      // try{
-        // let contat = await page.app.$axios.get('/index/get-yupao').then(res=>{
-        //   if(res.code==200){
-        //     return {
-        //       ...res.content
-        //     }
-        //   }
-        // })
-        // return {contat}
-      // }catch{
-
-      // }
-      
-    },
-    beforeMount(){
-      this.$axios.get('/index/get-yupao').then(res=>{
-        this.contat = {...res.content}
-      })
-    }
+    async asyncData ({$axios}){
+        //if(content && content.$axios){
+          return await $axios.get('https://cnodejs.org/api/v1/topics').then(res=>{
+              // if(res){
+                return {
+                  title:res.data[0].title
+                }
+              // }
+          })
+          //if(data){
+          //  return { title:data[0].title }
+          //}
+        //} 
+      },
+    // async asyncData (){
+    //   console.log(123)
+    //   return await axios.get('http://jxapi.kkbbi.com/index/get-yupao?source=M').then(res=>{
+    //     if(res.data.code == 200){
+    //       return { contat: res.data.content }
+    //     }
+    //   })
+    // },
+    // beforeMount(){
+    //   this.$axios.get('/index/get-yupao').then(res=>{
+    //     this.contat = {...res.content}
+    //   })
+    // }
 }
 </script>
 
