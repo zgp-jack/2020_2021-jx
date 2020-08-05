@@ -1,13 +1,9 @@
 <template>
-  <div style="height: 100%;">
-    <van-swipe class="my-swipe" :vertical="true" :autoplay="3000" :show-indicators="false" ref="resize">
-      <van-swipe-item v-if="go_release">
-        <p @click="go_set_top">置顶发布消息，提升曝光率，让别主动联系你 <span>去置顶</span></p>
-      </van-swipe-item>
-      <van-swipe-item v-if="go_settop">
+  <div >
         <p @click="go_releaseFn">点此发布机械出租、求租、转让、求购 <span>一键发布</span></p>
-      </van-swipe-item>
-    </van-swipe>
+        <p @click="go_set_top">置顶发布消息，提升曝光率，让别主动联系你 <span>去置顶</span></p>
+
+
     <!-- 发布弹窗 -->
     <BottomTop  ref="child" :hiddenAll="true" />
   </div>
@@ -48,20 +44,22 @@
 </script>
 
 <style lang="scss" scoped="scoped">
-  .my-swipe{
-    height: 100%;
+    .notice{
+      height: auto;
+    }
     p{
       font-size:0.25rem;
       color: #ffa926;
+      line-height: 0.6rem;
       span{
         padding: 0.05rem 0.1rem;
         background-color: #FFAA26;
         color: #fff;
         border-radius: 0.07rem;
-        // float: right;
+        margin-left:0.2rem;
       }
     }
-  }
+
  .van-swipe-item{
     font-size: 0.3rem;
     background: #fff;
