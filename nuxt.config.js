@@ -17,7 +17,7 @@ const rem = `(function (doc, win) {
   doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);`
 
-import {serverUrl} from './static/utils/utils';
+import {serverUrl} from './static/utils/url';
 const env = process.env.NODE_ENV;
 
 
