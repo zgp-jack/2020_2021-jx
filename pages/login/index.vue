@@ -49,12 +49,8 @@ export default {
           go_home_page:false,
         }
     },
-    beforeMount(){
-      console.log()
-    },
     created() {
       this.go_home_page = this.$route.query.signout;
-      console.log(this.go_home_page)
     },
     methods:{
       user_name(){

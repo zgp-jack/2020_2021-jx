@@ -17,9 +17,6 @@ import { Icon } from 'vant';
 Vue.use(Icon);
 export default {
     props:['title','onskip','ensure_text','getParentFn','color',"go_home_page"],
-    beforeMount() {
-       console.log()
-    },
     data(){
         return{
 
