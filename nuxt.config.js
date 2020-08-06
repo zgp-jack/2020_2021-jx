@@ -1,7 +1,8 @@
 
 const rem = `(function (doc, win) {
   var docEl = doc.documentElement,
-    resizeEvt = 'onorientationchange' in window ? 'onorientationchange' : 'resize',
+    // resizeEvt = 'onorientationchange' in window ? 'onorientationchange' : 'resize',
+    resizeEvt = 'resize',
     recalc = function () {
       var clientWidth = docEl.clientWidth;
       if (!clientWidth) return;
