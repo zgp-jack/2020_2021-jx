@@ -51,7 +51,7 @@
              <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
           </van-pull-refresh>
         </div>
-        
+
         <div v-if="(mode==2 || mode==3)">
             <van-pull-refresh v-model="loading" @refresh="onrefresh">
               <van-list
@@ -237,9 +237,8 @@ export default {
                 that.isempty = false;
               }
             }
-
             const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
-            that.list = [...list];
+            if(that.page == 1) that.list = [...list];
             }else{
               that.isempty = false;
             }
