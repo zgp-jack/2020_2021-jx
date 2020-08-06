@@ -71,9 +71,10 @@
         },
         rotate:0,
         is_rotate:false,
-        userInfo:{},
+        // userInfo:{},
         title:'鱼泡机械-幸运大转盘',
-        isiOS:false,
+        isiOS:false,//判断用户机型
+        source:'',//判断用户机型
       }
     },
     // 过滤器
@@ -86,15 +87,15 @@
 
     },
     beforeMount(){
-      this.firstNameArr = this.firstName.split("");
-      this.getNameArr();
-      this.initUserInfo();
-
       bridge = jsBridge();
-      this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
+      this.isiOS = bridge.isiOS;
+      this.source = bridge.isiOS?'?source=IOS':'?source=Android'
+      this.firstNameArr = this.firstName.split("");
+      // this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
     },
     mounted(){
-      this.isiOS = bridge.isiOS
+      this.getNameArr();
+      this.initUserInfo();
       this.getAPPDate()
       setTimeout(()=>{
         this.$refs.resize.resize()
@@ -108,7 +109,7 @@
       },
       //获取用户信息
       initUserInfo(){
-        this.$axios.post("/turn-table/get-user-lottery-info").then(res=>{
+        this.$axios.post("/turn-table/get-user-lottery-info" + this.source).then(res=>{
           if(res.code == 200){
             console.log(res)
             this.content = {...res.content};
@@ -154,7 +155,7 @@
                bridge.callHandler('playVideo',{type:ad})
               })
            }
-           that.$axios.post('/turn-table/do-lottery').then(res=>{
+           that.$axios.post('/turn-table/do-lottery' + that.source).then(res=>{
 
            if(res.code == 200 || that.content.lotteryNumber>0){
              console.log(res)
@@ -225,7 +226,7 @@
       watchVideo(){
           let that = this;
           let ad = that.videoType();
-          that.$axios.post('/turn-table/view-video',{hamapi:that.userInfo.id}).then(res=>{
+          that.$axios.post('/turn-table/view-video' + that.source).then(res=>{//{hamapi:that.userInfo.id}
           that.content.lotteryNumber +=1
           that.content.viewVideoNumber -=1
           if(res.code == 200){
@@ -268,7 +269,7 @@
       // 分享成功后的回调
       shareEndAction(){
         let that = this
-        this.$axios.post('/turn-table/turn-share',{hamapi:this.userInfo.id}).then(function(res){
+        that.$axios.post('/turn-table/turn-share' + that.source).then(function(res){//{hamapi:this.userInfo.id}
           if(res.code == 200){
             that.content.lotteryNumber +=1
             that.content.shareNumber-=1
@@ -306,7 +307,7 @@
             "returnTimes": 0,
             "msg": '',
         }
-        that.$axios.post('/turn-table/quit').then(function(res){
+        that.$axios.post('/turn-table/quit' + that.source).then(function(res){
           if(res.code == 200){
             data.returnTimes = 0;
           }
