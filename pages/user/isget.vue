@@ -15,11 +15,11 @@
           </div>
           <div class="not-consume" v-if="not_consume">
             <p>暂无鱼泡币消耗记录<br />查看完整电话或置顶消息会生成消耗记录</p>
-            <button>查看求租/出租机械</button>
+            <button @click="to_page">查看求租/出租机械</button>
           </div>
           <div class="not-consume" v-if="not_origin">
             <p>暂无鱼泡币来源记录<br />签到、发布消息可免费获得鱼泡币</p>
-            <button>免费获取鱼泡币</button>
+            <button @click="to_page">免费获取鱼泡币</button>
           </div>
          <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
           <van-list
@@ -234,8 +234,13 @@ export default {
         }else{
           this.not_origin = false
         }
+      },
+      to_page(){
+        if(this.mode == 0) this.$router.push("/home")
+        else this.$router.push("/user/get")
       }
     },
+
 }
 </script>
 
