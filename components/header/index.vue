@@ -16,8 +16,9 @@ import { Icon } from 'vant';
 
 Vue.use(Icon);
 export default {
-    props:['title','onskip','ensure_text','getParentFn','color'],
-    created(){
+    props:['title','onskip','ensure_text','getParentFn','color',"go_home_page"],
+    beforeMount() {
+       console.log()
     },
     data(){
         return{
@@ -26,14 +27,15 @@ export default {
     },
     methods:{
         onback(){
-            if(this.onskip){
-                this.onskip()
-                return false;
-            }
-
-              this.$router.go(-1)
-
-
+          if(this.onskip){
+              this.onskip()
+              return false;
+          }
+          if(this.$props.go_home_page) {
+            this.$router.push("/list/1");
+            return false;
+          }
+          this.$router.go(-1)
         },
 		onEnsure(){
 			this.$emit('getParentFn')

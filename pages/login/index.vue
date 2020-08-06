@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Header :title="title" go_home_page="false"/>
+      <Header :title="title" :go_home_page="go_home_page"/>
       <div class="father">
           <div class="form">
             <div class="form-row">
@@ -45,11 +45,16 @@ export default {
           users:'',
           password:'',
           userright:false,
-          pass:false
+          pass:false,
+          go_home_page:false,
         }
     },
     beforeMount(){
-
+      console.log()
+    },
+    created() {
+      this.go_home_page = this.$route.query.signout;
+      console.log(this.go_home_page)
     },
     methods:{
       user_name(){
