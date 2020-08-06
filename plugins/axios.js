@@ -3,19 +3,21 @@
     params,data(参数)
 */
 
-import {Toast,Dialog} from 'vant';
+import {Toast} from 'vant';
 import qs from 'qs';
-import {getCookie,setCookie} from '../static/utils/utils';
+import {getCookie,setCookie,isWeixin} from '../static/utils/utils';
 
-export default function ({$axios,redirect,store}) {
+export default function (aaaa) {
+    let {$axios,redirect,store} = aaaa
     // request拦截器
     let globalLoading;
     $axios.onRequest(config => {
         globalLoading = true;
         const {params,data} = config;
+        let source = isWeixin()?'wx':'M';
 
         if(!config.url.includes('source')){
-            config.url.includes('?')?config.url +='&source=M' : config.url += `?source=M`;
+            config.url.includes('?')?config.url += `&source=${source}` : config.url += `?source=${source}`;
         }
 
         if(params && params.globalLoading === false){

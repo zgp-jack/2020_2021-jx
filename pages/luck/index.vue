@@ -16,11 +16,11 @@
 
       <div class="turntable-tasks">
         <div class="turntable-task-item">
-          <span>看视频(<span id="overvideo">{{4-content.viewVideoNumber}}</span>/<span id="allvideo">4</span>)</span>
+          <span>看视频(<span id="overvideo">{{content.videoCount-content.viewVideoNumber}}</span>/<span id="allvideo">{{content.videoCount}}</span>)</span>
           <div :class="content.viewVideoNumber==0?'turntable-task-hui':''" @click="content.viewVideoNumber==0?()=>{}:appWatchVideo()" data-end="0" >去观看</div>
         </div>
         <div class="turntable-task-item">
-          <span>分享好友(<span id="overshare">{{1-content.shareNumber}}</span>/<span id="allshare">1</span>)</span>
+          <span>分享好友(<span id="overshare">{{content.shareCount-content.shareNumber}}</span>/<span id="allshare">{{content.shareCount}}</span>)</span>
           <div :class="content.shareNumber==0?'turntable-task-hui':''"  @click="appShare">去分享</div>
         </div>
       </div>
@@ -66,12 +66,15 @@
           lotteryNumber:0,//该用户剩余抽奖次数
           viewVideoNumber:0,//该用户剩余看视频次数
           shareNumber:0, //该用户剩余分享次数
+          shareCount:0,//分享总数
+          videoCount:0,//获取视频总数
         },
         rotate:0,
         is_rotate:false,
-        userInfo:{},
+        // userInfo:{},
         title:'鱼泡机械-幸运大转盘',
-        isiOS:false,
+        isiOS:false,//判断用户机型
+        source:'',//判断用户机型
       }
     },
     // 过滤器
@@ -84,15 +87,15 @@
 
     },
     beforeMount(){
-      this.firstNameArr = this.firstName.split("");
-      this.getNameArr();
-      this.initUserInfo();
-
       bridge = jsBridge();
-      this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
+      this.isiOS = bridge.isiOS;
+      this.source = bridge.isiOS?'?source=IOS':'?source=Android'
+      this.firstNameArr = this.firstName.split("");
+      // this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
     },
     mounted(){
-      this.isiOS = bridge.isiOS
+      this.getNameArr();
+      this.initUserInfo();
       this.getAPPDate()
       setTimeout(()=>{
         this.$refs.resize.resize()
@@ -106,7 +109,7 @@
       },
       //获取用户信息
       initUserInfo(){
-        this.$axios.post("/turn-table/get-user-lottery-info").then(res=>{
+        this.$axios.post("/turn-table/get-user-lottery-info" + this.source).then(res=>{
           if(res.code == 200){
             console.log(res)
             this.content = {...res.content};
@@ -134,17 +137,16 @@
           }
         });
         this.renderNameArr = newarr;
-        console.log(this.renderNameArr)
       },
       //点击抽奖
       startTurnTbale(){
-          //  const that = this;
-           if(this.is_rotate) return false
-           if(!this.intercept()){
+           const that = this;
+           if(that.is_rotate) return false
+           if(!that.intercept()){
              return false
            }
            let ad = that.videoType();
-           if(this.content.lotteryNumber ==0){
+           if(that.content.lotteryNumber ==0){
               Dialog.confirm({
               title:"提示",
               message:"抽奖次数不足，请获取抽奖次数后再来试试吧",
@@ -153,12 +155,11 @@
                bridge.callHandler('playVideo',{type:ad})
               })
            }
-           this.$axios.post('/turn-table/do-lottery').then(res=>{
-           console.log(this.content.lotteryNumber)
+           that.$axios.post('/turn-table/do-lottery' + that.source).then(res=>{
 
-           if(res.code == 200 || this.content.lotteryNumber>0){
+           if(res.code == 200 || that.content.lotteryNumber>0){
              console.log(res)
-             this.is_rotate = true
+             that.is_rotate = true
              const {prizeKey} = res.content
              let rotates = 0
              switch (prizeKey) {
@@ -225,7 +226,7 @@
       watchVideo(){
           let that = this;
           let ad = that.videoType();
-          that.$axios.post('/turn-table/view-video',{hamapi:that.userInfo.id}).then(res=>{
+          that.$axios.post('/turn-table/view-video' + that.source).then(res=>{//{hamapi:that.userInfo.id}
           that.content.lotteryNumber +=1
           that.content.viewVideoNumber -=1
           if(res.code == 200){
@@ -268,7 +269,7 @@
       // 分享成功后的回调
       shareEndAction(){
         let that = this
-        this.$axios.post('/turn-table/turn-share',{hamapi:this.userInfo.id}).then(function(res){
+        that.$axios.post('/turn-table/turn-share' + that.source).then(function(res){//{hamapi:this.userInfo.id}
           if(res.code == 200){
             that.content.lotteryNumber +=1
             that.content.shareNumber-=1
@@ -306,7 +307,7 @@
             "returnTimes": 0,
             "msg": '',
         }
-        that.$axios.post('/turn-table/quit').then(function(res){
+        that.$axios.post('/turn-table/quit' + that.source).then(function(res){
           if(res.code == 200){
             data.returnTimes = 0;
           }
@@ -346,14 +347,16 @@
 
       videoType(){
         // content:{
-        //   lotteryNumber:0,//该用户剩余抽奖次数
+        // lotteryNumber:0,//该用户剩余抽奖次数
         //   viewVideoNumber:0,//该用户剩余看视频次数
         //   shareNumber:0, //该用户剩余分享次数
+        //   shareCount:0,//分享总数
+        //   videoCount:0,//获取视频总数
         // },
         // let num=Math.floor(Math.random()*4+1);
-        const {lotteryNumber,viewVideoNumber,shareNumber} = this.content;
+        const {lotteryNumber,viewVideoNumber,shareNumber,videoCount,shareCount} = this.content;
         //判断用户看了多少次，看了3次第4次播放腾讯的
-        let num = 5 - lotteryNumber - viewVideoNumber - shareNumber;
+        let num = videoCount + shareCount - lotteryNumber - viewVideoNumber - shareNumber;
         let type;
         switch((num+1)%4){
           case 0 : type = 'tx'
