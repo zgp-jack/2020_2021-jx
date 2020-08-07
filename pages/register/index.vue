@@ -78,9 +78,9 @@ export default {
           return false;
         }
         //发送ajax请求
-        this.isCaptcha = false;
+        // this.isCaptcha = false;
         timer = setInterval(()=>{
-          this.countDown--;
+          if(this.countDown>0) this.countDown--;
           if(this.countDown == 0){
             this.isCaptcha = true;
             clearInterval(timer)

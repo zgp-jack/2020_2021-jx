@@ -51,7 +51,7 @@ export default function jsBridge(){
     // js调APP方法 （参数分别为:app提供的方法名  传给app的数据  回调）
     function callHandler(name, data, callback) {
         setupWebViewJavascriptBridge((bridge) => {
-            bridge.callHandler(name, data, callback);
+            bridge.callHandler(name,data,callback);
         });
     };
     // APP调js方法 （参数分别为:js提供的方法名  回调）
