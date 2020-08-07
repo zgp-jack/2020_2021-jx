@@ -385,13 +385,13 @@
             data.msg = res.msg;
           }
           console.log(data.returnTimes)
-          window.WebViewJavascriptBridge.callHandler(
+          bridge.callHandler(
             'finish'
             , data
           );
         }).catch(()=>{
             //请求失败允许返回
-            window.WebViewJavascriptBridge.callHandler(
+            bridge.callHandler(
               'finish'
               , data
             );
