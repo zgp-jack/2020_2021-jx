@@ -77,7 +77,7 @@
 .list_data{
     @include static_inner($top:1.91rem)
     .van-pull-refresh{
-      overflow:visible
+      // padding-bottom::;
     }
 }
 

@@ -61,12 +61,9 @@
               >
                 <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
               </van-list>
+              <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
             </van-pull-refresh>
-             <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
         </div>
-
-
-
     <Tarbar />
     </div>
   </div>
