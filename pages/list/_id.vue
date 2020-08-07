@@ -48,8 +48,10 @@
             >
               <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
             </van-list>
+             <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
           </van-pull-refresh>
         </div>
+
         <div v-if="(mode==2 || mode==3)">
             <van-pull-refresh v-model="loading" @refresh="onrefresh">
               <van-list
@@ -60,10 +62,10 @@
                 <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
               </van-list>
             </van-pull-refresh>
-
+             <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
         </div>
 
-        <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
+
 
     <Tarbar />
     </div>
@@ -145,7 +147,7 @@ export default {
     }
   },
   beforeMount(){
-    
+
   },
   mounted() {
     if(this.$route.query['keep-alive'] !== false){
@@ -235,13 +237,12 @@ export default {
                 that.isempty = false;
               }
             }
-
             const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
-            that.list = [...list];
+            if(that.page == 1) that.list = [...list];
             }else{
               that.isempty = false;
             }
-          
+
         })
       }else{
         Toast('您访问的页面不存在，将自动跳转')

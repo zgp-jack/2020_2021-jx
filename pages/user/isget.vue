@@ -12,7 +12,14 @@
                       <img :class="[shows?'rotate':'']" src="../../assets/img/consume/tou-bottom.png" alt="">
                   </p>
               </div>
-
+          </div>
+          <div class="not-consume" v-if="not_consume">
+            <p>暂无鱼泡币消耗记录<br />查看完整电话或置顶消息会生成消耗记录</p>
+            <button @click="to_page">查看求租/出租机械</button>
+          </div>
+          <div class="not-consume" v-if="not_origin">
+            <p>暂无鱼泡币来源记录<br />签到、发布消息可免费获得鱼泡币</p>
+            <button @click="to_page">免费获取鱼泡币</button>
           </div>
          <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
           <van-list
@@ -112,7 +119,9 @@ export default {
             iscomplete:false,
             mode:0,
             isLoading:false,
-            text:'加载中...'
+            text:'加载中...',
+            not_consume:false,
+            not_origin:false
         }
     },
     methods:{
@@ -176,7 +185,11 @@ export default {
           if(this.classification == '全部分类') this.fenleiindex = ''
           let params = {type:this.mode,page:this.page,page_size:this.page_size,date:this.valuetime,category:this.fenleiindex}
           this.$axios.get('/coin/record',{params}).then(res=>{
-          console.log(res)
+            this.not_consume = false;
+            this.not_origin = false
+          if(res.content.list.length == 0) {
+            this.noListData(params.category);
+          }
           this.list = this.page == 1?[...res.content.list]:[...this.list,...res.content.list]
           res.content.list.length>=10?(this.iscomplete = false,this.page++):(this.iscomplete = true,this.More = true)
           this.listLoading = false
@@ -203,8 +216,31 @@ export default {
         }else if(is_company== 1){
           Toast('此条信息已删除!')
         }
+      },
+      //没有数据
+      noListData(category){
+
+        if(this.mode == 0 && !category){
+          this.not_consume = true;
+          this.Moreimg = false
+        }else{
+          this.not_consume = false
+        }
+
+        if(this.mode == 1 && category===""){
+          console.log(category)
+          this.not_origin = true;
+          this.Moreimg = false
+        }else{
+          this.not_origin = false
+        }
+      },
+      to_page(){
+        if(this.mode == 0) this.$router.push("/home")
+        else this.$router.push("/user/get")
       }
     },
+
 }
 </script>
 

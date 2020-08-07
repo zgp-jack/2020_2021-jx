@@ -38,9 +38,8 @@
                     <img @click.stop="changeSateFn(item,index)" class="status" :src="item.check!='2'?status[item.check].url:changeStatus[mode][item.end].url" alt="">
                 </div>
             </van-list>
+            <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
           </van-pull-refresh>
-          <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
-
         </div>
          <BottomTop  ref="child" :hiddenAll="true" />
   </div>
@@ -100,7 +99,6 @@ export default {
             isshow:true,
             Topmaskr:false,
             list:[],
-
             //参数
             mode:'',
             page:1,
@@ -178,9 +176,9 @@ export default {
                           that.isempty = false;
                         }
                       }
-
                       const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
-                      that.list = [...list];
+                      if(that.page == 1) that.list = [...list];
+                      
                   }else{
                     that.isempty = true;
                   }

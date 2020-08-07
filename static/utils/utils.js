@@ -233,3 +233,21 @@ export function isWeixin(callback){
   }
 }
 
+//判断当前是什么浏览器/返回['Android','IOS','XCX','M','wx']
+export function browserEnvironment(){
+  let environment = window.navigator.userAgent;
+  let source;
+  const isWeixin = environment.toLowerCase().includes('micromessenger');
+  let isAndroid = environment.includes('Android') || environment.includes('Adr');
+  let isiOS = !!environment.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+  if(isiOS){
+    source = 'IOS'
+  }else if(isAndroid){
+    source = 'Android'
+  }else if(isWeixin){
+    source = 'wx'
+  }else{
+    source = 'M'
+  }
+  return source;
+}

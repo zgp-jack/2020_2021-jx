@@ -113,4 +113,22 @@
                     }
             }
     }
+    .not-consume{
+      padding-top: 2.5rem;
+      font-size: 0.3rem;
+      p{
+        text-align: center;
+      }
+      button{
+        background-color:rgb(255, 170, 38);
+        width: 4rem;
+        border-radius:0.5rem;
+        height: 0.8rem;
+        color: #fff;
+        margin: 1rem auto;
+        display: block;
+        outline: none;
+        border: none;
+      }
+    }
 }
