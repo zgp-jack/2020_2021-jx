@@ -6,7 +6,9 @@
         <div class="inner-block">
           <div class="titles" @click="goBack">玩法说明</div>
           <div class="play">
-            <p> 1、每天每人有4次抽奖机会</p>
+            <!-- shareCount:0,//分享总数
+          videoCount:0,//获取视频总数 -->
+            <p> 1、每天每人有{{Number(content.shareCount) + Number(content.videoCount)}}次抽奖机会</p>
             <p> 2、每天0点刷新抽奖机会</p>
             <p> 3、本活动最终解释权归鱼泡机械 平台所有</p>
             <p> 4、若经发现用户存在恶意违规行为，本平台有权取消其抽奖资格并 收回其抽奖所得。</p>
@@ -18,7 +20,7 @@
     <div class="turntable-container">
       <div class="turtable-right">
         <div class="inner" @click="goshow">
-          玩法说明
+          活动说明
         </div>
       </div>
       <div class="turntable-box">
@@ -29,7 +31,12 @@
         </div>
 
       </div>
-      <div class="turntable-timesbox">我的抽奖次数：<span id="turntable-times">{{content.lotteryNumber}}</span>次
+      <!-- lotteryNumber:0,//该用户剩余抽奖次数
+          viewVideoNumber:0,//该用户剩余看视频次数
+          shareNumber:0, //该用户剩余分享次数
+          shareCount:0,//分享总数
+          videoCount:0,//获取视频总数 -->
+      <div class="turntable-timesbox">我的抽奖次数：<span id="turntable-times">{{Number(content.viewVideoNumber)+Number(content.shareNumber)+Number(content.lotteryNumber)}}</span>次
         <!-- <span @click="!isComplete?int():appWatchVideo()" class="turntable-span-img"></span> -->
       </div>
 
@@ -54,7 +61,7 @@
             <!-- vertical -->
             <van-swipe-item v-for="(item,index) in renderNameArr" :key="index" class="turntable-order-item">
               <div class="turntable-order-item" v-for="(item,index) in item" :key="index">
-                 {{timeArr[index]}}"{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币
+                 {{timeArr[index]}} "{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币
               </div>
             </van-swipe-item>
           </van-swipe>
@@ -140,7 +147,7 @@
        })
         setTimeout(()=>{
           this.timeArr = newArr
-        },2000)
+        },4200)
       },
       Cloes(){
         this.show = false
@@ -212,7 +219,7 @@
            if(that.content.lotteryNumber ==0){
               Dialog.confirm({
               title:"提示",
-              message:"抽奖次数不足，请获取抽奖次数后再来试试吧",
+              message:"需要观看视频后，才能抽奖",
               confirmButtonColor:"#EF9F38",
               }).then(()=>{
                bridge.callHandler('playVideo',{type:ad})
@@ -353,14 +360,15 @@
             // })
             that.startTurnTbale()
 
-          }else if(res && res.code == 500){
-            Dialog.alert({
-                title:'提示',
-                message:res.msg,
-                confirmButtonText:"确定",
-            })
-            that.content.shareNumber = 0
           }
+          // else if(res && res.code == 500){
+          //   Dialog.alert({
+          //       title:'提示',
+          //       message:res.msg,
+          //       confirmButtonText:"确定",
+          //   })
+          //   that.content.shareNumber = 0
+          // }
         })
       },
       // 获取次数
@@ -418,7 +426,7 @@
               'finish'
               , data
             );
-          })
+        })
       },
       // APP 调js
       getAPPDate(){
@@ -475,7 +483,7 @@
     height: 100%;
       .inner-block{
           width:5.8rem;
-          height:6.5rem;
+          // height:6.5rem;
           background-color: #fff;
           border-radius:0.2rem;
           padding:0.43rem 0.42rem;
@@ -492,11 +500,11 @@
             }
             .btn{
               width:3.28rem;
-              height:0.62rem;
-              background:rgba(239,159,56,1);
-              border-radius:0.31rem;
+              // height:0.62rem;
+              background:#ffa926;
+              border-radius:0.36rem;
               margin: 0 auto;
-              line-height:0.62rem;
+              line-height:0.72rem;
               color: #fff;
             }
       }
@@ -517,6 +525,7 @@
      height: 100%;
      background: url('http://cdn.yupao.com/newyupao/images/m-turntable-bg.png?t=1') no-repeat;
      background-size: 100% 100%;
+     overflow: hidden;
  }
 .turtable-right{
   position: absolute;

@@ -105,4 +105,5 @@ export default {
     base: env === "development" ?'/dist':'/',
   },
 
+  loading: '~/components/loading/index.vue'
 }
