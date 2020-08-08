@@ -151,6 +151,7 @@ export default {
       this.int()
     }
     window.addEventListener('scroll',this.my_scroll);
+    document.getElementsByClassName("van-pull-refresh__head")[0].style.display="none";
   },
   methods: {
     // 滚动
