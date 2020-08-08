@@ -1,7 +1,26 @@
 <template>
   <div class="large-turntable">
-
+    <!-- 遮罩 -->
+    <van-overlay :show="show" z-index="60">
+      <div class="van-inner">
+        <div class="inner-block">
+          <div class="titles" @click="goBack">玩法说明</div>
+          <div class="play">
+            <p> 1、每天每人有4次抽奖机会</p>
+            <p> 2、每天0点刷新抽奖机会</p>
+            <p> 3、本活动最终解释权归鱼泡机械 平台所有</p>
+            <p> 4、若经发现用户存在恶意违规行为，本平台有权取消其抽奖资格并 收回其抽奖所得。</p>
+          </div>
+          <div class="btn" @click="Cloes">继续抽奖</div>
+        </div>
+      </div>
+    </van-overlay>
     <div class="turntable-container">
+      <div class="turtable-right">
+        <div class="inner" @click="goshow">
+          玩法说明
+        </div>
+      </div>
       <div class="turntable-box">
         <div class="turntable-box-out" :class='[is_rotate?"luck-rotate":""]' :style="{transform:'rotate('+rotate+'deg)'}"></div>
         <div class="turntable-box-img" :class='[is_rotate?"luck-rotate":""]' :style="{transform:'rotate('+rotate+'deg)'}"></div>
@@ -11,10 +30,10 @@
 
       </div>
       <div class="turntable-timesbox">我的抽奖次数：<span id="turntable-times">{{content.lotteryNumber}}</span>次
-        <span @click="!isComplete?int():appWatchVideo()" class="turntable-span-img"></span>
+        <!-- <span @click="!isComplete?int():appWatchVideo()" class="turntable-span-img"></span> -->
       </div>
 
-      <div class="turntable-tasks">
+      <!-- <div class="turntable-tasks">
         <div class="turntable-task-item">
           <span>看视频(<span id="overvideo">{{content.videoCount-content.viewVideoNumber}}</span>/<span id="allvideo">{{content.videoCount}}</span>)</span>
           <div :class="content.viewVideoNumber==0?'turntable-task-hui':''" @click="!isComplete?int():(content.viewVideoNumber==0?()=>{}:appWatchVideo())" data-end="0" >去观看</div>
@@ -23,7 +42,7 @@
           <span>分享好友(<span id="overshare">{{content.shareCount-content.shareNumber}}</span>/<span id="allshare">{{content.shareCount}}</span>)</span>
           <div :class="content.shareNumber==0?'turntable-task-hui':''"  @click="!isComplete?int():appShare()">去分享</div>
         </div>
-      </div>
+      </div> -->
 
       <div class="turntable-tipsbox">
         <div class="turntable-tips-title">每天看视频或分享好友可获得抽奖次数</div>
@@ -31,11 +50,11 @@
       </div>
       <div class="turntable-orderbox">
         <div class="turntable-order" onclick="gailu">
-          <van-swipe class="my-swipe turntable-order-lists" :autoplay="3000" indicator-color="white" id="orderlsits" vertical style="height: 3.35rem;" :touchable="false" duration="1000" ref="resize">
+          <van-swipe class="my-swipe turntable-order-lists" :autoplay="3000" indicator-color="white" id="orderlsits" vertical style="height: 3.35rem;" :touchable="false" duration="1000" ref="resize" @change='scrollFlish'>
             <!-- vertical -->
             <van-swipe-item v-for="(item,index) in renderNameArr" :key="index" class="turntable-order-item">
               <div class="turntable-order-item" v-for="(item,index) in item" :key="index">
-                恭喜 "{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币
+                 {{timeArr[index]}}"{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币
               </div>
             </van-swipe-item>
           </van-swipe>
@@ -46,13 +65,15 @@
   </div>
 </template>
 <script>
-  import { NoticeBar,Dialog,Toast,Swipe,SwipeItem } from 'vant';
+  import { NoticeBar,Dialog,Toast,Swipe,SwipeItem,Overlay } from 'vant';
   import jsBridge from '../../static/utils/JSbridge';
+  import {formatDate} from '../../static/utils/utils'
   let bridge;
   export default{　
     components:{
       'van-swipe':Swipe,
       'van-swipe-item':SwipeItem,
+      'van-overlay':Overlay
     },
     data(){
       return{
@@ -69,19 +90,24 @@
           shareCount:0,//分享总数
           videoCount:0,//获取视频总数
         },
-        rotate:0,
+        rotate:30,
         is_rotate:false,//判断是否正在抽奖
         // userInfo:{},
         title:'鱼泡机械-幸运大转盘',
         isiOS:false,//判断用户机型
         source:'',//判断用户机型
         isComplete:false,//是否初始化完成
+        time:new Date(),
+        show:false,
+        timeArr:[],
+        success:false // 是否为4次后的分享成功
       }
     },
     // 过滤器
     filters:{
       currens(val){
-        console.log(val)
+        let add = formatDate(val,'h:mm:ss')
+        return add
       }
     },
     created() {
@@ -103,6 +129,26 @@
       },0)
     },
     methods:{
+      // 滚动时间
+      scrollFlish(){
+       let nowTime = new Date().getTime();
+       let nowHMS = formatDate(nowTime,"h:mm:ss");
+       let arr = this.timeArr;
+       arr.push(nowHMS);
+       let newArr = arr.sort(function(){
+            return Math.random() * 2 - 1
+       })
+        setTimeout(()=>{
+          this.timeArr = newArr
+        },2000)
+      },
+      Cloes(){
+        this.show = false
+      },
+      // 弹窗
+      goshow(){
+        this.show = true
+      },
       //随机数
       getRand(start, end) {
         if (start == 0) return Math.floor((end + 1) * Math.random());
@@ -114,6 +160,7 @@
           if(res && res.code == 200){
             this.isComplete = true;
             this.content = {...res.content};
+            console.log(res)
           }else{
             this.isComplete = 0;
           }
@@ -129,7 +176,8 @@
         for(let i = 0; i < nameNum; i++){
           var nameStr = this.firstNameArr[this.getRand(0, firstLen)] + this.lastName[this.getRand(0, lastLen)];
           var integral = this.integralArr[this.getRand(0, this["integralArr"].length - 1)];
-          this.nameArr.push({ name: nameStr, integral: integral });
+          let timer = new Date()
+          this.nameArr.push({ name: nameStr, integral: integral,star:1});
         }
         let newarr =[]
         let arr = [];
@@ -142,10 +190,22 @@
           }
         });
         this.renderNameArr = newarr;
+          for(let i =0; i < 10; i++){
+            let beforTime = new Date().getTime() - i*6*1000;
+            let beforHMS = formatDate(beforTime,"h:mm:ss");
+            this.timeArr.push(beforHMS)
+        }
       },
       //点击抽奖
       startTurnTbale(){
            const that = this;
+          //  当用户分享4次了
+           let contry = that.content.lotteryNumber+that.content.viewVideoNumber+that.content.shareNumber
+           if(contry == 1) {
+             that.appShare()
+             if(!that.success) return false
+           }
+
            if(that.is_rotate) return false;
            if(!that.intercept()){
              return false
@@ -187,10 +247,10 @@
                 title:"提示",
                 message:res.msg,
               }).then(()=>{
-                this.rotate = 0
+                this.rotate = 30
                 this.is_rotate = false
               }).catch(()=>{
-                this.rotate = 0
+                this.rotate = 30
                 this.is_rotate = false
               })
              },5200)
@@ -283,6 +343,7 @@
         let that = this
         that.$axios.post('/turn-table/turn-share' + that.source).then(function(res){//{hamapi:this.userInfo.id}
           if(res && res.code == 200){
+            that.success = true
             that.content.lotteryNumber +=1
             that.content.shareNumber-=1
             //关闭弹框直接去抽奖
@@ -293,6 +354,7 @@
             //   confirmButtonColor:"#EF9F38",
             // })
             that.startTurnTbale()
+
           }else if(res && res.code == 500){
             Dialog.alert({
                 title:'提示',
@@ -320,10 +382,12 @@
       },
       // 返回上级
       goBack(){
+        debugger
+        let that = this;
+        console.log(that)
         //转动的时候不允许操作
         if(that.is_rotate) return false;
 
-        let that = this;
         let data = {
             "returnTimes": 0,
             "msg": '',
@@ -331,6 +395,11 @@
         that.$axios.post('/turn-table/quit' + that.source).then(function(res){
           if(res && res.code == 200){
             data.returnTimes = 0;
+            debugger
+            bridge.callHandler(
+            'finish'
+            , data
+          );
           }
           if(res && res.code == 500){
             // Dialog.confirm({
@@ -342,15 +411,16 @@
             //   // that.$router.go(-1)
             // })
             data.returnTimes = 1;
+            console.log(data)
             data.msg = res.msg;
-          }
-          window.WebViewJavascriptBridge.callHandler(
+            bridge.callHandler(
             'finish'
             , data
           );
+          }
         }).catch(()=>{
             //请求失败允许返回
-            window.WebViewJavascriptBridge.callHandler(
+            bridge.callHandler(
               'finish'
               , data
             );
@@ -404,6 +474,39 @@
 </script>
 
 <style scoped lang='scss'>
+  .van-inner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+      .inner-block{
+          width:5.8rem;
+          height:6.5rem;
+          background-color: #fff;
+          border-radius:0.2rem;
+          padding:0.43rem 0.42rem;
+          text-align: center;
+          font-size:0.28rem;
+            .titles{
+              font-size:0.35rem;
+              font-weight:550;
+            }
+            .play{
+              line-height:0.6rem;
+              text-align: left;
+              margin:0.3rem 0;
+            }
+            .btn{
+              width:3.28rem;
+              height:0.62rem;
+              background:rgba(239,159,56,1);
+              border-radius:0.31rem;
+              margin: 0 auto;
+              line-height:0.62rem;
+              color: #fff;
+            }
+      }
+  }
   #{'/deep/'} .head{
     height: 1rem;
     overflow: hidden;
@@ -421,6 +524,21 @@
      background: url('http://cdn.yupao.com/newyupao/images/m-turntable-bg.png?t=1') no-repeat;
      background-size: 100% 100%;
  }
+.turtable-right{
+  position: absolute;
+  right:-0.2rem;
+    .inner{
+      width:1.82rem;
+      height:0.57rem;
+      background:rgba(255,243,240,1);
+      // box-shadow:0px 3px 0px 0px rgba(133,28,4,0.15), 0px 5px 6px 0px rgba(255,255,255,1);
+      border-radius:0.29rem;
+      font-size:0.3rem;
+      text-align: center;
+      line-height:0.57rem;
+      color:#FF4B40;
+    }
+}
 .turntable-box {
   position: relative;
   width: 6rem;
@@ -455,21 +573,21 @@
   position: absolute;
   width: 6rem;
   height: 6rem;
-  left: 50%;
-  top: 50%;
+  left: 85%;
+  top: 75%;
   margin-left: -3rem;
   margin-top: -3rem;
   z-index: 5;
-  background: url('http://cdn.yupao.com/newyupao/images/m-turntable-btn.png') no-repeat;
-  background-size: 100% 100%;
+  background: url('../../assets/img/Lark.png') no-repeat;
+  background-size: 30% 40%;
   transform-origin: center;
 }
 .turntable-btn-click{
   position: absolute;
   width: 100px;
   height: 100px;
-  left: 50%;
-  top: 50%;
+  left: 16%;
+  top: 20%;
   margin-left: -50px;
   margin-top: -50px;
   z-index: 15;
