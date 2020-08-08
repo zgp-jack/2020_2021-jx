@@ -152,6 +152,9 @@
       },
       // 弹窗
       goshow(){
+        //转动的时候不允许操作
+        if(this.is_rotate) return false;
+
         this.show = true
       },
       //随机数
