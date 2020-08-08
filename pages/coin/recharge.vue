@@ -16,20 +16,20 @@
         <div v-for="(item,i) in math_num_list" :key="i" v-if='i==liIndex'>
          <div class="recharge-details">
             <p>
-               充值金额
+               充值金额：
               <span class="colors">{{item}}元</span>
             </p>
             <p>
-               充值积分
-              <span class="colors">{{item+recharge_given[i]}}积分</span>
+               充值鱼泡币：
+              <span class="colors">{{item+recharge_given[i]}}鱼泡币</span>
             </p>
             <p>
-               积分单价
+               鱼泡币单价：
               <span class="colors">{{item/(item+recharge_given[i]) | capitalize}}元 /个</span>
             </p>
             <p>
-               充值后总积分
-              <span class="colors">{{coin_users+item+recharge_given[i]}}积分(可查看个{{(coin_users+item+recharge_given[i])/3 | tel}}电话)</span>
+               充值后总鱼泡币：
+              <span class="colors">{{coin_users+item+recharge_given[i]}}鱼泡币(可查看个{{(coin_users+item+recharge_given[i])/3 | tel}}电话)</span>
             </p>
          </div>
        </div>
