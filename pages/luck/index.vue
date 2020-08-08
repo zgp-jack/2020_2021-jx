@@ -160,7 +160,6 @@
           if(res && res.code == 200){
             this.isComplete = true;
             this.content = {...res.content};
-            console.log(res)
           }else{
             this.isComplete = 0;
           }
@@ -183,7 +182,6 @@
         let arr = [];
         this.nameArr.forEach((element,index) => {
           arr.push(element)
-          console.log(arr)
           if((index+1) % 4 ==0 ){
             newarr.push([...arr])
             arr=[]
@@ -382,9 +380,7 @@
       },
       // 返回上级
       goBack(){
-        debugger
         let that = this;
-        console.log(that)
         //转动的时候不允许操作
         if(that.is_rotate) return false;
 
@@ -395,7 +391,6 @@
         that.$axios.post('/turn-table/quit' + that.source).then(function(res){
           if(res && res.code == 200){
             data.returnTimes = 0;
-            debugger
             bridge.callHandler(
             'finish'
             , data
@@ -411,7 +406,6 @@
             //   // that.$router.go(-1)
             // })
             data.returnTimes = 1;
-            console.log(data)
             data.msg = res.msg;
             bridge.callHandler(
             'finish'
