@@ -50,7 +50,7 @@ export default {
     data(){
         return{
             list:[
-                {title:'玩游戏，赚鱼泡币',detail:'每天玩15秒小游戏，可得1-300分',btn_text:'去下载',src:'https://a.app.qq.com/o/simple.jsp?pkgname=com.yupao.machine'},
+                {title:'玩游戏，赚鱼泡币',detail:'每天玩15秒小游戏，可得1-300币',btn_text:'去下载',src:'https://a.app.qq.com/o/simple.jsp?pkgname=com.yupao.machine'},
                 {title:'邀请好友成功 + 5 鱼泡币',detail:'好友注册送鱼泡币,  不限次数',btn_text:'去邀请',src:'/user/invitation'},
                  {title:'充值',detail:'充值付钱购买鱼泡币',btn_text:'去充值',src:'/coin/recharge',src:'/coin/recharge'},
                 {title:'发布求租 + 1鱼泡币',detail:'通过审核后赠送, 5次/月',btn_text:'去发布',src:'/coin/recharge',src:"../../common/create?mode=1"},

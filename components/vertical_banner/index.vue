@@ -1,7 +1,7 @@
 <template>
   <div >
-        <p @click="go_releaseFn">点此发布机械出租、求租、转让、求购 <span>一键发布</span></p>
-        <p @click="go_set_top">置顶发布消息，提升曝光率，让别主动联系你 <span>去置顶</span></p>
+        <p @click="go_releaseFn" v-if="go_release">点此发布机械出租、求租、转让、求购 <span>一键发布</span></p>
+        <p @click="go_set_top" v-if="go_settop">置顶发布消息，提升曝光率，让别主动联系你 <span>去置顶</span></p>
 
 
     <!-- 发布弹窗 -->

@@ -178,6 +178,7 @@
       //状态的显示
       allState(obj){
         //是否是新用户
+        console.log(obj)
         if(this.detail_info.roofTag == 1) this.go_release = true;
         else if(this.detail_info.roofTag == 2) this.go_settop = true;
         else if(this.detail_info.roofTag == 0){

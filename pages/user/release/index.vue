@@ -38,8 +38,13 @@
                     <img @click.stop="changeSateFn(item,index)" class="status" :src="item.check!='2'?status[item.check].url:changeStatus[mode][item.end].url" alt="">
                 </div>
             </van-list>
-            <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
+            <EmptyMsg :empty1="iscomplete && !isempty" v-if="!firstEmpty" />
           </van-pull-refresh>
+           <EmptyMsg :empty2="!isempty" v-if="firstEmpty"/>
+           <div class="go-release" v-if="firstEmpty">
+              <button @click="goReleasePage">去发布</button>
+              <p>你还没有发布消息，点击这里发布</p>
+           </div>
         </div>
          <BottomTop  ref="child" :hiddenAll="true" />
   </div>
@@ -131,9 +136,16 @@ export default {
             iscomplete:false,
             isempty:false,//数据是否为空
             loading:false,
+            firstEmpty:false,//第一次数据为空
         }
     },
     methods:{
+      goReleasePage(){
+        if(this.mode == 1) this.$router.push('../../common/create?mode=1')
+        if(this.mode == 2) this.$router.push('../../common/create?mode=2')
+        if(this.mode == 3) this.$router.push('../../common/create?mode=3')
+        if(this.mode == 4) this.$router.push('../../common/create?mode=4')
+      },
       //新手指引弹窗
         mask_show(){
           let guide = getNovicePoint();
@@ -153,9 +165,11 @@ export default {
             const that = this;
             const {mode,page,page_size} = that;
             const params = {mode,page,page_size,globalLoading:false};
+            // that.firstEmpty = false
             that.loading = true;
             if(mode==1 || mode ==2 || mode==3 || mode==4){
                 that.$axios.get('/user/create-list',{params}).then(res=>{
+
                     that.loading && (that.loading = false);
                     if(res.code == 200){
                       if(that.page == 1){
@@ -164,10 +178,13 @@ export default {
                           that.isempty = false;
                         }else if(!res.content.length){
                           that.isempty = true;
+                          that.firstEmpty = true;
+                          console.log(res)
                         }else{
                           that.iscomplete = false;
                           that.isempty = false;
                         }
+                        if(res.content.length) that.firstEmpty = false;
                       }else{
                         if(res.content.length<that.page_size){
                           that.iscomplete = true;
