@@ -6,7 +6,9 @@
         <div class="inner-block">
           <div class="titles" @click="goBack">玩法说明</div>
           <div class="play">
-            <p> 1、每天每人有4次抽奖机会</p>
+            <!-- shareCount:0,//分享总数
+          videoCount:0,//获取视频总数 -->
+            <p> 1、每天每人有{{Number(content.shareCount) + Number(content.videoCount)}}次抽奖机会</p>
             <p> 2、每天0点刷新抽奖机会</p>
             <p> 3、本活动最终解释权归鱼泡机械 平台所有</p>
             <p> 4、若经发现用户存在恶意违规行为，本平台有权取消其抽奖资格并 收回其抽奖所得。</p>
@@ -29,32 +31,37 @@
         </div>
 
       </div>
-      <div class="turntable-timesbox">我的抽奖次数：<span id="turntable-times">{{counts}}</span>次
+      <!-- lotteryNumber:0,//该用户剩余抽奖次数
+          viewVideoNumber:0,//该用户剩余看视频次数
+          shareNumber:0, //该用户剩余分享次数
+          shareCount:0,//分享总数
+          videoCount:0,//获取视频总数 -->
+      <div class="turntable-timesbox">今日可抽奖：<span id="turntable-times">{{Number(content.viewVideoNumber)+Number(content.shareNumber)+Number(content.lotteryNumber)}}</span>次
         <!-- <span @click="!isComplete?int():appWatchVideo()" class="turntable-span-img"></span> -->
       </div>
 
-      <!-- <div class="turntable-tasks">
+      <div class="turntable-tasks">
         <div class="turntable-task-item">
-          <span>看视频(<span id="overvideo">{{content.videoCount-content.viewVideoNumber}}</span>/<span id="allvideo">{{content.videoCount}}</span>)</span>
-          <div :class="content.viewVideoNumber==0?'turntable-task-hui':''" @click="!isComplete?int():(content.viewVideoNumber==0?()=>{}:appWatchVideo())" data-end="0" >去观看</div>
+          <span>看视频剩余次数(<span id="allvideo">{{content.videoCount}}</span>)</span>
+          <div :class="content.viewVideoNumber==0?'turntable-task-hui':''" @click="!isComplete?int():(content.viewVideoNumber==0?()=>{}:appWatchVideo())" data-end="0" >去抽奖</div>
         </div>
         <div class="turntable-task-item">
-          <span>分享好友(<span id="overshare">{{content.shareCount-content.shareNumber}}</span>/<span id="allshare">{{content.shareCount}}</span>)</span>
-          <div :class="content.shareNumber==0?'turntable-task-hui':''"  @click="!isComplete?int():appShare()">去分享</div>
+          <span>分享好友剩余次数(<span id="allshare">{{content.shareCount}}</span>)</span>
+          <div :class="content.shareNumber==0?'turntable-task-hui':''"  @click="!isComplete?int():appShare()">去抽奖</div>
         </div>
-      </div> -->
+      </div>
 
-      <div class="turntable-tipsbox">
+      <!-- <div class="turntable-tipsbox">
         <div class="turntable-tips-title">每天看视频或分享好友可获得抽奖次数</div>
         <div class="turntable-tips-body">[小妙招：连续观看3次视频后抽奖，中奖机率更高哦]</div>
-      </div>
+      </div> -->
       <div class="turntable-orderbox">
         <div class="turntable-order" onclick="gailu">
-          <van-swipe class="my-swipe turntable-order-lists" :autoplay="3000" indicator-color="white" id="orderlsits" vertical style="height: 3.35rem;" :touchable="false" duration="1000" ref="resize" @change='scrollFlish'>
+          <van-swipe class="my-swipe turntable-order-lists" :autoplay="3000" indicator-color="white" id="orderlsits" vertical style="height: 3.35rem;" :touchable="false" :duration="1000" ref="resize" @change='scrollFlish'>
             <!-- vertical -->
             <van-swipe-item v-for="(item,index) in renderNameArr" :key="index" class="turntable-order-item">
               <div class="turntable-order-item" v-for="(item,index) in item" :key="index">
-                 {{timeArr[index]}}"{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币
+                 {{timeArr[index]}} "{{item.name}}" 中奖 ! 获得 {{item.integral}} 鱼泡币
               </div>
             </van-swipe-item>
           </van-swipe>
@@ -104,13 +111,6 @@
         success:false, // 是否为4次后的分享成功
       }
     },
-    // 过滤器
-    filters:{
-      currens(val){
-        let add = formatDate(val,'h:mm:ss')
-        return add
-      }
-    },
     created() {
     },
     beforeMount(){
@@ -131,22 +131,23 @@
     methods:{
       // 滚动时间
       scrollFlish(){
-       let nowTime = new Date().getTime();
-       let nowHMS = formatDate(nowTime,"h:mm:ss");
-       let arr = this.timeArr;
-       arr.push(nowHMS);
-       let newArr = arr.sort(function(){
-            return Math.random() * 2 - 1
-       })
-        setTimeout(()=>{
-          this.timeArr = newArr
-        },2000)
+        let timeArr = [];
+        let time = new Date().getTime() - 60*1000;
+        for(let i = 4; i > 0; i--){
+          let beforTime = time - i*3000/4;
+          let beforHMS = formatDate(beforTime,"h:mm:ss");
+          timeArr.push(beforHMS)
+        }
+        this.timeArr = [...timeArr]
       },
       Cloes(){
         this.show = false
       },
       // 弹窗
       goshow(){
+        //转动的时候不允许操作
+        if(this.is_rotate) return false;
+
         this.show = true
       },
       //随机数
@@ -159,7 +160,7 @@
         this.$axios.post("/turn-table/get-user-lottery-info" + this.source).then(res=>{
           if(res && res.code == 200){
             this.isComplete = true;
-            this.content = {...res.content};
+            this.content = {...res.content.info};
             console.log(res)
           }else{
             this.isComplete = 0;
@@ -183,25 +184,25 @@
         let arr = [];
         this.nameArr.forEach((element,index) => {
           arr.push(element)
-          console.log(arr)
           if((index+1) % 4 ==0 ){
             newarr.push([...arr])
             arr=[]
           }
         });
         this.renderNameArr = newarr;
-          for(let i =0; i < 10; i++){
-            let beforTime = new Date().getTime() - i*6*1000;
-            let beforHMS = formatDate(beforTime,"h:mm:ss");
-            this.timeArr.push(beforHMS)
-        }
+        this.scrollFlish()
       },
       //点击抽奖
       startTurnTbale(){
            const that = this;
-          //  当用户分享4次了
-           let contry = that.content.lotteryNumber+that.content.viewVideoNumber+that.content.shareNumber
-           if(contry == 1) {
+          //  用户没有分享最后一次抽奖强制分享
+          //  lotteryNumber:0,//该用户剩余抽奖次数
+          // viewVideoNumber:0,//该用户剩余看视频次数
+          // shareNumber:0, //该用户剩余分享次数
+          // shareCount:0,//分享总数
+          // videoCount:0,//获取视频总数
+           let contry = Number(that.content.viewVideoNumber) + Number(that.content.lotteryNumber)
+           if(that.content.shareNumber !=0 && contry == 1) {
              that.appShare()
              if(!that.success) return false
            }
@@ -214,7 +215,7 @@
            if(that.content.lotteryNumber ==0){
               Dialog.confirm({
               title:"提示",
-              message:"需要观看视频后,才能抽奖",
+              message:"需要观看视频后，才能抽奖",
               confirmButtonColor:"#EF9F38",
               }).then(()=>{
                bridge.callHandler('playVideo',{type:ad})
@@ -243,13 +244,20 @@
              this.rotate = 9*360+rotates
              this.content.lotteryNumber -=1
              setTimeout(()=>{
-              Dialog.confirm({
-                title:"提示",
-                message:res.msg,
-              }).then(()=>{
-                this.rotate = 30
-                this.is_rotate = false
-              }).catch(()=>{
+              // Dialog.confirm({
+              //   title:"提示",
+              //   message:res.msg,
+              // }).then(()=>{
+              //   this.rotate = 30
+              //   this.is_rotate = false
+              // }).catch(()=>{
+              //   this.rotate = 30
+              //   this.is_rotate = false
+              // })
+              Dialog.alert({
+                title:'提示',
+                message: res.msg,
+              }).then(res=>{
                 this.rotate = 30
                 this.is_rotate = false
               })
@@ -355,14 +363,15 @@
             // })
             that.startTurnTbale()
 
-          }else if(res && res.code == 500){
-            Dialog.alert({
-                title:'提示',
-                message:res.msg,
-                confirmButtonText:"确定",
-            })
-            that.content.shareNumber = 0
           }
+          // else if(res && res.code == 500){
+          //   Dialog.alert({
+          //       title:'提示',
+          //       message:res.msg,
+          //       confirmButtonText:"确定",
+          //   })
+          //   that.content.shareNumber = 0
+          // }
         })
       },
       // 获取次数
@@ -382,9 +391,7 @@
       },
       // 返回上级
       goBack(){
-        debugger
         let that = this;
-        console.log(that)
         //转动的时候不允许操作
         if(that.is_rotate) return false;
 
@@ -395,7 +402,6 @@
         that.$axios.post('/turn-table/quit' + that.source).then(function(res){
           if(res && res.code == 200){
             data.returnTimes = 0;
-            debugger
             bridge.callHandler(
             'finish'
             , data
@@ -411,7 +417,6 @@
             //   // that.$router.go(-1)
             // })
             data.returnTimes = 1;
-            console.log(data)
             data.msg = res.msg;
             bridge.callHandler(
             'finish'
@@ -424,7 +429,7 @@
               'finish'
               , data
             );
-          })
+        })
       },
       // APP 调js
       getAPPDate(){
@@ -481,7 +486,7 @@
     height: 100%;
       .inner-block{
           width:5.8rem;
-          height:6.5rem;
+          // height:6.5rem;
           background-color: #fff;
           border-radius:0.2rem;
           padding:0.43rem 0.42rem;
@@ -498,11 +503,11 @@
             }
             .btn{
               width:3.28rem;
-              height:0.62rem;
-              background:rgba(239,159,56,1);
-              border-radius:0.31rem;
+              // height:0.62rem;
+              background:#ffa926;
+              border-radius:0.36rem;
               margin: 0 auto;
-              line-height:0.62rem;
+              line-height:0.72rem;
               color: #fff;
             }
       }
@@ -523,6 +528,7 @@
      height: 100%;
      background: url('http://cdn.yupao.com/newyupao/images/m-turntable-bg.png?t=1') no-repeat;
      background-size: 100% 100%;
+     overflow: hidden;
  }
 .turtable-right{
   position: absolute;
@@ -594,18 +600,13 @@
   border-radius: 50%;
   overflow: hidden;
 }
-.turntable-timesbox{
-  position: relative;
-  color: white;
-  font-size: 0.3rem;
-  margin-top: 0.5rem;
-}
  .turntable-timesbox{
     position: relative;
     color: white;
     font-size: 0.3rem;
     margin-top: 0.3rem;
     text-align: center;
+    font-weight: 500;
   }
   .turntable-timesbox img{
     width: 2rem;

@@ -88,6 +88,7 @@ export default {
     },
     mounted () {
         this.$refs.collHead.onchangeIndex(this.mode)
+        // document.getElementsByClassName("van-pull-refresh__head")[0].style.display = "block";
     },
     data(){
         return{
@@ -178,7 +179,7 @@ export default {
                       }
                       const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
                       if(that.page == 1) that.list = [...list];
-                      
+
                   }else{
                     that.isempty = true;
                   }
@@ -201,6 +202,11 @@ export default {
         },
         onServers(mode){
             this.$router.replace({path:'/user/release/',query:{mode}});
+            document.getElementsByClassName("van-pull-refresh__head")[0].style.display = "none";
+            setTimeout(()=>{
+              document.getElementsByClassName("van-pull-refresh__head")[0].style.display = "block";
+            },1800)
+
         },
         listScroll(){
             this.page += 1;

@@ -61,12 +61,9 @@
               >
                 <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
               </van-list>
+              <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
             </van-pull-refresh>
-             <EmptyMsg :empty1="iscomplete && !isempty" :empty2="isempty"/>
         </div>
-
-
-
     <Tarbar />
     </div>
   </div>
@@ -154,6 +151,7 @@ export default {
       this.int()
     }
     window.addEventListener('scroll',this.my_scroll);
+    document.getElementsByClassName("van-pull-refresh__head")[0].style.display="none";
   },
   methods: {
     // 滚动
