@@ -124,7 +124,6 @@
       }
     },
     created() {
-
     },
     beforeMount(){
       bridge = jsBridge();
