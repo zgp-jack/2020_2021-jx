@@ -40,14 +40,19 @@
         <!-- <span @click="!isComplete?int():appWatchVideo()" class="turntable-span-img"></span> -->
       </div>
 
-      <div class="turntable-tasks">
-        <div class="turntable-task-item">
-          <span>看视频剩余次数(<span id="overvideo">{{content.videoCount-content.viewVideoNumber}}</span>/<span id="allvideo">{{content.videoCount}}</span>)</span>
-          <div :class="content.viewVideoNumber==0?'turntable-task-hui':''" @click="!isComplete?int():(content.viewVideoNumber==0?()=>{}:appWatchVideo())" data-end="0" >去抽奖</div>
-        </div>
-        <div class="turntable-task-item">
-          <span>分享好友剩余次数(<span id="overshare">{{content.shareCount-content.shareNumber}}</span>/<span id="allshare">{{content.shareCount}}</span>)</span>
-          <div :class="content.shareNumber==0?'turntable-task-hui':''"  @click="!isComplete?int():appShare()">去抽奖</div>
+      <div class="turntable-tasks" v-if="content.viewVideoNumber!=0 || content.shareNumber!=0">
+        <img src="../../assets/img/luck/task_top.png" alt="" class="task_top">
+        <img src="../../assets/img/luck/task_center.png" alt="" class="task_center" :style="{'height':content.viewVideoNumber==0 || content.shareNumber==0? '0.6rem':'auto'}">
+        <img src="../../assets/img/luck/task_bottom.png" alt="">
+        <div class="task_inner">
+            <div class="turntable-task-item clearfix" v-if="content.viewVideoNumber!=0">
+              <span>看视频剩余次数(<span id="overvideo">{{content.videoCount-content.viewVideoNumber}}</span>/<span id="allvideo">{{content.videoCount}}</span>)</span>
+              <div :class="content.viewVideoNumber==0?'turntable-task-hui fr':'fr'" @click="!isComplete?int():(content.viewVideoNumber==0?()=>{}:appWatchVideo())" data-end="0" >去抽奖</div>
+            </div>
+            <div class="turntable-task-item clearfix" v-if="content.shareNumber!=0">
+              <span>分享好友剩余次数(<span id="overshare">{{content.shareCount-content.shareNumber}}</span>/<span id="allshare">{{content.shareCount}}</span>)</span>
+              <div :class="content.shareNumber==0?'turntable-task-hui fr':'fr'"  @click="!isComplete?int():appShare()">去抽奖</div>
+            </div>
         </div>
       </div>
 
@@ -67,14 +72,14 @@
           </van-swipe>
         </div>
       </div>
-      <div class="turntable-tips" v-if="isiOS">本活动兑换奖品由鱼泡网提供，奖品发放及后续服务均由产品赞助方鱼泡网提供，与Apple Inc.无关。</div>
+      <div @click="goBack" class="turntable-tips" v-if="isiOS">本活动兑换奖品由鱼泡网提供，奖品发放及后续服务均由产品赞助方鱼泡网提供，与Apple Inc.无关。</div>
     </div>
   </div>
 </template>
 <script>
-  import { NoticeBar,Dialog,Toast,Swipe,SwipeItem,Overlay } from 'vant';
+  import { NoticeBar,Dialog,Swipe,SwipeItem,Overlay } from 'vant';
   import jsBridge from '../../static/utils/JSbridge';
-  import {formatDate} from '../../static/utils/utils'
+  import {formatDate} from '../../static/utils/utils';
   let bridge;
   export default{　
     components:{
@@ -96,6 +101,7 @@
           shareNumber:0, //该用户剩余分享次数
           shareCount:0,//分享总数
           videoCount:0,//获取视频总数
+          turn_table_video_scale:null,//看视频类型比列
         },
         rotate:30,
         is_rotate:false,//判断是否正在抽奖
@@ -107,7 +113,7 @@
         time:new Date(),
         show:false,
         timeArr:[],
-        success:false // 是否为4次后的分享成功
+        // success:false // 是否为4次后的分享成功
       }
     },
     // 过滤器
@@ -164,10 +170,11 @@
       },
       //获取用户信息
       initUserInfo(){
+        this.isComplete = false;
         this.$axios.post("/turn-table/get-user-lottery-info" + this.source).then(res=>{
           if(res && res.code == 200){
             this.isComplete = true;
-            this.content = {...res.content};
+            this.content = {...res.content.info,...res.content.videoConf};
           }else{
             this.isComplete = 0;
           }
@@ -207,10 +214,12 @@
           // shareNumber:0, //该用户剩余分享次数
           // shareCount:0,//分享总数
           // videoCount:0,//获取视频总数
-           let contry = Number(that.content.viewVideoNumber) + Number(that.content.lotteryNumber)
-           if(that.content.shareNumber !=0 && contry == 1) {
+          const {viewVideoNumber,lotteryNumber,shareNumber} = that.content;
+           let contry = Number(viewVideoNumber) + Number(lotteryNumber) + Number(shareNumber)
+           if(shareNumber !=0 && contry == 1) {
              that.appShare()
-             if(!that.success) return false
+             return false;
+            //  if(!that.success) return false
            }
 
            if(that.is_rotate) return false;
@@ -220,11 +229,11 @@
            let ad = that.videoType();
            if(that.content.lotteryNumber ==0){
               Dialog.confirm({
-              title:"提示",
-              message:"需要观看视频后，才能抽奖",
-              confirmButtonColor:"#EF9F38",
-              }).then(()=>{
-               bridge.callHandler('playVideo',{type:ad})
+                title:"提示",
+                message:"需要观看视频后，才能抽奖",
+                confirmButtonColor:"#EF9F38",
+                }).then(()=>{
+                bridge.callHandler('playVideo',{type:ad})
               })
               return false;
            }
@@ -248,7 +257,12 @@
                         break;
                             }
              this.rotate = 9*360+rotates
-             this.content.lotteryNumber -=1
+
+             this.content.lotteryNumber -=1;
+
+             //避免12点以后数据没变的问题
+            //  this.initUserInfo()
+
              setTimeout(()=>{
               // Dialog.confirm({
               //   title:"提示",
@@ -286,9 +300,9 @@
             title:"提示",
             message:"分享给微信好友，可再获得1次抽奖机会",
             cancelButtonText: '取消',
-            confirmButtonText: '去分享'
+            confirmButtonText: '去分享',
           }).then(function(){
-            bridge.callHandler('share')
+            that.appShare()
           })
           return false
           //分享和看视频的次数都已经用完了
@@ -308,8 +322,13 @@
           let that = this;
           let ad = that.videoType();
           that.$axios.post('/turn-table/view-video' + that.source).then(res=>{//{hamapi:that.userInfo.id}
+
           that.content.lotteryNumber +=1
           that.content.viewVideoNumber -=1
+
+          //避免12点以后数据没变的问题
+          // that.initUserInfo()
+
           if(res && res.code == 200){
             if(that.content.viewVideoNumber ==0 && that.content.shareNumber >0 ){
                 Dialog.confirm({
@@ -318,7 +337,7 @@
                 confirmButtonText: '去分享',
                 confirmButtonColor:"#EF9F38",
               }).then(()=>{
-                bridge.callHandler('share')
+                that.appShare()
               })
             }else{
               // Dialog.confirm({
@@ -349,17 +368,25 @@
       appShare(){
         //转动的时候不允许操作
         if(this.is_rotate) return false;
-
-        bridge.callHandler('share');
+        const {shareNumber} = this.content;
+        let data = {
+          shareNumber
+        }
+        bridge.callHandler('share',data);
       },
       // 分享成功后的回调
       shareEndAction(){
         let that = this
         that.$axios.post('/turn-table/turn-share' + that.source).then(function(res){//{hamapi:this.userInfo.id}
           if(res && res.code == 200){
-            that.success = true
+            // that.success = true
+
             that.content.lotteryNumber +=1
             that.content.shareNumber-=1
+
+            //避免12点以后数据没变的问题
+            // that.initUserInfo()
+
             //关闭弹框直接去抽奖
             // Dialog.confirm({
             //   title:"分享成功",
@@ -389,7 +416,7 @@
         if(this.content.lotteryNumber ==0 &&  this.content.viewVideoNumber ==0){
           Dialog.alert({
             title:'谢谢参与',
-            message:'今日获取抽奖次数已达上限，请明天再来'
+            message:'今日获取抽奖次数已达上限，请明天再来',
           })
           return false
         }
@@ -413,7 +440,7 @@
             , data
           );
           }
-          if(res && res.code == 500){
+          else if(res && res.code == 500){
             // Dialog.confirm({
             //   title:"提示",
             //   message:res.msg,
@@ -425,9 +452,15 @@
             data.returnTimes = 1;
             data.msg = res.msg;
             bridge.callHandler(
-            'finish'
-            , data
-          );
+              'finish'
+              , data
+            );
+          }
+          else{
+            bridge.callHandler(
+              'finish'
+              , data
+            );
           }
         }).catch(()=>{
             //请求失败允许返回
@@ -462,14 +495,15 @@
         //   videoCount:0,//获取视频总数
         // },
         // let num=Math.floor(Math.random()*4+1);
-        const {lotteryNumber,viewVideoNumber,shareNumber,videoCount,shareCount} = this.content;
-        //判断用户看了多少次，看了3次第4次播放腾讯的
-        let num = videoCount + shareCount - lotteryNumber - viewVideoNumber - shareNumber;
+        let {lotteryNumber,viewVideoNumber,shareNumber,videoCount,shareCount,turn_table_video_scale} = this.content;
+        turn_table_video_scale = turn_table_video_scale.split(',');
+        //播放视频比例
+        let num = Number(videoCount)  + Number(shareCount) - lotteryNumber - viewVideoNumber - shareNumber;
         let type;
-        switch((num+1)%4){
-          case 0 : type = 'tx'
-          break;
-          default: type = 'tt'
+        if(num!=0 && ((num+1) % turn_table_video_scale.length ==0)){
+          type = turn_table_video_scale[turn_table_video_scale.length - 1]
+        }else{
+          type = turn_table_video_scale[num % turn_table_video_scale.length]
         }
         return type
       },
@@ -541,7 +575,6 @@
   right:-0.2rem;
     .inner{
       width:1.82rem;
-      height:0.57rem;
       background:rgba(255,243,240,1);
       // box-shadow:0px 3px 0px 0px rgba(133,28,4,0.15), 0px 5px 6px 0px rgba(255,255,255,1);
       border-radius:0.29rem;
@@ -623,30 +656,32 @@
   .turntable-tasks{
     position: relative;
     margin-top: 0.3rem;
-    width: 100%;
-    height: 3rem;
-    background: url('http://cdn.yupao.com/newyupao/images/turntable-day-task.png') no-repeat;
-    background-size: 100% 100%;
-    padding: 0.9rem 0.2rem 0.2rem;
+    .task_inner{
+      width: 100%;
+      position: absolute;
+      top:0.4rem;
+    }
   }
   .turntable-task-item{
     position: relative;
     width: 100%;
     font-size: 0.3rem;
     color: #635050;
-    padding: 0 0.2rem;
+    padding: 0 0.4rem;
+    //0.1839622641509434/12-13像素
+  }
+  img{
+      display: block;
   }
   .turntable-task-item span{
     display: inline-block;
     line-height: 0.8rem;
   }
   .turntable-task-item div{
-    position: absolute;
+    margin-top: 0.1rem;
     line-height: 0.6rem;
     padding: 0 0.2rem;
     color: white;
-    top: 0.1rem;
-    right: 0.2rem;
     background-color: #fc6441;
     border-radius: 3px;
     font-size: 0.3rem;
