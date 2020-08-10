@@ -29,7 +29,7 @@
         </div>
 
       </div>
-      <div class="turntable-timesbox">我的抽奖次数：<span id="turntable-times">{{content.lotteryNumber}}</span>次
+      <div class="turntable-timesbox">我的抽奖次数：<span id="turntable-times">{{counts}}</span>次
         <!-- <span @click="!isComplete?int():appWatchVideo()" class="turntable-span-img"></span> -->
       </div>
 
@@ -100,7 +100,8 @@
         time:new Date(),
         show:false,
         timeArr:[],
-        success:false // 是否为4次后的分享成功
+        counts:'',
+        success:false, // 是否为4次后的分享成功
       }
     },
     // 过滤器
@@ -111,7 +112,6 @@
       }
     },
     created() {
-
     },
     beforeMount(){
       bridge = jsBridge();
@@ -214,7 +214,7 @@
            if(that.content.lotteryNumber ==0){
               Dialog.confirm({
               title:"提示",
-              message:"抽奖次数不足，请获取抽奖次数后再来试试吧",
+              message:"需要观看视频后,才能抽奖",
               confirmButtonColor:"#EF9F38",
               }).then(()=>{
                bridge.callHandler('playVideo',{type:ad})
