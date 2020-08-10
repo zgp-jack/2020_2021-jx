@@ -42,11 +42,11 @@
 
       <div class="turntable-tasks">
         <div class="turntable-task-item">
-          <span>看视频剩余次数(<span id="overvideo">{{content.videoCount-content.viewVideoNumber}}</span>/<span id="allvideo">{{content.videoCount}}</span>)</span>
+          <span>看视频剩余次数(<span id="allvideo">{{content.videoCount}}</span>)</span>
           <div :class="content.viewVideoNumber==0?'turntable-task-hui':''" @click="!isComplete?int():(content.viewVideoNumber==0?()=>{}:appWatchVideo())" data-end="0" >去抽奖</div>
         </div>
         <div class="turntable-task-item">
-          <span>分享好友剩余次数(<span id="overshare">{{content.shareCount-content.shareNumber}}</span>/<span id="allshare">{{content.shareCount}}</span>)</span>
+          <span>分享好友剩余次数(<span id="allshare">{{content.shareCount}}</span>)</span>
           <div :class="content.shareNumber==0?'turntable-task-hui':''"  @click="!isComplete?int():appShare()">去抽奖</div>
         </div>
       </div>
@@ -107,18 +107,11 @@
         time:new Date(),
         show:false,
         timeArr:[],
-        success:false // 是否为4次后的分享成功
-      }
-    },
-    // 过滤器
-    filters:{
-      currens(val){
-        let add = formatDate(val,'h:mm:ss')
-        return add
+        counts:'',
+        success:false, // 是否为4次后的分享成功
       }
     },
     created() {
-
     },
     beforeMount(){
       bridge = jsBridge();
@@ -167,7 +160,8 @@
         this.$axios.post("/turn-table/get-user-lottery-info" + this.source).then(res=>{
           if(res && res.code == 200){
             this.isComplete = true;
-            this.content = {...res.content};
+            this.content = {...res.content.info};
+            console.log(res)
           }else{
             this.isComplete = 0;
           }

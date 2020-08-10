@@ -13,7 +13,7 @@
             </div>
             <div class="form-row">
               <i class="iconfont icon-yanzheng"></i>
-              <input type="text"  placeholder="请输入短信验证码" v-model="register_data.captcha" autocomplete="off" maxlength="6" id="yanzheng">
+              <input type="text"  placeholder="请输入短信验证码" v-model="register_data.captcha" autocomplete="off" maxlength="6" id="yanzheng" >
               <div class="get-captcha" @click="getCaptcha">{{isCaptcha?'获取验证码':countDown+'s'}}</div>
             </div>
             <div class="form-row">
@@ -125,7 +125,7 @@ export default {
           const {code} = res
           if(code == 200){
             Toast('注册成功')
-            this.$router.push('/login')
+            this.$router.replace('/login')
           }else{
             Toast(res.msg)
           }
