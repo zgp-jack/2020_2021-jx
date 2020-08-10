@@ -62,7 +62,8 @@
       </div> -->
       <div class="turntable-orderbox">
         <div class="turntable-order" onclick="gailu">
-          <van-swipe class="my-swipe turntable-order-lists" :autoplay="3000" indicator-color="white" id="orderlsits" vertical style="height: 3.35rem;" :touchable="false" :duration="1000" ref="resize" @change='scrollFlish'>
+          <!-- @change='scrollFlish' -->
+          <van-swipe class="my-swipe turntable-order-lists" :autoplay="3000" indicator-color="white" id="orderlsits" vertical style="height: 3.35rem;" :touchable="false" :duration="1000" ref="resize" >
             <!-- vertical -->
             <van-swipe-item v-for="(item,index) in renderNameArr" :key="index" class="turntable-order-item">
               <div class="turntable-order-item" v-for="(item,index) in item" :key="index">
@@ -202,7 +203,7 @@
           }
         });
         this.renderNameArr = newarr;
-        this.scrollFlish()
+        // this.scrollFlish()
       },
       //点击抽奖
       startTurnTbale(){
@@ -213,9 +214,9 @@
           // shareNumber:0, //该用户剩余分享次数
           // shareCount:0,//分享总数
           // videoCount:0,//获取视频总数
-          const {viewVideoNumber,lotteryNumber,shareNumber} = that.content;
-           let contry = Number(viewVideoNumber) + Number(lotteryNumber) + Number(shareNumber)
-           if(shareNumber !=0 && contry == 1) {
+           const {viewVideoNumber,lotteryNumber,shareNumber} = that.content;
+           let contry = Number(viewVideoNumber) + Number(lotteryNumber)
+           if(shareNumber !=0 && contry == 0) {
              that.appShare()
              return false;
             //  if(!that.success) return false
@@ -306,11 +307,12 @@
           return false
           //分享和看视频的次数都已经用完了
         }else if(that.content.viewVideoNumber == 0 && that.content.shareNumber == 0 ){
-            Dialog.alert({
-            title:"提示",
-            message:"今日抽奖次数已达上限，请明天再来",
-            confirmButtonColor:"#EF9F38",
-          })
+            // Dialog.alert({
+            //   title:"提示",
+            //   message:"今日抽奖次数已达上限，请明天再来",
+            //   confirmButtonColor:"#EF9F38",
+            // })
+            that.appShare()
           return false
         }
         let ad = that.videoType();
@@ -322,45 +324,53 @@
           let ad = that.videoType();
           that.$axios.post('/turn-table/view-video' + that.source).then(res=>{//{hamapi:that.userInfo.id}
 
-          that.content.lotteryNumber +=1
-          that.content.viewVideoNumber -=1
-
           //避免12点以后数据没变的问题
           // that.initUserInfo()
+          // lotteryNumber:0,//该用户剩余抽奖次数
+          // viewVideoNumber:0,//该用户剩余看视频次数
+          // shareNumber:0, //该用户剩余分享次数
+          // shareCount:0,//分享总数
+          // videoCount:0,//获取视频总数
+          // turn_table_video_scale:null,//看视频类型比列
 
           if(res && res.code == 200){
-            if(that.content.viewVideoNumber ==0 && that.content.shareNumber >0 ){
-                Dialog.confirm({
-                title:"小妙招",
-                message:'恭喜你，获得1次抽奖机会。分享给好友可再获得1次抽奖机会。',
-                confirmButtonText: '去分享',
-                confirmButtonColor:"#EF9F38",
-              }).then(()=>{
-                that.appShare()
-              })
-            }else{
-              // Dialog.confirm({
-              //   title:"提示",
-              //   message:res.msg,
-              //   cancelButtonText: '去抽奖',
-              //   confirmButtonText: '继续观看',
-              //   confirmButtonColor:"#EF9F38",
-              // }).then(()=>{
-              // bridge.callHandler('playVideo',{"type":ad})
-              // }).catch(()=>{
-              //   console.log('取消')
-              // })
-              //看完视频强制抽奖
-              that.startTurnTbale()
-            }
+            that.content.lotteryNumber +=1
+            that.content.viewVideoNumber -=1
+            // if(that.content.viewVideoNumber ==0 && that.content.shareNumber >0 ){
+            //   if(shareNumber !=0 && contry == 1){
+            //     Dialog.confirm({
+            //       title:"小妙招",
+            //       message:'恭喜你，获得1次抽奖机会。分享给好友可再获得1次抽奖机会。',
+            //       confirmButtonText: '去分享',
+            //       confirmButtonColor:"#EF9F38",
+            //     }).then(()=>{
+            //       that.appShare()
+            //     })
+            // }else{
+            //   // Dialog.confirm({
+            //   //   title:"提示",
+            //   //   message:res.msg,
+            //   //   cancelButtonText: '去抽奖',
+            //   //   confirmButtonText: '继续观看',
+            //   //   confirmButtonColor:"#EF9F38",
+            //   // }).then(()=>{
+            //   // bridge.callHandler('playVideo',{"type":ad})
+            //   // }).catch(()=>{
+            //   //   console.log('取消')
+            //   // })
+            //   //看完视频强制抽奖
+            //   that.startTurnTbale()
+            // }
+            //看完视频强制抽奖
+            that.startTurnTbale()
           }
-          if(res && res.code == 500){
-            Dialog.alert({
-              title:"谢谢参与",
-              message:res.msg,
-            })
-            that.content.viewVideoNumber = 0
-          }
+          // if(res && res.code == 500){
+          //   Dialog.alert({
+          //     title:"谢谢参与",
+          //     message:res.msg,
+          //   })
+          //   that.content.viewVideoNumber = 0
+          // }
         })
       },
       //分享好友
@@ -413,10 +423,12 @@
         if(this.is_rotate) return false;
 
         if(this.content.lotteryNumber ==0 &&  this.content.viewVideoNumber ==0){
-          Dialog.alert({
-            title:'谢谢参与',
-            message:'今日获取抽奖次数已达上限，请明天再来',
-          })
+          // Dialog.alert({
+          //   title:'谢谢参与',
+          //   message:'今日获取抽奖次数已达上限，请明天再来',
+          // })
+          //没有次数了调分享
+          this.appShare()
           return false
         }
         return true
