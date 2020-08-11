@@ -7,8 +7,7 @@ import {Toast} from 'vant';
 import qs from 'qs';
 import {getCookie,setCookie,isWeixin} from '../static/utils/utils';
 
-export default function (aaaa) {
-    let {$axios,redirect,store} = aaaa
+export default function ({$axios,redirect,store}) {
     // request拦截器
     let globalLoading;
     $axios.onRequest(config => {
@@ -44,7 +43,7 @@ export default function (aaaa) {
     })
     $axios.onError(error => {
         Toast.clear()
-        return error
+        console.log(error)
     })
     // response拦截器
     $axios.interceptors.response.use(response => {

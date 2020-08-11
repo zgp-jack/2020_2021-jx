@@ -17,6 +17,28 @@
         }
 }
 .father{
+    .go-release{
+      margin-top: 1rem;
+      button{
+        display: block;
+        width: 4rem;
+        height: 0.8rem;
+        background-color: rgb(255, 170, 38);
+        font-size: 0.3rem;
+        color: #fff;
+        text-align: center;
+        line-height: 0.8rem;
+        border: none;
+        outline: none;
+        border-radius: 1rem;
+        margin: 0 auto;
+      }
+      p{
+        padding-top: 0.2rem;
+        font-size: 0.25rem;
+        text-align: center;
+      }
+    }
     .van-pull-refresh{
       overflow: visible;
     }
