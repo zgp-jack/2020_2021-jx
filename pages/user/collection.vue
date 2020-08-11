@@ -97,6 +97,7 @@ export default {
        onRefresh() {
          this.page = 1
          this.More = false
+         this.list = []
          this.getcollect(this.modeler);
          this.isLoading= false;
     },

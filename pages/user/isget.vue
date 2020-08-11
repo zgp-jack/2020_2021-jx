@@ -129,6 +129,7 @@ export default {
       onRefresh(){
          this.page = 1
          this.More = false
+         this.list = []
          this.getrec()
          this.isLoading= false;
       },
