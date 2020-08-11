@@ -77,7 +77,14 @@ export default {
   */
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
+    
+    // Simple usage
+    'cookie-universal-nuxt',
+ 
+    // With options
+    ['cookie-universal-nuxt', { alias: 'cookiz' }],
+
   ],
   axios: {
     // credentials: true,
@@ -105,5 +112,8 @@ export default {
     base: env === "development" ?'/dist':'/',
   },
 
-  loading: '~/components/loading/index.vue'
+  loading: '~/components/loading/index.vue',
+
+  //中间件
+  middleware: ['userAgent']
 }
