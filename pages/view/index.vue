@@ -117,6 +117,26 @@
         novice_point_alert:true
       }
     },
+    middleware: 'userAgent',
+    async asyncData ({route,redirect,$axios,userAgent}){
+      let params = {...route.query};
+      // 参数不完整跳转首页
+      if(params.info && params.mode){
+        return await $axios.get('/index/new-view?'+userAgent,{params}).then(res=>{
+          if(res.code == 200){
+             return{
+               detail_info:{...res.content}
+             }
+          }else if(res.code == 500){
+            Dialog.alert({
+              title:"提示",
+              message:res.msg,
+            })
+          }
+        })
+      }
+    },
+
     components:{
       VerticalBanner,
       "van-dialog": Dialog.Component,
@@ -126,6 +146,7 @@
     mounted(){
       let guide = getNovicePoint();
       if(!guide.detail) this.novice_point_alert = false
+
       //参数不完整跳转首页
       if(!(this.$route.query.info && this.$route.query.mode)){
         window.location.replace('/dist/home')
@@ -134,23 +155,26 @@
        this.mode = this.$route.query.mode;
        // 改变标题
        this.changeTitle(this.mode);
-       //根据参数请求数据
-        this.$axios.get('/index/new-view',{params}).then(res=>{
-          if(res.code == 200){
-             this.$set(this,'detail_info',{...res.content})
-             // 状态的显示
-             this.allState(res.content);
-             //获取详情的高度
-             this.detailContnetHeight()
-          }else if(res.code == 500){
-            Dialog.alert({
-              title:"提示",
-              message:res.msg,
-            }).then(res=>{
-              this.$router.go(-1)
-            })
-          }
-        })
+       // 状态的显示
+       this.allState(this.detail_info);
+        //获取详情的高度
+       this.detailContnetHeight()
+        // this.$axios.get('/index/new-view',{params}).then(res=>{
+        //   if(res.code == 200){
+        //      this.$set(this,'detail_info',{...res.content})
+        //      // 状态的显示
+        //      this.allState(res.content);
+        //      //获取详情的高度
+        //      this.detailContnetHeight()
+        //   }else if(res.code == 500){
+        //     Dialog.alert({
+        //       title:"提示",
+        //       message:res.msg,
+        //     }).then(res=>{
+        //       this.$router.go(-1)
+        //     })
+        //   }
+        // })
       }
     },
     methods:{
