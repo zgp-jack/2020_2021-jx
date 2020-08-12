@@ -13,7 +13,7 @@
                   </p>
               </div>
           </div>
-          
+
          <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
           <van-list
           v-if="list.length"
@@ -41,7 +41,7 @@
           </div>
           </van-list>
            <emptyMsg  :empty1='true' v-if='More'/>
-           <emptyMsg  :empty2='true' v-if='Moreimg'/>
+           <emptyMsg  :empty2='true' v-if='Moreimg' :text="'暂无积分来源记录'"/>
            <div class="not-consume" v-if="not_consume">
              <p>暂无鱼泡币消耗记录<br />查看完整电话或置顶消息会生成消耗记录</p>
              <button @click="to_page">查看求租/出租机械</button>
@@ -130,6 +130,7 @@ export default {
       onRefresh(){
          this.page = 1
          this.More = false
+         this.list = []
          this.getrec()
          this.isLoading= false;
       },

@@ -114,7 +114,7 @@
             }
     }
     .not-consume{
-      padding-top: 2.5rem;
+      padding-top: 0.2rem;
       font-size: 0.3rem;
       p{
         text-align: center;
@@ -131,4 +131,8 @@
         border: none;
       }
     }
+
+}
+.van-pull-refresh{
+  min-height:calc(100% - 1rem);
 }
