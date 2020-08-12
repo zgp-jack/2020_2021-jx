@@ -157,6 +157,7 @@ export default {
       //下拉刷新
       onRefresh(){
         this.page = 1;
+        this.list = []
         this.getList()
       }
     }
