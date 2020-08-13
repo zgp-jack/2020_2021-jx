@@ -25,7 +25,9 @@
             <van-list
                 v-model="loading"
                 :finished="iscomplete"
-                @load="listScroll">
+                @load="listScroll"
+                v-if="list.length"
+                >
                 <div class="item" v-for="(item,index) in list" :key='index' @click.stop="onSkip('view',item)">
                     <div class="title-h3">{{item.title}}</div>
                     <div class="intruduce">{{item.desc}}</div>
@@ -215,6 +217,7 @@ export default {
         },
         onrefresh(){
           this.page = 1;
+          this.list = []
           this.getData()
         },
         onServers(mode){
