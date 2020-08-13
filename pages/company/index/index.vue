@@ -5,7 +5,7 @@
         <div class="select_inner clearfix" @click="onisclose('isSelect_area')"><i class="iconfont icon-down fr" :class="{'rotate':isSelect_area}"/><p class="fr">{{selectAreaData.name || '所在地区'}}</p></div>
         <div class="select_inner clearfix" @click="onisclose('isSelect_jixie')"><i class="iconfont icon-down fr" :class="{'rotate':isSelect_jixie}"/><p class="fr">{{selectJixieData.name || '所有机械'}}</p></div>
     </div>
-    <div class="father">
+    <div class="father" @scroll="my_scroll">
       <van-pull-refresh v-model="listLoading" @refresh="onRefresh">
         <van-list
           v-model="listLoading"
@@ -36,7 +36,8 @@
 
     <!-- 机械类型选择 -->
     <CustomMechanicalType :onSelect="onSelect" :isSelect_jixie="isSelect_jixie" onlyFather = 'true'/>
-
+    <!-- 底部呼出 -->
+    <div class="bottom-bar" :class="isshow==false?'top-hide':''" @click="go"></div>
   </div>
 </template>
 
@@ -72,7 +73,9 @@ export default {
         isSelect_area: false,
         isSelect_jixie: false,
 
-        CustomArea_default_data:{province:{id: 1,name: '全国',pid: '0'}}
+        CustomArea_default_data:{province:{id: 1,name: '全国',pid: '0'}},
+        myscroll:0,
+        isshow:true
       }
     },
     computed:{
@@ -81,7 +84,22 @@ export default {
       }
     },
     methods:{
+      go(){
+        this.$router.push('/user/company')
+      },
+      // 滚动
+      my_scroll(e){
+        let scrollTop = e.path[0].scrollTop
+        let {myscroll,isshow} = this;
+            // 页面滚动距顶部距离
+            if(scrollTop>myscroll && isshow){
+                this.isshow = false;
 
+            }else if(scrollTop<myscroll && !isshow){
+                this.isshow = true;
+            }
+            this.myscroll=scrollTop
+      },
       getList(){
         this.listLoading = true
         let params = {page:this.page,area:this.area,type:this.type,page_size:this.page_size,globalLoading:false};
