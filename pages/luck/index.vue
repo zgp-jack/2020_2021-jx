@@ -46,11 +46,11 @@
         <img src="../../assets/img/luck/task_bottom.png" alt="">
         <div class="task_inner">
             <div class="turntable-task-item clearfix" v-if="content.viewVideoNumber!=0">
-              <span>看视频剩余次数(<span id="overvideo">{{content.videoCount-content.viewVideoNumber}}</span>/<span id="allvideo">{{content.videoCount}}</span>)</span>
+              <span>看视频剩余次数(<span id="overvideo">{{content.viewVideoNumber}}</span>/<span id="allvideo">{{content.videoCount}}</span>)</span>
               <div :class="content.viewVideoNumber==0?'turntable-task-hui fr':'fr'" @click="!isComplete?int():(content.viewVideoNumber==0?()=>{}:appWatchVideo())" data-end="0" >去抽奖</div>
             </div>
             <div class="turntable-task-item clearfix" v-if="content.shareNumber!=0">
-              <span>分享好友剩余次数(<span id="overshare">{{content.shareCount-content.shareNumber}}</span>/<span id="allshare">{{content.shareCount}}</span>)</span>
+              <span>分享好友剩余次数(<span id="overshare">{{content.shareNumber}}</span>/<span id="allshare">{{content.shareCount}}</span>)</span>
               <div :class="content.shareNumber==0?'turntable-task-hui fr':'fr'"  @click="!isComplete?int():appShare()">去抽奖</div>
             </div>
         </div>
@@ -125,6 +125,10 @@
       }
     },
     created() {
+     const {ssoToken} =  this.$route.query;
+     if(ssoToken){
+       this.$cookies.set('ssoToken',ssoToken)
+     }
     },
     beforeMount(){
       bridge = jsBridge();
@@ -510,6 +514,10 @@
         turn_table_video_scale = turn_table_video_scale.split(',');
         //播放视频比例
         let num = Number(videoCount)  + Number(shareCount) - lotteryNumber - viewVideoNumber - shareNumber;
+
+        //避免剩余看视频次数大于获取视频总数
+        num = Math.abs(num);
+
         let type;
         if(num!=0 && ((num+1) % turn_table_video_scale.length ==0)){
           type = turn_table_video_scale[turn_table_video_scale.length - 1]

@@ -17,7 +17,6 @@
                   <div class="chooseImg">
                     <img src="http://statics.zhaogongdi.com/xcx/camera.png">
                     <van-uploader :after-read="uploadImg" :max-count="3" />
-                    </van-uploader>
                 </div>
               </div>
             </div>

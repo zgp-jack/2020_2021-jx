@@ -80,7 +80,7 @@ export default {
           }
         }).then(res=>{
           if(res.code==200){
-            setCookie('ssoToken',res.content.token);
+            this.$cookies.set('ssoToken',res.content.token);
             Toast('登录成功')
             const callback = ()=>{
                that.$router.go(-1);
