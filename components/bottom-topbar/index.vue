@@ -71,6 +71,7 @@ export default {
   },
   methods:{
      handleScroll(scr){
+
             const scrollTop = scr;
             let {my_scroll,isshow} = this;
             // 页面滚动距顶部距离

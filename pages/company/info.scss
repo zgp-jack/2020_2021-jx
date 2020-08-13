@@ -4,6 +4,8 @@
   font-size:0.35rem;
   .linkman{
     color: #555555;
+    line-height: 0.6rem;
+    padding: 0.2rem;
   }
     .head{
       position: relative;
@@ -53,7 +55,7 @@
       margin-top:0.3rem;
       background: #fff;
         .list-head{
-          margin-left:0.1rem;
+          margin-left:0.2rem;
           border-bottom: 1px dashed #ddd;
           padding:0.3rem 0;
             >p{
@@ -70,7 +72,7 @@
           color: #555555;
         }
         .list-body{
-          padding-left:0.1rem;
+          padding-left:0.2rem;
             >div:not(:first-child) {
              border-top: 1px solid #ddd;
             }
