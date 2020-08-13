@@ -82,7 +82,7 @@
         display: none;
       }
     }
-    
+
 }
 
 //排序
@@ -111,4 +111,7 @@
     z-index: -2;
     opacity: 0;
     height: 0;
+}
+.van-pull-refresh{
+  padding-bottom:1rem;
 }

@@ -117,6 +117,35 @@
         novice_point_alert:true
       }
     },
+    // middleware: 'userAgent',
+    // async asyncData ({query,$axios,userAgent,app}){
+    //   let params = query;
+      
+    //   // 参数不完整跳转首页
+    //   // if(params.info && params.mode){
+    //     return await $axios.get('/index/new-view?source=M',{params}).then(res=>{
+    //       // if(res.code == 200){
+    //          return{
+    //            detail_info:{...res.content}
+    //          }
+    //       // }else if(res.code == 500){
+    //       //   Dialog.alert({
+    //       //     title:"提示",
+    //       //     message:res.msg,
+    //       //   })
+    //       // }
+    //     })
+    //   // }
+    // },
+
+    // async asyncData ({$axios}){
+    //   debugger
+    //   return await $axios.get('https://cnodejs.org/api/v1/topics').then(res=>{
+    //     return {
+    //       title:res.data[0].title
+    //     }
+    //   })
+    // },
     components:{
       VerticalBanner,
       "van-dialog": Dialog.Component,
@@ -126,6 +155,7 @@
     mounted(){
       let guide = getNovicePoint();
       if(!guide.detail) this.novice_point_alert = false
+
       //参数不完整跳转首页
       if(!(this.$route.query.info && this.$route.query.mode)){
         window.location.replace('/dist/home')
@@ -134,7 +164,6 @@
        this.mode = this.$route.query.mode;
        // 改变标题
        this.changeTitle(this.mode);
-       //根据参数请求数据
         this.$axios.get('/index/new-view',{params}).then(res=>{
           if(res.code == 200){
              this.$set(this,'detail_info',{...res.content})
