@@ -40,7 +40,6 @@ export default {
   methods:{
     //初始化
     int(){
-      debugger
       const weixin = isWeixin();
       const ssoToken = this.$cookies.get('ssoToken');
       const {code,state} = this.$route.query;
@@ -48,7 +47,7 @@ export default {
       if(weixin && !ssoToken && !code && !state){
         that.authorization()
       }else{
-        
+
         that.getArea()
 
         //获取机械类型

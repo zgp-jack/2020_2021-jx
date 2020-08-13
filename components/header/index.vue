@@ -32,6 +32,10 @@ export default {
             this.$router.push("/list/1");
             return false;
           }
+          if(history.length <= 1){
+              this.$router.push("/home");
+              return false;
+          }
           this.$router.go(-1)
         },
 		onEnsure(){
