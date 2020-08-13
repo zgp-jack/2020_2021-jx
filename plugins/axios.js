@@ -7,7 +7,7 @@ import {Toast} from 'vant';
 import qs from 'qs';
 import {setCookie,isWeixin} from '../static/utils/utils';
 
-export default function ({$axios,redirect,$cookies}) {
+export default function ({$axios,redirect,app}) {
     // request拦截器
     let globalLoading;
     $axios.onRequest(config => {
@@ -38,7 +38,7 @@ export default function ({$axios,redirect,$cookies}) {
             duration: 0,
             loadingType: 'spinner',
         });
-        let ssoToken = $cookies.get('ssoToken');
+        let ssoToken = app.$cookies.get('ssoToken');
         if(ssoToken){
             config.headers.common['x-token'] = ssoToken;
         }

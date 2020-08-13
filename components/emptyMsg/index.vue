@@ -31,7 +31,7 @@
 import Vue from "vue";
 
 export default {
-  props: ["text", "empty1","empty2",'noshow'],
+  props: ["text", "empty1","empty2"],
   data() {
     return {};
   }

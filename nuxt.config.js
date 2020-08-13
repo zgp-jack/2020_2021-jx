@@ -115,5 +115,5 @@ export default {
   loading: '~/components/loading/index.vue',
 
   //中间件
-  middleware: ['userAgent']
+  // middleware: ['userAgent']
 }

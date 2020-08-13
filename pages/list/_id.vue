@@ -40,7 +40,7 @@
        <!-- 呼出 -->
        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
         <div v-if="(mode==1 || mode==4)">
-          <van-pull-refresh v-model="loading" @refresh="onrefresh" style="padding-bottom:1rem">
+          <van-pull-refresh v-model="loading" @refresh="onrefresh">
             <van-list
               v-model="loading"
               :finished="iscomplete || isempty"
