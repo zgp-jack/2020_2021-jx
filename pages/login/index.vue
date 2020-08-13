@@ -14,8 +14,8 @@
           </div>
           <div class="submit" :class="[userright&&pass?'active':'noReady']" @click="Login()">登录</div>
           <div class="containr-res">
-            <router-link to='/register'>快速注册</router-link>
-            <router-link to='/reset' class="con-fr">忘记密码?</router-link>
+            <router-link to='/register' replace>快速注册</router-link>
+            <router-link to='/reset' class="con-fr" replace>忘记密码?</router-link>
           </div>
           <div class="div-line">
             <span class="line-s">
@@ -47,10 +47,12 @@ export default {
           userright:false,
           pass:false,
           go_home_page:false,
+          go_home:false
         }
     },
     created() {
       this.go_home_page = this.$route.query.signout;
+      this.go_home = this.$route.query.noLogin
     },
     methods:{
       user_name(){
@@ -64,7 +66,7 @@ export default {
       },
       user_pass(){
         let userPass = this.password
-        if(userPass.length>=6 && nopass.pattern.test(userPass)){
+        if(nopass.pattern.test(userPass)){
           this.pass = true
         }else{
           this.pass = false
@@ -83,7 +85,11 @@ export default {
             this.$cookies.set('ssoToken',res.content.token);
             Toast('登录成功')
             const callback = ()=>{
-               that.$router.go(-1);
+              if(that.go_home){
+                 that.$router.go(-1);
+              }else{
+                that.$router.replace('/user')
+              }
             }
             GetUser(that,callback)
           }else{

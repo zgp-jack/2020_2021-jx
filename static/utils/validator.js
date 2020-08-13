@@ -16,7 +16,7 @@ export const no_strict_phoneCheck = {
 // 密码格式验证
 export const nopass = {
   message: '密码格式不正确',
-  pattern: /^(\w){6}$/
+  pattern: /^(\w){6,}$/
 };
 
 /* 包含中文 */

@@ -15,7 +15,7 @@
                     </router-link>
                 </div>
                 <div class="container" @click="signOut">
-                    <router-link to='' class="con_btn">
+                    <router-link to='/login' class="con_btn" replace>
                         退出登录
                     </router-link>
                 </div>
@@ -45,7 +45,7 @@ export default {
         document.cookie = "havaSeven"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
         let {base} = this.$router.history;
         let url = base?window.location.origin + base +'/login':window.location.origin+'/login'
-        window.location.href = url+"?signout=true"
+        window.location.href = url+""
       }
     }
 }
