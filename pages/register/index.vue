@@ -70,6 +70,13 @@ export default {
       getCaptcha(){
         if(this.isCaptcha==false) return false;
         let timer = null;
+        if(this.register_data.user_name.length < 2){
+            Dialog.alert({
+            title:'提示',
+            message:"请输入正确的姓名",
+          })
+          return false;
+        }
         if(!CellphoneCheck.pattern.test(this.register_data.phone)){
           Dialog.alert({
             title:'提示',
@@ -79,18 +86,20 @@ export default {
         }
         //发送ajax请求
         // this.isCaptcha = false;
-        timer = setInterval(()=>{
+        let token = this.tokenss()
+        const params = {phone:this.register_data.phone,token,mode:0}
+        this.$axios.get('/user/get-captcha',{params}).then(res=>{
+          Toast('发送成功')
+          if(res.code == 200){
+          timer = setInterval(()=>{
+          this.isCaptcha = false;
           if(this.countDown>0) this.countDown--;
           if(this.countDown == 0){
             this.isCaptcha = true;
             clearInterval(timer)
+            this.countDown = 60
           }
         },1000)
-        let token = this.tokenss()
-        const params = {phone:this.register_data.phone,token,mode:0}
-        this.$axios.get('/user/get-captcha',{params}).then(res=>{
-          if(res.code == 200){
-            alert('发送成功')
           }else{
             Toast(res.msg)
           }
