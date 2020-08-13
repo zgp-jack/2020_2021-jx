@@ -1,19 +1,19 @@
 
 <template>
-  <div></div>
+  <div>
+  </div>
 </template>
 
 <script>
-import {setCookie,isWeixin,getCookie} from'../static/utils/utils.js'
+import {isWeixin} from'../static/utils/utils.js';
 export default {
   /* 后续再优化 */
-
   beforeMount(){
     const that = this;
     const {code,state} = this.$route.query;
     if(code && state){
       const weixin = isWeixin();
-      const ssoToken = getCookie('ssoToken');
+      const ssoToken = that.$cookie.get('ssoToken');
         if (weixin && !ssoToken) {
           that.$axios.get(
           '/user/wechat-auth',
@@ -22,9 +22,8 @@ export default {
           },
         ).then(res=>{
           if(res.code == 200){
-            setCookie('ssoToken',res.content.token,7)
-            let url = window.location.origin+'/home';
-            window.location.href = url
+            that.$cookie.set('ssoToken',res.content.token)
+            window.location.replace('/home')
           }
         })
       }else{
