@@ -78,7 +78,7 @@ export default {
           const {code} = res
           if(code == 200){
             Toast('修改成功')
-            this.$router.replace('/login?signout=true')
+            this.$router.replace('/login')
           }else{
             Toast('修改失败请检查您的手机号和验证码')
           }
