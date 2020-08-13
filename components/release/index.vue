@@ -460,7 +460,7 @@ export default {
 
             Dialog.alert({
               title: '温馨提示',
-              message: '发布成功',
+              message: '信息提交成功，工作人员正在审核中',
             }).then(()=>{
               if(rexpText && !that.editorData){
                 const fondText = modeText.find(item=>{

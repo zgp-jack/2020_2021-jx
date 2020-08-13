@@ -46,11 +46,11 @@
         <img src="../../assets/img/luck/task_bottom.png" alt="">
         <div class="task_inner">
             <div class="turntable-task-item clearfix" v-if="content.viewVideoNumber!=0">
-              <span>看视频剩余次数(<span id="overvideo">{{content.viewVideoNumber}}</span>/<span id="allvideo">{{content.videoCount}}</span>)</span>
+              <span>看视频剩余次数(<span id="overvideo">{{content.videoCount - content.viewVideoNumber}}</span>/<span id="allvideo">{{content.videoCount}}</span>)</span>
               <div :class="content.viewVideoNumber==0?'turntable-task-hui fr':'fr'" @click="!isComplete?int():(content.viewVideoNumber==0?()=>{}:appWatchVideo())" data-end="0" >去抽奖</div>
             </div>
             <div class="turntable-task-item clearfix" v-if="content.shareNumber!=0">
-              <span>分享好友剩余次数(<span id="overshare">{{content.shareNumber}}</span>/<span id="allshare">{{content.shareCount}}</span>)</span>
+              <span>分享好友剩余次数(<span id="overshare">{{content.shareCount - content.shareNumber}}</span>/<span id="allshare">{{content.shareCount}}</span>)</span>
               <div :class="content.shareNumber==0?'turntable-task-hui fr':'fr'"  @click="!isComplete?int():appShare()">去抽奖</div>
             </div>
         </div>
