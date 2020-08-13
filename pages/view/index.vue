@@ -164,8 +164,6 @@
        this.mode = this.$route.query.mode;
        // 改变标题
        this.changeTitle(this.mode);
-       // 状态的显示
-       this.detailContnetHeight()
         this.$axios.get('/index/new-view',{params}).then(res=>{
           if(res.code == 200){
              this.$set(this,'detail_info',{...res.content})
