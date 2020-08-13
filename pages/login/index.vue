@@ -88,6 +88,7 @@ export default {
               if(that.go_home_page){
                 that.$router.go(-2);
               }else if(that.go_home){
+                debugger
                  that.$router.go(-1);
               }else{
                 that.$router.replace('/user')
