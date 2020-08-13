@@ -79,6 +79,10 @@ export default {
           if(code == 200){
             Toast('修改成功')
             this.$router.replace('/login')
+          }else if(res.code == 10902){
+            Toast(res.msg)
+          }else if(res.code == 10002){
+            Toast(res.msg)
           }else{
             Toast('修改失败请检查您的手机号和验证码')
           }
@@ -91,6 +95,8 @@ export default {
           this.$axios.get('/user/get-captcha',{params}).then(res=>{
           if(res.code == 200){
             this.countDown(60)
+          }else if(res.code == 10002){
+            Toast(res.msg)
           }else{
             Toast('您输入的格式有误')
           }

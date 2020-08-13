@@ -114,10 +114,10 @@ export default {
         }else if(!CellphoneCheck.pattern.test(this.register_data.phone)){
           this.alertFn('请输入正确的电话号码')
           return false;
-        }else if(this.register_data.captcha < 6 && !Callcap.pattern.test(this.register_data.captcha)){
+        }else if(this.register_data.captcha == 6){
           this.alertFn(Callcap.message)
           return false;
-        }else if(this.register_data.user_pass < 6 && !nopass.pattern.test(this.register_data.user_pass)){
+        }else if(this.register_data.user_pass >= 6 && !nopass.pattern.test(this.register_data.user_pass)){
           this.alertFn(Callcap.message)
           return false;
         }
