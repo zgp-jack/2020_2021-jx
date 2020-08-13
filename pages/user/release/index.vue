@@ -23,7 +23,6 @@
         <div class="father">
           <van-pull-refresh v-model="loading" @refresh="onrefresh">
             <van-list
-                v-if="list.length"
                 v-model="loading"
                 :finished="iscomplete"
                 @load="listScroll">
@@ -216,7 +215,6 @@ export default {
         },
         onrefresh(){
           this.page = 1;
-          this.list = []
           this.getData()
         },
         onServers(mode){
