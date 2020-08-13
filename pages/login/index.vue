@@ -88,7 +88,7 @@ export default {
               if(that.go_home){
                  that.$router.go(-1);
               }else{
-                that.$router.push('/user')
+                that.$router.replace('/user')
               }
             }
             GetUser(that,callback)
