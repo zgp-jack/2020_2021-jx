@@ -59,7 +59,7 @@ export function showPhoneFn(that,Toast,data,bool=false){
         that.$router.push('/user/get')
       })
       .catch(()=>{
-        
+
       })
     }
   })
@@ -174,7 +174,7 @@ export function whetherLogin(that,url,callback){
       callback();
       return false;
     }
-    that.$router.push("/login");
+    that.$router.push("/login?noLogin=true");
     return false;
   }else if(url){
     that.$router.push(url);

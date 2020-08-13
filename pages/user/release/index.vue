@@ -43,7 +43,7 @@
             <EmptyMsg :empty1="iscomplete && !isempty" v-if="!firstEmpty" />
           </van-pull-refresh>
            <EmptyMsg :empty2="isempty" v-if="firstEmpty"/>
-           <div class="go-release" v-if="firstEmpty">
+           <div class="go-release" v-if="firstEmpty && isempty">
               <button @click="goReleasePage">去发布</button>
               <p>你还没有发布消息，点击这里发布</p>
            </div>
