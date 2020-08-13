@@ -55,7 +55,8 @@ export default {
           tel:'',
           check_code:'',
           captcha_text:'获取验证码',
-          get_captcha:true
+          get_captcha:true,
+          phoneChat:true
         }
     },
     methods:{
@@ -77,9 +78,9 @@ export default {
           const {code} = res
           if(code == 200){
             Toast('修改成功')
-            this.$router.push('/login')
+            this.$router.replace('/login')
           }else{
-            Toast('修改失败')
+            Toast('修改失败请检查您的手机号和验证码')
           }
         })
       },
@@ -91,7 +92,7 @@ export default {
           if(res.code == 200){
             this.countDown(60)
           }else{
-            Toast(res.msg)
+            Toast('您输入的格式有误')
           }
       })
       },
