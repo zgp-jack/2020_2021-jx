@@ -277,10 +277,18 @@
           return false;
         }
         let reg = /\*+/g;
+        let params = {id:this.detail_info.uu,mode:this.mode,};
         if(reg.test(phone)){
           Dialog.alert({
             title: '温馨提示',
-            message: '请先查看完整号码后操作',
+            message: '查看完整号码后操作',
+          }).then(()=>{
+            showPhoneFn(this,Toast,params,(tel)=>{
+              this.$router.push({path:'/set/report',query:this.$route.query});
+              this.show_complete_tel = false;
+              this.call_phone = true;
+              this.detail_info.phone = tel;
+            })
           })
         }else{
           //跳转到投诉页面
