@@ -17,6 +17,7 @@ export default {
     },
     methods:{
         active(i,mode){
+          if(this.ActiveIndex == mode) return false
             this.ActiveIndex = mode
             this.$emit('modeType',mode)
         },
