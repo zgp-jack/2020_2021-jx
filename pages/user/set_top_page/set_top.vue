@@ -300,10 +300,10 @@
       sureSetTop(){
         let that = this;
         if(this.sure_data.length == 0){
-          Toast("请选择置顶区域");
+          Toast("请选择置顶城市");
           return false
         }else if(this.day == ''){
-          Toast("请选择置顶时间");
+          Toast("请选择置顶天数");
           return false
         }
         let areaId = '';
