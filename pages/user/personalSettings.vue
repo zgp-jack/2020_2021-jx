@@ -15,7 +15,7 @@
                     </router-link>
                 </div>
                 <div class="container" @click="signOut">
-                    <router-link to='' class="con_btn">
+                    <router-link to='/login' class="con_btn" replace>
                         退出登录
                     </router-link>
                 </div>
