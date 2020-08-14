@@ -158,7 +158,8 @@
 
       //参数不完整跳转首页
       if(!(this.$route.query.info && this.$route.query.mode)){
-        window.location.replace('/dist/home')
+        // window.location.replace('/dist/home')
+        this.$router.replace('/home')
       }else{
        let params = {...this.$route.query};
        this.mode = this.$route.query.mode;

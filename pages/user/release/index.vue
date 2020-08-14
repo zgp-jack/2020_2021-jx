@@ -205,7 +205,7 @@ export default {
                 })
             }
             else{
-                that.$router.replace({path:'/user/release/1'});
+                that.$router.replace({path:'/user/release/',query:{mode:1}});
             }
         },
         int(){
