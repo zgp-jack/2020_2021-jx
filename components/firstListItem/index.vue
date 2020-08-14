@@ -49,7 +49,7 @@
    },
     data(){
       return{
-        default_img:{},
+        // default_img:{},
         is_mine:true, //是否是自己发布的消息
         show:false,  //是否显示弹框
         shows:false, //去充值弹窗
@@ -59,8 +59,12 @@
       }
     },
     beforeMount(){
-      this.default_img={...this.$store.state.default_portrait};
       this.stateImage();
+    },
+    computed: {
+      default_img(){
+        return this.$store.state.default_portrait;
+      }
     },
     methods:{
         //打电话弹框显示
