@@ -474,8 +474,14 @@ export default {
               }
             })
 
-          }else{
-            Toast(res.msg)
+          }else if(res.code==204){
+            const {uu_id,mode} = res.content
+            Dialog.confirm({
+              title: '温馨提示',
+              message: res.msg,
+            }).then(()=>{
+              that.$router.replace({path:'/user/set_top_page/set_top',query:{id:uu_id,mode}})
+            })
           }
         })
       },

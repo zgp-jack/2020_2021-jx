@@ -13,7 +13,7 @@ export default {
     const {code,state} = this.$route.query;
     if(code && state){
       const weixin = isWeixin();
-      const ssoToken = that.$cookie.get('ssoToken');
+      const ssoToken = that.$cookies.get('ssoToken');
         if (weixin && !ssoToken) {
           that.$axios.get(
           '/user/wechat-auth',
@@ -22,7 +22,7 @@ export default {
           },
         ).then(res=>{
           if(res.code == 200){
-            that.$cookie.set('ssoToken',res.content.token)
+            that.$cookies.set('ssoToken',res.content.token)
             window.location.replace('/home')
           }
         })
