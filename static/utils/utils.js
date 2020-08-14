@@ -180,7 +180,7 @@ export function whetherLogin(that,url,callback){
     that.$router.push(url);
     return true;
   }else{
-
+    return "logined"
   }
 }
 

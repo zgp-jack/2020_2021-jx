@@ -50,9 +50,12 @@ export default {
           go_home:false
         }
     },
+    beforeMount() {
+      if(document.cookie.includes("ssoToken")) this.$router.replace('/user') 
+    },      
     created() {
       this.go_home_page = this.$route.query.signout;
-      this.go_home = this.$route.query.noLogin
+      this.go_home = this.$route.query.noLogin;
     },
     methods:{
       user_name(){

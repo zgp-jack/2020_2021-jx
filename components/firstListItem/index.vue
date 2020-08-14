@@ -60,6 +60,7 @@
     },
     beforeMount(){
       this.default_img={...this.$store.state.default_portrait};
+      console.log(this.default_img)
       this.stateImage();
     },
     methods:{
