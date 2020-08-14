@@ -45,16 +45,16 @@
     },
     data(){
       return{
-        // default_img:'http://statics.zhaogongdi.com/common/default_cover.png',
+        default_img:'http://statics.zhaogongdi.com/common/default_cover.png',
         is_mine:true, //是否是自己发布的消息
         show:false,  //是否显示弹框
         item_flag:{}
       }
     },
     computed: {
-      default_img(){
-        return this.$store.state.default_portrait.default_cover
-      }
+      // default_img(){
+      //   return this.$store.state.default_portrait.default_cover
+      // }
     },
     methods:{
       //打电话弹框显示
