@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class='layout'>
-      <Loading v-if="numberServers!=3" />
+      <Loading v-if="numberServers!=3" :show='true'/>
       <nuxt keep-alive :keep-alive-props="{ include: includeArr }"/>
     </div>
   </div>
@@ -11,7 +11,7 @@
 <script>
 import Loading from "../components/loading";
 import {StorageType} from '../static/exports/area_type.js';
-import {getCookie,GetUser,isWeixin} from '../static/utils/utils.js';
+import {GetUser,isWeixin} from '../static/utils/utils.js';
 import area from '../static/exports/area_type';
 
 export default {
@@ -41,13 +41,15 @@ export default {
     //初始化
     int(){
       const weixin = isWeixin();
-      const ssoToken = getCookie('ssoToken');
+      const ssoToken = this.$cookies.get('ssoToken');
       const {code,state} = this.$route.query;
       const that = this;
-      that.getArea()
       if(weixin && !ssoToken && !code && !state){
         that.authorization()
       }else{
+
+        that.getArea()
+
         //获取机械类型
         that.getMechanics()
         //获取默认头像、地区

@@ -11,7 +11,9 @@ export default {
       loading: true
     }),
     mounted(){
-      this.loading = false
+      if(!this.$props || !this.$props.show){
+          this.loading = false
+      }
     }
   }
 </script>

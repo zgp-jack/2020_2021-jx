@@ -15,7 +15,7 @@
           <div class="submit" :class="[userright&&pass?'active':'noReady']" @click="Login()">登录</div>
           <div class="containr-res">
             <router-link to='/register' replace>快速注册</router-link>
-            <router-link to='/reset' class="con-fr" replace>忘记密码?</router-link>
+            <router-link to='/reset' class="con-fr" >忘记密码?</router-link>
           </div>
           <div class="div-line">
             <span class="line-s">
@@ -85,7 +85,10 @@ export default {
             this.$cookies.set('ssoToken',res.content.token);
             Toast('登录成功')
             const callback = ()=>{
-              if(that.go_home){
+              if(that.go_home_page){
+                that.$router.go(-2);
+              }else if(that.go_home){
+                debugger
                  that.$router.go(-1);
               }else{
                 that.$router.replace('/user')

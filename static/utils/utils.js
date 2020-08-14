@@ -174,7 +174,7 @@ export function whetherLogin(that,url,callback){
       callback();
       return false;
     }
-    that.$router.replace("/login?noLogin=true");
+    that.$router.push("/login?noLogin=true");
     return false;
   }else if(url){
     that.$router.push(url);
