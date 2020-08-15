@@ -51,8 +51,10 @@
         item_flag:{}
       }
     },
-    beforeMount(){
-      this.default_img= this.$store.state.default_portrait.default_cover
+    computed: {
+      // default_img(){
+      //   return this.$store.state.default_portrait.default_cover
+      // }
     },
     methods:{
       //打电话弹框显示

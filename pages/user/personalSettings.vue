@@ -14,7 +14,7 @@
                         <i></i>
                     </router-link>
                 </div>
-                <div class="container" @click="signOut">
+                <div class="container" @click="signOut" v-if="iswx">
                     <router-link to='/login' class="con_btn" replace>
                         退出登录
                     </router-link>
@@ -26,14 +26,22 @@
 
 <script>
 import Header from '../../components/header'
-import {whetherLogin} from '../../static/utils/utils.js';
+import {whetherLogin,isWeixin} from '../../static/utils/utils.js';
 export default {
     components:{
         Header
     },
+    mounted() {
+        if(!isWeixin()) this.iswx = true;
+
+    },
+    created() {
+    //   
+    },
     data(){
         return{
-            title:'个人设置'
+            title:'个人设置',
+            iswx:false,
         }
     },
     methods:{

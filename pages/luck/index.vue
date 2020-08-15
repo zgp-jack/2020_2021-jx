@@ -4,7 +4,7 @@
     <van-overlay :show="show" z-index="60">
       <div class="van-inner">
         <div class="inner-block">
-          <div class="titles" @click="goBack">玩法说明</div>
+          <div class="titles">玩法说明</div>
           <div class="play">
             <!-- shareCount:0,//分享总数
           videoCount:0,//获取视频总数 -->
@@ -125,9 +125,10 @@
       }
     },
     created() {
-     const {ssoToken} =  this.$route.query;
-     if(ssoToken){
-       this.$cookies.set('ssoToken',ssoToken)
+     const {id,token} =  this.$route.query;
+     if(id && token){
+       this.$cookies.set('id',id)
+       this.$cookies.set('token',token)
      }
     },
     beforeMount(){

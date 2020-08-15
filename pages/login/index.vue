@@ -14,7 +14,7 @@
           </div>
           <div class="submit" :class="[userright&&pass?'active':'noReady']" @click="Login()">登录</div>
           <div class="containr-res">
-            <router-link to='/register' replace>快速注册</router-link>
+            <router-link to='/register'>快速注册</router-link>
             <router-link to='/reset' class="con-fr" >忘记密码?</router-link>
           </div>
           <div class="div-line">
@@ -50,9 +50,12 @@ export default {
           go_home:false
         }
     },
+    beforeMount() {
+      if(document.cookie.includes("ssoToken")) this.$router.replace('/user') 
+    },      
     created() {
       this.go_home_page = this.$route.query.signout;
-      this.go_home = this.$route.query.noLogin
+      this.go_home = this.$route.query.noLogin;
     },
     methods:{
       user_name(){
@@ -76,13 +79,11 @@ export default {
         const that = this;
         let Pass = this.password;
         let psd = md5(Pass)
-        this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password},{
-          headers:{
-            key:1
-          }
-        }).then(res=>{
+        this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password}).then(res=>{
           if(res.code==200){
-            this.$cookies.set('ssoToken',res.content.token);
+            const {token,id} = res.content;
+            this.$cookies.set('token',token);
+            this.$cookies.set('id',id);
             Toast('登录成功')
             const callback = ()=>{
               if(that.go_home_page){

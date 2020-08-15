@@ -8,7 +8,7 @@
         <b class="complate-state" :style="{'background-image': 'url('+require('../../assets/img/other/finished.png')}" v-if="(data.item.mode == 4 && data.item.status==2)"></b>
       </div>
       <div class="left-img">
-        <img :src="data.item.cover && data.item.cover!='' ? data.item.cover : default_img.default_header" alt="">
+        <img :src="data.item.cover && data.item.cover!='' ? data.item.cover : default_img" alt="">
       </div>
       <div class="right-inner">
         <div class="basic-info">
@@ -49,7 +49,7 @@
    },
     data(){
       return{
-        default_img:{},
+        default_img:'http://statics.zhaogongdi.com/common/default_header.png',
         is_mine:true, //是否是自己发布的消息
         show:false,  //是否显示弹框
         shows:false, //去充值弹窗
@@ -59,8 +59,12 @@
       }
     },
     beforeMount(){
-      this.default_img={...this.$store.state.default_portrait};
       this.stateImage();
+    },
+    computed: {
+      // default_img(){
+      //   return this.$store.state.default_portrait;
+      // }
     },
     methods:{
         //打电话弹框显示

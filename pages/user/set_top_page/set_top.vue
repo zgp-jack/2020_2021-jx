@@ -318,10 +318,17 @@
         }
         this.$axios.post('/user/new-set-top-do',{...data}).then(res=>{
           if(res.code == 200){
-           Toast.success('置顶成功');
-           setTimeout(()=>{
-             that.$router.go(-1);
-           },1500)
+          //  Toast.success('置顶成功');
+          //  setTimeout(()=>{
+          //    that.$router.go(-1);
+          //  },1500)
+          Toast({
+            message: '置顶成功',
+            duration: 1500,
+            onClose:()=>{
+              this.$router.replace({path:'/user/release',query:{mode:data.type}})
+            }
+          });
           }else if(res.code == 303){
             Toast.fail(res.msg)
           }else{
