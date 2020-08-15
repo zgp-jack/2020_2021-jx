@@ -51,7 +51,7 @@ export default {
         }
     },
     beforeMount() {
-      if(document.cookie.includes("ssoToken")) this.$router.replace('/user') 
+      if(document.cookie.includes("token")) this.$router.replace('/user') 
     },      
     created() {
       this.go_home_page = this.$route.query.signout;
@@ -79,7 +79,9 @@ export default {
         const that = this;
         let Pass = this.password;
         let psd = md5(Pass)
+        debugger
         this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password}).then(res=>{
+          
           if(res.code==200){
             const {token,id} = res.content;
             this.$cookies.set('token',token);
