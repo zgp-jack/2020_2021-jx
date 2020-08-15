@@ -79,7 +79,6 @@ export default {
         const that = this;
         let Pass = this.password;
         let psd = md5(Pass)
-        debugger
         this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password}).then(res=>{
           
           if(res.code==200){
