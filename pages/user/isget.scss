@@ -6,10 +6,16 @@
         border-bottom: 1px solid rgba(238,238,238,1);
     }
     .consume-title{
-        background:rgba(255,255,255,1);
+        width: 100%;
+        top: 1rem;
+        z-index: 50;
+        position: fixed;
+        background:#f6f6f6;
         box-shadow:0px 2px 0.21rem 0px rgba(192,191,190,0.3);
         line-height:1.5rem;
             .consume-one{
+
+                background-color: white;
                 img{
                     width: 0.36rem;
                     height:0.36rem;
@@ -133,5 +139,5 @@
     }
 }
 .van-pull-refresh{
-  height:calc(100% - 1rem);
+ margin-top: 1.27rem;
 }
