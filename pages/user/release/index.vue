@@ -55,7 +55,7 @@
 <script>
 import collHead from '../../../components/collection-head';
 import EmptyMsg from '../../../components/emptyMsg';
-import {formatDate,setNovicePoint,getNovicePoint,whetherLogin} from '../../../static/utils/utils.js';
+import {formatDate,setNovicePoint,getNovicePoint,whetherLogin,getRequestQuery} from '../../../static/utils/utils.js';
 import { Toast,List,Dialog,PullRefresh } from 'vant';
 import BottomTop from '../../../components/bottom-topbar/index.vue';
 
@@ -166,11 +166,11 @@ export default {
         getData(){
             const that = this;
             const {mode,page,page_size} = that;
-            const params = {mode,page,page_size,globalLoading:false};
+            const params = {mode,page,page_size};
             // that.firstEmpty = false
             that.loading = true;
             if(mode==1 || mode ==2 || mode==3 || mode==4){
-                that.$axios.get('/user/create-list',{params}).then(res=>{
+                that.$axios.post('/user/create-list?'+getRequestQuery(params),{globalLoading:false}).then(res=>{
 
                     that.loading && (that.loading = false);
                     if(res.code == 200){
@@ -256,14 +256,14 @@ export default {
                   info: item.uu_id,
                   type: that.mode
                 }
-                that.$axios.get('user/cancel-top',{params}).then(res=>{
+                that.$axios.post('user/cancel-top?'+getRequestQuery(params)).then(res=>{
                   that.findItem(res,"top",false,item,index)
                 })
               })
           }else{
             //去置顶页面
             let params = {info: item.uu_id,mode: that.mode};
-            that.$axios.get('/user/set-top',{params}).then(res=>{
+            that.$axios.post('/user/set-top?'+getRequestQuery(params)).then(res=>{
                 if(res.code == 8639){
                 this.$router.push({
                   path:"/user/set_top_page/set_top",
@@ -314,7 +314,7 @@ export default {
                   info: item.uu_id,
                   type: 0
                 }
-                that.$axios.get('/user/change-status',{params}).then(res=>{
+                that.$axios.post('/user/change-status?'+getRequestQuery(params)).then(res=>{
                   that.findItem(res,"end",2,item,index)
                 })
              }).catch(()=>{})
