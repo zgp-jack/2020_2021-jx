@@ -207,7 +207,7 @@ export default {
       },
       // 跳转
       go(item){
-        const {is_company,uu_id,type,is_forbidden} = item
+        const {is_company,uu_id,type,is_forbidden,is_deleted} = item;
         if(is_company == 0 && this.mode == 0){
             this.$router.push({
               path:'/view',
@@ -217,14 +217,20 @@ export default {
               }
             })
         }else if(is_company== 1){
-          Toast('此条信息已删除!')
+          this.$router.push({
+              path:'/company/info',
+              query:{
+                id:uu_id,
+              }
+            })
+        }else if(is_deleted == 1){
+          Toast("该信息已被删除")
         }else if(is_forbidden == 1){
           Toast("该信息被投诉过多，无法进行查看")
         }
       },
       //没有数据
       noListData(category){
-
         if(this.mode == 0 && !category){
           this.not_consume = true;
           this.Moreimg = false
