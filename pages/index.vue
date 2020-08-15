@@ -13,17 +13,19 @@ export default {
     const {code,state} = this.$route.query;
     if(code && state){
       const weixin = isWeixin();
-      const ssoToken = that.$cookies.get('ssoToken');
-        if (weixin && !ssoToken) {
+      const token = that.$cookies.get('token');
+      const id = that.$cookies.get('id');
+        if (weixin && !token && !id) {
           that.$axios.get(
           '/user/wechat-auth',
           {
-            params:{code},headers:{key:1}
+            params:{code}
           },
         ).then(res=>{
           if(res.code == 200){
-            that.$cookies.set('ssoToken',res.content.token)
-            window.location.replace('/home')
+            that.$cookies.set('token',res.content.token)
+            that.$cookies.set('id',res.content.id)
+            window.location.replace('/home?code=none')
           }
         })
       }else{
