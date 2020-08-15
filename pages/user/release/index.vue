@@ -95,7 +95,6 @@ export default {
     },
     mounted () {
         this.$refs.collHead.onchangeIndex(this.mode)
-        // document.getElementsByClassName("van-pull-refresh__head")[0].style.display = "block";
     },
     data(){
         return{
@@ -181,7 +180,6 @@ export default {
                         }else if(!res.content.length){
                           that.isempty = true;
                           that.firstEmpty = true;
-                          console.log(res)
                         }else{
                           that.iscomplete = false;
                           that.isempty = false;
@@ -357,7 +355,6 @@ export default {
         },
         //拒绝原因
         refuse(item){
-          console.log(item)
           Dialog.alert({
             title:"提示",
             message:item.fail_reason,
