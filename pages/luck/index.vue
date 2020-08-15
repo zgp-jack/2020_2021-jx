@@ -76,7 +76,7 @@
       <div @click="goBack" class="turntable-tips" v-if="isiOS">本活动兑换奖品由鱼泡网提供，奖品发放及后续服务均由产品赞助方鱼泡网提供，与Apple Inc.无关。</div>
     </div>
   </div>
-</template>
+</template> 
 <script>
   import { NoticeBar,Dialog,Swipe,SwipeItem,Overlay } from 'vant';
   import jsBridge from '../../static/utils/JSbridge';

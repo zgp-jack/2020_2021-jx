@@ -67,11 +67,9 @@ import Tarbar from '../../components/tarbar'
 import {callPhoneFn,GetUser,whetherLogin} from '../../static/utils/utils'
 export default {
   beforeMount(){
-    
     GetUser(this,(res) => {
       this.userInfo = res
     })
-    if(!document.cookie.includes("ssoToken"))  {this.$router.replace("/login")};
   },
   mounted(){
     
