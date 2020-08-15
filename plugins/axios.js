@@ -31,7 +31,7 @@ export default function({ $axios, redirect, app }) {
             globalLoading = false
             delete data.globalLoading
         }
-        
+
         if (method && method === 'post') {
             let token = app.$cookies.get('token');
             let id = app.$cookies.get('id');
@@ -42,7 +42,7 @@ export default function({ $axios, redirect, app }) {
             }
         }
 
-        
+
         if (config.url !== '/upload?source=M') {
             config.data = qs.stringify(config.data)
             config.headers.common['content-type'] = 'application/x-www-form-urlencoded';

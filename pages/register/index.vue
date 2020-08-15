@@ -41,7 +41,7 @@
 import Headers from '../../components/header';
 import {Dialog,Toast} from 'vant'
 import md5 from 'js-md5';
-import {formatDate} from '../../static/utils/utils.js';
+import {formatDate,getRequestQuery} from '../../static/utils/utils.js';
 import {CellphoneCheck,Callcap,nopass} from '../../static/utils/validator';
 export default {
   components:{
@@ -88,7 +88,7 @@ export default {
         // this.isCaptcha = false;
         let token = this.tokenss()
         const params = {phone:this.register_data.phone,token,mode:0}
-        this.$axios.get('/user/get-captcha',{params}).then(res=>{
+        this.$axios.post('/user/get-captcha?'+getRequestQuery(params)).then(res=>{
           Toast('发送成功')
           if(res.code == 200){
           timer = setInterval(()=>{

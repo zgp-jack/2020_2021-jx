@@ -38,6 +38,7 @@ import Headers from '../../components/header'
 import collHead from '../../components/collection-head'
 import emptyMsg from '../../components/emptyMsg/index'
 import { PullRefresh,Toast,List } from 'vant';
+import {getRequestQuery} from '../../static/utils/utils.js';
 export default {
     beforeMount(){
       this.getcollect();
@@ -83,7 +84,8 @@ export default {
         let {list}  = this
         let page = this.page
         let page_size = this.page_size
-        this.$axios.get('/user/collect-list',{params:{mode:modes,page,page_size}}).then(res=>{
+        let params = {mode:modes,page,page_size}
+        this.$axios.post('/user/collect-list?'+getRequestQuery(params)).then(res=>{
         this.listLoading = false;
         !res.content.next?(this.iscomplete=true,res.content.list.length!=0 && !res.content.next ?this.More = true:this.More = false):(this.iscomplete=false)
         res.content.list.length<=0?(this.Moreimg=true,this.More=false):(this.Moreimg=false)

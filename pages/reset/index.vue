@@ -36,7 +36,7 @@
 <script>
 import Headers from '../../components/header'
 import md5 from 'js-md5';
-import {formatDate} from '../../static/utils/utils.js';
+import {formatDate,getRequestQuery} from '../../static/utils/utils.js';
 import {Toast,Dialog} from 'vant';
 import {CellphoneCheck,Callcap,nopass} from '../../static/utils/validator';
 export default {
@@ -92,7 +92,7 @@ export default {
         if(!this.get_captcha) return false;
           let token = this.tokenss()
           const params = {phone:this.tel,token,mode:1}
-          this.$axios.get('/user/get-captcha',{params}).then(res=>{
+          this.$axios.post('/user/get-captcha?'+getRequestQuery(params)).then(res=>{
           if(res.code == 200){
             this.countDown(60)
           }else if(res.code == 10002){
