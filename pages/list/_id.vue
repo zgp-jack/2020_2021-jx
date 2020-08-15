@@ -78,8 +78,9 @@ import Topbar from "../../components/Topbar";
 import FirstListItem from '../../components/firstListItem';
 import SeccondListItem from '../../components/seccondListItem';
 import EmptyMsg from '../../components/emptyMsg';
-import BottomTop from '../../components/bottom-topbar/index'
-import Newgift from '../../components/new_gift/index'
+import BottomTop from '../../components/bottom-topbar/index';
+import Newgift from '../../components/new_gift/index';
+import {getRequestQuery} from '../../static/utils/utils.js';
 export default {
   name:'list',
   data() {
@@ -101,7 +102,7 @@ export default {
 
       mode : 1,
       type : 0,//机械类型
-      keywords : null,//关键字搜索
+      keywords : '',//关键字搜索
       page_size : 20 ,//每页数据量 X条 默认为10条
       page:1,
       pattern : 0,//0最新 1推荐 默认0
@@ -211,9 +212,9 @@ export default {
       if(this.mode==1||this.mode==2||this.mode==3||this.mode==4){
         const that = this;
         const {mode,page,page_size,addr,type,keywords,pattern} = that;
-        let params = {mode,page,page_size,addr,type,keywords,pattern,globalLoading:false}
+        let params = {mode,page,page_size,addr,type,keywords,pattern}
 
-        this.$axios.get('/index/list',{params}).then(res=>{
+        this.$axios.post('/index/list?'+getRequestQuery(params),{globalLoading:false}).then(res=>{
           if(res.code){
             that.loading = false;
             if(that.page == 1){
