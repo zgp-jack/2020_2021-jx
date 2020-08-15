@@ -35,18 +35,17 @@ export default function({ $axios, redirect, app }) {
         if (method && method === 'post') {
             let token = app.$cookies.get('token');
             let id = app.$cookies.get('id');
-            if (token && id) {
+            if (token && id && config.url !== '/upload?source=M') {
                 data.gourideToken = token;
                 data.hamapi = id;
                 config.data = {...data }
+                config.data = qs.stringify(config.data)
             }
         }
-
-
         if (config.url !== '/upload?source=M') {
-            config.data = qs.stringify(config.data)
             config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
         }
+
         globalLoading && Toast.loading({
             message: '加载中...',
             duration: 0,
