@@ -112,6 +112,10 @@ export function uploadPictures(page, file) {
     let config = {
         headers: { 'Content-Type': 'multipart/form-data' },
     };
+    let token = page.$cookies.get('token');
+    let id = page.$cookies.get('id');
+    fd.append('gourideToken', token);
+    fd.append('hamapi', id);
     return page.$axios.post('/upload', fd, config).then(res => {
         if (res && res.code == 200) {
             return res
