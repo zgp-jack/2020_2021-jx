@@ -209,7 +209,6 @@
       //状态的显示
       allState(obj){
         //是否是新用户
-        console.log(obj)
         if(this.detail_info.roofTag == 1) this.go_release = true;
         else if(this.detail_info.roofTag == 2) this.go_settop = true;
         else if(this.detail_info.roofTag == 0){
@@ -281,9 +280,10 @@
         let reg = /\*+/g;
         let params = {id:this.detail_info.uu,mode:this.mode,};
         if(reg.test(phone)){
-          Dialog.alert({
+          Dialog.confirm({
             title: '温馨提示',
-            message: '查看完整号码后操作',
+            message: '需查看电话号码后才能发起投诉',
+            confirmButtonText:"确定投诉"
           }).then(()=>{
             showPhoneFn(this,Toast,params,(tel)=>{
               this.$router.push({path:'/set/report',query:this.$route.query});
@@ -291,7 +291,7 @@
               this.call_phone = true;
               this.detail_info.phone = tel;
             })
-          })
+          }).catch(()=>{})
         }else{
           //跳转到投诉页面
           this.$router.push({

@@ -36,6 +36,7 @@
 <script>
 import Headers from '../../components/header'
 import { Dialog } from 'vant';
+import {getRequestQuery} from '../../static/utils/utils.js'; 
 export default {
     components:{
       Headers,
@@ -48,16 +49,19 @@ export default {
             texts:'',
             list:[{id:0,title:'电话虚假(空号、打不通)',show:false},{id:1,title:'虚假工程',show:false},{id:2,title:'其他',show:false},],
             report_reason:{},
-            userInfo:{}
+            // userInfo:{}
+        }
+      },
+      computed: {
+        userInfo(){
+          return this.$nuxt.$store.state.userinfo
         }
       },
       beforeMount(){
-        //获取用户信息
-        this.$set(this,"userInfo",this.$nuxt.$store.state.userinfo);
         //请求
         let params = {mode:1};
         let that = this;
-        this.$axios.get('/us/report-reson',{params}).then(res=>{
+        this.$axios.post('/us/report-reson?'+getRequestQuery(params)).then(res=>{
           if(res.code == 200){
             that.report_reason = {...res.content}
             //格式化数据
