@@ -9,13 +9,13 @@
             </h1>
             <div class="user">
                 <div class="top">
-                    <img :src="userinfo.header"/>
+                    <img :src="userinfo.header?userinfo.header:'http://statics.zhaogongdi.com/common/default_header.png'"/>
                     <div class="userinfo">
-                      <h3>{{userinfo.name}}</h3>
+                      <h3>{{userinfo.name?userinfo.name:''}}</h3>
                       <h3 style="display:inline-block;">用户编号:</h3>
                       <p style="display:inline-block;">
                         <span class="main_textc">
-                          {{userinfo.id}}
+                          {{userinfo.id?userinfo.id:''}}
                         </span>
                       </p>
                     </div>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="bottom">
                     <div>
-                      <p class="main_textc" @click="harvest(1)">{{userinfo.coin_balance}}</p>
+                      <p class="main_textc" @click="harvest(1)">{{userinfo.coin_balance?userinfo.coin_balance:'0'}}</p>
                       <p>可用鱼泡币</p>
                     </div>
                     <div>

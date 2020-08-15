@@ -40,7 +40,7 @@
        <!-- 呼出 -->
        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
         <div v-if="(mode==1 || mode==4)">
-          <van-pull-refresh v-model="loading" @refresh="onrefresh">
+          <van-pull-refresh v-model="loading" @refresh="onrefresh" :style="{'padding-bottom':(iscomplete && !isempty)?'':1+'rem'}">
             <van-list
               v-model="loading"
               :finished="iscomplete || isempty"
@@ -53,7 +53,7 @@
         </div>
 
         <div v-if="(mode==2 || mode==3)">
-            <van-pull-refresh v-model="loading" @refresh="onrefresh">
+            <van-pull-refresh v-model="loading" @refresh="onrefresh" :style="{'padding-bottom':(iscomplete && !isempty)?'':1+'rem'}">
               <van-list
                 v-model="loading"
                 :finished="iscomplete || isempty"

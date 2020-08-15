@@ -1,36 +1,36 @@
 @import '../../assets/css/style.scss';
-.list{
+.list {
     position: fixed;
     top: 0;
     z-index: 10;
-    .head{
-        .head_search{
+    .head {
+        .head_search {
             height: 1rem;
             width: $width;
             background-color: $color;
             padding: 0.15rem 0 0.15rem 0.27rem;
-            .van-search{
+            .van-search {
                 width: 6.11rem;
                 height: 0.7rem;
                 padding: 0;
             }
-            .van-cell{
+            .van-cell {
                 line-height: 0.6rem;
                 font-size: 0.28rem;
             }
             #{'/deep/'} {
-                .van-field__left-icon .van-icon{
+                .van-field__left-icon .van-icon {
                     font-size: 0.3rem;
                 }
             }
-            .search_text{
+            .search_text {
                 margin-right: 0.27rem;
                 line-height: 0.7rem;
                 font-size: 0.28rem;
                 color: #fff;
             }
         }
-        .select_head{
+        .select_head {
             display: flex;
             width: 7.5rem;
             line-height: 0.6rem;
@@ -39,79 +39,79 @@
             border-top: 1px solid #ddd;
             border-bottom: 1px solid #ddd;
             box-shadow: 0 3rpx 10rpx #ddd;
-            .select_inner{
+            .select_inner {
                 flex: 1;
                 text-align: center;
                 font-size: 0.30rem;
                 font-weight: bold;
-                color: rgb(85,85,85);
-                p{
+                color: rgb(85, 85, 85);
+                p {
                     display: inline-block;
                     width: calc(7.5rem * 0.25);
                     @include overflow_hiding();
                 }
-                .icon-down{
+                .icon-down {
                     font-size: 0.30rem;
-                    margin-right:0.2rem;
+                    margin-right: 0.2rem;
                     display: inline-block;
                     transition: 0.5s
                 }
-                img{
+                img {
                     width: 0.3rem;
                     height: 0.26rem;
-                    margin-left:0.04rem;
+                    margin-left: 0.04rem;
                     vertical-align: middle;
                 }
-                .rotate{
-                    transform-origin:center calc(75% - 0.16rem);
+                .rotate {
+                    transform-origin: center calc(75% - 0.16rem);
                     transform: rotate(-180deg);
                 }
             }
-            .select_inner:not(:first-child){
-                border-left:1px solid #ddd
+            .select_inner:not(:first-child) {
+                border-left: 1px solid #ddd
             }
         }
     }
 }
 
-.list_data{
-    @include static_inner($top:1.91rem)
-    .van-pull-refresh{
-      overflow:visible;
-      .van-pull-refresh__head{
-        display: none;
-      }
+.list_data {
+    @include static_inner($top: 1.91rem) .van-pull-refresh {
+        overflow: visible;
+        .van-pull-refresh__head {
+            display: none;
+        }
     }
-
 }
 
 //排序
-.model_mask{
-    .inner{
+.model_mask {
+    .inner {
         position: absolute;
         width: 33%;
         right: 0;
         height: 1.84rem;
-        .select_sort{
+        .select_sort {
             width: 100%;
         }
     }
 }
 
 //机械选择/地区选择
-#{'/deep/'} .model_mask{
-    top:1.91rem;
+#{'/deep/'} .model_mask {
+    top: 1.91rem;
     transition: all 0.3s ease-in-out 0s;
-    .selectd{
+    .selectd {
         height: 0;
     }
 }
-#{'/deep/'}  .selectd_box{
-    transition:all 0.3s ease-in-out 0s;
+
+#{'/deep/'} .selectd_box {
+    transition: all 0.3s ease-in-out 0s;
     z-index: -2;
     opacity: 0;
     height: 0;
 }
-.van-pull-refresh{
-  padding-bottom:1rem;
-}
+
+// .van-pull-refresh{
+//   padding-bottom:1rem;
+// }
