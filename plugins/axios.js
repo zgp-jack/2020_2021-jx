@@ -12,7 +12,8 @@ export default function ({$axios,redirect,app}) {
     let globalLoading;
     $axios.onRequest(config => {
         globalLoading = true;
-        const {params,data} = config;
+        let {params,data={},method} = config;
+
         let source;
         if (process.browser) {
             source = isWeixin()?'wx':'M';
@@ -21,15 +22,25 @@ export default function ({$axios,redirect,app}) {
             config.url.includes('?')?config.url += `&source=${source}` : config.url += `?source=${source}`;
         }
 
+        if(method && method==='post'){
+            let token = app.$cookies.get('token');
+            let id = app.$cookies.get('id');
+            if(token && id){
+                data.gourideToken = token;
+                data.hamapi = id;
+                config.data = {...data}
+            }
+        }
+
         if(params && params.globalLoading === false){
             globalLoading = false
             delete params.globalLoading
         }
-        if(data && data.globalLoading === false){
+        if(data.globalLoading === false){
             globalLoading = false
             delete data.globalLoading
         }
-        if(data && config.url!=='/upload?source=M'){
+        if(config.url!=='/upload?source=M'){
             config.data = qs.stringify(config.data)
             config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
         }
@@ -38,10 +49,10 @@ export default function ({$axios,redirect,app}) {
             duration: 0,
             loadingType: 'spinner',
         });
-        let ssoToken = app.$cookies.get('ssoToken');
-        if(ssoToken){
-            config.headers.common['x-token'] = ssoToken;
-        }
+        // let ssoToken = app.$cookies.get('ssoToken');
+        // if(ssoToken){
+        //     config.headers.common['x-token'] = ssoToken;
+        // }
     })
     $axios.onError(error => {
         Toast.clear()
