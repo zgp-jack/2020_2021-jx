@@ -94,7 +94,7 @@ import chooseArea from '../../components/customArea/index.vue'
 import call_confirm from '../../components/call_confirm/call_confirm'
 import BottomTop from '../../components/bottom-topbar/index'
 import Newgift from '../../components/new_gift/index'
-import {getNovicePoint,setNovicePoint} from '../../static/utils/utils.js';
+import {getNovicePoint,setNovicePoint,getRequestQuery} from '../../static/utils/utils.js';
 import home_novice_point from '../../components/page-novice-point/index.vue';
 import EmptyMsg from '../../components/emptyMsg';
 export default {
@@ -210,7 +210,7 @@ export default {
       //列表页数据
       listData(params={},cityData){
         const that = this;
-        that.$axios.get('/index/home',{params}).then(res=>{
+        that.$axios.post('/index/home?'+getRequestQuery(params)).then(res=>{
             that.$set(that, "list", {...res.content});
             //新手礼包
             that.show_gift_alert = that.list.welfareDialog;

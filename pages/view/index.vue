@@ -98,7 +98,7 @@
   import VerticalBanner from "../../components/vertical_banner";
   import pageView from "../../components/page-view";
   import { Dialog, ImagePreview,Toast } from 'vant';
-  import {showPhoneFn, callPhoneFn, whetherLogin, getNovicePoint, setNovicePoint} from '../../static/utils/utils.js';
+  import {showPhoneFn, callPhoneFn, whetherLogin, getNovicePoint, setNovicePoint,getRequestQuery} from '../../static/utils/utils.js';
   export default{
     data(){
       return{
@@ -165,7 +165,8 @@
        this.mode = this.$route.query.mode;
        // 改变标题
        this.changeTitle(this.mode);
-        this.$axios.get('/index/new-view',{params}).then(res=>{
+
+        this.$axios.post('/index/new-view?' + getRequestQuery(params)).then(res=>{
           if(res.code == 200){
              this.$set(this,'detail_info',{...res.content})
              // 状态的显示

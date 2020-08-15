@@ -249,3 +249,13 @@ export function browserEnvironment() {
     }
     return source;
 }
+
+//参数拼接
+export function getRequestQuery(query) {
+    const res = [];
+    Object.entries(query).forEach(o =>
+        // res.push(`${o[0]}=${window.encodeURIComponent(o[1])}`)
+        res.push(`${o[0]}=${o[1]}`)
+    );
+    return res.join("&");
+};

@@ -11,6 +11,7 @@ export default function({ $axios, redirect, app }) {
     // request拦截器
     let globalLoading;
     $axios.onRequest(config => {
+        // debugger
         globalLoading = true;
         let { params, data = {}, method } = config;
 
@@ -22,6 +23,15 @@ export default function({ $axios, redirect, app }) {
             config.url.includes('?') ? config.url += `&source=${source}` : config.url += `?source=${source}`;
         }
 
+        if (params && params.globalLoading === false) {
+            globalLoading = false
+            delete params.globalLoading
+        }
+        if (data.globalLoading === false) {
+            globalLoading = false
+            delete data.globalLoading
+        }
+        
         if (method && method === 'post') {
             let token = app.$cookies.get('token');
             let id = app.$cookies.get('id');
@@ -32,14 +42,7 @@ export default function({ $axios, redirect, app }) {
             }
         }
 
-        if (params && params.globalLoading === false) {
-            globalLoading = false
-            delete params.globalLoading
-        }
-        if (data.globalLoading === false) {
-            globalLoading = false
-            delete data.globalLoading
-        }
+        
         if (config.url !== '/upload?source=M') {
             config.data = qs.stringify(config.data)
             config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
