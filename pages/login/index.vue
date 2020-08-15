@@ -79,13 +79,11 @@ export default {
         const that = this;
         let Pass = this.password;
         let psd = md5(Pass)
-        this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password},{
-          headers:{
-            key:1
-          }
-        }).then(res=>{
+        this.$axios.post('/user/app-login',{phone:this.users,passkey:this.password}).then(res=>{
           if(res.code==200){
-            this.$cookies.set('ssoToken',res.content.token);
+            const {token,id} = res.content;
+            this.$cookies.set('token',token);
+            this.$cookies.set('id',id);
             Toast('登录成功')
             const callback = ()=>{
               if(that.go_home_page){
