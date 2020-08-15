@@ -70,9 +70,7 @@ export default {
     GetUser(this,(res) => {
       this.userInfo = res
     })
-  },
-  mounted(){
-    
+    document.cookie.indexOf('token') == -1 && this.$router.replace("/login")
   },
   data(){
     return{

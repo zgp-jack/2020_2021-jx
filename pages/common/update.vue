@@ -4,6 +4,7 @@
 
 <script>
 import Release from '../../components/release'
+import {getRequestQuery} from '../../static/utils/utils.js'
 export default {
   components:{
     Release
@@ -24,7 +25,7 @@ export default {
     methods:{
         getData(){
             const {mode,info} = this;
-            this.$axios.get('/user/new-update-get',{params:{mode,info}}).then(res=>{
+            this.$axios.post('/user/new-update-get?'+getRequestQuery({mode,info})).then(res=>{
                 if(res.code==200){
                     this.editorData = {...res.content};
                     this.show = true;

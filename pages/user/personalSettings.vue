@@ -35,9 +35,6 @@ export default {
         if(!isWeixin()) this.iswx = true;
 
     },
-    created() {
-    //   
-    },
     data(){
         return{
             title:'个人设置',
@@ -47,8 +44,9 @@ export default {
     methods:{
       signOut(){
         //清除token
-        document.cookie = "ssoToken"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/dist';
-        document.cookie = "ssoToken"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
+        document.cookie = "id"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
+        document.cookie = "token"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/dist';
+        document.cookie = "token"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
         //清除七天不提示弹框
         document.cookie = "havaSeven"+'=v; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
         let {base} = this.$router.history;
