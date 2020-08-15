@@ -23,6 +23,7 @@
 <script>
 import Headers from '../../components/header'
 import {CellphoneCheck,Callcap,nopass} from '../../static/utils/validator';
+import {getRequestQuery} from '../../static/utils/utils.js';
 import {Toast} from 'vant';
 export default {
   components:{
@@ -67,7 +68,7 @@ export default {
         return false;
       }
       const params = {phone:this.phone}
-      this.$axios.get('/index/send-message',{params}).then(res=>{
+      this.$axios.post('/index/send-message?'+getRequestQuery(params)).then(res=>{
           if(res.code == 200){
             this.countDown(60)
           }else{
