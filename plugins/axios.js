@@ -40,9 +40,9 @@ export default function({ $axios, redirect, app }) {
                 data.hamapi = id;
                 config.data = {...data }
             }
-            config.data = qs.stringify(config.data)
         }
-        if (config.url !== '/upload?source=M') {
+        if (config.url !== '/upload?source=M' && method && method == 'post') {
+            config.data = qs.stringify(config.data)
             config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
         }
         globalLoading && Toast.loading({
