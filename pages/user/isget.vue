@@ -78,7 +78,7 @@
 import Header from '../../components/header'
 import Vue from 'vue'
 import { Popup,DatetimePicker,Picker,List, Toast,PullRefresh} from 'vant';
-import {formatDate} from '../../static/utils/utils'
+import {formatDate,getRequestQuery} from '../../static/utils/utils'
 import emptyMsg from '../../components/emptyMsg/index'
 Vue.use(Popup);
 Vue.use(DatetimePicker);
@@ -171,7 +171,8 @@ export default {
         },
         // 获取配置数据
         getcoin(){
-             this.$axios.get('/coin/record-conf',{params:{type:this.mode}}).then(res=>{
+            let params = {type:this.mode}
+             this.$axios.post('/coin/record-conf?'+getRequestQuery(params)).then(res=>{
              const {category,searchDate} = res.content
              let timeList = [...searchDate]
              this.minDate = new Date(timeList[0])
@@ -186,7 +187,7 @@ export default {
           this.listLoading = true
           if(this.classification == '全部分类') this.fenleiindex = ''
           let params = {type:this.mode,page:this.page,page_size:this.page_size,date:this.valuetime,category:this.fenleiindex}
-          this.$axios.get('/coin/record',{params}).then(res=>{
+          this.$axios.post('/coin/record?'+getRequestQuery(params)).then(res=>{
             this.not_consume = false;
             this.not_origin = false
           if(res.content.list.length == 0) {
