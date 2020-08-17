@@ -19,6 +19,7 @@
                   <img src="http://statics.zhaogongdi.com/common/set_top_dialog.png">
               </div>
             </div>
+            <div class="iconfont icon-cuo closeCreate"></div>
         </div>
         <div class="father">
           <van-pull-refresh v-model="loading" @refresh="onrefresh">

@@ -1,108 +1,108 @@
 @import '../../assets/css/style.scss';
-.fathers{
-    @include box_inner($bottom:0rem,$padding-bottom:0.5rem,$top:1.2rem);
-        .info{
-            background: #fff;
-              .headers{
-                height: 2.1rem;
-                padding: 0.2rem;
-                border-bottom: 1px solid #ddd;
-                    >div:first-child{
-                        width: 1.7rem;
-                        height: 1.7rem;
-                    }
-                    >div:last-child{
-                        line-height: 1.9rem;
-                        font-size:0.28rem;
-                        color: $color;
-                    }
-                    .header-img{
-                        width: 0.8rem;
-                        height: 0.8rem;
-                        background-size: cover;
-                        border-radius:1rem;
-                        background-color: #666;
-                        // background-image: url(`${userinfo.header}`);
-                        background-position: center;
-                        background-repeat: no-repeat;
-                    }
-              }
-        }
-        .nickName{
-            position: relative;
-            padding-left:0.3rem;
-            background: #fff;
+.fathers {
+    @include box_inner($bottom: 0rem, $padding-bottom: 0.5rem, $top: 1.2rem);
+    .info {
+        background: #fff;
+        .headers {
+            height: 2.1rem;
+            padding: 0.2rem;
             border-bottom: 1px solid #ddd;
-              span{
-                  width: 2.9rem;
-                  flex: 1;
-                  font-size:0.31rem;
-              }
-              >span:last-child{
-                  text-align: right;
-                  color:$font-color;
-                  margin-right: 0.2rem;
-              }
-              input{
-                  width:5.6rem;
-                  flex:1;
-                  height: 1rem;
-                  line-height: 1rem;
-                  text-align: right;
-                  font-size: 0.35rem;
-                  color:$font-color;
-              }
+            >div:first-child {
+                width: 1.7rem;
+                height: 1.7rem;
+            }
+            >div:last-child {
+                line-height: 1.9rem;
+                font-size: 0.28rem;
+                color: $color;
+            }
+            .header-img {
+                width: 0.8rem;
+                height: 0.8rem;
+                background-size: cover;
+                border-radius: 1rem;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
         }
-        .reset-psd{
-            display: flex;
-            justify-content: space-between;
-            line-height:1rem;
-            padding-right:0.5rem;
+    }
+    .nickName {
+        position: relative;
+        padding-left: 0.3rem;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+        span {
+            width: 2.9rem;
+            flex: 1;
+            font-size: 0.31rem;
         }
-        .icon{
-            width:0.4rem;
-            height:0.4rem;
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            margin-left: 0.2rem;
-            margin-top: -0.2rem;
-            background-size: contain;
-            display: inline-block;
-            background-position: center;
-            background-repeat: no-repeat;
-            font-size: 0;
-            background-image: url('http://statics.zhaogongdi.com/common/arrow-right.png');
-            background-size: 100% 100%;
+        >span:last-child {
+            text-align: right;
+            color: $font-color;
+            margin-right: 0.2rem;
         }
-        .nones{
-            margin-top:0.2rem;
+        input {
+            width: 5.6rem;
+            flex: 1;
+            height: 1rem;
+            line-height: 1rem;
+            text-align: right;
+            font-size: 0.35rem;
+            color: $font-color;
         }
-        .submit{
-          width: 5.14rem;
-          margin: 0.86rem auto 10rpx;
-          line-height:0.88rem;
-          background-color: #FFA926;
-          color: #fff;
-          font-size:0.36rem;
-          text-align: center;
-          border-radius:0.44rem;
-          box-shadow: 0 0.11rem 0.22rem 0 rgba(179,119,28,0.24);
-        }
+    }
+    .reset-psd {
+        display: flex;
+        justify-content: space-between;
+        line-height: 1rem;
+        padding-right: 0.5rem;
+    }
+    .icon {
+        width: 0.4rem;
+        height: 0.4rem;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        margin-left: 0.2rem;
+        margin-top: -0.2rem;
+        background-size: contain;
+        display: inline-block;
+        background-position: center;
+        background-repeat: no-repeat;
+        font-size: 0;
+        background-image: url('http://statics.zhaogongdi.com/common/arrow-right.png');
+        background-size: 100% 100%;
+    }
+    .nones {
+        margin-top: 0.2rem;
+    }
+    .submit {
+        width: 5.14rem;
+        margin: 0.86rem auto 10rpx;
+        line-height: 0.88rem;
+        background-color: #FFA926;
+        color: #fff;
+        font-size: 0.36rem;
+        text-align: center;
+        border-radius: 0.44rem;
+        box-shadow: 0 0.11rem 0.22rem 0 rgba(179, 119, 28, 0.24);
+    }
 }
-.namestype{
-  padding-left:0.7rem;
-  color:#7D7D7D;
-  font-size:0.2rem;
-  margin:0.3rem 0;
+
+.namestype {
+    padding-left: 0.7rem;
+    color: #7D7D7D;
+    font-size: 0.2rem;
+    margin: 0.3rem 0;
 }
-.typein{
-  display: block;
-  width:3.9rem;
-  margin: 0 auto;
-  padding:0.1rem;
-  margin-top:0.3rem;
-  border: 1px solid #eee;
-  line-height:0.5rem;
-  margin-bottom:0.5rem;
+
+.typein {
+    display: block;
+    width: 3.9rem;
+    margin: 0 auto;
+    padding: 0.1rem;
+    margin-top: 0.3rem;
+    border: 1px solid #eee;
+    line-height: 0.5rem;
+    margin-bottom: 0.5rem;
 }
