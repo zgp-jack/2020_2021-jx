@@ -4,7 +4,7 @@
         <div class="fathers">
             <div class="info">
                 <div class="headers reset-psd">
-                    <div class="header-img" :style="{backgroundImage:`url(${userinfo.header})`}">
+                    <div class="header-img" :style="{backgroundImage:userinfo.header?'url('+userinfo.header+')':'url(http://statics.zhaogongdi.com/common/default_header.png)'}">
                     </div>
                     <van-uploader :after-read="ChangeHeader" :max-count="1">
                     <div @click="ChangeHeader">修改头像</div>
