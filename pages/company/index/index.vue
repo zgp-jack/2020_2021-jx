@@ -6,7 +6,7 @@
         <div class="select_inner clearfix" @click="onisclose('isSelect_jixie')"><i class="iconfont icon-down fr" :class="{'rotate':isSelect_jixie}"/><p class="fr">{{selectJixieData.name || '所有机械'}}</p></div>
     </div>
     <div class="father" @scroll="my_scroll">
-      <van-pull-refresh v-model="listLoading" @refresh="onRefresh">
+      <van-pull-refresh v-model="loading_top" @refresh="onRefresh">
         <van-list
           v-model="listLoading"
           :finished="iscomplete"
@@ -25,8 +25,8 @@
                     <div class="area">{{item.area}}</div>
                 </div>
             </div>
-            <div class="type-class" v-if="item.class && item.class.length != 0">
-               <a href="javascript:;" v-for="(itemSon , index) in item.class">itemSon</a>
+            <div class="type-class clearfix" v-if="item.class && item.class.length != 0">
+               <a href="javascript:;" class="fl" v-for="(itemSon , index) in item.class" :key="index">{{itemSon}}</a>
             </div>
           </div>
         </van-list>
@@ -68,6 +68,7 @@ export default {
         page_size:10,
         list:[],
         listLoading:false,
+        loading_top:false,
         iscomplete:false,
         More:false,
 
@@ -128,12 +129,10 @@ export default {
                 that.More = false;
               }
             }
-            const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
-            if(!Array.isArray(list)) return false
-            console.log(list)
-            this.page +=1 ;
             that.listLoading = false;
-            that.list = [...list];
+            that.loading_top = false;
+            this.page +=1 ;
+            that.list.push(...res.content);
           }
         })
       },
@@ -142,6 +141,12 @@ export default {
           path:'/company/info',
           query:{id:id}
         })
+      },
+      //下拉刷新
+      onRefresh(){
+        this.int();
+        this.getList();
+        this.loading_top = true;
       },
       onisclose(type) {
         let flag = this[type] ? false : true;
@@ -155,7 +160,7 @@ export default {
         this.$set(this, type, flag);
         // 关闭弹框请求接口
         if(Data){
-          this.page = 1;
+          this.int()
           switch(type){
             case 'isSelect_area' :
               this.selectAreaData = { ...Data };
@@ -177,11 +182,12 @@ export default {
         type !=='isSelect_area' && this.isSelect_area && this.$set(this, 'isSelect_area', false);
         type !=='isSelect_jixie' && this.isSelect_jixie && this.$set(this, 'isSelect_jixie', false);
       },
-      //下拉刷新
-      onRefresh(){
+      //初始化
+      int(){
         this.page = 1;
         this.list = []
-        this.getList()
+        this.iscomplete=false
+        this.More=false
       }
     }
 }

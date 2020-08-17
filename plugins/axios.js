@@ -5,13 +5,12 @@
 
 import { Toast } from 'vant';
 import qs from 'qs';
-import { setCookie, isWeixin } from '../static/utils/utils';
+import { isWeixin } from '../static/utils/utils';
 
 export default function({ $axios, redirect, app }) {
     // request拦截器
     let globalLoading;
     $axios.onRequest(config => {
-        // debugger
         globalLoading = true;
         let { params, data = {}, method } = config;
 
@@ -67,7 +66,8 @@ export default function({ $axios, redirect, app }) {
                 Toast('账号异常')
             } else if (response.data.code == 0) {
                 if (process.browser) {
-                    setCookie('ssoToken', '', -1)
+                    app.$cookies.remove('token')
+                    app.$cookies.remove('id')
                 }
                 redirect({
                     path: '/login',

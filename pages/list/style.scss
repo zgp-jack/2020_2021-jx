@@ -75,7 +75,8 @@
 }
 
 .list_data {
-    @include static_inner($top: 1.91rem) .van-pull-refresh {
+    @include static_inner($top: 1.91rem);
+    .van-pull-refresh {
         overflow: visible;
         .van-pull-refresh__head {
             display: none;
