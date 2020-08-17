@@ -41,10 +41,11 @@ export default {
     //初始化
     int(){
       const weixin = isWeixin();
-      const ssoToken = this.$cookies.get('ssoToken');
+      const token = this.$cookies.get('token');
+      const id = this.$cookies.get('id');
       const {code,state} = this.$route.query;
       const that = this;
-      if(weixin && !ssoToken && !code && !state){
+      if(weixin && !token && !id && !code && !state){
         that.authorization()
       }else{
 
