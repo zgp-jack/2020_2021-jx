@@ -40,7 +40,7 @@
        <!-- 呼出 -->
        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
         <div v-if="(mode==1 || mode==4)">
-          <van-pull-refresh v-model="loading" @refresh="onrefresh" :style="{'padding-bottom':(iscomplete && !isempty)?'':1+'rem'}">
+          <van-pull-refresh v-model="loading_top" @refresh="onrefresh" :style="{'padding-bottom':(!iscomplete && !isempty && list.length)?0:1+'rem'}">
             <van-list
               v-model="loading"
               :finished="iscomplete || isempty"
@@ -53,7 +53,7 @@
         </div>
 
         <div v-if="(mode==2 || mode==3)">
-            <van-pull-refresh v-model="loading" @refresh="onrefresh" :style="{'padding-bottom':(iscomplete && !isempty)?'':1+'rem'}">
+            <van-pull-refresh v-model="loading_top" @refresh="onrefresh" :style="{'padding-bottom':(!iscomplete && !isempty && !list.length)?0:1+'rem'}">
               <van-list
                 v-model="loading"
                 :finished="iscomplete || isempty"
@@ -118,7 +118,8 @@ export default {
         '3':'二手机械',
         '4':'二手机械'
       },
-      loading:false
+      loading:false,
+      loading_top:false,
     };
   },
   components: {
@@ -152,7 +153,6 @@ export default {
       this.int()
     }
     window.addEventListener('scroll',this.my_scroll);
-    document.getElementsByClassName("van-pull-refresh__head")[0].style.display="none";
   },
   methods: {
     // 滚动
@@ -169,6 +169,7 @@ export default {
       //关闭弹框请求接口
       if(Data){
         this.onreset();
+        this.loading = true;
         switch(type){
           case 'isSelect_area' :
             this.selectAreaData = { ...Data };
@@ -208,7 +209,6 @@ export default {
       reload  true重新加载
     */
     getList(){
-      this.loading = true;
       if(this.mode==1||this.mode==2||this.mode==3||this.mode==4){
         const that = this;
         const {mode,page,page_size,addr,type,keywords,pattern} = that;
@@ -217,6 +217,7 @@ export default {
         this.$axios.post('/index/list?'+getRequestQuery(params),{globalLoading:false}).then(res=>{
           if(res.code){
             that.loading = false;
+            this.loading_top = false;
             if(that.page == 1){
               if(res.content.length && res.content.length<that.page_size){
                 that.iscomplete = true;
@@ -236,12 +237,8 @@ export default {
                 that.isempty = false;
               }
             }
-            const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
-            if(that.page == 1) that.list = [...list];
-            }else{
-              that.isempty = false;
-            }
-
+            that.list.push(...res.content);
+          }
         })
       }else{
         Toast('您访问的页面不存在，将自动跳转')
@@ -252,6 +249,7 @@ export default {
     },
 
     onrefresh(){
+      this.loading_top = true;
       this.onreset()
       this.getList()
     },
@@ -285,6 +283,7 @@ export default {
     },
     listScroll(){
       this.page += 1;
+      this.loading = true;
       this.getList()
     },
     //得到电话号码并显示

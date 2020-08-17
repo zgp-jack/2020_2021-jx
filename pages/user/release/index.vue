@@ -194,9 +194,7 @@ export default {
                           that.isempty = false;
                         }
                       }
-                      const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
-                      if(that.page == 1) that.list = [...list];
-
+                      that.list.push(...res.content);
                   }else{
                     that.isempty = true;
                   }
