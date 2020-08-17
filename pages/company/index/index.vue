@@ -25,6 +25,9 @@
                     <div class="area">{{item.area}}</div>
                 </div>
             </div>
+            <div class="type-class" v-if="item.class && item.class.length != 0">
+               <a href="javascript:;" v-for="(itemSon , index) in item.class">itemSon</a>
+            </div>
           </div>
         </van-list>
       </van-pull-refresh>
@@ -126,6 +129,8 @@ export default {
               }
             }
             const list =  that.page == 1?[...res.content]:that.list.push(...res.content);
+            if(!Array.isArray(list)) return false
+            console.log(list)
             this.page +=1 ;
             that.listLoading = false;
             that.list = [...list];
