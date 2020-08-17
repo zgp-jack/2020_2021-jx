@@ -118,7 +118,7 @@ export default {
   data(){
     return{
       //首页列表标题数据
-      title_data:[{name:"机械求租",type:1,key:'tenant'},{name:"机械出租",type:2,key:'machine'},{name:"机械转让",type:3,key:'ershou'},{name:"机械求购",type:4,key:'want'}],
+      title_data:[],//切换数据
       title_active:0,
       //轮播图数据
       banner_children:[],
@@ -136,8 +136,12 @@ export default {
       show_gift:true, //新手大礼包
       show_gift_alert:false,//新手大礼包
       novice_point:'',//新手指引对象
-      novice_point_alert:false
+      novice_point_alert:false,
     }
+  },
+  created(){
+    this.titleData()
+    this.getBanner()
   },
   beforeMount(){
     this.novice_point = getNovicePoint();
@@ -179,8 +183,22 @@ export default {
     //切换标题
     changeTitle(index,type){
        this.title_active = index;
-       this.listDataIsEmpty(type)
+       const {title_active,title_data} = this;
+       if(!title_data[title_active].render){
+         this.listData()
+       }
     },
+
+    //title_data
+    titleData(){
+      this.title_data = [
+        {name:"机械求租",type:1,key:'tenant',render:false},
+        {name:"机械出租",type:2,key:'machine',render:false},
+        {name:"机械转让",type:3,key:'ershou',render:false},
+        {name:"机械求购",type:4,key:'want',render:false}
+      ]
+    },
+
     //数据是否为空
     listDataIsEmpty(type){
       if(this.list[type].length == 0){
@@ -200,7 +218,8 @@ export default {
         if (cityData) {
           this.selectAreaData = {...cityData}
           //接口请求
-          this.listData({area:cityData.id},cityData)
+          this.listData()
+          this.titleData()
         }
       },
       onisclose(type) {
@@ -208,21 +227,39 @@ export default {
         this.onSelect(type, flag);
       },
       //列表页数据
-      listData(params={},cityData){
+      listData(){
         const that = this;
-        that.$axios.post('/index/home?'+getRequestQuery(params)).then(res=>{
-            that.$set(that, "list", {...res.content});
+        let {title_data,mode,selectAreaData,title_active} = this;
+        that.$axios.post('/index/home-data?'+getRequestQuery({area:selectAreaData.id,mode:title_data[title_active].type})).then(res=>{
+          if(res.code){
+            // that.$set(that, "list", {...res.content});
+            that.title_data[title_active].render = true ;
+            that.list[that.title_data[title_active].key] = res.content.data;
+
+            //判断数据是否为空
+            that.listDataIsEmpty(that.title_data[title_active].key)
+
             //新手礼包
-            that.show_gift_alert = that.list.welfareDialog;
+            // that.show_gift_alert = that.list.welfareDialog;
+
             this.novicePointFn();
             // this.cannotScrollWindow();
-            this.formDataBannerData(res);
             //本地储存
-            window.localStorage.setItem('city',JSON.stringify(cityData));
-            //初始化是否有数据
-            that.listDataIsEmpty('tenant')
+            window.localStorage.setItem('city',JSON.stringify(selectAreaData));
+          }
         })
       },
+
+      //banner图
+      getBanner(){
+        const that = this;
+        that.$axios.get('/index/new-home').then(res=>{
+          if(res.code==200){
+            this.formDataBannerData(res)
+          }
+        })
+      },
+
       //格式化banner数据
       formDataBannerData(res){
         let bannerData = [...res.content.banner]
