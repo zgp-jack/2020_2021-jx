@@ -3,17 +3,18 @@
     <Header :title="'修改密码'"/>
     <div class="inner">
       <label for="">
-        <span>原密码</span>
-        <input type="password" maxlength="32" placeholder="请输入当前正在使用密码" v-model="origin_pass">
+        <span>验证码</span>
+        <input type="tel" maxlength="6" v-model="catcap"  autocomplete="off">
+        <p class="catcap" @click="capcome">{{btntext}}</p>
       </label>
       <label for="">
         <span>新的密码</span>
-        <input type="password" maxlength="32" placeholder="请输入6-32位字符" v-model="news_pass">
+        <input type="password" maxlength="32" placeholder="请输入6-32位字符" v-model="news_pass" autocomplete="off">
       </label>
-      <label for="">
+      <!-- <label for="">
         <span>确认密码</span>
         <input type="password" maxlength="32" placeholder="请再一次输入新密码" v-model="sure_pass">
-      </label>
+      </label> -->
     </div>
     <p class="submit" @click="submit" :style="{'backgroundColor':isOk?'#FFAA26':'','color':isOk?'#fff':'#888'}">确认</p>
   </div>
@@ -21,36 +22,64 @@
 
 <script>
 import {Toast,Dialog} from 'vant';
+import {formatDate,getRequestQuery} from '../../../static/utils/utils.js';
+import {Callcap,nopass} from '../../../static/utils/validator';
+import md5 from 'js-md5';
   export default{
     data(){
       return{
-        origin_pass:'',
+        catcap:'',
         news_pass:'',
-        sure_pass:''
+        getcap:true,
+        btntext:'获取验证码',
+        number:60,
+        phone:''
       }
     },
     methods:{
+      // 获取验证码
+      capcome(){
+        let that = this
+        that.phone = that.$store.state.userinfo.tel
+        if(!that.phone) return Toast('数据初始化中')
+        let params = {phone:that.phone}
+        if(!that.getcap) return false
+        that.$axios.post('/index/send-message?'+getRequestQuery(params)).then(res=>{
+            if (res.code == 200) {
+                that.countDown()
+            } else {
+                Toast(res.msg);
+            }
+          })
+      },
+      countDown(){
+          let that = this
+          let timer = setInterval(()=>{
+          if(that.number == 0){
+            that.getcap = true
+            that.btntext = '重新获取'
+            that.number = 60
+            clearInterval(timer)
+          }else{
+            if(that.getcap) that.getcap = false
+            that.number -=1
+            that.btntext = that.number+'s后获取'
+          }            
+          },1000)
+      },
+      // 提交
       submit(){
-        if(!this.isOk){
-          Toast('请输入正确的密码')
-          return false
-        }
-        if(this.news_pass != this.sure_pass){
-          Toast('请确认新密码是否一致')
-          return false
-        }
-        let news= {old_pass:this.origin_pass,new_pass:this.news_pass}
-        let data = JSON.stringify(news)
-        this.$axios.post('/user/app-updatekey',{data}).then(res=>{
-          if(res.code == 200){
-            Dialog.alert({
-              title:"提示",
-              message:"修改成功",
-            }).then(()=>{
-              this.$router.go(-1)
-            })
-          }
-          if(res.code == 500){
+        let that = this
+        if(!Callcap.pattern.test(that.catcap)) return Toast(Callcap.message)
+        if(!that.isOk) return Toast('新密码格式不正确')
+        let time =formatDate(new Date(),'yyyyMMdd')
+        let token = md5('APp_YUpAO_UseR_KeY'+that.phone+time).substring(0, 18)
+        let data = {phone:that.phone,user_token:token,user_pass:that.news_pass,captcha:that.catcap}
+        that.$axios.post('/user/app-reset',{data:JSON.stringify(data)}).then(res=>{
+          if(res.code == 200) {
+            Toast('修改成功')
+            that.$router.go(-1)
+          }else if(res.code == 300){
             Toast(res.msg)
           }
         })
@@ -58,7 +87,7 @@ import {Toast,Dialog} from 'vant';
     },
     computed:{
       isOk(){
-        if(this.origin_pass.length >=6 && this.news_pass.length >=6 && this.sure_pass.length >=6){
+        if(nopass.pattern.test(this.news_pass)){
           return true
         }else{
           return false;
@@ -100,5 +129,15 @@ import {Toast,Dialog} from 'vant';
     font-size: 0.3rem;
     color: #888;
     margin: 0.5rem auto;
+  }
+  .catcap{
+                display: inline-block;
+                line-height:0.3rem;
+                color: #fff;
+                padding: 0.1rem;
+                border-radius:0.08rem;
+                font-size:0.28rem;
+                background-color:rgb(255, 170, 38);
+                text-align: center;
   }
 </style>

@@ -36,7 +36,7 @@ export default {
       captcha_pass:true,
       get_captcha:true,
       captcha:'',
-      captcha_text:'获取验证码'
+      captcha_text:'获取验证码',
     }
   },
   methods:{
