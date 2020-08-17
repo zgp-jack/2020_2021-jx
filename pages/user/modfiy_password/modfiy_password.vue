@@ -70,8 +70,8 @@ import md5 from 'js-md5';
       // 提交
       submit(){
         let that = this
-        if(!Callcap.pattern.test(that.catcap)) return Toast('请输入正确的验证码')
-        if(!that.isOk) return Toast('请输入正确的密码')
+        if(!Callcap.pattern.test(that.catcap)) return Toast(Callcap.message)
+        if(!that.isOk) return Toast('新密码格式不正确')
         let time =formatDate(new Date(),'yyyyMMdd')
         let token = md5('APp_YUpAO_UseR_KeY'+that.phone+time).substring(0, 18)
         let data = {phone:that.phone,user_token:token,user_pass:that.news_pass,captcha:that.catcap}
