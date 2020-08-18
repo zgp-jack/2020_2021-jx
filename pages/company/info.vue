@@ -28,9 +28,9 @@
               </div>
               <div>
                   <p>联系方式</p>
-                  <p class="contact" v-if="!showphone">{{list.contact}}</p>
-                  <p class="contact" v-else @click="tel">{{phone}}</p>
-                  <button class="contact_chakan" @click="showNumber(list.uu_id)" v-if="!showphone">查看完整号码</button>
+                  <p class="contact" v-if="list.is_get == 0">{{list.contact}}</p>
+                  <p class="contact" v-else @click="tel">{{list.contact}}</p>
+                  <button class="contact_chakan" @click="showNumber(list.uu_id)" v-if="list.is_get == 0">查看完整号码</button>
               </div>
               <div>
                   <p>所在地区</p>
@@ -103,7 +103,7 @@
 <script>
 import Header from '../../components/header'
 import emptyMsg from '../../components/emptyMsg/index'
-import {callPhoneFn} from '../../static/utils/utils';
+import {callPhoneFn,getRequestQuery} from '../../static/utils/utils';
 import {Toast} from 'vant';
 export default {
   beforeMount(){
@@ -129,7 +129,6 @@ export default {
       list:{},
       companyScale:['<20', '20~39', '40~59', '60~99', '>=100'],
       phone:'',
-      showphone:false,
       page:1,
       page_size:10,
       first:[],
@@ -149,7 +148,7 @@ export default {
     // 获取数据
     getnew(){
       let params = {info:this.uu_id}
-      this.$axios.get('/company/new-view',{params}).then(res=>{
+      this.$axios.post('/company/new-view?'+getRequestQuery(params)).then(res=>{
         if(res)this.list = {...res.content}
       })
     },
@@ -157,8 +156,8 @@ export default {
     showNumber(id){
         this.$axios.post('/company/get-contact',{companyId:id}).then(res=>{
             if(res.code == 200){
-              this.phone = res.content
-              this.showphone = true
+              this.list.contact = res.content
+              this.list.is_get = 1
             }else if(res.code == 303){
                 Toast(res.msg)
                 this.$router.push('/user/get')
