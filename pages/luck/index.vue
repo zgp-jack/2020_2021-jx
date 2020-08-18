@@ -301,14 +301,15 @@
           return false
         }
         if(that.content.viewVideoNumber == 0  && that.content.shareNumber>0){
-          Dialog.confirm({
-            title:"提示",
-            message:"分享给微信好友，可再获得1次抽奖机会",
-            cancelButtonText: '取消',
-            confirmButtonText: '去分享',
-          }).then(function(){
-            that.appShare()
-          })
+          // Dialog.confirm({
+          //   title:"提示",
+          //   message:"分享给微信好友，可再获得1次抽奖机会",
+          //   cancelButtonText: '取消',
+          //   confirmButtonText: '去分享',
+          // }).then(function(){
+          //   that.appShare()
+          // })
+          that.appShare()
           return false
           //分享和看视频的次数都已经用完了
         }else if(that.content.viewVideoNumber == 0 && that.content.shareNumber == 0 ){
@@ -384,7 +385,7 @@
         if(this.is_rotate) return false;
         const {shareNumber} = this.content;
         let data = {
-          shareNumber
+          shareNumber:String(shareNumber)
         }
         bridge.callHandler('share',data);
       },

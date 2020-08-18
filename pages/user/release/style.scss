@@ -165,3 +165,81 @@
     opacity: 0;
     z-index: -1;
 }
+
+.model_mask{
+    z-index: 50;
+    .repeat_tost{
+        width: 5.62rem;
+        position: relative;
+        margin:2.79rem auto;
+        background-color: #fff;
+        border-radius: 0.2rem;
+        padding: 0 0.44rem 0.5rem;
+        .close{
+            position: absolute;
+            top: 0.22rem;
+            right: 0.33rem;
+        }
+        h2{
+            line-height: 0.8rem;
+            padding-top:0.22rem;
+            text-align: center;
+            color: #2C2C2C;
+            font-weight:500; 
+            font-size: 0.36rem;
+        }
+        .fail_reason{
+            font-size: 0.26rem;
+            line-height: 0.41rem;
+            color: #888888;
+            padding-bottom: 0.14rem;
+            border-bottom: 1px solid #EEEEEE;
+        }
+        h5{
+            line-height: 0.68rem;
+            padding-bottom: 0.09rem;
+            font-size: 0.28rem;
+        }
+        .Topping{
+            position: relative;
+            height: 1.14rem;
+            background-color: #fff;
+            box-shadow:0px 0px 27px 0px rgba(180,185,187,0.26);
+            padding:0.13rem 0.68rem 0 0.12rem;
+            h3{
+                @include overflow_hiding();
+                line-height: 0.54rem;
+                font-size: 0.2rem;
+                color: #0F0F0F;
+                font-weight:500;
+            }
+            .msg{
+                @include overflow_hiding();
+                font-size:0.18rem;
+                color: #6B6B6B;
+            }
+            img{
+                position: absolute;
+                top:-0.04rem;
+                right: 0.07rem;
+                height: 0.26rem;
+                width: auto;
+            }
+        }
+        .top_msg{
+            margin-top: 0.12rem;
+            font-size: 0.2rem;
+            color: #FFA926;
+        }
+        .btn{
+            margin: 0.50rem auto 0;
+            width: 2.68rem;
+            line-height: 0.62rem;
+            font-size: 0.26rem;
+            color: #fff;
+            text-align: center;
+            background-color: #FFA926;
+            border-radius: 0.08rem;
+        }
+    }
+}

@@ -34,7 +34,7 @@
                     <div class="intruduce">{{item.desc}}</div>
                     <div class="opearting clearfix">
                         <span @click.stop="goModifyPage(item)" :class="[(item.check==1) ? 'modify':'list_item_editor']" >修改信息</span>
-                        <span class="list_item_top" @click.stop="goSettingFn($event,item,index)" v-if="item.check!='0' && item.end!='2'">{{item.top?'取消置顶':!item.top_over_due?'继续置顶':'去置顶'}}</span>
+                        <span class="list_item_top" @click.stop="goSettingFn(item,index)" v-if="item.check!='0' && item.end!='2'">{{item.top?'取消置顶':!item.top_over_due?'继续置顶':'去置顶'}}</span>
                         <span @click.stop="refuse(item)" v-if="item.check == 0" class="list_item_reason fr"><img src="../../../assets/img/user_release/warning.png" alt=""> 查看被拒原因</span>
                         <span v-if="item.etime && item.check!=='0' && item.end !='2' && item.top" class="list_item_time fr">{{item.etime}} 到期</span>
                     </div>
@@ -49,6 +49,38 @@
               <p>你还没有发布消息，点击这里发布</p>
            </div>
         </div>
+
+        <div class="model_mask" v-if="repeatData.is_repeat">
+            <div class="repeat_tost">
+              <van-icon name="cross" size="0.26rem" color="#B7B7B7" class="close" @click="onclose"/>
+               <h2>
+                 提示
+               </h2>
+               <p class="fail_reason">
+                 {{repeatData.fail_reason}}
+               </p>
+               <h5>
+                 置顶信息
+               </h5>
+               <div class="Topping">
+                  <h3>
+                    {{repeatData.repeat_info.title}}
+                  </h3>
+                  <p class="msg">
+                    {{repeatData.repeat_info.desc}}
+                  </p>
+
+                  <img :src="changeStatus[repeatData.mode][1].url" alt="">
+               </div>
+               <p class="top_msg">
+                 点击去置顶，可快速置顶已发布的相同信息让您加速完成交易
+               </p>
+               <p class="btn" @click="onSkip('set_top',repeatData)">
+                 去置顶
+               </p>
+            </div>
+        </div>
+
          <BottomTop  ref="child" :hiddenAll="true" />
   </div>
 </template>
@@ -139,6 +171,11 @@ export default {
             isempty:false,//数据是否为空
             loading:false,
             firstEmpty:false,//第一次数据为空
+            repeatData:{//重复数据
+              is_repeat:false,
+              repeat_info:{},
+              uu_id:'',
+            }
         }
     },
     methods:{
@@ -148,6 +185,11 @@ export default {
         if(this.mode == 3) this.$router.push('../../common/create?mode=3')
         if(this.mode == 4) this.$router.push('../../common/create?mode=4')
       },
+
+      onclose(){
+        this.repeatData.is_repeat = false;
+      },
+
       //新手指引弹窗
         mask_show(){
           let guide = getNovicePoint();
@@ -237,10 +279,14 @@ export default {
                 case 'view' :
                 that.$router.push({path:'/view/',query:{info:data.uu_id,mode:that.mode}})
                 break;
+                case 'set_top' :
+                that.repeatData.is_repeat = false;
+                that.$router.push({path:'/user/set_top_page/set_top',query:{id:data.uu_id,mode:data.mode}})
+                break;
             }
         },
         //置顶
-        goSettingFn(e,item,index){
+        goSettingFn(item,index){
           let that = this;
           if(item.top){
             //取消置顶
@@ -354,9 +400,16 @@ export default {
         },
         //拒绝原因
         refuse(item){
+          let {is_repeat,fail_reason,repeat_info,uu_id,mode} = item;
+          if(is_repeat){
+             this.repeatData={
+               is_repeat,fail_reason,repeat_info,uu_id,mode
+             }
+             return false;
+          }
           Dialog.alert({
             title:"提示",
-            message:item.fail_reason,
+            message:fail_reason,
             confirmButtonColor:"#ffa926"
           })
         },
