@@ -153,7 +153,7 @@ export default {
   },
   watch: {
     $route (to, from) {
-      if(to.fullPath.includes('/user/release')){
+      if(to.fullPath.includes('/user/release') && from.fullPath.includes('/user/release')){
         if(to.query.show) this.Topmaskr = true;
         this.mode = to.query.mode;
         this.int();
@@ -163,6 +163,7 @@ export default {
         this.isempty = false,//数据是否为空
         this.getData()
       }
+      return false;
     }
   },
   beforeMount(){
@@ -257,7 +258,7 @@ export default {
       this.getData();
     },
     onServers(mode){
-        this.$router.replace({path:'/user/release/',query:{mode}});
+        this.$router.replace({path:'/user/release/',query:{mode:mode}});
         document.getElementsByClassName("van-pull-refresh__head")[0].style.display = "none";
         setTimeout(()=>{
           document.getElementsByClassName("van-pull-refresh__head")[0].style.display = "block";
@@ -276,7 +277,7 @@ export default {
             break;
             case 'set_top' :
               this.repeatData.is_repeat = false;
-              this.$router.push({path:'/user/set_top_page/set_top',query:{id:data.uu_id,mode:data.mode}})
+              this.$router.replace({path:'/user/set_top_page/set_top',query:{id:data.uu_id,mode:data.mode}})
             break;
         }
     },
@@ -298,7 +299,7 @@ export default {
         let params = {info: item.uu_id,mode: that.mode};
         that.$axios.post('/user/set-top?'+getRequestQuery(params)).then(res=>{
             if(res.code == 8639){
-            this.$router.push({ path:"/user/set_top_page/set_top", query:{id:item.uu_id, mode:this.mode} })
+            this.$router.replace({ path:"/user/set_top_page/set_top", query:{id:item.uu_id, mode:this.mode} })
             return
           }
           let etime = res.top.etime*1000;
@@ -320,12 +321,10 @@ export default {
     changeSateFn(item,index){
       let str = "已租到";
       let that = this;
-      if(item.check == 0 || item.check == 1){
-        //审核中或审核失败的数据
+      if(item.check == 0 || item.check == 1){ //审核中或审核失败的数据
         Toast("审核通过后才能修改");
         return false;
-      }else if(item.check == 2 && item.end == 1){
-        //等待完成的数据
+      }else if(item.check == 2 && item.end == 1){  //等待完成的数据
         if(this.mode == 1) str = '已租到'
         else if(this.mode == 2) str = "已出租"
         else str = "已完成"
