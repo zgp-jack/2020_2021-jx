@@ -197,6 +197,12 @@ export default {
         {name:"机械转让",type:3,key:'ershou',render:false},
         {name:"机械求购",type:4,key:'want',render:false}
       ]
+      this.list={ //首页列表内容的数据
+          tenant:[],
+          machine:[],
+          ershou:[],
+          want:[]
+        }
     },
 
     //数据是否为空
