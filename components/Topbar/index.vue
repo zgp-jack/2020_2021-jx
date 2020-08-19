@@ -8,7 +8,7 @@
             加微信号:
             <span class="tel-num">{{contact.wx_service}}</span>
             <span class="button">复制</span>
-            <span>微信号,拉您进租车微信群</span>
+            <span>拉您进租车微信群</span>
           </p>
           <p>
             客服电话:
