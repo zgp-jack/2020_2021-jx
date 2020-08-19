@@ -5,15 +5,14 @@
     <div class="notice" @click="hides(true)">
       <div>
           <p>
-            添加
+            加微信号:
             <span class="tel-num">{{contact.wx_service}}</span>
-            <span>微信号,拉您进机械微信群</span>
             <span class="button">复制</span>
+            <span>拉您进租车微信群</span>
           </p>
           <p>
-            添加
+            客服电话:
             <span class="tel-num">{{contact.contact}}</span>
-            <span>联系鱼泡机械客服</span>
             <span class="button">呼叫</span>
           </p>
       </div>
