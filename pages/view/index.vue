@@ -281,12 +281,13 @@
         let params = {id:this.detail_info.uu,mode:this.mode,};
         if(reg.test(phone)){
           Dialog.confirm({
-            title: '温馨提示',
-            message: '需查看电话号码后才能发起投诉',
-            confirmButtonText:"确定投诉"
+            title: '提示',
+            message: '您还没查看电话号码，查看电话号码 之后才能投诉。',
+            confirmButtonText:"查看电话",
+            confirmButtonColor:"#EF9F38"
           }).then(()=>{
             showPhoneFn(this,Toast,params,(tel)=>{
-              this.$router.push({path:'/set/report',query:this.$route.query});
+              // this.$router.push({path:'/set/report',query:this.$route.query});
               this.show_complete_tel = false;
               this.call_phone = true;
               this.detail_info.phone = tel;
