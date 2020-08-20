@@ -5,7 +5,7 @@
           <div class="input_line">
             <span>手机号</span>
             <div>
-                <input type="tel" maxlength="11" placeholder="请输入手机号" v-model="phone" @input="PhoneInput">
+                <input type="tel" oninput="value=value.replace(/[^\d]/g,'')" maxlength="11" placeholder="请输入手机号" v-model="phone" @input="PhoneInput">
             </div>
           </div>
           <div class="input_line">

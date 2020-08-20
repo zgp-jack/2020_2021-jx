@@ -48,7 +48,7 @@
               <div class="form_row">
                 <div class="notice">联系电话</div>
                 <div class="content">
-                  <input type="text" maxlength="11" placeholder="请输入联系电话" value="" v-model="phon">
+                  <input type="text" oninput="value=value.replace(/[^\d]/g,'')" maxlength="11" placeholder="请输入联系电话" value="" v-model="phon">
                 </div>
               </div>
               <div class="form_row" v-if="phon!==oldPhon || !oldPhon">
