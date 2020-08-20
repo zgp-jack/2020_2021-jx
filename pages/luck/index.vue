@@ -114,6 +114,7 @@
         time:new Date(),
         show:false,
         timeArr:[],
+        allright:true //关闭后不弹
         // success:false // 是否为4次后的分享成功
       }
     },
@@ -219,13 +220,21 @@
           // shareNumber:0, //该用户剩余分享次数
           // shareCount:0,//分享总数
           // videoCount:0,//获取视频总数
-           const {viewVideoNumber,lotteryNumber,shareNumber} = that.content;
+           const {viewVideoNumber,lotteryNumber,shareNumber,videoCount} = that.content;
            let contry = Number(viewVideoNumber) + Number(lotteryNumber)
            if(shareNumber !=0 && contry == 0) {
              that.appShare()
              return false;
             //  if(!that.success) return false
            }
+           if(videoCount - lotteryNumber >0 && shareNumber !=0){
+             let numbers =Math.floor(Math.random()*2+1);
+             if(numbers == 1 && that.allright){
+               that.appShare()
+               return false
+             }
+           }
+
 
            if(that.is_rotate) return false;
            if(!that.intercept()){
@@ -383,6 +392,7 @@
       appShare(){
         //转动的时候不允许操作
         if(this.is_rotate) return false;
+        this.allright = false
         const {shareNumber} = this.content;
         let data = {
           shareNumber:String(shareNumber)

@@ -13,7 +13,7 @@
         <div class="date-content">
           <div class="date"  @click="chooseTime">
             <span>置顶天数：</span>
-            <input type="text" disabled="disabled" :value="day" placeholder="请选择置顶天数">
+            <input type="text" disabled="disabled" :value="day" placeholder="请选择置顶天数"> 
           </div>
           <div class="score">
             <span>消耗鱼泡币：</span>
@@ -136,7 +136,6 @@
     data(){
       return{
         title:"机械置顶",
-        area:[],
         selected_arr:[],
         show_area_choose:false,
         show_set_top:true,
@@ -145,53 +144,55 @@
         columns: [],
         show_data_alert:false,
         day:'',
+        area:[],
         integral:0
       }
     },
     components:{
       "van-picker":Picker
     },
+    computed: {
+      allArea(){
+        let arr = this.$nuxt.$store.state.area;
+        let newArr = arr.map((item)=>{
+          item.addColor=false; return item
+        })
+        this.$set(this,'area',newArr)
+        return newArr;
+      }
+    },
     beforeMount() {
       for(var i = 1; i <= 30;i++){
         this.columns.push(i+"天")
       }
-       let arr = this.$nuxt.$store.state.area;
-       let newArr = arr.map((item)=>{
-        item.addColor=false;
-         return item
-      })
-      this.$set(this,'area',newArr);
     },
     methods:{
-       onConfirm(value, index) {
-         this.day = parseInt(value);
+      onConfirm(value, index) {
+        this.day = parseInt(value);
+        this.show_data_alert=false;
+      },
+      onCancel() {
           this.show_data_alert=false;
-        },
-        onCancel() {
-           this.show_data_alert=false;
-        },
+      },
       //选择城市
       chooseAreaFn(){
         this.show_set_top = false;
         this.show_area_choose = true;
         this.show_back_btn = true;
       },
-
       //选择时间
       chooseTime(){
         this.show_data_alert = true;
       },
       //点击选中城市
       selectedArea(item){
-        let that = this;
-        let arr = [...this.area];
-        let selectedArr = [...this.selected_arr];
-        //选中的对象
-        let index = selectedArr.indexOf(item);
-        if(index != -1){
-          //数组里有相同的数据把它删除
-          selectedArr.splice(index,1)
-        }else{
+        let that = this,
+            arr = [...this.area],
+            selectedArr = [...this.selected_arr],
+            index = selectedArr.indexOf(item);//选中的对象
+        //数组里有相同的数据把它删除
+        if(index != -1) selectedArr.splice(index,1)
+        else{
             //全国的时候把数组清空，在把全国push到数组
             if(item.id == 1){
               selectedArr = [];
@@ -252,7 +253,6 @@
       },
       //取消选择
       cancelArea(item,index){
-        //
         let arr = [...this.sure_data];
         let area = [...this.area];
         arr.splice(index,1)
@@ -268,31 +268,21 @@
         this.area = [...area]
       },
       countIntegral(day){
-        let arr = [...this.sure_data];
-        let num = 0;
+        let arr = [...this.sure_data],
+            num = 0;
          if(arr.length != 0 && arr[0].id == 1){
             //全国置顶
-            if(day < 7){
-                num = 600*day*0.9
-            }else if(day < 15){
-                num = 600*day*0.8
-            }else if(day < 30){
-                num = 600*day*0.7
-            }else if(day >= 30){
-                num = 600*day*0.6
-            }
+            if(day < 7) num = 600*day*0.9
+            else if(day < 15) num = 600*day*0.8
+            else if(day < 30) num = 600*day*0.7
+            else if(day >= 30) num = 600*day*0.6
          }else{
            //全省置顶
            let len = this.sure_data.length
-           if(day < 7){
-               num = 20*len*day;
-           }else if(day < 15){
-               num = 20*len*day*0.9;
-           }else if(day < 30){
-               num = 20*len*day*0.8;
-           }else if(day >= 30){
-               num = 20*len*day*0.7;
-           }
+           if(day < 7) num = 20*len*day;
+           else if(day < 15) num = 20*len*day*0.9;
+           else if(day < 30) num = 20*len*day*0.8;
+           else if(day >= 30) num = 20*len*day*0.7;
          }
           this.integral = num
       },
@@ -316,24 +306,13 @@
           dayNum:this.day,
           area:areaId.slice(0,areaId.length-1)
         }
+            
         this.$axios.post('/user/new-set-top-do',{...data}).then(res=>{
           if(res.code == 200){
-          //  Toast.success('置顶成功');
-          //  setTimeout(()=>{
-          //    that.$router.go(-1);
-          //  },1500)
-          Toast({
-            message: '置顶成功',
-            duration: 1500,
-            onClose:()=>{
-              this.$router.replace({path:'/user/release',query:{mode:data.type}})
-            }
-          });
-          }else if(res.code == 303){
-            Toast.fail(res.msg)
-          }else{
-            Toast(res.msg)
-          }
+            Toast({ message: '置顶成功', duration: 1500 });
+            setTimeout(()=>{this.$router.replace({path:'/user/release/',query:{mode:data.type}})},1500)
+          }else if(res.code == 303) Toast.fail(res.msg)
+          else Toast(res.msg)
         })
       }
     },
@@ -353,6 +332,10 @@
             lis[i].style.height = "44px"
           }
         }
+      },
+      //监听城市变化
+      allArea(old){
+        this.$set(this,'area',old)
       }
     }
   }
