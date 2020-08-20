@@ -150,61 +150,55 @@ import {CellphoneCheck} from '../../static/utils/validator.js';
 import PickerArea from '../pickerArea/index.vue'
 export default {
     components:{
-        Header,
-        'van-uploader':Uploader,
-        'van-area':Area,
-        [Dialog.Component.name]: Dialog.Component,
-        [ImagePreview.Component.name]: ImagePreview.Component,
-        PickerArea:PickerArea,
+      Header,
+      'van-uploader':Uploader,
+      'van-area':Area,
+      [Dialog.Component.name]: Dialog.Component,
+      [ImagePreview.Component.name]: ImagePreview.Component,
+      PickerArea:PickerArea,
     },
     data(){
-        return{
-            title:'供应商申请',
-            filelist:[],
-            company_name:'', //公司名称
-            detail_addr:"",  //详细地址
-            number:'1',  //机械规模
-            detail_company:'', //企业简介
-            company_username:'',  //联系人姓名
-            company_tel:'',    //联系人电话
-            upload_logo:[],  //logo图片
-            upload_license:[], //营业执照
-            upload_mechanism:[], //机构代码
-            upload_revenue:[],  //税务登记证
-            upload_id_card:[],  //身份证正面
-            upload_hand_card:[], //身份证反面
-            area_text:'',
-            area_id:{},
-            modify_data:{}, //修改页面的初始数据
-        }
+      return{
+          title:'供应商申请',
+          filelist:[],
+          company_name:'', //公司名称
+          detail_addr:"",  //详细地址
+          number:'1',  //机械规模
+          detail_company:'', //企业简介
+          company_username:'',  //联系人姓名
+          company_tel:'',    //联系人电话
+          upload_logo:[],  //logo图片
+          upload_license:[], //营业执照
+          upload_mechanism:[], //机构代码
+          upload_revenue:[],  //税务登记证
+          upload_id_card:[],  //身份证正面
+          upload_hand_card:[], //身份证反面
+          area_text:'',
+          area_id:{},
+          modify_data:{}, //修改页面的初始数据
+      }
     },
     props:['info'],
     beforeMount() {
       if(this.info) this.getParentData(this.info);
     },
     methods:{
-      //上传logo
-      uploadLogo(file) {
+      uploadLogo(file) { //上传logo
         this.uploadAllImages(file,'upload_logo')
       },
-      //上传营业执照
-      uploadLicense(file){
+      uploadLicense(file){ //上传营业执照
         this.uploadAllImages(file,'upload_license')
       },
-      //上传机构代码
-      uploadMechanism(file){
+      uploadMechanism(file){ //上传机构代码
         this.uploadAllImages(file,'upload_mechanism')
       },
-      //上传税务登记
-      uploadRevenue(file){
+      uploadRevenue(file){ //上传税务登记
         this.uploadAllImages(file,'upload_revenue')
       },
-      //上传身份证正面
-      uploadIdCard(file){
+      uploadIdCard(file){ //上传身份证正面
         this.uploadAllImages(file,'upload_id_card')
       },
-      //上传身份证反面
-      uploadHandCard(file){
+      uploadHandCard(file){ //上传身份证反面
         this.uploadAllImages(file,'upload_hand_card')
       },
       //上传封装
@@ -218,9 +212,7 @@ export default {
       },
       //预览图片
       previewImg(src){
-         ImagePreview([
-           src
-         ])
+         ImagePreview([src])
       },
       //删除图片
       deleteImg(witch){
@@ -239,29 +231,21 @@ export default {
           const onlyLetter = /^[A-Za-z]+$/;
           /* 全中文或者字母 */
           const only_letter_number=(str)=>{
-            if(numberCheck.test(str) || onlyLetter.test(str)){
-              return true;
-            }else{
-              return false
-            }
+            if(numberCheck.test(str) || onlyLetter.test(str)) return true;
+            else return false
           }
           /* 不支持全数字、空格、特殊符号 */
           const publicCheck=(str)=>{
-          if(!numberCheck.test(str) && !onlyLetter.test(str) && publicText.test(str)){
-              return true
-            }else{
-              return false
-            }
+            if(!numberCheck.test(str) && !onlyLetter.test(str) && publicText.test(str)) return true
+            else return false
           }
 
           let count = 0;
           for(let i = 0; i < this.company_name.length; i++){
-            if(chinese.test(this.company_name[i])){
-              count ++;
-            }
+            if(chinese.test(this.company_name[i])) count ++;
           }
           if(this.company_name.length > 20 || count < 5){
-             this.alert('请输入5~20字企业名称','company_name');
+            this.alert('请输入5~20字企业名称','company_name');
             return false;
           }else if(!publicCheck(this.company_name)){
             this.alert('请输入中文企业名称','company_name')
@@ -271,12 +255,9 @@ export default {
             this.alert('请选择企业所在地',()=>{this.$refs.area.onShow(true)});
             return false;
           }
-
           let addr_num_count = 0;
           for(let i = 0; i < this.detail_addr.length; i++){
-            if(chinese.test(this.detail_addr[i])){
-              addr_num_count ++;
-            }
+            if(chinese.test(this.detail_addr[i])) addr_num_count ++;
           }
           if(addr_num_count < 5){
             this.alert('请完整填写地址信息','detail_addr');
@@ -314,49 +295,40 @@ export default {
           }
           let arr_license = new Array('','','');
           arr_license[0] = this.upload_license[0].img
-          if(this.upload_revenue[0]){
-            arr_license[1] = this.upload_revenue[0].img
-          }
-          if(this.upload_mechanism[0]){
-            arr_license[2] = this.upload_mechanism[0].img
-          }
+          if(this.upload_revenue[0]) arr_license[1] = this.upload_revenue[0].img
+          if(this.upload_mechanism[0]) arr_license[2] = this.upload_mechanism[0].img
           let data = {
-            cname:this.company_name,
-            logo:this.upload_logo[0]?this.upload_logo[0].img:null,
-            area:this.area_id.city,
-            city:this.area_id.area,
-            addr:this.detail_addr,
-            scale:this.number,
-            desc:this.detail_company,
-            uname:this.company_username,
-            contact:this.company_tel,
-            license:arr_license.join(),
-            id_card:this.upload_id_card[0].img,
-            hand_card:this.upload_hand_card[0].img
+            cname: this.company_name,
+            logo: this.upload_logo[0]?this.upload_logo[0].img:null,
+            area: this.area_id.city,
+            city: this.area_id.area,
+            addr: this.detail_addr,
+            scale: this.number,
+            desc: this.detail_company,
+            uname: this.company_username,
+            contact: this.company_tel,
+            license: arr_license.join(),
+            id_card: this.upload_id_card[0].img,
+            hand_card: this.upload_hand_card[0].img
           }
           this.$axios.post('/company/save',{data:JSON.stringify(data)}).then(res=>{
-            if(res.code == 200){
-              //跳转页面
-            Dialog.confirm({
-              title:"提交成功",
-              message:'您提交的申请，需要核实人员核实之后才能通过，工作人员将在一个工作日之内联系您，请保持电话畅通，客服电话：15608008605',
-              cancelButtonText:"稍后再去",
-              confirmButtonText:"联系客服"
-            }) .then(() => {
-              this.$router.push({name:'company-user',params:{isCall:15608008605}})
-            }).catch(() => {
-              this.$router.push('/company/user')
-            });
-            }else if(res.code == 500){
-               this.alert(res.msg)
-            }
+            if(res.code == 200){ //跳转页面
+              Dialog.confirm({
+                title:"提交成功",
+                message:'您提交的申请，需要核实人员核实之后才能通过，工作人员将在一个工作日之内联系您，请保持电话畅通，客服电话：15608008605',
+                cancelButtonText:"稍后再去",
+                confirmButtonText:"联系客服"
+              }).then(() => { this.$router.push({name:'company-user',params:{isCall:15608008605}})
+              }).catch(() => { this.$router.push('/company/user') });
+            }else if(res.code == 500) this.alert(res.msg)
           })
       },
+      //alert提示封装
       alert(msg,flag=null){
         Dialog.alert({
           title:'提示',
           message:msg
-        }).then(()=>{
+        }).then(()=>{ 
           if(typeof flag == "string") this.$refs[flag].focus();
           else if(typeof flag == "function") flag();
         })
@@ -367,10 +339,7 @@ export default {
       },
       //接收子组件传的参数
       selectArea(area){
-        this.area_id={
-          area:area.area.id,
-          city:area.city.id,
-        }
+        this.area_id={ area:area.area.id, city:area.city.id }
         this.area_text = area.city.name+' '+area.area.name;
       },
       //被父组件调用的方法--获取父组件的异步数据
@@ -386,45 +355,18 @@ export default {
         this.company_username = company.uname;
         this.company_tel = company.contact;
         //logo
-        if(company.logo.server){
-          this.upload_logo = [{
-            src:company.logo.server,
-            img:company.logo.value
-           }];
-        }
+        if(company.logo.server) this.upload_logo = [{src:company.logo.server, img:company.logo.value }];
         //营业执照
-        this.upload_license=[{
-          src:licenses.license.server,
-          img:licenses.license.value
-        }]
+        this.upload_license=[{ src:licenses.license.server, img:licenses.license.value }]
         //代码机构
-        if(licenses.agency){
-          this.upload_mechanism=[{
-            src:licenses.agency.server,
-            img:licenses.agency.value
-          }]
-        }
+        if(licenses.agency) this.upload_mechanism=[{ src:licenses.agency.server, img:licenses.agency.value }]
         //税务登记
-        if(licenses.tax){
-          this.upload_revenue=[{
-            src:licenses.tax.server,
-            img:licenses.tax.value
-          }]
-        }
+        if(licenses.tax) this.upload_revenue=[{src:licenses.tax.server, img:licenses.tax.value}]
         //身份证
-        this.upload_id_card = [{
-          src:licenses.idCard.server,
-          img:licenses.idCard.value
-        }]
-        this.upload_hand_card = [{
-          src:licenses.handCard.server,
-          img:licenses.handCard.value
-        }]
+        this.upload_id_card = [{src:licenses.idCard.server, img:licenses.idCard.value }]
+        this.upload_hand_card = [{src:licenses.handCard.server, img:licenses.handCard.value}]
         //城市id
-        this.area_id={
-          area:company.city,
-          city:company.area,
-        }
+        this.area_id={ area:company.city, city:company.area}
       }
     },
 }
