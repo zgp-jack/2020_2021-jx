@@ -180,6 +180,7 @@
         this.$axios.post("/turn-table/get-user-lottery-info" + this.source).then(res=>{
           if(res && res.code == 200){
             this.isComplete = true;
+            console.log(res)
             this.content = {...res.content.info,...res.content.videoConf};
           }else{
             this.isComplete = 0;
@@ -221,13 +222,14 @@
           // shareCount:0,//分享总数
           // videoCount:0,//获取视频总数
            const {viewVideoNumber,lotteryNumber,shareNumber,videoCount} = that.content;
+           console.log(lotteryNumber)
            let contry = Number(viewVideoNumber) + Number(lotteryNumber)
            if(shareNumber !=0 && contry == 0) {
              that.appShare()
              return false;
             //  if(!that.success) return false
            }
-           if(videoCount - lotteryNumber >0 && shareNumber !=0){
+           if(videoCount - viewVideoNumber >0 && shareNumber !=0){
              let numbers =Math.floor(Math.random()*2+1);
              if(numbers == 1 && that.allright){
                that.appShare()
