@@ -108,10 +108,10 @@ export default {
         this.listLoading = true
         let params = {page:this.page,area:this.area,type:this.type,page_size:this.page_size,globalLoading:false};
         const that = this;
+        let tm = this.$nuxt.$store.state.userinfo.createCompany
         this.$axios.post('/company?'+getRequestQuery(params)).then(res=>{
-          console.log(res)
           if(res.code == 200 ){
-            that.createCompany = res.createCompany;
+            that.createCompany = tm
             if(that.page == 1){
               if(res.content.length && res.content.length<that.page_size){
                 that.iscomplete = true;
