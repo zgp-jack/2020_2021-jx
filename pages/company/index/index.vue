@@ -40,16 +40,17 @@
     <!-- 机械类型选择 -->
     <CustomMechanicalType :onSelect="onSelect" :isSelect_jixie="isSelect_jixie" onlyFather = 'true'/>
     <!-- 底部呼出 -->
-    <div class="bottom-bar" :class="isshow==false?'top-hide':''" @click="go"></div>
+    <div class="bottom-bar" :class="isshow==false?'top-hide':''" @click="go" v-if="!createCompany"></div>
   </div>
 </template>
 
 <script>
 import Header from '../../../components/header';
 import emptyMsg from '../../../components/emptyMsg/index';
-import {List,PullRefresh } from 'vant';
+import {List,PullRefresh} from 'vant';
 import CustomArea from '../../../components/customArea';
 import CustomMechanicalType from '../../../components/customMechanicalType';
+import {getRequestQuery} from '../../../static/utils/utils';
 export default {
     components:{
         Header,
@@ -71,20 +72,22 @@ export default {
         loading_top:false,
         iscomplete:false,
         More:false,
-
         selectAreaData: {}, //选择的数据
         selectJixieData: {},
         isSelect_area: false,
         isSelect_jixie: false,
-
         CustomArea_default_data:{province:{id: 1,name: '全国',pid: '0'}},
         myscroll:0,
-        isshow:true
+        isshow:true,
+        createCompany:false, //用户是否发布过供应商
       }
     },
     computed:{
       default_addr(){
         return this.$nuxt.$store.state.default_addr
+      },
+      tm(){
+       return this.$nuxt.$store.state.userinfo.createCompany
       }
     },
     methods:{
@@ -108,8 +111,9 @@ export default {
         this.listLoading = true
         let params = {page:this.page,area:this.area,type:this.type,page_size:this.page_size,globalLoading:false};
         const that = this;
-        this.$axios.get('/company',{params}).then(res=>{
+        this.$axios.post('/company?'+getRequestQuery(params)).then(res=>{
           if(res.code == 200 ){
+            that.createCompany = that.tm
             if(that.page == 1){
               if(res.content.length && res.content.length<that.page_size){
                 that.iscomplete = true;

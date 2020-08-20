@@ -5,7 +5,7 @@
           <div class="form">
             <div class="form-row">
               <i class="iconfont icon-shouji54"></i>
-              <input type="tel" id="username" placeholder="手机号码" autocomplete="off" v-model="users" maxlength="11" @input="user_name()">
+              <input type="tel" id="username" oninput="value=value.replace(/[^\d]/g,'')" placeholder="手机号码" autocomplete="off" v-model="users" maxlength="11" @input="user_name()">
             </div>
             <div class="form-row">
               <i class="iconfont icon-mima"></i>
@@ -38,7 +38,6 @@ import {setCookie,GetUser,whetherLogin} from '../../static/utils/utils.js';
 import {Toast} from 'vant';
 import {CellphoneCheck,nopass} from '../../static/utils/validator';
 export default {
-
     data(){
         return{
           title:'登录_鱼泡机械',

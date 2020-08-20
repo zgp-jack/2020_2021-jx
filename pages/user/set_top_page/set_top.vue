@@ -17,7 +17,7 @@
           </div>
           <div class="score">
             <span>消耗鱼泡币：</span>
-            <div>{{integral}}币</div>
+            <div>{{integral}}个</div>
           </div>
         </div>
         <div class="set-btn" @click="sureSetTop">确定置顶</div>

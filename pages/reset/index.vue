@@ -5,7 +5,7 @@
           <div class="form">
             <div class="form-row">
               <i class="iconfont icon-shouji54"></i>
-              <input type="tel"  placeholder="请输入你的手机号" autocomplete="off" v-model="tel" maxlength="11">
+              <input type="tel" oninput="value=value.replace(/[^\d]/g,'')"  placeholder="请输入你的手机号" autocomplete="off" v-model="tel" maxlength="11">
             </div>
             <div class="form-row">
               <i class="iconfont icon-yanzheng"></i>

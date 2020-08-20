@@ -117,35 +117,6 @@
         novice_point_alert:true
       }
     },
-    // middleware: 'userAgent',
-    // async asyncData ({query,$axios,userAgent,app}){
-    //   let params = query;
-      
-    //   // 参数不完整跳转首页
-    //   // if(params.info && params.mode){
-    //     return await $axios.get('/index/new-view?source=M',{params}).then(res=>{
-    //       // if(res.code == 200){
-    //          return{
-    //            detail_info:{...res.content}
-    //          }
-    //       // }else if(res.code == 500){
-    //       //   Dialog.alert({
-    //       //     title:"提示",
-    //       //     message:res.msg,
-    //       //   })
-    //       // }
-    //     })
-    //   // }
-    // },
-
-    // async asyncData ({$axios}){
-    //   debugger
-    //   return await $axios.get('https://cnodejs.org/api/v1/topics').then(res=>{
-    //     return {
-    //       title:res.data[0].title
-    //     }
-    //   })
-    // },
     components:{
       VerticalBanner,
       "van-dialog": Dialog.Component,
@@ -161,18 +132,16 @@
         // window.location.replace('/dist/home')
         this.$router.replace('/home')
       }else{
-       let params = {...this.$route.query};
-       this.mode = this.$route.query.mode;
-       // 改变标题
-       this.changeTitle(this.mode);
-
+        let params = {...this.$route.query};
+        this.mode = this.$route.query.mode;
+        this.changeTitle(this.mode);// 改变标题
         this.$axios.post('/index/new-view?' + getRequestQuery(params)).then(res=>{
           if(res.code == 200){
-             this.$set(this,'detail_info',{...res.content})
-             // 状态的显示
-             this.allState(res.content);
-             //获取详情的高度
-             this.detailContnetHeight()
+              this.$set(this,'detail_info',{...res.content})
+              // 状态的显示
+              this.allState(res.content);
+              //获取详情的高度
+              this.detailContnetHeight()
           }else if(res.code == 500){
             Dialog.alert({
               title:"提示",
@@ -194,9 +163,7 @@
         setTimeout(()=>{
            let detail_content_height = this.$refs.detail_content.offsetHeight,
                maxHeight = parseFloat(document.documentElement.style.fontSize) * 1.2;
-           if(detail_content_height>maxHeight){
-             this.show_wath_all = true;
-           }
+           if(detail_content_height>maxHeight) this.show_wath_all = true;
         },0)
       },
       // 改变标题
@@ -215,15 +182,12 @@
           this.go_release = true;
           this.go_settop = true;
         }
-        //是否已经收藏
-        this.is_collection = obj.collection;
-        //该信息是不是自己的
-        if(obj.is_author){
+        this.is_collection = obj.collection;//是否已经收藏
+        if(obj.is_author){//该信息是不是自己的
            this.is_mine = true;
            return false;
         }
-        // 状态是不是已完成
-        if(obj.status == 2){
+        if(obj.status == 2){ // 状态是不是已完成
           this.complete = true;
           this.detail_info.phone = this.detail_info.phone.slice(0,7) + "***";
           if(this.$route.query.mode == 1) this.state_text = "已租到";
@@ -231,9 +195,8 @@
           else this.state_text = "已完成";
           return false;
         }
-        //是否查看了完整电话号码
         let reg = /\*+/g;
-        if(reg.test(obj.phone)){
+        if(reg.test(obj.phone)){//是否查看了完整电话号码
           this.show_complete_tel = true;
           return false;
         }else{
@@ -245,11 +208,7 @@
       showPhone(id){
         //判断是否登录
         if(whetherLogin(this) == false) return false;
-
-        let params = {
-          id,
-          mode:this.mode,
-        };
+        let params = {id, mode:this.mode};
         //进行ajax请求完整的电话号码
         showPhoneFn(this,Toast,params,(tel)=>{
           this.show_complete_tel = false;
@@ -262,15 +221,14 @@
         if(this.call_phone) {
           callPhoneFn(this.detail_info.phone)
           return false;
-        }else{
-          this.showPhone(id);
-        }
+        }else this.showPhone(id);
       },
       //投诉
       reportFn(phone){
         if(whetherLogin(this) == false) return;
         // 判断是否已完成
         if(this.detail_info.status == 2){
+          // alert({title:'温馨提示',content:''})
           Dialog.alert({
             title: '温馨提示',
             message: '不能举报已完成的信息',
@@ -281,12 +239,14 @@
         let params = {id:this.detail_info.uu,mode:this.mode,};
         if(reg.test(phone)){
           Dialog.confirm({
-            title: '温馨提示',
-            message: '需查看电话号码后才能发起投诉',
-            confirmButtonText:"确定投诉"
+            title: '提示',
+            message: '您还没查看电话号码，查看电话号码 之后才能投诉。',
+            confirmButtonText:"查看电话",
+            confirmButtonColor:"#EF9F38"
+
           }).then(()=>{
             showPhoneFn(this,Toast,params,(tel)=>{
-              this.$router.push({path:'/set/report',query:this.$route.query});
+              // this.$router.push({path:'/set/report',query:this.$route.query});
               this.show_complete_tel = false;
               this.call_phone = true;
               this.detail_info.phone = tel;
@@ -294,45 +254,38 @@
           }).catch(()=>{})
         }else{
           //跳转到投诉页面
-          this.$router.push({
-            path:'/set/report',
-            query:this.$route.query
-          })
+          this.$router.push({path:'/set/report', query:this.$route.query})
         }
       },
       //查看全部
       watchAll(){
         this.show_wath_all = false;
       },
-      //展示图片
-      showImage(index){
+      showImage(index){//展示图片
         let that = this;
         ImagePreview({images:that.detail_info.images,startPosition:index,closeable:true})
       },
-      //分享
-      shareFn(){
+      shareFn(){//分享
         if(whetherLogin(this) == false) return;
         this.$router.push("/user/invitation")
       },
-      //收藏
-      cellectFn(id){
+      cellectFn(id){ //收藏
         if(whetherLogin(this) == false) return;
         let that = this;
-        let data = {
-           id,
-           mode:this.$route.query.mode,
-           type:(this.is_collection ? "2" : "1")
-         }
+        let data = {id, mode:this.$route.query.mode, type:(this.is_collection ? "2" : "1")}
          //发起ajax请求
          this.$axios.post('/index/collection',{data:JSON.stringify(data)}).then(res=>{
            if(res.code == 200){
-              Dialog.alert({
-                title:"温馨提示",
-                message: (data.type==2?"取消收藏":"收藏成功")
-              });
+            this.alert({title:"温馨提示",content:(data.type==2?"取消收藏":"收藏成功")})
               that.is_collection = !that.is_collection;
            }
          })
+      },
+      alert(data){ //alert弹窗封装
+        Dialog.alert({ title:data.title, message: data.content
+        }).then(()=>{
+          typeof data.callback == 'function' && data.callback;
+        })
       }
     }
   }

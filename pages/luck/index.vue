@@ -114,7 +114,7 @@
         time:new Date(),
         show:false,
         timeArr:[],
-        allright:true, //关闭后不弹
+        allright:[{ok:false},{ok:false},{ok:false},{ok:false}], //关闭后不弹
         // success:false // 是否为4次后的分享成功,
         watched:true  //看完视频后
       }
@@ -232,8 +232,10 @@
            }
            if(videoCount - viewVideoNumber >0 && shareNumber !=0 && e && that.watched){
              let numbers =Math.floor(Math.random()*2+1);
-             if(numbers == 1 && that.allright){
+             let num = videoCount - viewVideoNumber;
+             if(numbers == 1 && !that.allright[num].ok){
                that.appShare()
+               that.allright[num].ok = true
                return false
              }
            }
@@ -398,7 +400,6 @@
       appShare(){
         //转动的时候不允许操作
         if(this.is_rotate) return false;
-        this.allright = false
         const {shareNumber} = this.content;
         let data = {
           shareNumber:String(shareNumber)

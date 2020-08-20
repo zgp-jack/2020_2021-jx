@@ -63,7 +63,7 @@
                 <div class="corm-row">
                     <div class="row-left"><span class="f-red">*</span>联系电话</div>
                     <div class="row-right">
-                         <input type="number" class="textInput" ref="company_tel" v-model="company_tel" maxlength="11" placeholder="请输入联系电话">
+                         <input type="tel" oninput="value=value.replace(/[^\d]/g,'')" class="textInput" ref="company_tel" v-model="company_tel" maxlength="11" placeholder="请输入联系电话">
                     </div>
 
                 </div>
