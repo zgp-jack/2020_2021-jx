@@ -27,7 +27,7 @@
         <div class="turntable-box-out" :class='[is_rotate?"luck-rotate":""]' :style="{transform:'rotate('+rotate+'deg)'}"></div>
         <div class="turntable-box-img" :class='[is_rotate?"luck-rotate":""]' :style="{transform:'rotate('+rotate+'deg)'}"></div>
         <div class="turntable-btn">
-          <div class="turntable-btn-click" @click="!isComplete?int():startTurnTbale()"></div>
+          <div class="turntable-btn-click" @click="!isComplete?int():startTurnTbale($event)"></div>
         </div>
 
       </div>
@@ -213,7 +213,7 @@
         // this.scrollFlish()
       },
       //点击抽奖
-      startTurnTbale(){
+      startTurnTbale(e=null){
            const that = this;
           //  用户没有分享最后一次抽奖强制分享
           //  lotteryNumber:0,//该用户剩余抽奖次数
@@ -229,7 +229,7 @@
              return false;
             //  if(!that.success) return false
            }
-           if(videoCount - viewVideoNumber >0 && shareNumber !=0){
+           if(videoCount - viewVideoNumber >0 && shareNumber !=0 && e){
              let numbers =Math.floor(Math.random()*2+1);
              if(numbers == 1 && that.allright){
                that.appShare()
