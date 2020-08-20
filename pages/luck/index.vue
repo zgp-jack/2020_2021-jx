@@ -114,8 +114,9 @@
         time:new Date(),
         show:false,
         timeArr:[],
-        allright:true //关闭后不弹
-        // success:false // 是否为4次后的分享成功
+        allright:true, //关闭后不弹
+        // success:false // 是否为4次后的分享成功,
+        watched:true  //看完视频后
       }
     },
     // 过滤器
@@ -214,7 +215,8 @@
       },
       //点击抽奖
       startTurnTbale(e=null){
-           const that = this;
+           const that = this
+           console.log(that.content.lotteryNumber)
           //  用户没有分享最后一次抽奖强制分享
           //  lotteryNumber:0,//该用户剩余抽奖次数
           // viewVideoNumber:0,//该用户剩余看视频次数
@@ -222,14 +224,13 @@
           // shareCount:0,//分享总数
           // videoCount:0,//获取视频总数
            const {viewVideoNumber,lotteryNumber,shareNumber,videoCount} = that.content;
-           console.log(lotteryNumber)
            let contry = Number(viewVideoNumber) + Number(lotteryNumber)
            if(shareNumber !=0 && contry == 0) {
              that.appShare()
              return false;
             //  if(!that.success) return false
            }
-           if(videoCount - viewVideoNumber >0 && shareNumber !=0 && e){
+           if(videoCount - viewVideoNumber >0 && shareNumber !=0 && e && that.watched){
              let numbers =Math.floor(Math.random()*2+1);
              if(numbers == 1 && that.allright){
                that.appShare()
@@ -237,19 +238,22 @@
              }
            }
 
-
            if(that.is_rotate) return false;
            if(!that.intercept()){
              return false
            }
            let ad = that.videoType();
+
            if(that.content.lotteryNumber ==0){
               Dialog.confirm({
                 title:"提示",
                 message:"需要观看视频后，才能抽奖",
                 confirmButtonColor:"#EF9F38",
                 }).then(()=>{
+                that.watched = true
                 bridge.callHandler('playVideo',{type:ad})
+              }).catch(()=>{
+                 that.watched = false
               })
               return false;
            }
