@@ -177,6 +177,7 @@
       },
       //获取用户信息
       initUserInfo(){
+        let  that = this
         this.isComplete = false;
         this.$axios.post("/turn-table/get-user-lottery-info" + this.source).then(res=>{
           if(res && res.code == 200){
@@ -184,8 +185,8 @@
             console.log(res)
             this.content = {...res.content.info,...res.content.videoConf};
             let {videoCount} = this.content
-            for(let i = 0;i<videoCount.length;i++){
-              this.allright.push({ok:false})
+            for(let i = 0;i<videoCount;i++){
+              that.allright.push({ok:false})
             }
           }else{
             this.isComplete = 0;

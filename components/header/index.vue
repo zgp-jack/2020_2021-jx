@@ -16,7 +16,7 @@ import { Icon } from 'vant';
 
 Vue.use(Icon);
 export default {
-    props:['title','onskip','ensure_text','getParentFn','color',"go_home_page"],
+    props:['title','onskip','ensure_text','getParentFn','color',"go_home_page",'gores','mode'],
     data(){
         return{
 
@@ -36,6 +36,10 @@ export default {
               this.$router.push("/home");
               return false;
           }
+          if(this.gores){
+            this.$router.replace({path:"/user/release/",query:{mode:this.mode}});
+            return false
+            }
           this.$router.go(-1)
         },
 		onEnsure(){
