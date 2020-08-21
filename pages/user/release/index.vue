@@ -356,7 +356,7 @@ export default {
         this.repeatData={is_repeat, fail_reason, repeat_info, uu_id,mode,title,desc}
         return false;
       }
-      // this.alert({title:"提示",content:fail_reason,sureColor:"#ffa926"})
+      this.alert({title:"提示",content:fail_reason,sureColor:"#ffa926"})
     },
     showRelease(){
       this.$refs.child.list_show();
