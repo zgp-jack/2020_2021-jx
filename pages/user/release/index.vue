@@ -64,10 +64,10 @@
                </h5>
                <div class="Topping">
                   <h3>
-                    {{repeatData.repeat_info.title}}
+                    {{repeatData.title}}
                   </h3>
                   <p class="msg">
-                    {{repeatData.repeat_info.desc}}
+                    {{repeatData.desc}}
                   </p>
 
                   <img :src="changeStatus[repeatData.mode][1].url" alt="">
@@ -351,12 +351,12 @@ export default {
     },
     //拒绝原因
     refuse(item){
-      let {is_repeat,fail_reason,repeat_info,uu_id,mode} = item;
+      let {is_repeat,fail_reason,repeat_info,uu_id,mode,title,desc} = item;
       if(is_repeat){
-        this.repeatData={is_repeat, fail_reason, repeat_info, uu_id,mode}
+        this.repeatData={is_repeat, fail_reason, repeat_info, uu_id,mode,title,desc}
         return false;
       }
-      this.alert({title:"提示",content:fail_reason,sureColor:"#ffa926"})
+      // this.alert({title:"提示",content:fail_reason,sureColor:"#ffa926"})
     },
     showRelease(){
       this.$refs.child.list_show();
