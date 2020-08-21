@@ -1,6 +1,6 @@
 <template>
   <div class="set_top_page">
-     <Header :title="title" ref="header"/>
+     <Header :title="title" ref="header" :gores=true :mode='mode'/>
      <div class="main" v-show="show_set_top">
         <span class="set_area">当前选择置顶范围：</span>
             <div class="choose_scope" >
@@ -145,8 +145,12 @@
         show_data_alert:false,
         day:'',
         area:[],
-        integral:0
+        integral:0,
+        mode:''
       }
+    },
+    created(){
+      this.mode = this.$route.query.mode
     },
     components:{
       "van-picker":Picker
