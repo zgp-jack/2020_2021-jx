@@ -49,7 +49,6 @@ export default {
             texts:'',
             list:[{id:0,title:'电话虚假(空号、打不通)',show:false},{id:1,title:'虚假工程',show:false},{id:2,title:'其他',show:false},],
             report_reason:{},
-            // userInfo:{}
         }
       },
       computed: {
@@ -130,8 +129,6 @@ export default {
               Dialog.alert({
                 title: '提示',
                 message: res.msg,
-              }).then(()=>{
-                that.$router.go(-1)
               })
             }
           })
