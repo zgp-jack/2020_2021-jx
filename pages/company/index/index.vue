@@ -52,6 +52,15 @@ import CustomArea from '../../../components/customArea';
 import CustomMechanicalType from '../../../components/customMechanicalType';
 import {getRequestQuery} from '../../../static/utils/utils';
 export default {
+    created(){
+      let that = this
+      that.$axios.post('/user/get-userinfo').then(res=>{
+        if(res.code == 200){
+          let {createCompany} = res.content
+          that.createCompany = createCompany
+        }
+      })
+    },
     components:{
         Header,
         'van-list':List,
