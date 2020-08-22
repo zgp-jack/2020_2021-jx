@@ -117,7 +117,7 @@
      </div>
       <div class="data_alert" v-show="show_data_alert">
         <van-picker
-          title="标题"
+          title=""
           show-toolbar
           :columns="columns"
           @confirm="onConfirm"
@@ -130,7 +130,7 @@
 </template>
 
 <script>
-  import { Toast,DatetimePicker,Picker   } from 'vant';
+  import { Toast,DatetimePicker,Picker,Dialog   } from 'vant';
 
   export default{
     data(){
@@ -315,8 +315,14 @@
           if(res.code == 200){
             Toast({ message: '置顶成功', duration: 1500 });
             setTimeout(()=>{this.$router.replace({path:'/user/release/',query:{mode:data.type}})},1500)
-          }else if(res.code == 303) Toast.fail(res.msg)
-          else Toast(res.msg)
+          }else if(res.code == 303) {
+            Dialog.confirm({
+              title:"提示",
+              message:"鱼泡币不足，是否前往获取？"
+            }).then(()=>{
+              this.$router.push("/user/get")
+            })
+          }else Toast(res.msg)
         })
       }
     },

@@ -169,6 +169,7 @@ export default {
     },
     //指引弹窗显示
     novicePointFn(){
+      this.novice_point = getNovicePoint();
       if(this.novice_point.home){
         this.novice_point_alert = true;
         this.cannotScrollWindow();
