@@ -4,7 +4,7 @@
     <div class="inner">
       <label for="">
         <span>验证码</span>
-        <input type="tel" maxlength="6" v-model="catcap"  autocomplete="off">
+        <input type="tel" maxlength="6" v-model="catcap"  autocomplete="off" placeholder="请输入验证码">
         <p class="catcap" @click="capcome">{{btntext}}</p>
       </label>
       <label for="">
