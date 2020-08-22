@@ -11,7 +11,9 @@
                   <div class="create_ite_right">{{item.desc}}</div>
               </div>
           </div>
-          <div class="iconfont icon-cuo closeCreate"></div>
+          <div class="closeCreate">
+            <img src="../../assets/img/fabuclose.png">
+          </div>
       </div>
      </transition>
       <!-- 底部呼出 -->

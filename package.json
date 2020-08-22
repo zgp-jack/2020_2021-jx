@@ -1,34 +1,41 @@
 {
-  "name": "nuxt",
-  "version": "1.0.0",
-  "description": "this is nuxt project demo",
-  "author": "axin",
-  "private": true,
-  "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
-  },
-  "dependencies": {
-    "@nuxtjs/axios": "^5.12.0",
-    "axios": "^0.19.2",
-    "cookie-universal-nuxt": "^2.1.4",
-    "js-md5": "^0.7.3",
-    "moment": "^2.27.0",
-    "nuxt": "^2.0.0",
-    "sass-loader": "^9.0.2",
-    "vant": "^2.9.3",
-    "vue-clipboard2": "^0.3.1"
-  },
-  "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^4.19.1",
-    "eslint-friendly-formatter": "^4.0.1",
-    "eslint-loader": "^2.1.1",
-    "eslint-plugin-vue": "^4.0.0",
-    "node-sass": "^4.14.1"
-  }
+    "name": "nuxt",
+    "version": "1.0.0",
+    "description": "this is nuxt project demo",
+    "author": "axin",
+    "private": true,
+    "scripts": {
+        "dev": "nuxt",
+        "build": "nuxt build",
+        "start": "nuxt start",
+        "generate": "nuxt generate",
+        "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+        "precommit": "npm run lint"
+    },
+    "dependencies": {
+        "@nuxtjs/axios": "^5.12.0",
+        "axios": "^0.19.2",
+        "cookie-universal-nuxt": "^2.1.4",
+        "js-md5": "^0.7.3",
+        "moment": "^2.27.0",
+        "nuxt": "^2.0.0",
+        "sass-loader": "^9.0.2",
+        "vant": "^2.9.3",
+        "vue-clipboard2": "^0.3.1"
+    },
+    "devDependencies": {
+        "babel-eslint": "^10.0.1",
+        "eslint": "^4.19.1",
+        "eslint-friendly-formatter": "^4.0.1",
+        "eslint-loader": "^2.1.1",
+        "eslint-plugin-vue": "^4.0.0",
+        "node-sass": "^4.14.1"
+    },
+    "config": {
+        "nuxt": {
+            "host": "0.0.0.0",
+            "port": 3000
+        }
+
+    }
 }
