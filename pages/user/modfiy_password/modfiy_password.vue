@@ -98,7 +98,7 @@ import md5 from 'js-md5';
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .inner{
     padding-top: 1.01rem;
     // width: 7.5rem;

@@ -231,9 +231,7 @@ export default {
       this.mode = this.$route.query.mode;
       this.initPage(this.mode);
       this.isEditor();
-      whetherLogin(this,'',()=>{
-        this.$router.replace('/login')
-      })
+      whetherLogin(this,'',()=>{ this.$router.replace('/login') })
     },
     methods:{
       onMechanicsShow(flag){
