@@ -105,7 +105,7 @@
             <div class="form_row">
               <div class="notice">标题名称</div>
               <div class="content">
-                <input type="text" maxlength="20" placeholder="请输入标题" v-model="title">
+                <input type="text" maxlength="15" placeholder="请输入标题" v-model="title">
               </div>
             </div>
             <div class="form_row">
@@ -359,7 +359,7 @@ export default {
         let data = {};
 
         if ((!IncludeChinese(title) || title.length < 4)) {
-          Toast('请输入信息标题且不少于4个字');
+          Toast('请输入4-15字中文标题');
           return false;
         }
         if(!Mechanical.length){
@@ -387,7 +387,8 @@ export default {
             data.capt = capt;//验证码需要判断
           }
         }
-        if (!IncludeChinese(desc) || desc.length < 15) {
+        var reg = /[\u4e00-\u9fa5]/;
+        if (!reg.test(desc) || desc.length < 15) {
           Toast('详细描述内容不能少于15个字且必须包含汉字');
           return false;
         }

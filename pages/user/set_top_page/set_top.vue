@@ -117,7 +117,7 @@
      </div>
       <div class="data_alert" v-show="show_data_alert">
         <van-picker
-          title="标题"
+          title=""
           show-toolbar
           :columns="columns"
           @confirm="onConfirm"

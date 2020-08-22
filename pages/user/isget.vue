@@ -208,6 +208,14 @@ export default {
       // 跳转
       go(item){
         const {is_company,uu_id,type,is_forbidden,is_deleted} = item;
+        if(is_deleted == 1){
+          Toast("该信息已被删除");
+          return false
+        }
+        if(is_forbidden == 1){
+          Toast("该信息被投诉过多，无法进行查看");
+          return false;
+        }
         if(is_company == 0 && this.mode == 0){
             this.$router.push({
               path:'/view',
@@ -223,10 +231,6 @@ export default {
                 id:uu_id,
               }
             })
-        }else if(is_deleted == 1){
-          Toast("该信息已被删除")
-        }else if(is_forbidden == 1){
-          Toast("该信息被投诉过多，无法进行查看")
         }
       },
       //没有数据
