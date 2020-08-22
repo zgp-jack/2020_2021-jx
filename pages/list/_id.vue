@@ -45,6 +45,7 @@
               v-model="loading"
               :finished="iscomplete || isempty"
               @load="listScroll"
+              v-if="list.length"
             >
               <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
             </van-list>
