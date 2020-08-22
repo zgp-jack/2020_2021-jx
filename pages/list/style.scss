@@ -80,6 +80,7 @@
         overflow: visible;
         .van-pull-refresh__head {
             display: none;
+            height: 0;
         }
     }
 }
