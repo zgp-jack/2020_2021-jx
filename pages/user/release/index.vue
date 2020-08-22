@@ -50,7 +50,7 @@
            </div>
         </div>
 
-        <div class="model_mask" v-if="repeatData.is_repeat">
+        <div class="model_mask" v-if="repeatData.is_repeat &&repeatData.repeat_info">
             <div class="repeat_tost">
               <van-icon name="cross" size="0.26rem" color="#B7B7B7" class="close" @click="onclose"/>
                <h2>
@@ -60,14 +60,14 @@
                  {{repeatData.fail_reason}}
                </p>
                <h5>
-                 置顶信息
+                 更改置顶信息
                </h5>
                <div class="Topping">
                   <h3>
-                    {{repeatData.title}}
+                    {{repeatData.repeat_info.title}}
                   </h3>
                   <p class="msg">
-                    {{repeatData.desc}}
+                    {{repeatData.repeat_info.desc}}
                   </p>
 
                   <img :src="changeStatus[repeatData.mode][1].url" alt="">
@@ -273,11 +273,11 @@ export default {
     onSkip(key,data){
         switch(key){
             case 'view' :
-              this.$router.push({path:'/view/',query:{info:data.uu_id,mode:this.mode}})
+              this.$router.push({path:'/view/',query:{info:data.repeat_uuid,mode:data.mode}})
             break;
             case 'set_top' :
               this.repeatData.is_repeat = false;
-              this.$router.replace({path:'/user/set_top_page/set_top',query:{id:data.uu_id,mode:data.mode}})
+              this.$router.replace({path:'/user/set_top_page/set_top',query:{id:data.repeat_uuid,mode:data.mode}})
             break;
         }
     },
@@ -351,9 +351,11 @@ export default {
     },
     //拒绝原因
     refuse(item){
-      let {is_repeat,fail_reason,repeat_info,uu_id,mode,title,desc} = item;
-      if(is_repeat){
-        this.repeatData={is_repeat, fail_reason, repeat_info, uu_id,mode,title,desc}
+      console.log(item)
+      let {is_repeat,fail_reason,repeat_info,repeat_uuid,mode,title,desc} = item;
+      if(is_repeat && repeat_info){
+        this.repeatData={is_repeat, fail_reason, repeat_info,repeat_uuid,mode,title,desc}
+        console.log(this.repeatData)
         return false;
       }
       this.alert({title:"提示",content:fail_reason,sureColor:"#ffa926"})

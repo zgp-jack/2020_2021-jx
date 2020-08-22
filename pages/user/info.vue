@@ -34,7 +34,7 @@
 import Headers from '../../components/header'
 import {Toast,Uploader,Dialog} from 'vant';
 import Vue from 'vue';
-import {uploadPictures} from '../../static/utils/utils'
+import {uploadPictures,getRequestQuery} from '../../static/utils/utils'
 Vue.use(Uploader)
 export default {
     components:{
@@ -62,7 +62,7 @@ export default {
         uploadPictures(this,file.file).then(res =>{
            if(res){
              const params = {header:res.content.value}
-             this.$axios.get('/user/update-header',{params}).then( res => {
+             this.$axios.post('/user/update-header?'+getRequestQuery(params)).then( res => {
                 this.$nuxt.$store.state.userinfo.header = res.content
              })
            }else{
