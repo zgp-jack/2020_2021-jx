@@ -18,7 +18,6 @@ export default {
   layout: 'index',
   data() {
     return {
-      isShow: false,
       numberServers:0,
       includeArr: ['list','home'], // 需要缓存的组件名数组
     };
@@ -46,7 +45,7 @@ export default {
       const {code,state} = this.$route.query;
       const that = this;
       if(weixin && !token && !id && !code && !state){
-        that.authorization()
+        setTimeout(()=>{that.authorization()},200)
       }else{
 
         that.getArea()
