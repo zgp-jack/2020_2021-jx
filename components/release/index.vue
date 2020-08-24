@@ -231,7 +231,9 @@ export default {
       this.mode = this.$route.query.mode;
       this.initPage(this.mode);
       this.isEditor();
-      whetherLogin(this,'',()=>{ this.$router.replace('/login') })
+      whetherLogin(this,'',()=>{
+        this.$router.replace('/login')
+      })
     },
     methods:{
       onMechanicsShow(flag){
@@ -243,12 +245,34 @@ export default {
       },
       //初始化页面
       initPage(mode){
-        if(mode == 1) this.page_info = { title : "发布求租信息", notice_text : "求租简介", desc:'请简要描述设备型号、工作地点工作时长.结算方式，可大幅提升匹配准确' }
-        else if(mode == 2) this.page_info = { title : "发布出租信息", notice_text : "出租简介", desc:'请简要描述出租设备型号和期望交易地区，信息越准越好出租' }
-        else if(mode == 3) this.page_info = { title : "发布转让信息", notice_text : "转让简介", desc:'请简要描述设备型号和机械年份，我们将为您快速匹配交易方'}
-        else if(mode == 4) this.page_info = { title : "发布求购信息", notice_text : "求购简介", desc:'请简要描述设备型号和机械年份，我们将为您快速匹配交易方' }
-        let {tel} = this.$nuxt.$store.state.userinfo;
+        if(mode == 1) {
+          this.page_info = {
+            title : "发布求租信息",
+            notice_text : "求租简介",
+            desc:'请简要描述设备型号、工作地点工作时长.结算方式，可大幅提升匹配准确'
+          }
+        }else if(mode == 2){
+          this.page_info = {
+            title : "发布出租信息",
+            notice_text : "出租简介",
+            desc:'请简要描述出租设备型号和期望交易地区，信息越准越好出租'
+          }
+        }else if(mode == 3){
+          this.page_info = {
+            title : "发布转让信息",
+            notice_text : "转让简介",
+            desc:'请简要描述设备型号和机械年份，我们将为您快速匹配交易方'
+          }
+        }else if(mode == 4){
+          this.page_info = {
+            title : "发布求购信息",
+            notice_text : "求购简介",
+            desc:'请简要描述设备型号和机械年份，我们将为您快速匹配交易方'
+          }
+        }
+        let {tel,name} = this.$nuxt.$store.state.userinfo;
         this.phon = tel;
+        this.user = name
         this.oldPhon = tel;
       },
       //机械类型选择
@@ -262,13 +286,21 @@ export default {
       //发送验证码
       sendCapt(){
         const that = this;
-        let params = { phone:that.phon}
+        let params = {
+          phone:that.phon
+        }
         if(CellphoneCheck.pattern.test(params.phone)){
           that.$axios.post('/index/send-message?'+getRequestQuery(params)).then(res=>{
-            if (res.code == 200) that.countDown()
-            else Toast(res.msg);
+            if (res.code == 200) {
+                that.countDown()
+            } else {
+                Toast(res.msg);
+            }
           })
-        }else Toast(CellphoneCheck.message)
+        }else{
+          Toast(CellphoneCheck.message)
+        }
+
       },
       countDown(){
         let number = 60;
@@ -278,14 +310,18 @@ export default {
           if(number == -1){
             this.get_captcha_msg = '重新获取'
             clearInterval(timer);
-          }else this.get_captcha_msg = number + 's后获取';
+          }else{
+            this.get_captcha_msg = number + 's后获取';
+          }
         },1000)
       },
       //文件上传
       afterRead(file){
         const { images } = this;
         uploadPictures(this,file.file).then(res=>{
-          if(res.code == 200) images.push(res.content.value)
+          if(res.code == 200){
+            images.push(res.content.value)
+          }
         })
         return true;
       },
@@ -298,7 +334,11 @@ export default {
       //图片预览
       imgView(index){
         let images = [...this.images];
-        ImagePreview({images:images.map(item=>this.imgserver + item), startPosition: index, closeable: true });
+        ImagePreview({
+          images:images.map(item=>this.imgserver + item),
+          startPosition: index,
+          closeable: true,
+        });
       },
       //请求拦截
       requstIntercept(){
@@ -370,6 +410,7 @@ export default {
         data.user = user;
         data.phon = phon;
         data.desc = desc;
+
         return {params,data}
       },
       //创建/编辑提交
@@ -402,9 +443,26 @@ export default {
             function jump(paramsUrl){
               that.$router.replace({path:'/user/release',query:{mode:paramsUrl}})
             }
-            const modeText = [ { mode:1,text:['求租','需要','急需','找']}, {mode:2,text:['出租','闲置','待租']}, { mode:3,text:['出售','转让','卖']}, { mode:4,text:['买','求购','急购'] } ]
+
+            const modeText = [
+                {
+                  mode:1,text:['求租','需要','急需','找']
+                },
+                {
+                  mode:2,text:['出租','闲置','待租']
+                },
+                {
+                  mode:3,text:['出售','转让','卖']
+                },
+                {
+                  mode:4,text:['买','求购','急购']
+                }
+            ]
             const rexpText = that.title.match(/(求租|需要|急需|找|出租|闲置|待租|出售|转让|卖|买|求购|急购)/g);
-            Dialog.alert({ title: '温馨提示', message: '信息提交成功，工作人员正在审核中',
+
+            Dialog.alert({
+              title: '温馨提示',
+              message: '信息提交成功，工作人员正在审核中',
             }).then(()=>{
               if(rexpText && !that.editorData){
                 const fondText = modeText.find(item=>{
@@ -417,14 +475,16 @@ export default {
                 jump(params.mode)
               }
             })
-
           }else if(res.code==204){
-            const {uu_id,mode} = res.content
-            Dialog.confirm({ title: '温馨提示', message: res.msg,
+            console.log(res)
+            Dialog.confirm({
+              title: '温馨提示',
+              message: res.msg,
             }).then(()=>{
-              that.$router.replace({path:'/user/set_top_page/set_top',query:{id:uu_id,mode}})
+              that.$router.replace({path:'/user/release',query:{mode:this.mode}})
             })
           }
+          
         })
       },
       //设置修改数据
@@ -434,6 +494,8 @@ export default {
               this.title = editorData.title;
               this.$route.query.mode ==1 && (this.meth = editorData.payment_method==2?3:editorData.payment_method);
               this.user = editorData.user_name;
+            //   this.phon = editorData.tel;
+            //   this.oldPhon = editorData.tel;
               this.desc = editorData.desc;
               editorData.image_arr && editorData.image_arr.length && (this.images = [...editorData.image_arr.map(item=>item.server)]);
               editorData.class_id && editorData.class_id.length && (this.default_Mechanical = [...editorData.class_id]);
