@@ -270,8 +270,9 @@ export default {
             desc:'请简要描述设备型号和机械年份，我们将为您快速匹配交易方'
           }
         }
-        let {tel} = this.$nuxt.$store.state.userinfo;
+        let {tel,name} = this.$nuxt.$store.state.userinfo;
         this.phon = tel;
+        this.user = name
         this.oldPhon = tel;
       },
       //机械类型选择
@@ -474,16 +475,16 @@ export default {
                 jump(params.mode)
               }
             })
-
           }else if(res.code==204){
-            const {uu_id,mode} = res.content
+            console.log(res)
             Dialog.confirm({
               title: '温馨提示',
               message: res.msg,
             }).then(()=>{
-              that.$router.replace({path:'/user/set_top_page/set_top',query:{id:uu_id,mode}})
+              that.$router.replace({path:'/user/release',query:{mode:this.mode}})
             })
           }
+          
         })
       },
       //设置修改数据

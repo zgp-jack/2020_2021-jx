@@ -3,9 +3,9 @@
     params,data(参数)
 */
 
-import { Toast } from 'vant';
+import { Toast, Dialog } from 'vant';
 import qs from 'qs';
-import { isWeixin } from '../static/utils/utils';
+import { isWeixin, callPhoneFn } from '../static/utils/utils';
 
 export default function({ $axios, redirect, app }) {
     // request拦截器
@@ -63,7 +63,13 @@ export default function({ $axios, redirect, app }) {
         Toast.clear()
         if (response.status == 200) {
             if (response.data.code == 300) {
-                Toast('账号异常')
+                const { contact } = response.data.content
+                Dialog.confirm({
+                    title: '温馨提示',
+                    message: response.data.msg,
+                }).then(() => {
+                    callPhoneFn(contact)
+                })
             } else if (response.data.code == 0) {
                 if (process.browser) {
                     app.$cookies.remove('token')
