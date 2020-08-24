@@ -10,8 +10,8 @@
           <img src="http://statics.zhaogongdi.com/common/logo_m.png" alt="">
         </h1>
         <div @click="chooseArea" class="position fl">
-          <i class="icon-dingwei iconfont" /><b>{{selectAreaData.name || '成都'}}</b>
-          <strong class="iconfont icon-youjiantou" st></strong>
+          <i class="" /><b>{{selectAreaData.name || '成都'}}</b>
+          <strong class=""></strong>
 
         </div>
       </div>

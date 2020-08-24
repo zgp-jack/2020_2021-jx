@@ -116,7 +116,13 @@
 		font-size: 0.27rem;
       }
       .position{
-
+        i{
+          display: inline-block;
+          width: 0.23rem;
+          height: 0.25rem;
+          background-size: 100% 100%;
+          background-image: url('../../assets/img/position.png');
+        }
       }
       .time{
 
