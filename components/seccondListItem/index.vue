@@ -19,7 +19,7 @@
         </div>
         <div class="position-time">
           <div class="position fl">
-            <i class="icon-dingwei iconfont"></i>
+            <i class=""></i>
              {{data.item.area}}
           </div>
           <div class="time fr">

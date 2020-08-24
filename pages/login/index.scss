@@ -1,88 +1,89 @@
 @import '../../assets/css/style.scss';
-.father{
-    @include box_inner($bottom:0rem,$padding-bottom:0.5rem,$top:1rem);
-    .form{
-        padding:0.2rem 0.3rem;
-        .form-row{
+.father {
+    @include box_inner($bottom: 0rem, $padding-bottom: 0.5rem, $top: 1rem);
+    .form {
+        padding: 0.2rem 0.3rem;
+        .form-row {
             display: flex;
             background-color: #fff;
-            padding:0.2rem;
-            margin-bottom:0.2rem;
-            height:0.9rem;
-            font-size:0.3rem;
+            padding: 0.2rem;
+            margin-bottom: 0.2rem;
+            height: 0.9rem;
+            font-size: 0.3rem;
             align-items: center;
-                input{
-                    width:80%;
-                    flex: 1;
-                    height:0.35rem;
-                    line-height: 0.35rem;
-
-                }
+            input {
+                width: 80%;
+                flex: 1;
+                height: 0.35rem;
+                line-height: 0.35rem;
+            }
         }
     }
-    .iconfont{
-    width:0.5rem;
-    height: 0.3rem;
-    margin-right: 0.1rem;
-    text-align: center;
-    font-size:0.5rem;
-    margin-top: -0.3rem;
-    color: #FFAA26;
-    }
-    .submit{
-        margin: 0 0.35rem;
-        background-color: #eee;
-        color: #888;
-        line-height:0.7rem;
-        border-radius:0.3rem;
+    .iconfont {
+        width: 0.5rem;
+        height: 0.3rem;
+        margin-right: 0.1rem;
         text-align: center;
-        font-size:0.25rem;
+        font-size: 0.5rem;
+        margin-top: -0.3rem;
+        color: #FFAA26;
     }
-    .containr-res{
+    .submit {
+        width: 6.8rem;
         position: relative;
         margin: 0.2rem 0.35rem;
         background-color: #eee;
-        line-height:0.7rem;
-        border-radius:0.3rem;
+        line-height: 0.7rem;
+        border-radius: 0.3rem;
         text-align: center;
-        font-size:0.25rem;
-            >a:first-child{
-                display: inline-block;
-                width: 100%;
-            }
-            .con-fr{
-                position: absolute;
-                top:0.8rem;
-                right: 0;
-                font-size: 0.25rem;
-            }
+        font-size: 0.25rem;
+        color: #888;
     }
-    .div-line{
+    .containr-res {
+        position: relative;
+        margin: 0.2rem 0.35rem;
+        background-color: #eee;
+        line-height: 0.7rem;
+        border-radius: 0.3rem;
+        text-align: center;
+        font-size: 0.25rem;
+        >a:first-child {
+            display: inline-block;
+            width: 100%;
+        }
+        .con-fr {
+            position: absolute;
+            top: 0.8rem;
+            right: 0;
+            font-size: 0.25rem;
+        }
+    }
+    .div-line {
         clear: both;
-        height:0.48rem;
+        height: 0.48rem;
         text-align: center;
         margin: 0 0.35rem;
         margin-top: 1rem;
-            .line-s{
-                border-top: 1px dashed #bbb;
-                display: block;
+        .line-s {
+            border-top: 1px dashed #bbb;
+            display: block;
+            position: relative;
+            top: 0.23rem;
+            span {
+                color: #bbb;
+                background-color: #f7f7f7;
+                padding: 0 0.3rem;
                 position: relative;
-                top:0.23rem;
-                    span{
-                        color: #bbb;
-                        background-color: #f7f7f7;
-                        padding: 0 0.3rem;
-                        position: relative;
-                        top: -0.9rem;
-                        line-height: 1;
-                        font-size:0.3rem;
-                    }
+                top: -0.9rem;
+                line-height: 1;
+                font-size: 0.3rem;
             }
+        }
     }
-    .con_call{
-        margin-top:0.5rem;
+    .con_call {
+        margin-top: 0.5rem;
         font-size: 0.3rem;
-        a{
+        a {
             display: block;
             margin: 0.3rem 0.3rem;
             border: 1px solid #ddd;
@@ -90,25 +91,25 @@
             line-height: 0.66rem;
             color: #777;
             background-color: #fff;
-                .icon{
-                    width: 0.3rem;
-                    height: 0.3rem;
-                    background-image: url('http://statics.zhaogongdi.com/common/call.png');
-                    vertical-align: -2px;
-                    margin-right:5px;
-                    background-size: contain;
-                    display: inline-block;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    font-size: 0;
-                }
+            .icon {
+                width: 0.3rem;
+                height: 0.3rem;
+                background-image: url('http://statics.zhaogongdi.com/common/call.png');
+                vertical-align: -2px;
+                margin-right: 5px;
+                background-size: contain;
+                display: inline-block;
+                background-position: center;
+                background-repeat: no-repeat;
+                font-size: 0;
+            }
         }
     }
-    .active{
-        background-color:$color;
+    .active {
+        background-color: $color;
         color: #fff;
     }
-    .noReady{
-      pointer-events:none;
+    .noReady {
+        pointer-events: none;
     }
 }

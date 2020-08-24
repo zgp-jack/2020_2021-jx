@@ -105,7 +105,7 @@
             <div class="form_row">
               <div class="notice">标题名称</div>
               <div class="content">
-                <input type="text" maxlength="20" placeholder="请输入标题" v-model="title">
+                <input type="text" maxlength="15" placeholder="请输入标题" v-model="title">
               </div>
             </div>
             <div class="form_row">
@@ -270,8 +270,9 @@ export default {
             desc:'请简要描述设备型号和机械年份，我们将为您快速匹配交易方'
           }
         }
-        let {tel} = this.$nuxt.$store.state.userinfo;
+        let {tel,name} = this.$nuxt.$store.state.userinfo;
         this.phon = tel;
+        this.user = name
         this.oldPhon = tel;
       },
       //机械类型选择
@@ -359,7 +360,7 @@ export default {
         let data = {};
 
         if ((!IncludeChinese(title) || title.length < 4)) {
-          Toast('请输入信息标题且不少于4个字');
+          Toast('请输入4-15字中文标题');
           return false;
         }
         if(!Mechanical.length){
@@ -387,7 +388,8 @@ export default {
             data.capt = capt;//验证码需要判断
           }
         }
-        if (!IncludeChinese(desc) || desc.length < 15) {
+        var reg = /[\u4e00-\u9fa5]/;
+        if (!reg.test(desc) || desc.length < 15) {
           Toast('详细描述内容不能少于15个字且必须包含汉字');
           return false;
         }
@@ -473,16 +475,16 @@ export default {
                 jump(params.mode)
               }
             })
-
           }else if(res.code==204){
-            const {uu_id,mode} = res.content
+            console.log(res)
             Dialog.confirm({
               title: '温馨提示',
               message: res.msg,
             }).then(()=>{
-              that.$router.replace({path:'/user/set_top_page/set_top',query:{id:uu_id,mode}})
+              that.$router.replace({path:'/user/release',query:{mode:this.mode}})
             })
           }
+          
         })
       },
       //设置修改数据

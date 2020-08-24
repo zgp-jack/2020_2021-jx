@@ -31,12 +31,24 @@
         font-size: 0.3rem;
         margin-left: 0.25rem;
         i{
+          // margin-top: 0.2rem;
+          background-position-y: 0.05rem;
+          display: inline-block;
+          width: 0.23rem;
+          height: 0.3rem;
+          background-size: 0.20rem 0.25rem;
+          background-repeat: no-repeat;
+          background-image: url("http://statics.zhaogongdi.com/common/area.png");
           font-size: 0.30rem;
         }
         strong{
           display: inline-block;
-          transform: rotate(90deg);
-          font-size: 0.30rem;
+          width: 0.25rem;
+          height: 0.3rem;
+          background-image: url("http://statics.zhaogongdi.com/common/areamore.png");
+          background-size: 100% auto;
+          background-repeat: no-repeat;
+          background-position-y: 0.05rem;
         }
        }
     }

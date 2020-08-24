@@ -4,7 +4,7 @@
     <div class="inner">
       <label for="">
         <span>验证码</span>
-        <input type="tel" maxlength="6" v-model="catcap"  autocomplete="off">
+        <input type="tel" maxlength="6" v-model="catcap"  autocomplete="off" placeholder="请输入验证码">
         <p class="catcap" @click="capcome">{{btntext}}</p>
       </label>
       <label for="">
@@ -76,11 +76,12 @@ import md5 from 'js-md5';
         let token = md5('APp_YUpAO_UseR_KeY'+that.phone+time).substring(0, 18)
         let data = {phone:that.phone,user_token:token,user_pass:that.news_pass,captcha:that.catcap}
         that.$axios.post('/user/app-reset',{data:JSON.stringify(data)}).then(res=>{
+          console.log(res)
           if(res.code == 200) {
             Toast('修改成功')
             that.$router.go(-1)
-          }else if(res.code == 300){
-            Toast(res.msg)
+          }else if(res.code == 3000){
+            Toast('验证码输入不正确')
           }
         })
       }
@@ -97,15 +98,14 @@ import md5 from 'js-md5';
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .inner{
     padding-top: 1.01rem;
-    width: 7.5rem;
+    // width: 7.5rem;
     height: auto;
     background-color: #fff;
     label{
-      height: 0.8rem;
-      line-height: 0.8rem;
+      line-height: 1rem;
       display: block;
       font-size: 0.3rem;
       border-bottom: 1px solid #ccc;
@@ -113,6 +113,9 @@ import md5 from 'js-md5';
       span{
         display: inline-block;
         width: 1.6rem;
+      }
+      input{
+        width:3.3rem;
       }
       &:nth-of-type(3){
         border: none;

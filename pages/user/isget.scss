@@ -61,11 +61,11 @@
             }
     }
     .consume-content{
-        margin-top:0.18rem;
+        // margin-top:0.18rem;
         // line-height:3.4rem;
         background:rgba(255,255,255,1);
-        box-shadow:0px 2px 0.21rem 0px rgba(192,191,190,0.3);
-        padding:0  0.27rem 0.27rem;
+        // box-shadow:0px 2px 0.21rem 0px rgba(192,191,190,0.3);
+        padding:0 0.27rem;
         overflow: hidden;
             .consume-content-one{
                 display:flex;
@@ -139,5 +139,5 @@
     }
 }
 .van-pull-refresh{
- margin-top: 1.27rem;
+ margin-top: 1.5rem;
 }

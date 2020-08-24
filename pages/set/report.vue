@@ -2,6 +2,9 @@
   <div>
     <Headers :title="title"/>
       <div class="fathers">
+          <div class="tips">
+            恶意投诉将会封号，请谨慎投诉
+          </div>
           <div class="title">
             选择举报原因
           </div>
@@ -23,7 +26,7 @@
               <div>手机号</div>
               <p>{{userInfo.tel}}</p>
           </div>
-          <div class="title">备注说明<span>恶意投诉将会封号，请谨慎投诉</span></div>
+          <div class="title">备注信息<span></span></div>
           <div class="describe">
             <textarea maxlength="500" placeholder="合理说明投诉理由，审核人员将为您尽快处理。" v-model="texts"></textarea>
             <span>{{texts.length}}/500</span>
