@@ -40,12 +40,12 @@
        <!-- 呼出 -->
        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
         <div v-if="(mode==1 || mode==4)">
-          <van-pull-refresh v-model="loading_top" loading-text='' @refresh="onrefresh" :style="{'padding-bottom':iscomplete && !isempty && list.length?0:0.2+'rem'}">
+          <van-pull-refresh v-model="loading_top"  @refresh="onrefresh" :style="{'padding-bottom':iscomplete && !isempty && list.length?0:0.2+'rem'}">
             <van-list
               v-model="loading"
               :finished="iscomplete || isempty"
               @load="listScroll"
-             
+              v-if="list.length"
             >
               <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
             </van-list>
@@ -54,12 +54,12 @@
         </div>
 
         <div v-if="(mode==2 || mode==3)">
-            <van-pull-refresh v-model="loading_top" loading-text='' @refresh="onrefreshs" :style="{'padding-bottom':!iscomplete && !isempty && list.length?0:0.2+'rem'}">
+            <van-pull-refresh v-model="loading_top"  @refresh="onrefresh" :style="{'padding-bottom':!iscomplete && !isempty && list.length?0:0.2+'rem'}">
               <van-list
                 v-model="loading"
                 :finished="iscomplete || isempty"
                 @load="listScroll"
-               
+               v-if="list.length"
               >
                 <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
               </van-list>
@@ -211,6 +211,9 @@ export default {
       reload  true重新加载
     */
     getList(){
+      this.loading= false
+      this.loading_top = true;
+      console.log(this.loading)
       if(this.mode==1||this.mode==2||this.mode==3||this.mode==4){
         const that = this;
         const {mode,page,page_size,addr,type,keywords,pattern} = that;
@@ -251,17 +254,13 @@ export default {
     },
 
     onrefresh(){
-      this.loading = true;
-      this.loading_top = false
+      // this.loading = true;
+      this.loading_top = true
+      this.loading = false
       this.onreset()
       this.getList()
     },
-     onrefreshs(){
-      this.loading = true;
-      this.loading_top = false
-      this.onreset()
-      this.getList()
-    },
+
     //重置page
     onreset(){
       this.page = 1;
