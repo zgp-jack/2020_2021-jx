@@ -40,7 +40,7 @@
        <!-- 呼出 -->
        <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
         <div v-if="(mode==1 || mode==4)">
-          <van-pull-refresh v-model="loading_top"  @refresh="onrefresh" :style="{'padding-bottom':iscomplete && !isempty && list.length?0:0.2+'rem'}">
+          <van-pull-refresh v-model="loading_top"  @refresh="onrefresh" :style="{'padding-bottom':iscomplete && !isempty && list.length?0:0.8+'rem'}">
             <van-list
               v-model="loading"
               :finished="iscomplete || isempty"
@@ -54,7 +54,7 @@
         </div>
 
         <div v-if="(mode==2 || mode==3)">
-            <van-pull-refresh v-model="loading_top"  @refresh="onrefresh" :style="{'padding-bottom':!iscomplete && !isempty && list.length?0:0.2+'rem'}">
+            <van-pull-refresh v-model="loading_top"  @refresh="onrefresh" :style="{'padding-bottom':iscomplete && !isempty && list.length?0:0.8+'rem'}">
               <van-list
                 v-model="loading"
                 :finished="iscomplete || isempty"
@@ -211,18 +211,16 @@ export default {
       reload  true重新加载
     */
     getList(){
-      this.loading= false
+      this.loading= true
       this.loading_top = true;
-      console.log(this.loading)
       if(this.mode==1||this.mode==2||this.mode==3||this.mode==4){
         const that = this;
         const {mode,page,page_size,addr,type,keywords,pattern} = that;
         let params = {mode,page,page_size,addr,type,keywords,pattern}
-
         this.$axios.post('/index/list?'+getRequestQuery(params),{globalLoading:false}).then(res=>{
           if(res.code){
-            that.loading = false;
-            this.loading_top = false;
+             that.loading_top = false;
+             that.loading = false;
             if(that.page == 1){
               if(res.content.length && res.content.length<that.page_size){
                 that.iscomplete = true;
