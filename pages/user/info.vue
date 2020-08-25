@@ -19,7 +19,7 @@
                     <span @click="phone">{{userinfo.tel}}<i class="icon"></i></span>
                 </div>
             </div>
-            <div class="nickName reset-psd nones" @click="modfiy">
+            <div class="nickName reset-psd nones" @click="modfiy" v-if="show_modifiy_pass">
                     <span>修改密码</span>
                      <i class="icon"></i>
                 </div>
@@ -34,7 +34,7 @@
 import Headers from '../../components/header'
 import {Toast,Uploader,Dialog} from 'vant';
 import Vue from 'vue';
-import {uploadPictures,getRequestQuery} from '../../static/utils/utils'
+import {uploadPictures,getRequestQuery,isWeixin} from '../../static/utils/utils'
 Vue.use(Uploader)
 export default {
     components:{
@@ -45,13 +45,17 @@ export default {
         return{
             title:'鱼泡机械-个人资料',
             username:'',
-            show:false
+            show:false,
+            show_modifiy_pass:true
         }
     },
     computed:{
         userinfo(){
           return this.$nuxt.$store.state.userinfo
         }
+    },
+    mounted() {
+      if(isWeixin()) this.show_modifiy_pass = false
     },
     methods:{
       modfiy(){

@@ -53,12 +53,27 @@ export default {
       // }
       //   window.location.href = url
       // }
+      let id = window.sessionStorage.getItem("default");
+      let str = window.sessionStorage.getItem('city');
+      let all = window.sessionStorage.getItem("all");
+      let city_id = ""
+      if(str) {
+         city_id = JSON.parse(str)
+      }else if(all){
+        city_id = JSON.parse(all)
+      };
+      let flag = false;
+      if(id == city_id.id || str == null){
+        flag = true;
+      }else{
+        window.sessionStorage.setItem("default",city_id.id)
+      }
       if(path=='/user'){
         this.$router.push(path)
       }else{
         this.$router.push({
           path,
-          query:{'keep-alive':false}
+          query:{'keep-alive':flag}
         })
       }
       

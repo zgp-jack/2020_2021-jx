@@ -50,19 +50,26 @@
 
 <style lang='scss' scoped>
   .phone_alert{
-    width: 5.09rem;
+    width: 6.09rem;
+    font-size: 0.4rem;
     height: auto;
     .ask{
       padding-top: 0.42rem;
       text-align: center;
       color: #585963;
-      font-size: 0.27rem;
-      padding-bottom: 0.1rem;
+      font-size: 0.3rem;
+      padding-bottom: 0.2rem;
+    }
+    .van-dialog{
+     
+    }
+    .van-dialog__header{
+      font-size: 0.3rem;
     }
     .tips{
       margin-bottom: 0.3rem;
       text-align: center;
-      font-size: 0.2rem;
+      font-size: 0.28rem;
       color: #868686;
       input{
         vertical-align: -13%;
