@@ -1,7 +1,7 @@
 <template>
   <div>
       <Header :title="title"/>
-      <div class="father">
+      <div class="mother">
           <div class="consume-title">
               <div class="consume-one border-btn">
                   <p @click="showPopup">
@@ -13,7 +13,7 @@
                   </p>
               </div>
           </div>
-
+        <div style="margin-top:1.5rem">
          <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
           <van-list
           v-if="list.length"
@@ -51,6 +51,7 @@
              <button @click="to_page">免费获取鱼泡币</button>
            </div>
          </van-pull-refresh>
+       </div>  
           <van-popup v-model="show" position="bottom" :style="{height:'30%'}">
               <van-datetime-picker
                 v-model="currentDate"
