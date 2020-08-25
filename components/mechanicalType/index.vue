@@ -17,7 +17,7 @@
                 <div class="title">选择分类</div>
                 <div class="list" v-for="(item,index) in clas" :key="index">
                     <div>
-                        <p class="list_title clearfix" @click="(e)=>showSelect(index,e)">{{item[0].name}}<i :class="['icon-arrowBottom-fill','iconfont',!item[0].show?'rotate':'']"/><span v-if="item[0].number">{{item[0].number}}</span></p>
+                        <p class="list_title clearfix"  :class="[index == clas.length - 1 && 'nonedet']" @click="(e)=>showSelect(index,e)">{{item[0].name}}<i :class="['icon-arrowBottom-fill','iconfont',!item[0].show?'rotate':'']"/><span v-if="item[0].number">{{item[0].number}}</span></p>
                         <div class="list_data" v-if="item[0].show">
                             <span :class="itemSon.color?'yellow':''" v-for="(itemSon,indexSon) in item" :key="indexSon" v-if="indexSon!==0" @click="colorSelect(itemSon)">{{itemSon.name}}</span>
                         </div>
