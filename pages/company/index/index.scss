@@ -20,8 +20,12 @@
             width: calc(7.5rem * 0.3);
             @include overflow_hiding();
         }
-        .icon-down {
-            font-size: 0.30rem;
+        .icon-downs {
+            width: .4rem;
+            height: .4rem;
+            margin-top: 0.1rem;
+            background: url(../../../assets/img/icon/down.png);
+            background-size: 100% 100%;
             margin-right: 0.5rem;
             display: inline-block;
             transition: 0.5s

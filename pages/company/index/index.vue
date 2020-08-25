@@ -2,8 +2,8 @@
   <div>
     <Header :title='title'/>
     <div class="select_head">
-        <div class="select_inner clearfix" @click="onisclose('isSelect_area')"><i class="iconfont icon-down fr" :class="{'rotate':isSelect_area}"/><p class="fr">{{selectAreaData.name || '所在地区'}}</p></div>
-        <div class="select_inner clearfix" @click="onisclose('isSelect_jixie')"><i class="iconfont icon-down fr" :class="{'rotate':isSelect_jixie}"/><p class="fr">{{selectJixieData.name || '所有机械'}}</p></div>
+        <div class="select_inner clearfix" @click="onisclose('isSelect_area')"><i class=" icon-downs fr" :class="{'rotate':isSelect_area}"/><p class="fr">{{selectAreaData.name || '所在地区'}}</p></div>
+        <div class="select_inner clearfix" @click="onisclose('isSelect_jixie')"><i class=" icon-downs fr" :class="{'rotate':isSelect_jixie}"/><p class="fr">{{selectJixieData.name || '所有机械'}}</p></div>
     </div>
     <div class="father" @scroll="my_scroll">
       <van-pull-refresh v-model="loading_top" @refresh="onRefresh">
@@ -19,10 +19,8 @@
                 <div class="info">
                     <div class="name">{{item.name}}</div>
                     <div class="gong-img">
-                    
                       <img src="../../../assets/img/icon/gongying.png" class="gongying">
                       <img src="../../../assets/img/icon/VIP.png" class="vip" v-if="item.authenticate==2">
-                      
                     </div>
                     <div class="area">{{item.area}}</div>
                 </div>
