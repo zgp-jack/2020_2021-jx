@@ -3,8 +3,8 @@
     <transition name="fade">
       <div class="father" @click="list_hide" v-show="lists_show">
           <div class="create_content" :class="[(lists_show)?'Boxon':'']">
-              <div class="create_item" v-for="(item,i) in list" :key="i" @click="Isgo(item.src)">
-                  <div class="create_list_left">
+              <div class="create_item" v-for="(item,i) in list" :key="i" @click="Isgo(item.src)" :class="[(sport_show)?'Boxon':'']">
+                  <div class="create_list_left" >
                       <div class="create_item_title">{{item.title}}</div>
                       <div class="create_item_msg">{{item.detail}}</div>
                   </div>
@@ -68,7 +68,8 @@ export default {
         box_show:false,
         play:true,
         showPlay:'',
-        show:false
+        show:false,
+        sport_show:false
     }
   },
   methods:{
@@ -87,10 +88,14 @@ export default {
         },
         list_show(parmas=true){
           this.showButton = parmas;
-          this.lists_show = true
+          this.lists_show = true;
+          setTimeout(()=>{
+            this.sport_show = true
+          },50)
         },
         list_hide(){
           this.lists_show = false
+          this.sport_show = false
         },
         Isgo(link){
           if(whetherLogin(this)==false) return false;
