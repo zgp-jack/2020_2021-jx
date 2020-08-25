@@ -4,11 +4,11 @@
       <div class="father">
           <div class="form">
             <div class="form-row">
-              <i class="iconfont icon-shouji54"></i>
+              <i class="icon-shouji"></i>
               <input type="tel" id="username" oninput="value=value.replace(/[^\d]/g,'')" placeholder="手机号码" autocomplete="off" v-model="users" maxlength="11" @input="user_name()">
             </div>
             <div class="form-row">
-              <i class="iconfont icon-mima"></i>
+              <i class="icon-password"></i>
               <input type="password" id="username" placeholder="密码" autocomplete="off" v-model="password" @input="user_pass()">
             </div>
           </div>

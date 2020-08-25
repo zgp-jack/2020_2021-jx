@@ -4,16 +4,16 @@
       <div class="father">
           <div class="form">
             <div class="form-row">
-              <i class="iconfont icon-shouji54"></i>
+              <i class="icon-shouji"></i>
               <input type="tel" oninput="value=value.replace(/[^\d]/g,'')"  placeholder="请输入你的手机号" autocomplete="off" v-model="tel" maxlength="11">
             </div>
             <div class="form-row">
-              <i class="iconfont icon-yanzheng"></i>
+              <i class="icon-check"></i>
               <input type="text"  placeholder="请输入短信验证码" autocomplete="off" v-model="check_code" maxlength="6" id="yanzheng">
               <div class="get-captcha" @click="getCheck">{{captcha_text}}</div>
             </div>
             <div class="form-row">
-              <i class="iconfont icon-mima"></i>
+              <i class="icon-password"></i>
               <input type="password"  placeholder="请输入设置您的密码" autocomplete="off" v-model="password">
             </div>
           </div>

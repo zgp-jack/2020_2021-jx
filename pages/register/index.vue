@@ -4,20 +4,20 @@
       <div class="father">
           <div class="form">
             <div class="form-row">
-              <i class="iconfont icon-touxiang"></i>
+              <i class="icon-header"></i>
               <input type="text"  placeholder="请输入你的姓名" autocomplete="off" v-model="register_data.user_name"  maxlength="10" >
             </div>
             <div class="form-row">
-              <i class="iconfont icon-shouji54"></i>
+              <i class="icon-shouji"></i>
               <input type="tel" oninput="value=value.replace(/[^\d]/g,'')"  placeholder="请输入你的手机号" autocomplete="off" v-model="register_data.phone"  maxlength="11">
             </div>
             <div class="form-row">
-              <i class="iconfont icon-yanzheng"></i>
+              <i class="icon-check"></i>
               <input type="text"  placeholder="请输入短信验证码" v-model="register_data.captcha" autocomplete="off" maxlength="6" id="yanzheng" >
               <div class="get-captcha" @click="getCaptcha">{{isCaptcha?'获取验证码':countDown+'s'}}</div>
             </div>
             <div class="form-row">
-              <i class="iconfont icon-mima"></i>
+              <i class="icon-password"></i>
               <input type="password"  placeholder="请输入设置您的密码" v-model="register_data.user_pass" autocomplete="off" maxlength="16">
             </div>
           </div>

@@ -17,6 +17,19 @@
                 height: 0.35rem;
                 line-height: 0.35rem;
             }
+            i{
+                display: inline-block;
+                width: 0.45rem;
+                height: 0.45rem;
+                background-size: 100% 100%;
+                margin-right: 0.1rem;
+            }
+            .icon-shouji{
+                background-image: url(../../assets/img/icon/phone.png);
+            }
+            .icon-password{
+                background-image: url(../../assets/img/icon/password.png);
+            }
         }
     }
     .iconfont {
