@@ -5,6 +5,7 @@
       <div class="head">
         <div class="clearfix head_search">
           <van-search
+              left-icon=""
               class="fl"
               :placeholder="search_placeholder[mode]"
               v-model="query.keywords"
@@ -13,8 +14,8 @@
           <span class="search_text fr" @click="onSearch">搜索</span>
         </div>
         <div class="select_head">
-          <div class="select_inner clearfix" @click="onisclose('isSelect_area')"><i class="iconfont icon-down fr" :class="{'rotate':isSelect_area}"/><p class="fr">{{selectAreaData.name || '成都'}}</p></div>
-          <div class="select_inner clearfix" @click="onisclose('isSelect_jixie')"><i class="iconfont icon-down fr" :class="{'rotate':isSelect_jixie}"/><p class="fr">{{selectJixieData.name || '所有机械'}}</p></div>
+          <div class="select_inner clearfix" @click="onisclose('isSelect_area')"><i class="iconfont  fr" :class="{'rotate':isSelect_area}"/><p class="fr">{{selectAreaData.name || '成都'}}</p></div>
+          <div class="select_inner clearfix" @click="onisclose('isSelect_jixie')"><i class="iconfont  fr" :class="{'rotate':isSelect_jixie}"/><p class="fr">{{selectJixieData.name || '所有机械'}}</p></div>
           <div class="select_inner" @click="onisclose('isSelect_sort')">{{selectSortData.name || '最新'}}<img src="../../assets/img/list/sort.png" alt=""></div>
         </div>
       </div>
@@ -155,8 +156,15 @@ export default {
       this.int()
     }
     window.addEventListener('scroll',this.my_scroll);
+    
   },
   methods: {
+    initPage(){
+      if(document.getElementsByClassName("van-search__content")[0]){
+        document.getElementsByClassName("van-search__content")[0].style.backgroundColor="#fff"
+      }
+      
+    },
     // 滚动
     my_scroll(e){
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
@@ -224,6 +232,7 @@ export default {
         const {mode,page,page_size,addr,type,keywords,pattern} = that;
         let params = {mode,page,page_size,addr,type,keywords,pattern}
         this.$axios.post('/index/list?'+getRequestQuery(params),{globalLoading:false}).then(res=>{
+          that.initPage();
           if(res.code){
              that.loading_top = false;
              that.loading = false;
