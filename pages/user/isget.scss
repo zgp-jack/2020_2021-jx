@@ -1,143 +1,144 @@
 @import '../../assets/css/style.scss';
-.father{
-    @include box_inner($bottom:0rem,$padding-bottom:0rem,$top:1rem);
-
-    .border-btn{
-        border-bottom: 1px solid rgba(238,238,238,1);
+.father {
+    @include box_inner($bottom: 0rem, $padding-bottom: 0rem, $top: 1rem);
+    .border-btn {
+        border-bottom: 1px solid rgba(238, 238, 238, 1);
     }
-    .consume-title{
+    .consume-title {
         width: 100%;
         top: 1rem;
         z-index: 50;
         position: fixed;
-        background:#f6f6f6;
-        box-shadow:0px 2px 0.21rem 0px rgba(192,191,190,0.3);
-        line-height:1.5rem;
-            .consume-one{
-
-                background-color: white;
-                img{
-                    width: 0.36rem;
-                    height:0.36rem;
-                     transition: 0.3s;
-                    vertical-align:sub;
-
-                }
-                .rotate{
-                  transform:rotate(180deg);
-
-                }
-                padding: 0.26rem;
-                display: flex;
-                line-height: 0.74rem;
-                justify-content:space-between;
-                align-items: center;
-                >p:first-child{
-                    color: #303030;
-                    font-size: 0.33rem;
-                    font-weight: 550;
-                }
-                >p:last-child{
-                    line-height:0.2rem;
-                    background:rgba(246,246,246,1);
-                    border-radius:3px;
-                    padding:0.2rem;
-                    color: #4F4F4F;
-                    font-size: 0.33rem;
-                    text-align: center;
-                }
+        background: #f6f6f6;
+        box-shadow: 0px 2px 0.21rem 0px rgba(192, 191, 190, 0.3);
+        line-height: 1.5rem;
+        .consume-one {
+            background-color: white;
+            img {
+                width: 0.36rem;
+                height: 0.36rem;
+                transition: 0.3s;
+                vertical-align: sub;
             }
-            .consume-two{
-                padding: 0.26rem;
-                display: flex;
-                line-height: 0.74rem;
-                font-size:0.26rem;
-                    >p>span{
-                        color:$color;
-                    }
-                    >p:nth-child(2){
-                        margin-left:0.97rem;
-                    }
+            .rotate {
+                transform: rotate(180deg);
             }
+            padding: 0.26rem;
+            display: flex;
+            line-height: 0.74rem;
+            justify-content:space-between;
+            align-items: center;
+            >p:first-child {
+                color: #303030;
+                font-size: 0.33rem;
+                font-weight: 550;
+            }
+            >p:last-child {
+                line-height: 0.2rem;
+                background: rgba(246, 246, 246, 1);
+                border-radius: 3px;
+                padding: 0.2rem;
+                color: #4F4F4F;
+                font-size: 0.33rem;
+                text-align: center;
+            }
+        }
+        .consume-two {
+            padding: 0.26rem;
+            display: flex;
+            line-height: 0.74rem;
+            font-size: 0.26rem;
+            >p>span {
+                color: $color;
+            }
+            >p:nth-child(2) {
+                margin-left: 0.97rem;
+            }
+        }
     }
-    .consume-content{
+    .consume-content {
         // margin-top:0.18rem;
         // line-height:3.4rem;
-        background:rgba(255,255,255,1);
+        background: rgba(255, 255, 255, 1);
         // box-shadow:0px 2px 0.21rem 0px rgba(192,191,190,0.3);
-        padding:0 0.27rem;
+        padding: 0 0.27rem;
         overflow: hidden;
-            .consume-content-one{
-                display:flex;
-                margin-top: 0.27rem;
-                    .consume-content-img{
-                        width: 0.8rem;
-                        height: 0.8rem;
-                          img{
-                            width:100%;
-                            height:100%;
-                          }
-                    }
-                    .consume-center{
-                       margin-left:0.25rem;
-                       flex: 1;
-                       position: relative;
-                        .consume-content-text{
-                            display: inline-block;
-                            line-height:0.46rem;
-                              p{
-                                  font-size: 0.31rem;
-                                  color: #252529;
-                                  &:nth-of-type(2){
-                                    font-weight:normal;
-                                    font-size: 0.28rem;
-                                    margin-top: 0.05rem;
-                                  }
-                              }
-                              span{
-                                  font-size: 0.3rem;
-                                  color: #9E9E9E;
-                                  display: block;
-                              }
-                        }
-                        .consume-content-right{
-                            float: right;
-                            p{
-                                font-size:0.26rem;
-                                color: #FFAA26;
-                                font-weight:550;
-                            }
-                            img{
-                                position:absolute;
-                                top:35%;
-                                right:0;
-                                display: block;
-                                width: 0.32rem;
-                                height: 0.32rem;
-                            }
-                        }
-                    }
+        .consume-content-one {
+            display: flex;
+            margin-top: 0.27rem;
+            .consume-content-img {
+                width: 0.8rem;
+                height: 0.8rem;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
             }
+            .consume-center {
+                margin-left: 0.25rem;
+                flex: 1;
+                position: relative;
+                .consume-content-text {
+                    display: inline-block;
+                    line-height: 0.46rem;
+                    p {
+                        font-size: 0.31rem;
+                        color: #252529;
+                        &:nth-of-type(2) {
+                            font-weight: normal;
+                            font-size: 0.28rem;
+                            margin-top: 0.05rem;
+                        }
+                    }
+                    span {
+                        font-size: 0.3rem;
+                        color: #9E9E9E;
+                        display: block;
+                    }
+                }
+                .consume-content-right {
+                    float: right;
+                    p {
+                        font-size: 0.26rem;
+                        color: #FFAA26;
+                        font-weight: 550;
+                    }
+                    img {
+                        position: absolute;
+                        top: 35%;
+                        right: 0;
+                        display: block;
+                        width: 0.32rem;
+                        height: 0.32rem;
+                    }
+                }
+            }
+        }
     }
-    .not-consume{
-      padding-top: 2.5rem;
-      font-size: 0.3rem;
-      p{
-        text-align: center;
-      }
-      button{
-        background-color:rgb(255, 170, 38);
-        width: 4rem;
-        border-radius:0.5rem;
-        height: 0.8rem;
-        color: #fff;
-        margin: 1rem auto;
-        display: block;
-        outline: none;
-        border: none;
-      }
+    .not-consume {
+        padding-top: 2.5rem;
+        font-size: 0.3rem;
+        p {
+            text-align: center;
+        }
+        button {
+            background-color: rgb(255, 170, 38);
+            width: 4rem;
+            border-radius: 0.5rem;
+            height: 0.8rem;
+            color: #fff;
+            margin: 1rem auto;
+            display: block;
+            outline: none;
+            border: none;
+        }
     }
 }
-.van-pull-refresh{
- margin-top: 1.5rem;
+
+.van-pull-refresh {
+    margin-top: 1.5rem;
+}
+
+.van-picker-column__item {
+    font-size: 0.3rem !important;
 }
