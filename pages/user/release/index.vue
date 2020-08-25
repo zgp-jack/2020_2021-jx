@@ -193,22 +193,27 @@ export default {
     },
     //新手指引弹窗
     mask_show(){
+      console.log(1)
+      debugger
       let guide = getNovicePoint();
       switch (this.mode) {
           case 1:
           guide.lease = false
+          setNovicePoint(guide)
           break;
           case 2:
           guide.userBuy = false
+          setNovicePoint(guide)
           break;
           case 3:
           guide.userRelease = false
+          setNovicePoint(guide)
           break;
           case 4:
           guide.zhuanrang = false
+          setNovicePoint(guide)
           break;
       }
-      setNovicePoint(guide)
       this.mask_tencent = false
     },
     Topmask(){
