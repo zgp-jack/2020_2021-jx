@@ -18,7 +18,6 @@ export default {
   layout: 'index',
   data() {
     return {
-      isShow: false,
       numberServers:0,
       includeArr: ['list','home'], // 需要缓存的组件名数组
     };
@@ -46,7 +45,7 @@ export default {
       const {code,state} = this.$route.query;
       const that = this;
       if(weixin && !token && !id && !code && !state){
-        that.authorization()
+        setTimeout(()=>{that.authorization()},200)
       }else{
 
         that.getArea()
@@ -74,6 +73,7 @@ export default {
     },
     //获取默认头像、地区
     getDefaultData(){
+      let weixin = isWeixin();
       const that = this;
       that.$axios.get('/index/index',{params:{phone:'',user_token:''}}).then(res=>{
         if(res.code == 200){
@@ -82,13 +82,25 @@ export default {
           const default_portrait = {
             default_cover,default_header
           }
-          const contacts = {contact,wx_service};
+          let contacts = {contact,wx_service};
           that.$nuxt.$store.commit('setPortrait',default_portrait)
           that.$nuxt.$store.commit('setDefaultAddr',addr)
           that.$nuxt.$store.commit('setImgServer',file_domain)
-          that.$nuxt.$store.commit('setContact',{...contacts})
+          if(!weixin) {
+            that.$nuxt.$store.commit('setContact',{...contacts})
+            return
+          };
+          // 微信端请求微信路径接口
+          that.$axios.get('us/wx-account',{params:{phone:'',user_token:''}}).then(res=>{
+            if(res.code == 200){
+              let wx_service = res.content
+              contacts = {contact,wx_service}
+              that.$nuxt.$store.commit('setContact',{...contacts})
+            }
+          })
         }
       })
+      
     },
 
     //获取用户信息

@@ -1,13 +1,14 @@
 @import '../../assets/css/style.scss';
-
 @mixin inner {
     background-color: #fff;
     padding: 0.1rem 0.3rem 0.3rem;
 }
+
 @mixin title {
     padding-top: 0.3rem;
     line-height: 0.35rem;
 }
+
 @mixin item {
     display: inline-block;
     padding: 0 0.32rem;
@@ -19,7 +20,8 @@
     color: #5C5B5B;
     background-color: #F5F5F5;
 }
-.mechanics_select_box{
+
+.mechanics_select_box {
     width: 0;
     position: absolute;
     height: 100vh;
@@ -31,25 +33,25 @@
     overflow: hidden;
     transition: all 300ms;
     z-index: 60;
-    .mechanics-inner{
+    .mechanics-inner {
         position: absolute;
-        top:calc(1.01rem + 0.2rem);
+        top: calc(1.01rem + 0.2rem);
         width: 7.5rem;
-        .top{
+        .top {
             @include inner;
-            .title{
+            .title {
                 @include title;
-                .msg{
+                .msg {
                     font-size: 0.3rem;
                     color: #A5A5A5;
                 }
             }
-            .mechanics{
+            .mechanics {
                 height: 2.2rem;
-                span{
+                span {
                     position: relative;
                     @include item;
-                    i{
+                    i {
                         position: absolute;
                         right: 0;
                         top: 0.02rem;
@@ -59,26 +61,26 @@
                 }
             }
         }
-        .mechanics_select{
+        .mechanics_select {
             position: relative;
             height: calc(100vh - 4.46rem);
             margin-top: 0.2rem;
             @include inner;
             overflow-x: hidden;
-            .title{
+            .title {
                 @include title;
             }
-            .list{
+            .list {
                 margin-bottom: 0.2rem;
-                .list_title{
+                .list_title {
                     margin-bottom: 0.05rem;
                     line-height: 1.2rem;
                     font-weight: 400;
                     border-bottom: 1px solid #E7E7E7;
-                    .rotate{
+                    .rotate {
                         transform: rotate(-90deg);
                     }
-                    span{
+                    span {
                         float: right;
                         margin-top: calc(1.2rem / 2 - 0.39rem /2);
                         margin-right: 0.3rem;
@@ -91,12 +93,12 @@
                         color: #fff;
                         background-color: #ffa926;
                     }
-                    i{
+                    i {
                         float: right;
                     }
                 }
-                .list_data{
-                    span{
+                .list_data {
+                    span {
                         @include item;
                     }
                     .yellow {
@@ -107,13 +109,18 @@
             }
         }
     }
-    
 }
-.mechanics_show{
+
+.mechanics_show {
     width: 7.5rem;
 }
+
 #{'/deep/'} {
-    .header{
+    .header {
         position: absolute;
     }
+}
+
+.nonedet {
+    border: none !important;
 }

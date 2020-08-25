@@ -81,7 +81,7 @@ import md5 from 'js-md5';
             Toast('修改成功')
             that.$router.go(-1)
           }else if(res.code == 3000){
-            Toast('验证码输入不正确')
+            Toast('请获取验证码')
           }
         })
       }

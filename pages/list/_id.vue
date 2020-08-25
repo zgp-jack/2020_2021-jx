@@ -5,6 +5,7 @@
       <div class="head">
         <div class="clearfix head_search">
           <van-search
+              left-icon=""
               class="fl"
               :placeholder="search_placeholder[mode]"
               v-model="query.keywords"
@@ -13,8 +14,8 @@
           <span class="search_text fr" @click="onSearch">搜索</span>
         </div>
         <div class="select_head">
-          <div class="select_inner clearfix" @click="onisclose('isSelect_area')"><i class="iconfont icon-down fr" :class="{'rotate':isSelect_area}"/><p class="fr">{{selectAreaData.name || '成都'}}</p></div>
-          <div class="select_inner clearfix" @click="onisclose('isSelect_jixie')"><i class="iconfont icon-down fr" :class="{'rotate':isSelect_jixie}"/><p class="fr">{{selectJixieData.name || '所有机械'}}</p></div>
+          <div class="select_inner clearfix" @click="onisclose('isSelect_area')"><i class="iconfont  fr" :class="{'rotate':isSelect_area}"/><p class="fr">{{selectAreaData.name || '成都'}}</p></div>
+          <div class="select_inner clearfix" @click="onisclose('isSelect_jixie')"><i class="iconfont  fr" :class="{'rotate':isSelect_jixie}"/><p class="fr">{{selectJixieData.name || '所有机械'}}</p></div>
           <div class="select_inner" @click="onisclose('isSelect_sort')">{{selectSortData.name || '最新'}}<img src="../../assets/img/list/sort.png" alt=""></div>
         </div>
       </div>
@@ -38,14 +39,14 @@
     <div class="list_data" @scroll="my_scroll">
       <Topbar/>
        <!-- 呼出 -->
-       <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
+       <BottomTop :showWant="true" :qiandao="false" ref="mychild" :mode='mode'/>
         <div v-if="(mode==1 || mode==4)">
-          <van-pull-refresh v-model="loading_top" loading-text='' @refresh="onrefresh" :style="{'padding-bottom':iscomplete && !isempty && list.length?0:0.2+'rem'}">
+          <van-pull-refresh v-model="loading_top"  @refresh="onrefresh" :style="{'padding-bottom':iscomplete && !isempty && list.length?0:0.8+'rem'}">
             <van-list
               v-model="loading"
               :finished="iscomplete || isempty"
               @load="listScroll"
-             
+              v-if="list.length"
             >
               <FirstListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
             </van-list>
@@ -54,12 +55,12 @@
         </div>
 
         <div v-if="(mode==2 || mode==3)">
-            <van-pull-refresh v-model="loading_top" loading-text='' @refresh="onrefreshs" :style="{'padding-bottom':!iscomplete && !isempty && list.length?0:0.2+'rem'}">
+            <van-pull-refresh v-model="loading_top"  @refresh="onrefresh" :style="{'padding-bottom':iscomplete && !isempty && list.length?0:0.8+'rem'}">
               <van-list
                 v-model="loading"
                 :finished="iscomplete || isempty"
                 @load="listScroll"
-               
+               v-if="list.length"
               >
                 <SeccondListItem @giveParent="getObj" v-for="(item,index) in list" :key="index" :data="{item,index}"/>
               </van-list>
@@ -155,8 +156,15 @@ export default {
       this.int()
     }
     window.addEventListener('scroll',this.my_scroll);
+    
   },
   methods: {
+    initPage(){
+      if(document.getElementsByClassName("van-search__content")[0]){
+        document.getElementsByClassName("van-search__content")[0].style.backgroundColor="#fff"
+      }
+      
+    },
     // 滚动
     my_scroll(e){
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
@@ -166,6 +174,12 @@ export default {
     onSelect(type, flag, Data) {
       if(flag){
         this.closeAll(type)
+        document.getElementsByClassName("list_data")[0].style.position="fixed"
+      }else{
+        if(document.getElementsByClassName("list_data")[0]){
+          document.getElementsByClassName("list_data")[0].style.position="static"
+        }
+        
       }
       this.$set(this, type, flag);
       //关闭弹框请求接口
@@ -211,15 +225,17 @@ export default {
       reload  true重新加载
     */
     getList(){
+      this.loading= true
+      this.loading_top = true;
       if(this.mode==1||this.mode==2||this.mode==3||this.mode==4){
         const that = this;
         const {mode,page,page_size,addr,type,keywords,pattern} = that;
         let params = {mode,page,page_size,addr,type,keywords,pattern}
-
         this.$axios.post('/index/list?'+getRequestQuery(params),{globalLoading:false}).then(res=>{
+          that.initPage();
           if(res.code){
-            that.loading = false;
-            this.loading_top = false;
+             that.loading_top = false;
+             that.loading = false;
             if(that.page == 1){
               if(res.content.length && res.content.length<that.page_size){
                 that.iscomplete = true;
@@ -251,17 +267,13 @@ export default {
     },
 
     onrefresh(){
-      this.loading = true;
-      this.loading_top = false
+      // this.loading = true;
+      this.loading_top = true
+      this.loading = false
       this.onreset()
       this.getList()
     },
-     onrefreshs(){
-      this.loading = true;
-      this.loading_top = false
-      this.onreset()
-      this.getList()
-    },
+
     //重置page
     onreset(){
       this.page = 1;

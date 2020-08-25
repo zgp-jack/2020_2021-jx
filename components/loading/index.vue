@@ -12,7 +12,7 @@ export default {
     }),
     mounted(){
       if(!this.$props || !this.$props.show){
-          this.loading = false
+          this.loading = false;
       }
     }
   }

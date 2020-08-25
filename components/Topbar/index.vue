@@ -79,6 +79,11 @@ export default {
       return this.$nuxt.$store.state.contact;
     }
   },
+  watch: {
+    contact(v,o){
+      console.log(v)
+    }
+  },
 }
 </script>
 

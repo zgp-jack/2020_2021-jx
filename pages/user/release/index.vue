@@ -1,11 +1,16 @@
 <template>
   <div>
-      <Header :title="title" @getParentFn="showRelease" ensure_text="发布"/>
+    <!-- ensure_text="发布" -->
+      <Header :title="title" @getParentFn="showRelease"/>
       <div style="width: 7.5rem;">
         <collHead :arr = 'arr' @modeType = 'onServers' ref="collHead"/>
       </div>
        <!-- 遮罩 -->
-       <div class="point-mask" v-if="(mode ==1 && mask_tencent) || (mode == 4 && mask_want)" :style="{'background-image':mode == 1?'url('+require('../../../assets/img/my-fabu/qiuzu_point.png'):'url('+require('../../../assets/img/my-fabu/qiugou_point.png')}">
+       <div class="point-mask" v-if="mask_tencent">
+           <img src="http://statics.zhaogongdi.com/common/myCreatejob.png" v-if="mode == 1">
+           <img src="http://statics.zhaogongdi.com/common/myCraeteShop.png" v-if="mode == 2">
+           <img src="http://statics.zhaogongdi.com/common/myCreateUsed.png" v-if="mode == 3">
+           <img src="http://statics.zhaogongdi.com/common/myCreateWant.png" v-if="mode == 4">
            <div class="btn-img" @click="mask_show()"></div>
        </div>
        <!-- 置顶遮罩 -->
@@ -21,7 +26,7 @@
             </div>
             <div class="iconfont icon-cuo closeCreate"></div>
         </div>
-        <div class="father">
+        <div class="fathersss">
           <van-pull-refresh v-model="loading" @refresh="onrefresh">
             <van-list
                 v-model="loading"
@@ -107,7 +112,7 @@ export default {
           title:'我的发布',
           arr:[{title:'我的求租',id:'1'},{title:'我的出租',id:'2'},{title:'我的出售',id:'3'},{title:'我的求购',id:'4'},],
           mask_want:false,
-          mask_tencent:false,
+          mask_tencent:true,
           my_scroll:0,
           isshow:true,
           Topmaskr:false,
@@ -189,14 +194,22 @@ export default {
     //新手指引弹窗
     mask_show(){
       let guide = getNovicePoint();
-      if(this.mode == 1){
-          guide.lease = false;
-          this.mask_tencent = false;
-      }else{
-          guide.userBuy = false;
-          this.mask_want = false;
+      switch (this.mode) {
+          case 1:
+          guide.lease = false
+          break;
+          case 2:
+          guide.userBuy = false
+          break;
+          case 3:
+          guide.userRelease = false
+          break;
+          case 4:
+          guide.zhuanrang = false
+          break;
       }
       setNovicePoint(guide)
+      this.mask_tencent = false
     },
     Topmask(){
       this.Topmaskr =false
@@ -244,11 +257,10 @@ export default {
         }
     },
     int(){
-      if((this.mode == 1 || this.mode == 4)){
         let guide = getNovicePoint();
-        this.mask_want = guide.userBuy;
-        this.mask_tencent = guide.lease;
-      }
+        if( !guide.lease || !guide.userBuy || !guide.userRelease || !guide.zhuanrang){
+          this.mask_tencent = false
+        }
     },
     //下拉刷新
     onrefresh(){
@@ -273,7 +285,7 @@ export default {
     onSkip(key,data){
         switch(key){
             case 'view' :
-              this.$router.push({path:'/view/',query:{info:data.repeat_uuid,mode:data.mode}})
+              this.$router.replace({path:'/view',query:{info:data.uu_id,mode:this.mode}})
             break;
             case 'set_top' :
               this.repeatData.is_repeat = false;
@@ -375,7 +387,7 @@ export default {
       Dialog.alert({
         title:data.title,
         message:data.content,
-        confirmButtonColor:data.sureColor
+        confirmButtonColor:data.sureColor, 
       }).then(()=>{
         data.sureCallBack && data.sureCallBack()
       })
@@ -383,6 +395,6 @@ export default {
   }
 }
 </script>
-<style lang='scss' scoped>
+<style lang='scss'>
  @import './style.scss'
 </style>
