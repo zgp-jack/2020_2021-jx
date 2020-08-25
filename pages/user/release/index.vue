@@ -193,8 +193,6 @@ export default {
     },
     //新手指引弹窗
     mask_show(){
-      console.log(1)
-      debugger
       let guide = getNovicePoint();
       switch (this.mode) {
           case 1:
