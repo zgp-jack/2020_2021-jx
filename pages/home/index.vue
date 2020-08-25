@@ -162,7 +162,7 @@ export default {
   methods:{
     //有弹框时不能滚动窗口
     cannotScrollWindow(){
-      if(this.novice_point_alert){
+      if(this.novice_point_alert || this.isSelect_area){
         document.documentElement.style.position = "fixed";
       }else{
         document.documentElement.style.position = "static";
@@ -223,8 +223,12 @@ export default {
     // 选择城市
     chooseArea(){
       this.isSelect_area = !this.isSelect_area;
+      this.cannotScrollWindow()
+      
     },
     onSelect(type, flag, cityData) {
+      this.isSelect_area = false
+      this.cannotScrollWindow()
       this.isSelect_area = !this.isSelect_area;
         this.$set(this, type, flag);
         //关闭弹框请求接口

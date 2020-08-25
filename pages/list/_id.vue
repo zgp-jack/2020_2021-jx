@@ -166,6 +166,12 @@ export default {
     onSelect(type, flag, Data) {
       if(flag){
         this.closeAll(type)
+        document.getElementsByClassName("list_data")[0].style.position="fixed"
+      }else{
+        if(document.getElementsByClassName("list_data")[0]){
+          document.getElementsByClassName("list_data")[0].style.position="static"
+        }
+        
       }
       this.$set(this, type, flag);
       //关闭弹框请求接口
