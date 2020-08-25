@@ -19,8 +19,10 @@
                 <div class="info">
                     <div class="name">{{item.name}}</div>
                     <div class="gong-img">
-                      <span class="iconfont  icon-gongying gongying"></span>
-                      <span class="iconfont  icon-VIP-tongguo vip" v-if="item.authenticate==2"></span>
+                    
+                      <img src="../../../assets/img/icon/gongying.png" class="gongying">
+                      <img src="../../../assets/img/icon/VIP.png" class="vip" v-if="item.authenticate==2">
+                      
                     </div>
                     <div class="area">{{item.area}}</div>
                 </div>
