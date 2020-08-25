@@ -42,6 +42,7 @@
     }
     .van-pull-refresh {
         overflow: visible;
+        margin-top: 0;
     }
     @include box_inner($bottom:0rem,
     $top:2rem);
