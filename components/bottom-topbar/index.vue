@@ -48,7 +48,7 @@ export default {
   }
 },
 
-    props:['showWant','qiandao','hiddenAll',"showAlert"],
+    props:['showWant','qiandao','hiddenAll',"showAlert","mode"],
     components:{
       Sign
     },
@@ -113,7 +113,7 @@ export default {
       // 跳转发布页
       fabugo(){
         if(whetherLogin(this) == false) return false;
-        this.$router.push({path:'/user/release/',query:{mode:1,show:true}})
+        this.$router.push({path:'/user/release/',query:{mode:this.mode,show:true}})
       },
        handle(show){
           this.box_show = show

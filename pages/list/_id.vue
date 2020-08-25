@@ -39,7 +39,7 @@
     <div class="list_data" @scroll="my_scroll">
       <Topbar/>
        <!-- 呼出 -->
-       <BottomTop :showWant="true" :qiandao="false" ref="mychild"/>
+       <BottomTop :showWant="true" :qiandao="false" ref="mychild" :mode='mode'/>
         <div v-if="(mode==1 || mode==4)">
           <van-pull-refresh v-model="loading_top"  @refresh="onrefresh" :style="{'padding-bottom':iscomplete && !isempty && list.length?0:0.8+'rem'}">
             <van-list

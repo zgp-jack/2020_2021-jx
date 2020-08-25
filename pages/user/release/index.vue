@@ -6,7 +6,11 @@
         <collHead :arr = 'arr' @modeType = 'onServers' ref="collHead"/>
       </div>
        <!-- 遮罩 -->
-       <div class="point-mask" v-if="(mode ==1 && mask_tencent) || (mode == 4 && mask_want)" :style="{'background-image':mode == 1?'url('+require('../../../assets/img/my-fabu/qiuzu_point.png'):'url('+require('../../../assets/img/my-fabu/qiugou_point.png')}">
+       <div class="point-mask" v-if="mask_tencent">
+           <img src="http://statics.zhaogongdi.com/common/myCreatejob.png" v-if="mode == 1">
+           <img src="http://statics.zhaogongdi.com/common/myCraeteShop.png" v-if="mode == 2">
+           <img src="http://statics.zhaogongdi.com/common/myCreateUsed.png" v-if="mode == 3">
+           <img src="http://statics.zhaogongdi.com/common/myCreateWant.png" v-if="mode == 4">
            <div class="btn-img" @click="mask_show()"></div>
        </div>
        <!-- 置顶遮罩 -->
@@ -108,7 +112,7 @@ export default {
           title:'我的发布',
           arr:[{title:'我的求租',id:'1'},{title:'我的出租',id:'2'},{title:'我的出售',id:'3'},{title:'我的求购',id:'4'},],
           mask_want:false,
-          mask_tencent:false,
+          mask_tencent:true,
           my_scroll:0,
           isshow:true,
           Topmaskr:false,
@@ -190,14 +194,22 @@ export default {
     //新手指引弹窗
     mask_show(){
       let guide = getNovicePoint();
-      if(this.mode == 1){
-          guide.lease = false;
-          this.mask_tencent = false;
-      }else if(this.mode == 4){
-          guide.userBuy = false;
-          this.mask_want = false;
+      switch (this.mode) {
+          case 1:
+          guide.lease = false
+          break;
+          case 2:
+          guide.userBuy = false
+          break;
+          case 3:
+          guide.userRelease = false
+          break;
+          case 4:
+          guide.zhuanrang = false
+          break;
       }
       setNovicePoint(guide)
+      this.mask_tencent = false
     },
     Topmask(){
       this.Topmaskr =false
@@ -245,11 +257,10 @@ export default {
         }
     },
     int(){
-      if((this.mode == 1 || this.mode == 4)){
         let guide = getNovicePoint();
-        this.mask_want = guide.userBuy;
-        this.mask_tencent = guide.lease;
-      }
+        if( !guide.lease || !guide.userBuy || !guide.userRelease || !guide.zhuanrang){
+          this.mask_tencent = false
+        }
     },
     //下拉刷新
     onrefresh(){
