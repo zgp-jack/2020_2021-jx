@@ -193,19 +193,19 @@ export default {
     },
     //新手指引弹窗
     mask_show(){
-      let guide = getNovicePoint();
+      let guide = {...getNovicePoint()};
       switch (this.mode) {
-          case 1:
-          guide.lease = false
+          case "1":
+            guide.lease = false
           break;
-          case 2:
-          guide.userBuy = false
+          case "2":
+            guide.userBuy = false
           break;
-          case 3:
-          guide.userRelease = false
+          case "3":
+            guide.userRelease = false
           break;
-          case 4:
-          guide.zhuanrang = false
+          case "4":
+            guide.zhuanrang = false
           break;
       }
       setNovicePoint(guide)
