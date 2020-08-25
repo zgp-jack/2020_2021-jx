@@ -63,6 +63,7 @@ export default {
           this.onSelect("isSelect_area", false, this.city[index]);
           this.province = {...item};
           window.sessionStorage.setItem('all',JSON.stringify({id: 1, name: "全国", pid: "0"}))
+          window.sessionStorage.setItem("city",'')
         }else if(this.onlyFather){
           this.onSelect("isSelect_area", false, this.city[index][0]);
         }
@@ -76,6 +77,7 @@ export default {
       if(index != null){
         //设置本地存储
         window.sessionStorage.setItem('province',JSON.stringify(this.city[this.provinceChosedIndex][0]));
+        window.sessionStorage.setItem("is_request",true);
         window.sessionStorage.setItem('city',JSON.stringify(this.city[this.provinceChosedIndex][index]));
         //把全国的本地储存清空
         window.sessionStorage.setItem('all','');

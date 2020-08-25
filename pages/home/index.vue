@@ -10,7 +10,7 @@
           <img src="http://statics.zhaogongdi.com/common/logo_m.png" alt="">
         </h1>
         <div @click="chooseArea" class="position fl">
-          <i class="" /><b>{{selectAreaData.name || '成都'}}</b>
+          <i class="" /><b data-id="322">{{selectAreaData.name || '成都'}}</b>
           <strong class=""></strong>
 
         </div>
@@ -137,6 +137,8 @@ export default {
       show_gift_alert:false,//新手大礼包
       novice_point:'',//新手指引对象
       novice_point_alert:false,
+      defualt_id : "322",
+      first_request:true,
     }
   },
   created(){
@@ -145,6 +147,10 @@ export default {
   },
   beforeMount(){
     this.novice_point = getNovicePoint();
+    let str = window.sessionStorage.getItem("city");
+    if(!str){
+      // window.sessionStorage.setItem("city");
+    }
   },
   mounted() {
     setTimeout(()=>{
@@ -184,9 +190,9 @@ export default {
     //切换标题
     changeTitle(index,type){
        this.title_active = index;
-       const {title_active,title_data} = this;
+       const {title_active,title_data,selectAreaData} = this;
        if(!title_data[title_active].render){
-         this.listData()
+         this.listData(false)
        }
     },
 
@@ -223,10 +229,10 @@ export default {
         this.$set(this, type, flag);
         //关闭弹框请求接口
         if (cityData) {
-          this.selectAreaData = {...cityData}
-          //接口请求
-          this.listData()
-          this.titleData()
+            this.selectAreaData = {...cityData}
+            //接口请求
+            this.listData()
+            this.titleData()
         }
       },
       onisclose(type) {
@@ -234,7 +240,7 @@ export default {
         this.onSelect(type, flag);
       },
       //列表页数据
-      listData(){
+      listData(bool){
         const that = this;
         let {title_data,mode,selectAreaData,title_active} = this;
         that.$axios.post('/index/home-data?'+getRequestQuery({area:selectAreaData.id,mode:title_data[title_active].type})).then(res=>{
