@@ -271,10 +271,9 @@ export default {
         this.getData()
     },
     onSkip(key,data){
-      console.log(data)
         switch(key){
             case 'view' :
-              this.$router.push({path:'/view/',query:{info:data.repeat_uuid,mode:data.mode}})
+              this.$router.replace({path:'/view',query:{info:data.uu_id,mode:this.mode}})
             break;
             case 'set_top' :
               this.repeatData.is_repeat = false;
