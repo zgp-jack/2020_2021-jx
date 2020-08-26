@@ -170,7 +170,7 @@
                       <img :src="imgserver+item" alt="" @click="imgView(index)">
                     </div>
                     <div class="fl" v-if="images.length<9">
-                      <van-uploader :after-read="afterRead">
+                      <van-uploader :after-read="afterRead"  multiple :max-size="5*1024*1024" @oversize="onOversize">
                         <div class="chose-img">
                         </div>
                       </van-uploader>
@@ -325,6 +325,10 @@ export default {
         })
         return true;
       },
+      // 文件大小
+      onOversize(file){
+        Toast('文件大小不能超过5M')
+      },
       //删除图片
       imgCloce(index){
         let {images} = this;
@@ -372,7 +376,7 @@ export default {
           that.onPickerAreaShow(true)
           return false;
         }
-        if (!OnlyChinese.test(user) || user.length < 2) {
+        if (user.length < 2) {
           Toast('请输入正确的联系人且不少于2个字');
           return false;
         }
