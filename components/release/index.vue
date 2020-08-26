@@ -324,6 +324,10 @@ export default {
           })
         return true;
       },
+      // 文件大小
+      // onOversize(file){
+      //   Toast('文件大小不能超过5M')
+      // },
       //删除图片
       imgCloce(index){
         let {images} = this;
@@ -371,7 +375,7 @@ export default {
           that.onPickerAreaShow(true)
           return false;
         }
-        if (!OnlyChinese.test(user) || user.length < 2) {
+        if (user.length < 2) {
           Toast('请输入正确的联系人且不少于2个字');
           return false;
         }
@@ -481,6 +485,11 @@ export default {
               message: res.msg,
             }).then(()=>{
               that.$router.replace({path:'/user/release',query:{mode:this.mode}})
+            })
+          }else if(res.code == 500){
+            Dialog.confirm({
+              title:'温馨提示',
+              message:res.msg
             })
           }
           
