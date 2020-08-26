@@ -286,7 +286,7 @@ export default {
     onSkip(key,data){
         switch(key){
             case 'view' :
-              this.$router.replace({path:'/view',query:{info:data.uu_id,mode:this.mode}})
+              this.$router.push({path:'/view',query:{info:data.uu_id,mode:this.mode}})
             break;
             case 'set_top' :
               this.repeatData.is_repeat = false;
