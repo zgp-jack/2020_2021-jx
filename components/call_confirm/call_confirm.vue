@@ -1,6 +1,6 @@
 <template>
     <div>
-      <van-dialog class="phone_alert" v-model="show" title="温馨提示"  @confirm="go_call" show-cancel-button confirmButtonText="去拨打">
+      <van-dialog class="phone_alert" v-model="show" title="温馨提示"  @confirm="go_call" show-cancel-button confirmButtonText="去拨打" confirm-button-color='#FFAA26'>
         <p class="ask">你是否要拨打电话?</p>
         <div class="tips">
           <input type="checkbox" v-model="whether">七天内不再提示
