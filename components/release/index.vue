@@ -170,7 +170,7 @@
                       <img :src="imgserver+item" alt="" @click="imgView(index)">
                     </div>
                     <div class="fl" v-if="images.length<9">
-                      <van-uploader :after-read="afterRead">
+                      <van-uploader :after-read="afterRead"  multiple :max-size="5*1024*1024" @oversize="onOversize">
                         <div class="chose-img">
                         </div>
                       </van-uploader>
@@ -324,6 +324,10 @@ export default {
           }
         })
         return true;
+      },
+      // 文件大小
+      onOversize(file){
+        Toast('文件大小不能超过5M')
       },
       //删除图片
       imgCloce(index){
