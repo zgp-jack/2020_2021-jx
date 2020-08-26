@@ -122,7 +122,6 @@ function compress(img, size) {
     console.log(ndata.length / 1024)
     return ndata
 }
-
 //上传图片
 export function uploadPictures(page, file,callback) {
    return new Promise(function(resolve, reject){
