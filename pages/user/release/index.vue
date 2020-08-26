@@ -194,17 +194,18 @@ export default {
     //新手指引弹窗
     mask_show(){
       let guide = {...getNovicePoint()};
-      switch (this.mode) {
-          case "1":
+      console.log(this.mode,guide)
+      switch (parseInt(this.mode)) {
+          case 1:
             guide.lease = false
           break;
-          case "2":
+          case 2:
             guide.userBuy = false
           break;
-          case "3":
+          case 3:
             guide.userRelease = false
           break;
-          case "4":
+          case 4:
             guide.zhuanrang = false
           break;
       }
