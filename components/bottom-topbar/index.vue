@@ -92,18 +92,16 @@ export default {
             this.sport_show = true
           },50)
           if(this.lists_show){
-            var mo=function(e){e.preventDefault();};
-            document.body.style.overflow='hidden';
-            document.addEventListener("touchmove",mo,false)
+            document.getElementsByClassName("list_data")[0].style.position="fixed"
+            document.getElementsByClassName("list")[0].style.zIndex=0
           }
         },
         list_hide(){
           this.lists_show = false
           this.sport_show = false
-          if(!this.lists_show){
-            var mo=function(e){e.preventDefault();};
-            document.body.style.overflow='';//出现滚动条
-            document.removeEventListener("touchmove",mo,false);
+          if(!this.lists_show && document.getElementsByClassName("list_data")[0]){
+          document.getElementsByClassName("list_data")[0].style.position="static"
+          document.getElementsByClassName("list")[0].style.zIndex=10
           }
         },
         Isgo(link){

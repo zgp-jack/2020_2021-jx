@@ -17,7 +17,9 @@
                         <span class="file_mk">{{!upload_logo.length?"上传图片":"重新上传"}}</span>
                       </van-uploader>
                       <div class="uploaded_img" v-show="upload_logo.length">
-                        <span class="iconfont icon-cuo" @click="deleteImg('upload_logo')"></span>
+                        <span class="icon-cuos" @click="deleteImg('upload_logo')">
+                          <img src="../../assets/img/icon/cuo.png">
+                        </span>
                         <img :src="[upload_logo.length ? upload_logo[0].src:'']" @click="previewImg(upload_logo[0].src)" alt="图片加载失败" >
                       </div>
                     </div>
