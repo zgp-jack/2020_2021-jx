@@ -40,7 +40,7 @@
                     <div class="opearting clearfix">
                         <span @click.stop="goModifyPage(item)" :class="[(item.check==1) ? 'modify':'list_item_editor']" >修改信息</span>
                         <span class="list_item_top" @click.stop="goSettingFn(item,index)" v-if="item.check!='0' && item.end!='2'">{{item.top?'取消置顶':!item.top_over_due?'继续置顶':'去置顶'}}</span>
-                        <span @click.stop="refuse(item)" v-if="item.check == 0" class="list_item_reason fr"><img src="../../../assets/img/user_release/warning.png" alt=""> 查看被拒原因</span>
+                        <span @click.stop="refuse(item)" v-if="item.check == 0" class="list_item_reason fr"><img src="../../../assets/img/user_release/warning.png" alt=""><h3>查看被拒原因</h3></span>
                         <span v-if="item.etime && item.check!=='0' && item.end !='2' && item.top" class="list_item_time fr">{{item.etime}} 到期</span>
                     </div>
                     <img @click.stop="changeSateFn(item,index)" class="status" :src="item.check!='2'?status[item.check].url:changeStatus[mode][item.end].url" alt="">

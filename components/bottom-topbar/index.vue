@@ -74,7 +74,6 @@ export default {
   },
   methods:{
      handleScroll(scr){
-
             const scrollTop = scr;
             let {my_scroll,isshow} = this;
             // 页面滚动距顶部距离
@@ -92,10 +91,20 @@ export default {
           setTimeout(()=>{
             this.sport_show = true
           },50)
+          if(this.lists_show){
+            var mo=function(e){e.preventDefault();};
+            document.body.style.overflow='hidden';
+            document.addEventListener("touchmove",mo,false)
+          }
         },
         list_hide(){
           this.lists_show = false
           this.sport_show = false
+          if(!this.lists_show){
+            var mo=function(e){e.preventDefault();};
+            document.body.style.overflow='';//出现滚动条
+            document.removeEventListener("touchmove",mo,false);
+          }
         },
         Isgo(link){
           if(whetherLogin(this)==false) return false;
