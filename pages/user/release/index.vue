@@ -16,12 +16,12 @@
        <!-- 置顶遮罩 -->
         <div class="Topmask" @click="Topmask" :class="[Topmaskr?'':'Topide']">
             <div class="top_notice_content">
-              <div class="base">
+              <!-- <div class="base">
                   <p>鱼泡提示</p>
                   <p>点击信息右上角 "置顶" 功能，即可将信息状态升级为置顶信息，让您的信息被更多的机友浏览。</p>
-              </div>
+              </div> -->
               <div class="info">
-                  <img src="http://statics.zhaogongdi.com/common/set_top_dialog.png">
+                  <img src="../../../assets/img/top.png">
               </div>
             </div>
             <div class="iconfont icon-cuo closeCreate"></div>

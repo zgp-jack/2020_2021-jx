@@ -4,19 +4,21 @@
     <div class="inner">
       <label for="">
         <span>验证码</span>
-        <input type="tel" maxlength="6" v-model="catcap"  autocomplete="off" placeholder="请输入验证码">
+        <input type="password" style="display: none;">
+        <input type="tel"  maxlength="6" v-model="catcap"  autocomplete="off" placeholder="请输入验证码" name="txtPassword">
         <p class="catcap" @click="capcome">{{btntext}}</p>
       </label>
       <label for="">
         <span>新的密码</span>
-        <input type="password" maxlength="32" placeholder="请输入6-32位字符" v-model="news_pass" autocomplete="off">
+        <input type="password" style="display: none;">
+        <input type="password"  maxlength="32" placeholder="请输入6-32位字符" v-model="news_pass" autocomplete='new-password' name="txtPassword">
       </label>
       <!-- <label for="">
         <span>确认密码</span>
         <input type="password" maxlength="32" placeholder="请再一次输入新密码" v-model="sure_pass">
       </label> -->
     </div>
-    <p class="submit" @click="submit" :style="{'backgroundColor':isOk?'#FFAA26':'','color':isOk?'#fff':'#888'}">确认</p>
+    <p class="submit" @click="submit">确认</p>
   </div>
 </template>
 
@@ -35,6 +37,10 @@ import md5 from 'js-md5';
         number:60,
         phone:''
       }
+    },
+    mounted(){
+      this.catcap = ''
+      this.news_pass = ''
     },
     methods:{
       // 获取验证码
@@ -70,6 +76,8 @@ import md5 from 'js-md5';
       // 提交
       submit(){
         let that = this
+        if(!that.catcap.length) return Toast('验证码不能为空')
+        if(!that.news_pass.length) return Toast('新密码不能为空')
         if(!Callcap.pattern.test(that.catcap)) return Toast(Callcap.message)
         if(!that.isOk) return Toast('新密码格式不正确')
         let time =formatDate(new Date(),'yyyyMMdd')
@@ -132,6 +140,9 @@ import md5 from 'js-md5';
     font-size: 0.3rem;
     color: #888;
     margin: 0.5rem auto;
+    background-color:#FFAA26;
+    color: #fff;
+    border: 0;
   }
   .catcap{
                 display: inline-block;

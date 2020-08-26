@@ -115,7 +115,7 @@
             }
             .list_item_time {
                 border: none;
-                color: rgb(3, 3, 3);
+                color: #8c8c8c;
             }
         }
         .status {
@@ -137,7 +137,6 @@
     transition: all .5s;
     .top_notice_content {
         width: 6.5rem;
-        background: #fff;
         border-radius: 10px;
         overflow: hidden;
         .base {
