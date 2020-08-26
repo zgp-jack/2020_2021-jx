@@ -194,18 +194,19 @@ export default {
     //新手指引弹窗
     mask_show(){
       let guide = {...getNovicePoint()};
-      switch (this.mode) {
-          case "1":
-          guide.lease = false
+      console.log(this.mode,guide)
+      switch (parseInt(this.mode)) {
+          case 1:
+            guide.lease = false
           break;
-          case "2":
-          guide.userBuy = false
+          case 2:
+            guide.userBuy = false
           break;
-          case "3":
-          guide.userRelease = false
+          case 3:
+            guide.userRelease = false
           break;
-          case "4":
-          guide.zhuanrang = false
+          case 4:
+            guide.zhuanrang = false
           break;
       }
       setNovicePoint(guide)
@@ -285,7 +286,7 @@ export default {
     onSkip(key,data){
         switch(key){
             case 'view' :
-              this.$router.replace({path:'/view',query:{info:data.uu_id,mode:this.mode}})
+              this.$router.push({path:'/view',query:{info:data.uu_id,mode:this.mode}})
             break;
             case 'set_top' :
               this.repeatData.is_repeat = false;

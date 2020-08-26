@@ -372,7 +372,7 @@ export default {
           that.onPickerAreaShow(true)
           return false;
         }
-        if (!OnlyChinese.test(user) || user.length < 2) {
+        if (user.length < 2) {
           Toast('请输入正确的联系人且不少于2个字');
           return false;
         }
