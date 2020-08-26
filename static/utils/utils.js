@@ -104,27 +104,81 @@ export function formatDate(timestamp, format = 'yyyy-MM-dd') {
     }
     return format;
 }
-
-//上传图片
-export function uploadPictures(page, file) {
-    let fd = new FormData();　
-    fd.append('pic', file);
-    let config = {
-        headers: { 'Content-Type': 'multipart/form-data' },
-    };
-    let token = page.$cookies.get('token');
-    let id = page.$cookies.get('id');
-    fd.append('gourideToken', token);
-    fd.append('hamapi', id);
-    return page.$axios.post('/upload', fd, config).then(res => {
-        if (res && res.code == 200) {
-            return res
-        } else {
-            Toast(res.msg)
-        }
-    })
+//压缩图片
+function compress(img, size) {
+    let canvas = document.createElement('canvas')
+    let ctx = canvas.getContext('2d')
+    let initSize = img.src.length
+    let width = img.width
+    let height = img.height
+    canvas.width = width
+    canvas.height = height
+    // 铺底色
+    ctx.fillStyle = '#fff'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.drawImage(img, 0, 0, width, height)
+    //进行最小压缩
+    let ndata = canvas.toDataURL('image/jpeg', size)
+    console.log(ndata.length / 1024)
+    return ndata
 }
 
+//上传图片
+export function uploadPictures(page, file,callback) {
+   return new Promise(function(resolve, reject){
+        let size = file.size/1024/1024;
+        let config = {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        };
+        let token = page.$cookies.get('token');
+        let id = page.$cookies.get('id');
+        if(size >= 5){
+            let canvas = document.createElement('canvas') // 创建Canvas对象(画布)
+            let context = canvas.getContext('2d')
+            const reader = new FileReader()// 读取文件资源
+            let img = new Image()
+            reader.readAsDataURL(file)  
+            reader.onload = function(e){ 
+                img.src = e.target.result
+            }
+            return img.onload = function() {
+                let that = this;
+                canvas.width = 300;
+                canvas.height = 400;
+                context.drawImage(img, 0, 0, 300, 400)
+                file.content = canvas.toDataURL(file.type, 0.92) // 0.92为默认压缩质量
+                let files = dataURLtoFile(file.content, file.name)
+                const data = new FormData()
+                data.append('pic', files)
+                data.append('gourideToken', token)
+                data.append('hamapi', id)
+                return page.$axios.post('/upload', data, config).then(res => {
+                    resolve(res)
+                })
+            }
+        }else{
+            let fd = new FormData();　
+            fd.append('pic', file);
+            fd.append('gourideToken', token);
+            fd.append('hamapi', id);
+            return page.$axios.post('/upload', fd, config).then(res => {
+                resolve(res)
+            })
+        }
+    })
+    
+}
+function dataURLtoFile (dataurl, filename) { // 将base64转换为file文件
+    let arr = dataurl.split(',')
+    let mime = arr[0].match(/:(.*?);/)[1]
+    let bstr = atob(arr[1])
+    let n = bstr.length
+    let u8arr = new Uint8Array(n)
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n)
+    }
+    return new File([u8arr], filename, {type: mime})
+  }
 
 export function getClass(o) { //判断数据类型
     return Object.prototype.toString.call(o).match(/^\[object\s(.*)\]$/)[1];

@@ -166,7 +166,7 @@
               <div class="images-on">
                 <div class="img clearfix">
                     <div class="img_box fl" v-for="(item,index) in images" :key="index">
-                      <i class="iconfont icon-cuo imgclose" @click="imgCloce(index)"/>
+                      <i class="imgclose" @click="imgCloce(index)"/>
                       <img :src="imgserver+item" alt="" @click="imgView(index)">
                     </div>
                     <div class="fl" v-if="images.length<9">
@@ -300,7 +300,6 @@ export default {
         }else{
           Toast(CellphoneCheck.message)
         }
-
       },
       countDown(){
         let number = 60;
@@ -318,11 +317,11 @@ export default {
       //文件上传
       afterRead(file){
         const { images } = this;
-        uploadPictures(this,file.file).then(res=>{
-          if(res.code == 200){
-            images.push(res.content.value)
-          }
-        })
+          uploadPictures(this,file.file).then(res=>{
+            if(res.code == 200){
+              images.push(res.content.value)
+            }
+          })
         return true;
       },
       //删除图片
