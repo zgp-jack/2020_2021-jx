@@ -21,6 +21,10 @@
             #{'/deep/'} {
                 .van-field__left-icon .van-icon {
                     font-size: 0.3rem;
+                    // margin-right: 0.1rem;
+                }
+                .van-field__left-icon .van-icon img {
+                    vertical-align: baseline;
                 }
             }
             .search_text {
@@ -51,7 +55,7 @@
                     width: calc(7.5rem * 0.2);
                     @include overflow_hiding();
                 }
-                i{
+                i {
                     background-image: url('../../assets/img/icon/down.png');
                     display: inline-block;
                     width: 0.3rem;
@@ -59,13 +63,11 @@
                     background-size: 100% 100%;
                     margin-right: 0.3rem;
                     transition: 0.5s;
-                    margin-top:0.15rem
+                    margin-top: 0.15rem
                 }
                 // .icon-down {
                 //     font-size: 0.30rem;
-                   
                 //     display: inline-block;
-                    
                 // }
                 img {
                     width: 0.3rem;

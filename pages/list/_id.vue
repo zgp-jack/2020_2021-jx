@@ -5,12 +5,13 @@
       <div class="head">
         <div class="clearfix head_search">
           <van-search
-              left-icon=""
+              :left-icon='carouselData.url'
               class="fl"
               :placeholder="search_placeholder[mode]"
               v-model="query.keywords"
               maxlength="16"
           />
+          <!-- <img src="../../assets/img/fangdajing.png"> -->
           <span class="search_text fr" @click="onSearch">搜索</span>
         </div>
         <div class="select_head">
@@ -123,6 +124,7 @@ export default {
       },
       loading:false,
       loading_top:false,
+      carouselData:{url:require('../../assets/img/fangdajing.png')}
     };
   },
   components: {
