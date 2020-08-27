@@ -76,13 +76,14 @@ import md5 from 'js-md5';
       // 提交
       submit(){
         let that = this
-        if(!that.catcap.length) return Toast('验证码不能为空')
-        if(!that.news_pass.length) return Toast('新密码不能为空')
-        if(!Callcap.pattern.test(that.catcap)) return Toast(Callcap.message)
-        if(!that.isOk) return Toast('新密码格式不正确')
+        // if(!that.catcap.length) return Toast('验证码不能为空')
+        // if(!that.news_pass.length) return Toast('新密码不能为空')
+        // if(!Callcap.pattern.test(that.catcap)) return Toast(Callcap.message)
+        // if(!that.isOk) return Toast('新密码格式不正确')
         let time =formatDate(new Date(),'yyyyMMdd')
         let token = md5('APp_YUpAO_UseR_KeY'+that.phone+time).substring(0, 18)
         let data = {phone:that.phone,user_token:token,user_pass:that.news_pass,captcha:that.catcap}
+        console.log(data);
         that.$axios.post('/user/app-reset',{data:JSON.stringify(data)}).then(res=>{
           console.log(res)
           if(res.code == 200) {
@@ -90,6 +91,8 @@ import md5 from 'js-md5';
             that.$router.go(-1)
           }else if(res.code == 3000){
             Toast('请获取验证码')
+          }else if(res.code == 10902){
+            Toast(res.msg)
           }
         })
       }

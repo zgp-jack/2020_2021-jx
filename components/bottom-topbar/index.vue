@@ -91,18 +91,16 @@ export default {
           setTimeout(()=>{
             this.sport_show = true
           },50)
-          if(this.lists_show){
-            document.getElementsByClassName("list_data")[0].style.position="fixed"
-            if(document.getElementsByClassName("list")[0])document.getElementsByClassName("list")[0].style.zIndex=0     
+          if(this.lists_show ){
+            document.documentElement.style.position="fixed"
+          }else{
+            
           }
         },
         list_hide(){
           this.lists_show = false
           this.sport_show = false
-          if(!this.lists_show && document.getElementsByClassName("list_data")[0]){
-          document.getElementsByClassName("list_data")[0].style.position="static"
-         if(document.getElementsByClassName("list")[0])document.getElementsByClassName("list")[0].style.zIndex=10 
-          }
+          document.documentElement.style.position="static"
         },
         Isgo(link){
           if(whetherLogin(this)==false) return false;
