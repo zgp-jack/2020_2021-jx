@@ -4,6 +4,16 @@
     .border-btn {
         border-bottom: 1px solid rgba(238, 238, 238, 1);
     }
+    .van-picker__columns {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: -0.5rem;
+        z-index: -2;
+    }
+    .van-ellipsis {
+        overflow: inherit;
+    }
     .consume-title {
         width: 100%;
         top: 1rem;
