@@ -85,12 +85,12 @@ export default {
       //发起充值
       submit(){
         const that = this;
-        const {rehIndex,math_num_list} = this;
+        const {liIndex,math_num_list} = this;
         // let config = {
         //     headers:{'Content-Type':'application/x-www-form-urlencoded'},
         // };
         let isweixins = isWeixin()?'wx':'M';
-        that.$axios.post('/coin/create-recharge?amount='+math_num_list[rehIndex]+'&source='+ isweixins).then(res=>{
+        that.$axios.post('/coin/create-recharge?amount='+math_num_list[liIndex]+'&source='+ isweixins).then(res=>{
            if(res.code == 200){
              const {type,url,no} = res.content;
              if(type == 'h5'){
