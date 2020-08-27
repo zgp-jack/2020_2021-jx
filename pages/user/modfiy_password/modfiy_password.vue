@@ -46,11 +46,13 @@ import md5 from 'js-md5';
       // 获取验证码
       capcome(){
         let that = this
+        let time =formatDate(new Date(),'yyyyMMdd')
         that.phone = that.$store.state.userinfo.tel
+        let token = md5('APp_YUpAO_UseR_KeY'+that.phone+time).substring(0, 18)
         if(!that.phone) return Toast('数据初始化中')
-        let params = {phone:that.phone}
+        let params = {phone:that.phone,token:token,mode:"1"}
         if(!that.getcap) return false
-        that.$axios.post('/index/send-message?'+getRequestQuery(params)).then(res=>{
+        that.$axios.post('/user/get-captcha?'+getRequestQuery(params)).then(res=>{
             if (res.code == 200) {
                 that.countDown()
             } else {
@@ -76,10 +78,10 @@ import md5 from 'js-md5';
       // 提交
       submit(){
         let that = this
-        // if(!that.catcap.length) return Toast('验证码不能为空')
-        // if(!that.news_pass.length) return Toast('新密码不能为空')
-        // if(!Callcap.pattern.test(that.catcap)) return Toast(Callcap.message)
-        // if(!that.isOk) return Toast('新密码格式不正确')
+        if(!that.catcap.length) return Toast('验证码不能为空')
+        if(!that.news_pass.length) return Toast('新密码不能为空')
+        if(!Callcap.pattern.test(that.catcap)) return Toast(Callcap.message)
+        if(!that.isOk) return Toast('新密码格式不正确')
         let time =formatDate(new Date(),'yyyyMMdd')
         let token = md5('APp_YUpAO_UseR_KeY'+that.phone+time).substring(0, 18)
         let data = {phone:that.phone,user_token:token,user_pass:that.news_pass,captcha:that.catcap}
