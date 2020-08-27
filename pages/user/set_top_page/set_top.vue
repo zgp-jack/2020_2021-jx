@@ -4,7 +4,7 @@
      <div class="main" v-show="show_set_top">
         <span class="set_area">当前选择置顶范围：</span>
             <div class="choose_scope" >
-                <div class="item" v-for="(item,index) in sure_data" @click="cancelArea(item,index)" :key="index">{{item.name}}<b class="iconfont icon-cuo"></b></div>
+                <div class="item" v-for="(item,index) in sure_data" @click="cancelArea(item,index)" :key="index">{{item.name}}<b class="itemCuo"></b></div>
 
                 <span v-if="(sure_data.length==0)" @click="chooseAreaFn">点击选择置顶范围 ></span>
                 <span v-else style="width: 2rem;" @click="chooseAreaFn">添加更多</span>
@@ -397,7 +397,16 @@
           line-height: 0.8rem;
           margin-bottom: 0.2rem;
           position: relative;
-          b{position: absolute;right: 0;top: -0.28rem;color: #aaa;}
+          b{
+            position: absolute;
+            right:0;
+            /* top: -0.28rem; */
+            color: #aaa;
+            width:0.25rem;
+            height: 0.25rem; 
+            background-image: url(../../../assets/img/icon/cuo.png);
+            background-size:100% 100%;
+          }
          }
       }
       .set_data{font-size: 0.3rem;display: block;margin-top: 0.2rem;margin-bottom: 0.5rem;clear: both;padding-top: 0.5rem;}

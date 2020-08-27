@@ -84,7 +84,7 @@
                 <div class="images-on">
                   <div class="img clearfix">
                       <div class="img_box fl" v-for="(item,index) in images" :key="index">
-                        <i class="iconfont icon-cuo imgclose" @click="imgCloce(index)"/>
+                        <i class="imgclose" @click="imgCloce(index)"/>
                         <img :src="imgserver+item" alt="" @click="imgView(index)">
                       </div>
                       <div class="fl" v-if="images.length<9">
