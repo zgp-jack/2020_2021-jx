@@ -50,7 +50,7 @@
                 </div>
                 <div class=" desc-row">
                     <div class="row-left"><span class="f-red">*</span>企业介绍</div>
-                    <textarea class="desc" ref="detail_company" maxlength="500" v-model="detail_company" placeholder="请介绍一下贵公司业务情况"></textarea>
+                    <textarea class="desc" ref="detail_company" maxlength="500" v-model="detail_company" placeholder="请详细介绍公司规模、主营业务,不少于10字"></textarea>
                     <div class="text_length" style="text-align: right;">{{detail_company.length}}/500</div>
                 </div>
             </div>
