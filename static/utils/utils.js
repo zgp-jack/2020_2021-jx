@@ -122,7 +122,7 @@ function compress(img, size) {
     console.log(ndata.length / 1024)
     return ndata
 }
-//上传图片
+//浏览器上传图片
 export function uploadPictures(page, file,callback) {
    return new Promise(function(resolve, reject){
         let size = file.size/1024/1024;
@@ -143,9 +143,9 @@ export function uploadPictures(page, file,callback) {
             return img.onload = function() {
                 let that = this;
                 console.log(that.width)
-                canvas.width = 100;
+                canvas.width = 300;
                 canvas.height = 400;
-                context.drawImage(img, 0, 0, 100, 400)
+                context.drawImage(img, 0, 0, 300, 400)
                 file.content = canvas.toDataURL(file.type, 0.92) // 0.92为默认压缩质量
                 let files = dataURLtoFile(file.content, file.name)
                 const data = new FormData()
@@ -182,6 +182,11 @@ function dataURLtoFile (dataurl, filename) { // 将base64转换为file文件
 
 export function getClass(o) { //判断数据类型
     return Object.prototype.toString.call(o).match(/^\[object\s(.*)\]$/)[1];
+}
+
+//微信浏览器上传图片
+function uploadWxImage(){
+    
 }
 
 //拷贝对象

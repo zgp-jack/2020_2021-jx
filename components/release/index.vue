@@ -321,6 +321,8 @@ export default {
           uploadPictures(this,file.file).then(res=>{
             if(res.code == 200){
               images.push(res.content.value)
+            }else{
+              Toast(res.msg)
             }
           })
         return true;
