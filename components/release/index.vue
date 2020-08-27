@@ -29,12 +29,13 @@
               </div>
               <div class="form_row">
                 <div class="notice">结算方式</div>
-                <div class="content" style="display:flex">
+                <div class="content" style="display:flex;align-items:center;">
                   <select name="method" v-model="meth">
                     <option value="1">现款</option>
                     <option value="3">协商付款</option>
                   </select>
-                  <i class="iconfont icon-down" />
+                  <!-- <i class="iconfont icon-down" /> -->
+                  <img src="../../assets/img/icon/down.png" class="down">
                 </div>
               </div>
             </div>
