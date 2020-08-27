@@ -20,7 +20,7 @@
     </div>
     <p class="submit" @click="submit">确认</p>
   </div>
-</template>
+</template>  
 
 <script>
 import {Toast,Dialog} from 'vant';
