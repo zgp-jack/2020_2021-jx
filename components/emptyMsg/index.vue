@@ -5,7 +5,7 @@
         </div>
         <div v-else-if="empty2" class="empty2">
             <img src="http://statics.zhaogongdi.com/common/list_empty.png?v=10001" alt="">
-            <p>{{text || '暂无此类数据'}}</p>
+            <p v-if="!test">{{text || '暂无此类数据'}}</p>
         </div>
     </div>
 
@@ -31,7 +31,7 @@
 import Vue from "vue";
 
 export default {
-  props: ["text", "empty1","empty2"],
+  props: ["text", "empty1","empty2",'test'],
   data() {
     return {};
   }
