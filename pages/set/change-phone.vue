@@ -15,7 +15,7 @@
                 <p class="main_backc" @click="GetCaptcha">{{captcha_text}}</p>
             </div>
           </div>
-          <div class="save" @click="SavePhone">确认新手机号</div>
+          <div class="save" @click="SavePhone">确定新手机号</div>
       </div>
   </div>
 </template>
