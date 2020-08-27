@@ -1,4 +1,7 @@
 import { Toast, Dialog } from 'vant';
+let app = '' //存储this
+let mycallback = '' //存储回调
+
 //读取cookies
 export function getCookie(name) {
     var arr,
@@ -186,7 +189,79 @@ export function getClass(o) { //判断数据类型
 
 //微信浏览器上传图片
 function uploadWxImage(){
+   
+}
+//微信配置
+function weixinConfig({appId,nonceStr,rawString,signature,timestamp}){
+    if(process.client){
+        let wx = require('weixin-js-sdk')
+        wx.config({
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: appId, // 必填，公众号的唯一标识
+            // rawString :rawString,
+            timestamp: timestamp, // 必填，生成签名的时间戳
+            nonceStr: nonceStr, // 必填，生成签名的随机串
+            signature: signature,// 必填，签名，见附录1
+            jsApiList: ['chooseImage', 'uploadImage','ready'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            //jsApiList: ['updateTimelineShareData','updateAppMessageShareData']
+        })
+         wx.ready(function(){
+            wxChooseImage(wx)
+        })
+
+    }
     
+}
+//微信上传图片
+ function wxChooseImage(wx) {
+    wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['compressed'], // 指定是原图还是压缩图，默认都有
+        sourceType: ['album', 'camera'], // 指定来源是相册还是相机，默认都有
+        success: function (res) {
+            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            wx.uploadImage({
+                localId: localIds.toString(), // 需要上传的图片的ID，由chooseImage接口获得
+                isShowProgressTips: 0, // 进度提示
+                success: function (res) {
+                    requestImage(res.serverId)
+                },
+                fail: function (res) {
+                    Toast('图片上传失败，请重试');
+                }
+            });
+        },
+        fail: function (err) {
+            console.log("图片上传失败，请重试");
+        }
+    });
+}
+//接口请求图片
+function requestImage(id){
+    if(!id) return false;
+    let data = {mediaId:id,type:'Wx'}
+    app.$axios.post("/upload/wx-upload",{data:JSON.stringify(data)}).then(res=>{
+        if(res.code == 200){
+            typeof mycallback =='function' && mycallback()
+        }else {
+            Toast(res.msg)
+        }
+        console.log(res)
+    })
+
+}
+//微信请求
+ export function weiXinConfigRequest(self,mycallback){
+    app = self
+    mycallback = mycallback;
+   return self.$axios.post('upload/get-wx-upload-params').then(res=>{
+       if(res.code == 200){
+           weixinConfig(res.content)
+           return res;
+       }else{
+           Toast("微信获取参数失败")
+       }
+    })
 }
 
 //拷贝对象

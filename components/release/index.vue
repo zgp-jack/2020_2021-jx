@@ -163,7 +163,7 @@
 
           <div class="public-style" v-if="mode!=4">
             <div class="form_row desc">
-              <div class="notice">上传图片(必填)</div>
+              <div class="notice" @click="upload_image">上传图片(必填)</div>
               <div class="images-on">
                 <div class="img clearfix">
                     <div class="img_box fl" v-for="(item,index) in images" :key="index">
@@ -192,7 +192,7 @@ import MechanicalType from '../../components/mechanicalType';
 import PickerArea from '../../components/pickerArea';
 import {CellphoneCheck,IncludeChinese,OnlyChinese} from '../../static/utils/validator.js';
 import {Toast,Uploader,ImagePreview,Dialog} from 'vant';
-import {uploadPictures,whetherLogin,getRequestQuery} from '../../static/utils/utils.js';
+import {uploadPictures,whetherLogin,getRequestQuery,weiXinConfigRequest,isWeixin} from '../../static/utils/utils.js';
 export default {
   props:['editorData'],
   components:{
@@ -226,6 +226,7 @@ export default {
           capt:'',//短信验证码——当联系人电话不同于用户电话号码（若修改 则需要既不同于用户电话号码 又不同于 修改之前的电话号码）时 ，必须有此值，验证电话号码
           images:[],//相关图片，无图片则为 null 有图片时其格式为 "image1,image2,image3" 最多九张 (求租 与 求购 信息不使用)字符串逗号隔开
           descLength:0,//详情简介里文字的长度
+          wexConfig:{}
       }
     },
     beforeMount() {
@@ -235,8 +236,21 @@ export default {
       whetherLogin(this,'',()=>{
         this.$router.replace('/login')
       })
+      // weiXinConfigRequest(this).then(res=>{
+      //   if(res.code == 200){
+
+      //   }
+      // });
     },
+
     methods:{
+      upload_image(){
+        weiXinConfigRequest(this).then(res=>{
+        if(res.code == 200){
+          // debugger
+        }
+      });
+      },
       onMechanicsShow(flag){
         this.$refs.mechanics.onShow(flag)
       },
@@ -318,6 +332,10 @@ export default {
       //文件上传
       afterRead(file){
         const { images } = this;
+        //微信环境
+        if(isWeixin){
+          weiXinConfigRequest(this,(url)=>{console.log(url)}).then();
+        }else{
           uploadPictures(this,file.file).then(res=>{
             if(res.code == 200){
               images.push(res.content.value)
@@ -325,6 +343,10 @@ export default {
               Toast(res.msg)
             }
           })
+        }
+        //浏览器环境
+        
+          
         return true;
       },
       // 文件大小
