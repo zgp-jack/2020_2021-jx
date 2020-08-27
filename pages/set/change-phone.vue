@@ -56,7 +56,7 @@ export default {
     GetCaptcha(){
       if(!this.get_captcha) return false;
       if(!CellphoneCheck.pattern.test(this.phone)){
-        Toast(CellphoneCheck.message)
+        Toast('请输入正确的手机号')
         return false;
       }
       if(this.phone == this.$nuxt.$store.state.userinfo.tel){
@@ -89,6 +89,7 @@ export default {
         }
     },
     SavePhone(){
+      let that = this
       let phone = this.phone
       let captcha = this.captcha
       let user_phone = this.$nuxt.$store.state.userinfo.tel
@@ -100,7 +101,7 @@ export default {
             Toast('请输入正确的电话号码')
             return false;
           }
-          if(captcha.length<6 && !Callcap.pattern.test(captcha)){
+          if(!Callcap.pattern.test(captcha)){
             Toast(Callcap.message)
             return false;
           }
@@ -108,8 +109,8 @@ export default {
             if(res.code == 200){
               Toast(res.msg)
               let Timeout = setTimeout(()=>{
+                that.$router.go(-1)
                 clearTimeout(Timeout)
-                this.$router.go(-1)
               })
             }else{
               Toast(res.msg)
