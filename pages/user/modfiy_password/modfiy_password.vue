@@ -35,7 +35,8 @@ import md5 from 'js-md5';
         getcap:true,
         btntext:'获取验证码',
         number:60,
-        phone:''
+        phone:'',
+        is_get:true,
       }
     },
     mounted(){
@@ -45,6 +46,8 @@ import md5 from 'js-md5';
     methods:{
       // 获取验证码
       capcome(){
+        if(!this.is_get) return false;
+        this.is_get = false;
         let that = this
         let time =formatDate(new Date(),'yyyyMMdd')
         that.phone = that.$store.state.userinfo.tel
@@ -56,6 +59,7 @@ import md5 from 'js-md5';
             if (res.code == 200) {
                 that.countDown()
             } else {
+                that.is_get = true;
                 Toast(res.msg);
             }
           })
@@ -64,6 +68,7 @@ import md5 from 'js-md5';
           let that = this
           let timer = setInterval(()=>{
           if(that.number == 0){
+            that.is_get = true;
             that.getcap = true
             that.btntext = '重新获取'
             that.number = 60

@@ -14,13 +14,14 @@
                   <span class="iconfont icon-cuo" @click="closeImage(index)"></span>
                 </div>
               <div class="upload_control" v-show="images.length != 3">
+                <div class="wxMask" v-if="wx" @click="wxUploadImage"></div>
                   <div class="chooseImg">
                     <img src="http://statics.zhaogongdi.com/xcx/camera.png">
                     <van-uploader :after-read="uploadImg" :max-count="3" />
                 </div>
               </div>
             </div>
-        </div>
+        </div> 
         <div class="mark" @click="submit">提交反馈</div>
         <div class="msg">
             <p>
@@ -40,7 +41,7 @@
 <script>
 import Headers from '../../components/header'
 import Copy from '../../components/Copy'
-import {callPhoneFn,Copynum,uploadPictures} from '../../static/utils/utils'
+import {callPhoneFn,Copynum,uploadPictures,weiXinConfigRequest,isWeixin} from '../../static/utils/utils'
 import {Toast,Uploader } from 'vant'
 export default {
   components:{
@@ -56,8 +57,12 @@ export default {
         show:false,
         contact:'',
         fileList:[],
-        images:[]
+        images:[],
+        wx:false
     }
+  },
+  beforeMount() {
+    this.wx = isWeixin()
   },
   methods:{
     submit(){
@@ -110,6 +115,14 @@ export default {
          this.images.push(res.content)
        }
      })
+    },
+    wxUploadImage(){
+      let {images} = this
+        weiXinConfigRequest(this,function(res){
+          let url = "http://statics.zhaogongdi.com" + res.content.url
+          console.log(res.content.url)
+          images.push(res.content.url)
+        }).then();
     },
     closeImage(index){
       this.images.splice(index,1)

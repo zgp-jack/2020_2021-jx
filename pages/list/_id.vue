@@ -36,7 +36,6 @@
             </div>
         </div>
     </div>
-
     <div class="list_data" @scroll="my_scroll">
       <Topbar/>
        <!-- 呼出 -->
@@ -165,7 +164,6 @@ export default {
       if(document.getElementsByClassName("van-search__content")[0]){
         document.getElementsByClassName("van-search__content")[0].style.backgroundColor="#fff"
       }
-      
     },
     // 滚动
     my_scroll(e){

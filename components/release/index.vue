@@ -87,7 +87,8 @@
                         <i class="imgclose" @click="imgCloce(index)"/>
                         <img :src="imgserver+item" alt="" @click="imgView(index)">
                       </div>
-                      <div class="fl" v-if="images.length<9">
+                      <div class="fl img__box" v-if="images.length<9">
+                        <div class="wxMask" v-if="iswx" @click="wxUploadImage"></div>
                         <van-uploader :after-read="afterRead">
                           <div class="chose-img">
                           </div>
@@ -163,14 +164,16 @@
 
           <div class="public-style" v-if="mode!=4">
             <div class="form_row desc">
-              <div class="notice" @click="upload_image">上传图片(必填)</div>
+              <div class="notice">上传图片(必填)</div>
               <div class="images-on">
                 <div class="img clearfix">
                     <div class="img_box fl" v-for="(item,index) in images" :key="index">
                       <i class="imgclose" @click="imgCloce(index)"/>
                       <img :src="imgserver+item" alt="" @click="imgView(index)">
                     </div>
-                    <div class="fl" v-if="images.length<9">
+                   
+                    <div class="fl img__box" v-if="images.length<9">
+                      <div class="wxMask" v-if="iswx" @click="wxUploadImage"></div>
                       <van-uploader :after-read="afterRead">
                         <div class="chose-img">
                         </div>
@@ -226,7 +229,7 @@ export default {
           capt:'',//短信验证码——当联系人电话不同于用户电话号码（若修改 则需要既不同于用户电话号码 又不同于 修改之前的电话号码）时 ，必须有此值，验证电话号码
           images:[],//相关图片，无图片则为 null 有图片时其格式为 "image1,image2,image3" 最多九张 (求租 与 求购 信息不使用)字符串逗号隔开
           descLength:0,//详情简介里文字的长度
-          wexConfig:{}
+          iswx:false
       }
     },
     beforeMount() {
@@ -236,20 +239,18 @@ export default {
       whetherLogin(this,'',()=>{
         this.$router.replace('/login')
       })
-      // weiXinConfigRequest(this).then(res=>{
-      //   if(res.code == 200){
-
-      //   }
-      // });
+      this.iswx = isWeixin();
     },
 
     methods:{
-      upload_image(){
-        weiXinConfigRequest(this).then(res=>{
-        if(res.code == 200){
-          // debugger
-        }
-      });
+      //微信上传图片
+      wxUploadImage(){
+        let {images} = this
+        weiXinConfigRequest(this,function(res){
+          let url = "http://statics.zhaogongdi.com" + res.content.url
+          console.log(res.content.url)
+          images.push(res.content.url)
+        }).then();
       },
       onMechanicsShow(flag){
         this.$refs.mechanics.onShow(flag)
@@ -333,17 +334,15 @@ export default {
       afterRead(file){
         const { images } = this;
         //微信环境
-        if(isWeixin){
-          weiXinConfigRequest(this,(url)=>{console.log(url)}).then();
-        }else{
           uploadPictures(this,file.file).then(res=>{
             if(res.code == 200){
+              console.log(res.content.value)
               images.push(res.content.value)
             }else{
               Toast(res.msg)
             }
           })
-        }
+        
         //浏览器环境
         
           
