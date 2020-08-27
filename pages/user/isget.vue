@@ -61,7 +61,7 @@
                 :formatter="formatter"
                  @cancel='cancel()' @confirm='(e)=>{confirm(e)}'/>
           </van-popup>
-          <van-popup position="bottom" :style="{height:'30%'}" v-model="shows">
+          <van-popup position="bottom" :style="{height:'30%'}" v-model="shows" visible-item-count=1>
               <van-picker
                 show-toolbar
                 :columns="columns"
