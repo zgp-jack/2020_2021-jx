@@ -11,11 +11,15 @@
           <div class="reason">
               <div class="main_reason" @click="chekout(false)">
                 <span>{{report_reason.completed}}</span>
-                <i class="iconfont icon-gouxuan" :class="[orther == false?'icondanxuan':'iconno']"></i>
+                <!-- <i class="iconfont icon-gouxuan" :class="[orther == false?'icondanxuan':'iconno']"></i> -->
+                <img src="../../assets/img/icon/true.png" v-if="!orther" class="icondanxuan">
+                <img src="../../assets/img/icon/false.png" v-else class="icondanxuan">
               </div>
               <div class="main_reason" @click="chekout(true)">
                 <span>信息虚假</span>
-                <i class="iconfont icon-gouxuan" :class="[orther?'icondanxuan':'iconno']"></i>
+                <!-- <i class="iconfont icon-gouxuan" :class="[orther?'icondanxuan':'iconno']"></i> -->
+                <img src="../../assets/img/icon/true.png" v-if="orther" class="icondanxuan">
+                <img src="../../assets/img/icon/false.png" v-else class="icondanxuan">
               </div>
               <div :class="[orther?'orther_reason':'nones']">
                   <div v-for="(item,i) in report_reason.reason" :key="i" @click="change(i)" :class="{'cur':item.show}">{{item.title}}</div>

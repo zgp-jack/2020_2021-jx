@@ -56,6 +56,7 @@ export default {
       let id = window.sessionStorage.getItem("default");
       let str = window.sessionStorage.getItem('city');
       let all = window.sessionStorage.getItem("all");
+      
       let city_id = ""
       if(str) {
          city_id = JSON.parse(str)
@@ -63,11 +64,15 @@ export default {
         city_id = JSON.parse(all)
       };
       let flag = false;
-      if(id == city_id.id || str == null){
-        flag = true;
-      }else{
-        window.sessionStorage.setItem("default",city_id.id)
+      
+      if(path == "/home"){
+        if(id == city_id.id || str == null){
+          flag = true;
+        }else{
+          window.sessionStorage.setItem("default",city_id.id)
+        }
       }
+     
       if(path=='/user'){
         this.$router.push(path)
       }else{
@@ -76,7 +81,16 @@ export default {
           query:{'keep-alive':flag}
         })
       }
-      
+    },
+    wheatherKeep(path){
+      if(path == "/list/1"){
+        if(city_id.id == id.tente_default.id || str == null){
+          flag = true;
+        }else{
+          let default_id = {page_default:city_id.id,tente_default:city_id.id,machine_default:city_id.id,ershou_default:city_id.id,want_default:city_id.id};
+        window.sessionStorage.setItem("default",JSON.stringify(default_id))
+        }
+      }
     }
   }
 };

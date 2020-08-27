@@ -142,9 +142,10 @@ export function uploadPictures(page, file,callback) {
             }
             return img.onload = function() {
                 let that = this;
-                canvas.width = 300;
+                console.log(that.width)
+                canvas.width = 100;
                 canvas.height = 400;
-                context.drawImage(img, 0, 0, 300, 400)
+                context.drawImage(img, 0, 0, 100, 400)
                 file.content = canvas.toDataURL(file.type, 0.92) // 0.92为默认压缩质量
                 let files = dataURLtoFile(file.content, file.name)
                 const data = new FormData()
