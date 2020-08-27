@@ -109,7 +109,7 @@
                     </div>
                 </div>
             </div>
-             <div class="union-title">上传身份证照片(上传企业法人身份证)</div>
+             <div class="union-title"><span class="f-red">*</span>上传身份证照片(上传企业法人身份证)</div>
              <div class="from-row">
                  <div class="id_card">
                     <van-uploader :after-read="uploadIdCard" multiple :max-count="1" v-show="!upload_id_card.length">
