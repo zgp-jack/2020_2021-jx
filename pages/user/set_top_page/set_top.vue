@@ -530,7 +530,8 @@
     .content{
       width: 100%;
       overflow-y: auto;
-      height:8rem;
+      height:9rem;
+      padding-bottom: 1rem; 
       li{
         float: left;
         margin-right: 0.4rem;
@@ -548,7 +549,7 @@
       }
       .active{background-color: #ffa926;color: #fff;}
     }
-    .sure-btn{width: 7rem;height: 2rem;position:fixed;bottom:-0.5rem;box-sizing: border-box; z-index:50;}
+    .sure-btn{width: 7rem;height: 2rem;box-sizing: border-box; z-index:50;}
     .sure-btn p{width: 5rem;height: 0.9rem;border-radius: 0.5rem;background-color: #ffa926;text-align: center;font-size: 0.4rem;line-height: 0.9rem;color: #fff;margin: 0 auto;}
    }
 </style>

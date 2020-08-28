@@ -84,13 +84,13 @@
 .bottom-taber {
     position: fixed;
     width: 3rem;
-    height: 1.24rem;
+    height: 1.09rem;
     bottom: 9%;
     left: calc(50% - 1.5rem);
     opacity: 1;
     transition: all 500ms;
-    background: url('../../assets/img/qiuzu.png');
-    background-size: 100% 100%;
+    // background: url('../../assets/img/qiuzu.png');
+    background-size: 100% 100% !important;
     z-index: 10;
 }
 

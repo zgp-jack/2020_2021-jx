@@ -87,7 +87,8 @@
                         <i class="imgclose" @click="imgCloce(index)"/>
                         <img :src="imgserver+item" alt="" @click="imgView(index)">
                       </div>
-                      <div class="fl" v-if="images.length<9">
+                      <div class="fl img__box" v-if="images.length<9">
+                        <div class="wxMask" v-if="iswx" @click="wxUploadImage"></div>
                         <van-uploader :after-read="afterRead">
                           <div class="chose-img">
                           </div>
@@ -170,7 +171,9 @@
                       <i class="imgclose" @click="imgCloce(index)"/>
                       <img :src="imgserver+item" alt="" @click="imgView(index)">
                     </div>
-                    <div class="fl" v-if="images.length<9">
+                   
+                    <div class="fl img__box" v-if="images.length<9">
+                      <div class="wxMask" v-if="iswx" @click="wxUploadImage"></div>
                       <van-uploader :after-read="afterRead">
                         <div class="chose-img">
                         </div>
@@ -192,7 +195,7 @@ import MechanicalType from '../../components/mechanicalType';
 import PickerArea from '../../components/pickerArea';
 import {CellphoneCheck,IncludeChinese,OnlyChinese} from '../../static/utils/validator.js';
 import {Toast,Uploader,ImagePreview,Dialog} from 'vant';
-import {uploadPictures,whetherLogin,getRequestQuery} from '../../static/utils/utils.js';
+import {uploadPictures,whetherLogin,getRequestQuery,weiXinConfigRequest,isWeixin} from '../../static/utils/utils.js';
 export default {
   props:['editorData'],
   components:{
@@ -226,6 +229,7 @@ export default {
           capt:'',//短信验证码——当联系人电话不同于用户电话号码（若修改 则需要既不同于用户电话号码 又不同于 修改之前的电话号码）时 ，必须有此值，验证电话号码
           images:[],//相关图片，无图片则为 null 有图片时其格式为 "image1,image2,image3" 最多九张 (求租 与 求购 信息不使用)字符串逗号隔开
           descLength:0,//详情简介里文字的长度
+          iswx:false
       }
     },
     beforeMount() {
@@ -235,8 +239,19 @@ export default {
       whetherLogin(this,'',()=>{
         this.$router.replace('/login')
       })
+      this.iswx = isWeixin();
     },
+
     methods:{
+      //微信上传图片
+      wxUploadImage(){
+        let {images} = this
+        weiXinConfigRequest(this,function(res){
+          let url = "http://statics.zhaogongdi.com" + res.content.url
+          console.log(res.content.url)
+          images.push(res.content.url)
+        }).then();
+      },
       onMechanicsShow(flag){
         this.$refs.mechanics.onShow(flag)
       },
@@ -318,13 +333,19 @@ export default {
       //文件上传
       afterRead(file){
         const { images } = this;
+        //微信环境
           uploadPictures(this,file.file).then(res=>{
             if(res.code == 200){
+              console.log(res.content.value)
               images.push(res.content.value)
             }else{
               Toast(res.msg)
             }
           })
+        
+        //浏览器环境
+        
+          
         return true;
       },
       // 文件大小

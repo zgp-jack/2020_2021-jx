@@ -17,7 +17,7 @@
       </div>
      </transition>
       <!-- 底部呼出 -->
-      <div class="bottom-taber" :class="isshow==false?'top-hide':''" @click="list_show" v-if="hiddenAll==undefined"></div>
+      <div class="bottom-taber" :class="isshow==false?'top-hide':''" :style="{'background':(mode==1||mode==2||qiuzu=='true')?'url('+require('../../assets/img/chuzu.png'):'url('+require('../../assets/img/ershou.png')}" @click="list_show" v-if="hiddenAll==undefined"></div>
       <!-- 右侧呼出 -->
       <div class="flex_want_top" :class="isshow==false?'right-show':''" v-show="showWant" v-if="hiddenAll == undefined" @click="fabugo">
         <img src="http://statics.zhaogongdi.com/common/setTopButton.png">
@@ -44,11 +44,10 @@ export default {
      }
     },
     // 深度观察监听
-    deep: true
-  }
+    deep: true,
+  },
 },
-
-    props:['showWant','qiandao','hiddenAll',"showAlert","mode"],
+    props:['showWant','qiandao','hiddenAll',"showAlert","mode","qiuzu"],
     components:{
       Sign
     },
@@ -69,10 +68,21 @@ export default {
         play:true,
         showPlay:'',
         show:false,
-        sport_show:false
+        sport_show:false,
+        background_url:require('../../assets/img/chuzu.png')
     }
   },
+  beforeMount() {
+    console.log(this.$props.mode)
+    if(this.$props.qiuzu=="true"){
+
+    }else{
+      this.background_url = require('../../assets/img/ershou.png')
+    }
+  },
+
   methods:{
+
      handleScroll(scr){
             const scrollTop = scr;
             let {my_scroll,isshow} = this;
@@ -123,7 +133,8 @@ export default {
        handle(show){
           this.box_show = show
       },
-  }
+  },
+
 }
 </script>
 

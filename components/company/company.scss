@@ -185,3 +185,21 @@
     background-color: #FFAA26;
     color: #fff;
 }
+.wxMask{
+    width: 45% !important;
+    height: 2.6rem !important;
+    background-color: transparent;
+    position: absolute;
+    z-index: 100;
+    &:nth-of-type(2){
+        right: 0;
+    }
+}
+.wxMask02{
+    width: 45% !important;
+    height: 2.6rem !important;
+    background-color: transparent;
+    position: absolute;
+    z-index: 100;
+    right: 0.2rem;
+}

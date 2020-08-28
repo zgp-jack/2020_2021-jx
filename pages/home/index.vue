@@ -2,7 +2,7 @@
 <template>
   <div class="container" @scroll="my_scroll">
     <!-- 底部导航 -->
-    <BottomTop ref="mychild" :showWant="false" :qiandao='true'/>
+    <BottomTop ref="mychild" :showWant="false" :qiandao='true' qiuzu="true"/>
     <chooseArea :onSelect="onSelect" :isSelect_area="isSelect_area" whearthStorage = 'true' v-if="default_addr.city"/>
 	  <div id="head" ref="head">
       <div class="left_dom fl">
@@ -12,7 +12,6 @@
         <div @click="chooseArea" class="position fl">
           <i class="" /><b data-id="322">{{selectAreaData.name || '成都'}}</b>
           <strong class=""></strong>
-
         </div>
       </div>
       <div class="right_dom fr">
@@ -280,7 +279,7 @@ export default {
       //格式化banner数据
       formDataBannerData(res){
         let bannerData = [...res.content.banner]
-        bannerData[1].url = "/user/get"
+        bannerData[1].url = "https://a.app.qq.com/o/simple.jsp?pkgname=com.yupao.machine"
         this.banner_children = [...bannerData];
       },
       // 滚动显示隐藏
