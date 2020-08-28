@@ -196,20 +196,24 @@ function weixinConfig({appId,nonceStr,rawString,signature,timestamp}){
     if(process.client){
         let wx = require('weixin-js-sdk')
         wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: appId, // 必填，公众号的唯一标识
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: "wx97877fe3b35187a7", // 必填，公众号的唯一标识
             // rawString :rawString,
-            timestamp: timestamp, // 必填，生成签名的时间戳
-            nonceStr: nonceStr, // 必填，生成签名的随机串
-            signature: signature,// 必填，签名，见附录1
-            jsApiList: ['chooseImage', 'uploadImage','ready'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            timestamp:  1598585499, // 必填，生成签名的时间戳
+            nonceStr:  "FuyHnPvLpQAPoKFX", // 必填，生成签名的随机串
+            signature: "9f124c5d7eb87684b331dd4272ca0d5b3d45c56f",// 必填，签名，见附录1
+            jsApiList: ['ready','chooseImage','uploadImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             //jsApiList: ['updateTimelineShareData','updateAppMessageShareData']
         })
         // debugger
          wx.ready(function(){
+            
             //  console.log(123);
-            //  wxChooseImage(wx)
         })
+        wxChooseImage(wx)
+
+        
+
 
       
     }
@@ -217,6 +221,8 @@ function weixinConfig({appId,nonceStr,rawString,signature,timestamp}){
 }
 //微信上传图片
  function wxChooseImage(wx) {
+     console.log(wx)
+     return false;
     wx.chooseImage({
         count: 1, // 默认9
         sizeType: ['compressed'], // 指定是原图还是压缩图，默认都有

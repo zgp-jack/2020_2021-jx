@@ -13,7 +13,6 @@ export default function({ $axios, redirect, app }) {
     $axios.onRequest(config => {
         globalLoading = true;
         let { params, data = {}, method } = config;
-
         let source;
         if (process.browser) {
             source = isWeixin() ? 'wx' : 'M';
@@ -21,7 +20,6 @@ export default function({ $axios, redirect, app }) {
         if (!config.url.includes('source')) {
             config.url.includes('?') ? config.url += `&source=${source}` : config.url += `?source=${source}`;
         }
-
         if (params && params.globalLoading === false) {
             globalLoading = false
             delete params.globalLoading
@@ -44,6 +42,7 @@ export default function({ $axios, redirect, app }) {
             config.data = qs.stringify(config.data)
             config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
         }
+        config.headers.common['content-type'] = 'application/json;charset=utf-8';
         globalLoading && Toast.loading({
             message: '加载中...',
             duration: 0,
