@@ -12,7 +12,6 @@
         <div @click="chooseArea" class="position fl">
           <i class="" /><b data-id="322">{{selectAreaData.name || '成都'}}</b>
           <strong class=""></strong>
-
         </div>
       </div>
       <div class="right_dom fr">
@@ -280,7 +279,7 @@ export default {
       //格式化banner数据
       formDataBannerData(res){
         let bannerData = [...res.content.banner]
-        bannerData[1].url = "/user/get"
+        bannerData[1].url = "https://a.app.qq.com/o/simple.jsp?pkgname=com.yupao.machine"
         this.banner_children = [...bannerData];
       },
       // 滚动显示隐藏
