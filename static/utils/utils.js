@@ -1,4 +1,5 @@
 import { Toast, Dialog } from 'vant';
+import { serverUrl } from './url';
 let app = '' //存储this
 let mycallback = '' //存储回调
 
@@ -127,39 +128,19 @@ function compress(img, size) {
 }
 //浏览器上传图片
 export function uploadPictures(page, file,callback) {
+    const weixin = isWeixin()
+    if(weixin){
+        return __UPLOADIMAGE__(page, file)
+    }
+
    return new Promise(function(resolve, reject){
-        let size = file.size/1024/1024;
         let config = {
             headers: { 'Content-Type': 'multipart/form-data' },
         };
         let token = page.$cookies.get('token');
         let id = page.$cookies.get('id');
-        if(size >= 5){
-            let canvas = document.createElement('canvas') // 创建Canvas对象(画布)
-            let context = canvas.getContext('2d')
-            const reader = new FileReader()// 读取文件资源
-            let img = new Image()
-            reader.readAsDataURL(file)  
-            reader.onload = function(e){ 
-                img.src = e.target.result
-            }
-            return img.onload = function() {
-                let that = this;
-                console.log(that.width)
-                canvas.width = 300;
-                canvas.height = 400;
-                context.drawImage(img, 0, 0, 300, 400)
-                file.content = canvas.toDataURL(file.type, 0.92) // 0.92为默认压缩质量
-                let files = dataURLtoFile(file.content, file.name)
-                const data = new FormData()
-                data.append('pic', files)
-                data.append('gourideToken', token)
-                data.append('hamapi', id)
-                return page.$axios.post('/upload', data, config).then(res => {
-                    resolve(res)
-                })
-            }
-        }else{
+        compressImg(file,callback)
+        function callback(file){
             let fd = new FormData();　
             fd.append('pic', file);
             fd.append('gourideToken', token);
@@ -169,8 +150,34 @@ export function uploadPictures(page, file,callback) {
             })
         }
     })
-    
 }
+
+//压缩图片
+export function compressImg(file,callback){
+    let size = file.size/1024/1024;
+    if(size >= 5){
+        let canvas = document.createElement('canvas') // 创建Canvas对象(画布)
+        let context = canvas.getContext('2d')
+        const reader = new FileReader()// 读取文件资源
+        let img = new Image()
+        reader.readAsDataURL(file)  
+        reader.onload = function(e){ 
+            img.src = e.target.result
+        }
+        img.onload = function() {
+            let files = '';
+            canvas.width = 300;
+            canvas.height = 400;
+            context.drawImage(img, 0, 0, 300, 400)
+            file.content = canvas.toDataURL(file.type, 0.92) // 0.92为默认压缩质量
+            files = dataURLtoFile(file.content, file.name)
+            callback(files)
+        }
+    }else{
+        callback(file)
+    }
+}
+
 function dataURLtoFile (dataurl, filename) { // 将base64转换为file文件
     let arr = dataurl.split(',')
     let mime = arr[0].match(/:(.*?);/)[1]
@@ -196,7 +203,7 @@ function weixinConfig({appId,nonceStr,rawString,signature,timestamp}){
     if(process.client){
         let wx = require('weixin-js-sdk')
         wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: appId, // 必填，公众号的唯一标识
             // rawString :rawString,
             timestamp: timestamp, // 必填，生成签名的时间戳
@@ -255,7 +262,7 @@ function requestImage(id){
     app = self
     mycallback = callback;
     console.log(mycallback)
-    return self.$axios.post('upload/get-wx-upload-params').then(res=>{
+    return self.$axios.post('upload/get-wx-upload-params?url='+location.href.split('#')[0]).then(res=>{
        if(res.code == 200){
            weixinConfig(res.content)
            return res;
@@ -398,3 +405,49 @@ export function getRequestQuery(query) {
     );
     return res.join("&");
 };
+
+
+//微信浏览器上传图片
+export function __UPLOADIMAGE__(page,files) {
+    return new Promise(function(resolve, reject){
+        Toast.loading({
+            message: '上传中...',
+            duration: 0,
+            loadingType: 'spinner',
+        });
+        var uploadUrl = serverUrl+'/upload?source=M'
+        var xhr = new XMLHttpRequest();
+    
+        var form = new FormData();
+        compressImg(files,callback)
+        function callback(file){
+            let token = page.$cookies.get('token');
+            let id = page.$cookies.get('id');
+        
+            form.append('pic', file)
+            form.append('gourideToken', token)
+            form.append('hamapi', id)
+            xhr.open("POST", uploadUrl, true);
+
+            // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+            //在readystatechange事件上绑定一个事件处理函数
+            xhr.onreadystatechange = callback;
+            xhr.send(form);
+            function callback(){
+                if (xhr.readyState == 4) {
+                    Toast.clear()
+                    if (xhr.status == 200) {
+                        resolve({...JSON.parse(xhr.response)})
+                        Toast('上传成功')
+                    }else{
+                        Toast('上传失败')
+                    }
+                }
+            }
+        }
+    })
+    .catch(res=>{
+        Toast.clear()
+        Toast('上传失败')
+    })
+}
