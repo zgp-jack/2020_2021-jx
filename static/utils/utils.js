@@ -242,19 +242,20 @@ function requestImage(id){
     let data = {mediaId:id,type:'Wx'}
     app.$axios.post("/upload/wx-upload",{data:JSON.stringify(data)}).then(res=>{
         if(res.code == 200){
-            typeof mycallback =='function' && mycallback()
+            console.log(res,mycallback)
+            typeof mycallback =='function' && mycallback(res)
         }else {
             Toast(res.msg)
         }
-        console.log(res)
     })
 
 }
 //微信请求
- export function weiXinConfigRequest(self,mycallback){
+ export function weiXinConfigRequest(self,callback){
     app = self
-    mycallback = mycallback;
-   return self.$axios.post('upload/get-wx-upload-params').then(res=>{
+    mycallback = callback;
+    console.log(mycallback)
+    return self.$axios.post('upload/get-wx-upload-params').then(res=>{
        if(res.code == 200){
            weixinConfig(res.content)
            return res;
