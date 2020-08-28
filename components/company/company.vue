@@ -196,7 +196,6 @@ export default {
     },
     methods:{
       upLoadImage(target){
-        debugger
         let that = this
         weiXinConfigRequest(this,function(res){
           let url = "http://statics.zhaogongdi.com" + res.content.url
