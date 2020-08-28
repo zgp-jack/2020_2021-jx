@@ -205,10 +205,13 @@ function weixinConfig({appId,nonceStr,rawString,signature,timestamp}){
             jsApiList: ['chooseImage', 'uploadImage','ready'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             //jsApiList: ['updateTimelineShareData','updateAppMessageShareData']
         })
+        // debugger
          wx.ready(function(){
-            wxChooseImage(wx)
+            //  console.log(123);
+            //  wxChooseImage(wx)
         })
 
+      
     }
     
 }
@@ -232,6 +235,7 @@ function weixinConfig({appId,nonceStr,rawString,signature,timestamp}){
             });
         },
         fail: function (err) {
+            Toast('图片上传失败，请重试');
             console.log("图片上传失败，请重试");
         }
     });
@@ -242,7 +246,7 @@ function requestImage(id){
     let data = {mediaId:id,type:'Wx'}
     app.$axios.post("/upload/wx-upload",{data:JSON.stringify(data)}).then(res=>{
         if(res.code == 200){
-            console.log(res,mycallback)
+            
             typeof mycallback =='function' && mycallback(res)
         }else {
             Toast(res.msg)
@@ -254,7 +258,6 @@ function requestImage(id){
  export function weiXinConfigRequest(self,callback){
     app = self
     mycallback = callback;
-    console.log(mycallback)
     return self.$axios.post('upload/get-wx-upload-params').then(res=>{
        if(res.code == 200){
            weixinConfig(res.content)

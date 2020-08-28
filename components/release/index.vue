@@ -248,7 +248,6 @@ export default {
         let {images} = this
         weiXinConfigRequest(this,function(res){
           let url = "http://statics.zhaogongdi.com" + res.content.url
-          console.log(res.content.url)
           images.push(res.content.url)
         }).then();
       },
