@@ -15,7 +15,7 @@
                     <div class="row-right">
                       <!-- <span class="file_mk" @click="upLoadImage('upload_logo')" v-if="wx" >{{!upload_logo.length?"上传图片":"重新上传"}}</span> -->
                       <van-uploader :after-read="uploadLogo"  multiple :max-count="1">
-                        <span class="file_mk" v-if='!wx' >{{!upload_logo.length?"上传图片":"重新上传"}}</span>
+                        <span class="file_mk" >{{!upload_logo.length?"上传图片":"重新上传"}}</span>
                       </van-uploader>
                       <div class="uploaded_img" v-show="upload_logo.length">
                         <span class="icon-cuos" @click="deleteImg('upload_logo')">
