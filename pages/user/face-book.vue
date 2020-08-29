@@ -14,7 +14,7 @@
                   <span class="iconfont icon-cuo" @click="closeImage(index)"></span>
                 </div>
               <div class="upload_control" v-show="images.length != 3">
-                <div class="wxMask" v-if="wx" @click="wxUploadImage"></div>
+                <!-- <div class="wxMask" v-if="wx" @click="wxUploadImage"></div> -->
                   <div class="chooseImg">
                     <img src="http://statics.zhaogongdi.com/xcx/camera.png">
                     <van-uploader :after-read="uploadImg" :max-count="3" />

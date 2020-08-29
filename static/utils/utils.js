@@ -426,7 +426,7 @@ export function __UPLOADIMAGE__(page,files) {
             duration: 0,
             loadingType: 'spinner',
         });
-        var uploadUrl = serverUrl+'/upload?source=M'
+        var uploadUrl = serverUrl+'/upload?source=wx'
         var xhr = new XMLHttpRequest();
     
         var form = new FormData();

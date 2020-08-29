@@ -13,8 +13,8 @@
                 <div class="corm-row">
                     <div class="row-left">企业logo</div>
                     <div class="row-right">
-                      <span class="file_mk" @click="upLoadImage('upload_logo')" v-if="wx" >{{!upload_logo.length?"上传图片":"重新上传"}}</span>
-                      <van-uploader :after-read="uploadLogo"  multiple :max-count="1"  v-if='!wx'>
+                      <!-- <span class="file_mk" @click="upLoadImage('upload_logo')" v-if="wx" >{{!upload_logo.length?"上传图片":"重新上传"}}</span> -->
+                      <van-uploader :after-read="uploadLogo"  multiple :max-count="1">
                         <span class="file_mk" v-if='!wx' >{{!upload_logo.length?"上传图片":"重新上传"}}</span>
                       </van-uploader>
                       <div class="uploaded_img" v-show="upload_logo.length">
@@ -77,9 +77,9 @@
                   
                     <div class="row-left"><span class="f-red">*</span>营业执照</div>
                     <div class="row-right">
-                      <span class="file_mk" @click="upLoadImage('upload_license')" v-if="wx" >{{!upload_logo.length?"上传图片":"重新上传"}}</span>
-                     <van-uploader :after-read="uploadLicense" multiple :max-count="1" v-if="!wx">
-                       <span v-if="!wx" class="file_mk">{{!upload_license.length?'上传图片':'重新上传'}}</span>
+                      <!-- <span class="file_mk" @click="upLoadImage('upload_license')" v-if="wx" >{{!upload_logo.length?"上传图片":"重新上传"}}</span> -->
+                     <van-uploader :after-read="uploadLicense" multiple :max-count="1">
+                       <span class="file_mk">{{!upload_license.length?'上传图片':'重新上传'}}</span>
                      </van-uploader>
                      <div class="uploaded_img" v-show="upload_license.length">
                        <span class="iconfont icon-cuo" @click="deleteImg('upload_license')"></span>
@@ -90,9 +90,9 @@
                 <div class="corm-row">
                     <div class="row-left">机构代码</div>
                     <div class="row-right">
-                      <span class="file_mk" @click="upLoadImage('upload_mechanism')" v-if="wx" >{{!upload_logo.length?"上传图片":"重新上传"}}</span>
-                      <van-uploader :after-read="uploadMechanism" multiple :max-count="1" v-if="!wx">
-                        <span v-if="!wx" class="file_mk">{{!upload_mechanism.length?'上传图片':'重新上传'}}</span>
+                      <!-- <span class="file_mk" @click="upLoadImage('upload_mechanism')" v-if="wx" >{{!upload_logo.length?"上传图片":"重新上传"}}</span> -->
+                      <van-uploader :after-read="uploadMechanism" multiple :max-count="1">
+                        <span class="file_mk">{{!upload_mechanism.length?'上传图片':'重新上传'}}</span>
                       </van-uploader>
                       <div class="uploaded_img" v-show="upload_mechanism.length">
                         <span class="iconfont icon-cuo" @click="deleteImg('upload_mechanism')"></span>
@@ -103,9 +103,9 @@
                 <div class="corm-row">
                     <div class="row-left">税务登记证</div>
                     <div class="row-right">
-                      <span class="file_mk" @click="upLoadImage('upload_revenue')" v-if="wx" >{{!upload_logo.length?"上传图片":"重新上传"}}</span>
-                      <van-uploader :after-read="uploadRevenue" multiple :max-count="1" v-if="!wx">
-                        <span v-if="!wx" class="file_mk">{{!upload_revenue.length?'上传图片':'重新上传'}}</span>
+                      <!-- <span class="file_mk" @click="upLoadImage('upload_revenue')" v-if="wx" >{{!upload_logo.length?"上传图片":"重新上传"}}</span> -->
+                      <van-uploader :after-read="uploadRevenue" multiple :max-count="1">
+                        <span  class="file_mk">{{!upload_revenue.length?'上传图片':'重新上传'}}</span>
                       </van-uploader>
                       <div class="uploaded_img" v-show="upload_revenue.length">
                         <span class="iconfont icon-cuo" @click="deleteImg('upload_revenue')"></span>
@@ -117,7 +117,7 @@
              <div class="union-title"><span class="f-red">*</span>上传身份证照片(上传企业法人身份证)</div>
              <div class="from-row">
                  <div class="id_card">
-                   <div class="wxMask" v-if="wx" @click="upLoadImage('upload_id_card')"></div>
+                   <!-- <div class="wxMask" v-if="wx" @click="upLoadImage('upload_id_card')"></div> -->
                     <van-uploader :after-read="uploadIdCard" multiple :max-count="1" v-show="!upload_id_card.length">
                       <div class="one">
                           <div></div>
@@ -128,7 +128,7 @@
                       <span class="iconfont icon-cuo" @click="deleteImg('upload_id_card')"></span>
                       <img :src="[upload_id_card[0] ? upload_id_card[0].src:'']" @click="previewImg(upload_id_card[0].src)" alt="">
                     </div>
-                    <div class="wxMask02" v-if="wx" @click="upLoadImage('upload_hand_card')"></div>
+                    <!-- <div class="wxMask02" v-if="wx" @click="upLoadImage('upload_hand_card')"></div> -->
                     <van-uploader :after-read="uploadHandCard" v-show="!upload_hand_card.length" multiple :max-count="1">
                       <div class="two">
                           <div></div>
