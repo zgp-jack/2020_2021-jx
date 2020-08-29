@@ -11,7 +11,7 @@
                   <div class="create_ite_right">{{item.desc}}</div>
               </div>
           </div>
-          <div class="closeCreate">
+          <div class="closeCreate" :style="{'bottom':(iswx ? 'calc(20% - 1rem)':'calc(20% - 1.6rem)')}">
             <img src="../../assets/img/fabuclose.png">
           </div>
       </div>
@@ -34,7 +34,7 @@
 
 <script>
 import Sign from '../../components/Sign'
-import {coinget,whetherLogin} from '../../static/utils/utils'
+import {coinget,whetherLogin,isWeixin} from '../../static/utils/utils'
 export default {
   watch: {
   $route: {
@@ -69,11 +69,13 @@ export default {
         showPlay:'',
         show:false,
         sport_show:false,
-        background_url:require('../../assets/img/chuzu.png')
+        background_url:require('../../assets/img/chuzu.png'),
+        iswx:false
     }
   },
   beforeMount() {
-    console.log(this.$props.mode)
+    this.iswx=isWeixin()
+    console.log(this.iswx)
     if(this.$props.qiuzu=="true"){
 
     }else{

@@ -85,10 +85,10 @@
                   <div class="img clearfix">
                       <div class="img_box fl" v-for="(item,index) in images" :key="index">
                         <i class="imgclose" @click="imgCloce(index)"/>
-                        <img :src="imgserver+item" alt="" @click="imgView(index)">
+                        <img :src="item" alt="" @click="imgView(index)">
                       </div>
                       <div class="fl img__box" v-if="images.length<9">
-                        <div class="wxMask" v-if="iswx" @click="wxUploadImage"></div>
+                        <!-- <div class="wxMask" v-if="iswx" @click="wxUploadImage"></div> -->
                         <van-uploader :after-read="afterRead">
                           <div class="chose-img">
                           </div>
@@ -169,11 +169,11 @@
                 <div class="img clearfix">
                     <div class="img_box fl" v-for="(item,index) in images" :key="index">
                       <i class="imgclose" @click="imgCloce(index)"/>
-                      <img :src="imgserver+item" alt="" @click="imgView(index)">
+                      <img :src="item" alt="" @click="imgView(index)">
                     </div>
                    
                     <div class="fl img__box" v-if="images.length<9">
-                      <div class="wxMask" v-if="iswx" @click="wxUploadImage"></div>
+                      <!-- <div class="wxMask" v-if="iswx" @click="wxUploadImage"></div> -->
                       <van-uploader :after-read="afterRead">
                         <div class="chose-img">
                         </div>
@@ -245,9 +245,10 @@ export default {
     methods:{
       //微信上传图片
       wxUploadImage(){
+        
         let {images} = this
         weiXinConfigRequest(this,function(res){
-          let url = "http://statics.zhaogongdi.com" + res.content.url
+          let url = "http://statics.zhaogongdi.com" + res.content.url;
           images.push(res.content.url)
         }).then();
       },
@@ -332,11 +333,10 @@ export default {
       //文件上传
       afterRead(file){
         const { images } = this;
-        //微信环境
           uploadPictures(this,file.file).then(res=>{
             if(res.code == 200){
-              console.log(res.content.value)
-              images.push(res.content.value)
+              console.log(res.content)
+              images.push(res.content.server)
             }else{
               Toast(res.msg)
             }
@@ -361,7 +361,7 @@ export default {
       imgView(index){
         let images = [...this.images];
         ImagePreview({
-          images:images.map(item=>this.imgserver + item),
+          images:images.map(item=> item),
           startPosition: index,
           closeable: true,
         });
@@ -535,9 +535,7 @@ export default {
       }
     },
     computed:{
-      imgserver(){
-        return this.$nuxt.$store.state.img_server
-      }
+
     },
     watch:{
       desc(value){

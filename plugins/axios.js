@@ -42,7 +42,7 @@ export default function({ $axios, redirect, app }) {
             config.data = qs.stringify(config.data)
             config.headers.common['content-type'] = 'application/x-www-form-urlencoded';
         }
-        config.headers.common['content-type'] = 'application/json;charset=utf-8';
+        // config.headers.common['content-type'] = 'application/json;charset=utf-8';
         globalLoading && Toast.loading({
             message: '加载中...',
             duration: 0,
