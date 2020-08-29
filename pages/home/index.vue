@@ -22,7 +22,7 @@
       <Banner v-if="banner_children.length" :obj="banner_children"></Banner>
     </div>
     <div class="menus" ref="menus">
-      <router-link  :to="{path:'/list/1',query:{'keep-alive':false}}" >
+      <router-link  :to="{path:'/qiuzu',query:{'keep-alive':false}}" >
         <img src="http://statics.zhaogongdi.com/xcx/index_tenant.png" alt="">
         <span>机械求租</span>
       </router-link>
@@ -31,7 +31,7 @@
         <span>发布求租</span>
       </router-link>
 
-      <router-link  :to="{path:'/list/2',query:{'keep-alive':false}}" >
+      <router-link  :to="{path:'/chuzu',query:{'keep-alive':false}}" >
         <img src="http://statics.zhaogongdi.com/xcx/index_mahcine.png" alt="">
         <span>机械出租</span>
       </router-link>
@@ -40,11 +40,11 @@
         <img src="../../assets/img/home-images/Lark20200608-172704.png" alt="">
         <span>招聘机手</span>
       </a>
-      <router-link  :to="{path:'/list/3',query:{'keep-alive':false}}" >
+      <router-link  :to="{path:'/ershou',query:{'keep-alive':false}}" >
         <img src="http://statics.zhaogongdi.com/xcx/index_ershou.png" alt="">
         <span> 机械转让</span>
       </router-link>
-      <router-link  :to="{path:'/list/4',query:{'keep-alive':false}}" >
+      <router-link  :to="{path:'/qiugou',query:{'keep-alive':false}}" >
          <img src="http://statics.zhaogongdi.com/xcx/index_want.png" alt="">
          <span> 机械求购</span>
       </router-link>
@@ -295,10 +295,10 @@ export default {
       },
       //查看更多机械  跳转页面
       Jump_page(type){
-        if(type == 1) this.$router.replace({path:"/list/1",query:{"keep-alive":false}})
-        else if(type == 2) this.$router.replace({path:"/list/2",query:{"keep-alive":false}})
-        else if(type == 3) this.$router.replace({path:"/list/3",query:{"keep-alive":false}})
-        else if(type == 4)  this.$router.replace({path:"/list/4",query:{"keep-alive":false}})
+        if(type == 1) this.$router.replace({path:"/qiuzu",query:{"keep-alive":false}})
+        else if(type == 2) this.$router.replace({path:"/chuzu",query:{"keep-alive":false}})
+        else if(type == 3) this.$router.replace({path:"/ershou",query:{"keep-alive":false}})
+        else if(type == 4)  this.$router.replace({path:"/qiugou",query:{"keep-alive":false}})
       },
       getObj(obj){
         const {list,title_data,title_active} = this;
