@@ -175,7 +175,6 @@ export default {
             let params = {type:this.mode}
              this.$axios.post('/coin/record-conf?'+getRequestQuery(params)).then(res=>{
              const {category,searchDate} = res.content
-             console.log(category)
              let timeList = [...searchDate]
              this.minDate = new Date(timeList[0])
              this.maxDate = new Date(timeList[timeList.length-1])
@@ -193,7 +192,6 @@ export default {
             this.not_consume = false;
             this.not_origin = false
           if(res.content.list.length == 0) {
-            console.log(params.category)
             this.noListData(params.category);
           }
           this.list = this.page == 1?[...res.content.list]:[...this.list,...res.content.list]
@@ -238,12 +236,12 @@ export default {
       },
       //没有数据
       noListData(category){
-        if(this.mode == 0 && category !=''){
+        if(this.mode == 0){
           this.not_consume = true;
         }else{
           this.not_consume = false
         }
-        if(this.mode == 1 && category !=''){
+        if(this.mode == 1){
           this.not_origin = true;
         }else{
           this.not_origin = false
