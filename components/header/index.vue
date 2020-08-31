@@ -29,7 +29,7 @@ export default {
               return false;
           }
           if(this.$props.go_home_page) {
-            this.$router.push("/list/1");
+            this.$router.push("/qiuzu");
             return false;
           }
           if(history.length <= 1){

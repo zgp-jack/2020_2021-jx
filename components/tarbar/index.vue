@@ -22,13 +22,13 @@ export default {
         },
         {
           name:'机械求租',
-          path:'/list/1',
+          path:'/qiuzu',
           img:require("../../assets/img/information.png"),
           img_hui:require("../../assets/img/information_hui.png"),
         },
         {
           name:'机械出租',
-          path:'/list/2',
+          path:'/chuzu',
           img:require("../../assets/img/lease.png"),
           img_hui:require("../../assets/img/lease_hui.png"),
         },
@@ -83,7 +83,7 @@ export default {
       }
     },
     wheatherKeep(path){
-      if(path == "/list/1"){
+      if(path == "/chuzu" || path == "/chuzu/"){
         if(city_id.id == id.tente_default.id || str == null){
           flag = true;
         }else{

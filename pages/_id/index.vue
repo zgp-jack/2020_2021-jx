@@ -84,6 +84,7 @@ import EmptyMsg from '../../components/emptyMsg';
 import BottomTop from '../../components/bottom-topbar/index';
 import Newgift from '../../components/new_gift/index';
 import {getRequestQuery} from '../../static/utils/utils.js';
+import { MechanicalNum_link } from '../../static/utils/link';
 export default {
   name:'list',
   data() {
@@ -261,7 +262,7 @@ export default {
       }else{
         Toast('您访问的页面不存在，将自动跳转')
         setTimeout(() => {
-          this.$router.push('/list/1')
+          this.$router.push('/qiuzu')
         }, 1500);
       }
     },
@@ -316,7 +317,7 @@ export default {
       this.lost = yue
     },
     int(){
-      const mode = this.$route.params.id;
+      const mode = MechanicalNum_link[this.$route.path];
       this.mode = mode;
       //获取本地存储机械类型
       let all = window.sessionStorage.getItem('mechanic_all');

@@ -25,7 +25,7 @@ export default {
           if(res.code == 200){
             that.$cookies.set('token',res.content.token)
             that.$cookies.set('id',res.content.id)
-            window.location.replace('/home?code=none')
+            history.go(-2)
           }
         })
       }else{

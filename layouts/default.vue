@@ -44,7 +44,8 @@ export default {
       const id = this.$cookies.get('id');
       const {code,state} = this.$route.query;
       const that = this;
-      if(weixin && !token && !id && !code && !state){
+      //分享有code不判断code
+      if(weixin && !token && !id && !state){
         setTimeout(()=>{that.authorization()},200)
       }else{
 
@@ -119,7 +120,8 @@ export default {
 
     //微信授权
     authorization(){
-      let url = encodeURI('http://jxm.kkbbi.com/');
+      // let url = encodeURI('http://jxm.kkbbi.com/');
+      let url = encodeURI('http://m.zhaogongdi.com');
       window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97877fe3b35187a7&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=${url}#wechat_redirect`;
     },
   },
