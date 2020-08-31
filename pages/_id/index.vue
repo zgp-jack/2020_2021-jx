@@ -84,7 +84,7 @@ import EmptyMsg from '../../components/emptyMsg';
 import BottomTop from '../../components/bottom-topbar/index';
 import Newgift from '../../components/new_gift/index';
 import {getRequestQuery} from '../../static/utils/utils.js';
-import { MechanicalNum_link } from '../../static/utils/link';
+import { MechanicalNum_link, SEO_LIST_KEYWORDS, SEO_LIST_DESCRIPTION, SEO_LIST_TITLE } from '../../static/utils/link';
 export default {
   name:'list',
   data() {
@@ -93,7 +93,9 @@ export default {
       isSelect_area: false,
       isSelect_jixie: false,
       isSelect_sort: false,
-      selectAreaData: {}, //选择的数据
+      selectAreaData: {
+        name:''
+      }, //选择的数据
       selectJixieData: {},
       selectSortData: {},
       sort_index:0,
@@ -126,6 +128,15 @@ export default {
       loading_top:false,
       carouselData:{url:require('../../assets/img/fangdajing.png')}
     };
+  },
+  head(){
+    return {
+      title: SEO_LIST_TITLE[this.mode],
+      meta: [
+        { hid: 'description', name: 'description', content:SEO_LIST_DESCRIPTION[this.mode] },
+        { name: "keywords", content: SEO_LIST_KEYWORDS(this.selectAreaData.name, Number(this.mode))},
+      ]
+    }
   },
   components: {
     Tarbar,
@@ -257,6 +268,7 @@ export default {
               }
             }
             that.list.push(...res.content);
+            // that.head()
           }
         })
       }else{

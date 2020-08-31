@@ -103,6 +103,11 @@ export default {
       contact:{}
     }
   },
+  head(){
+    return {
+      title: this.title,
+    }
+  },
   components: {
     Tarbar,
   },
