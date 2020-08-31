@@ -99,12 +99,15 @@
   import pageView from "../../components/page-view";
   import { Dialog, ImagePreview,Toast } from 'vant';
   import {showPhoneFn, callPhoneFn, whetherLogin, getNovicePoint, setNovicePoint,getRequestQuery} from '../../static/utils/utils.js';
+  import {SEO_VIEW_KEYWORDS} from '../../static/utils/link.js';
   export default{
     data(){
       return{
         mode:1,
         title:"机械出租详情",
-        detail_info:{},
+        detail_info:{
+          class:[]
+        },
         call_phone:false,
         show_complete_tel:false,
         complete:false,
@@ -115,6 +118,15 @@
         go_settop:false,  //去置顶
         show_wath_all:false,
         novice_point_alert:true
+      }
+    },
+    head(){
+      return {
+        title: this.detail_info.title,
+        meta: [
+          { hid: 'description', name: 'description', content: this.detail_info.desc },
+          { name: "keywords", content: SEO_VIEW_KEYWORDS[this.mode] +  this.detail_info.class.map(item=>item.name).join(',')},
+        ]
       }
     },
     components:{
