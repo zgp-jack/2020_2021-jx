@@ -50,9 +50,19 @@ export const SEO_LIST_DESCRIPTION = {
     '4':'鱼泡机械求购信息,二手机械求购,求购信息,二手工程机械,工程机械买家,工程找机械,鱼泡机械打造专业的二手机械交易平台。',
 }
 
-export const SEO_LIST_TITLE = {
-    '1':'机械求租平台|机械租赁信息|机械施工机械|机械工程机械租赁-鱼泡机械网',
-    '2':'机械出租平台|机械机械租赁|机械机械信息库|机械机械找活-鱼泡机械网',
-    '3':'机械出售平台|机械机械转让|机械机械设备转让|机械工程机械出售-鱼泡机械网',
-    '4':'机械求购平台|机械机械求购|机械机械设备求购|机械工程机械求购-鱼泡机械网',
+export const SEO_LIST_TITLE = (isArea,model)=>{
+    let data = '';
+    let newArea = isArea==='全国'?'':isArea;
+    switch(model){
+        case 1:data = `${newArea}机械求租平台|${newArea}机械租赁信息|${newArea}机械施工机械|${newArea}机械工程机械租赁-${newArea}鱼泡机械网`
+        break;
+        case 2:data = `${newArea}机械出租平台|${newArea}机械机械租赁|${newArea}机械机械信息库|${newArea}机械机械找活-${newArea}鱼泡机械网`
+        break;
+        case 3:data = `${newArea}机械出售平台|${newArea}机械机械转让|${newArea}机械机械设备转让|${newArea}机械工程机械出售-${newArea}鱼泡机械网`
+        break;
+        case 4:data = `${newArea}机械求购平台|${newArea}机械机械求购|${newArea}机械机械设备求购|${newArea}机械工程机械求购-${newArea}鱼泡机械网`
+        break;
+    }
+
+    return data;
 }

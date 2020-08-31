@@ -131,7 +131,7 @@ export default {
   },
   head(){
     return {
-      title: SEO_LIST_TITLE[this.mode],
+      title: SEO_LIST_TITLE(this.selectAreaData.name,Number(this.mode)),
       meta: [
         { hid: 'description', name: 'description', content:SEO_LIST_DESCRIPTION[this.mode] },
         { name: "keywords", content: SEO_LIST_KEYWORDS(this.selectAreaData.name, Number(this.mode))},
