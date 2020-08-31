@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Headers :title="title" ensure_text="发布" @getParentFn="goRelease" />
+    <Headers :title="title" @getParentFn="goRelease" />
       <div class="father">
           <div class="yupao-user-share">
               <div class="user-share-item">

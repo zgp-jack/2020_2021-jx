@@ -11,7 +11,9 @@
             <div class="img">
                <div class="choosedImg" v-show="images.length" v-for="(item,index) in images" :key='index'>
                   <img :src="item.server" alt="">
-                  <span class="iconfont icon-cuo" @click="closeImage(index)"></span>
+                  <span class="icon-cuos" @click="closeImage(index)">
+                    <img src="../../assets/img/icon/cuo.png">
+                  </span>
                 </div>
               <div class="upload_control" v-show="images.length != 3">
                 <!-- <div class="wxMask" v-if="wx" @click="wxUploadImage"></div> -->
