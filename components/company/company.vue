@@ -82,7 +82,9 @@
                        <span class="file_mk">{{!upload_license.length?'上传图片':'重新上传'}}</span>
                      </van-uploader>
                      <div class="uploaded_img" v-show="upload_license.length">
-                       <span class="iconfont icon-cuo" @click="deleteImg('upload_license')"></span>
+                       <span class="icon-cuos" @click="deleteImg('upload_license')">
+                        <img src="../../assets/img/icon/cuo.png">
+                       </span>
                        <img :src="[upload_license[0] ? upload_license[0].src:'']" @click="previewImg(upload_license[0].src)" alt="" >
                      </div>
                     </div>
@@ -95,7 +97,9 @@
                         <span class="file_mk">{{!upload_mechanism.length?'上传图片':'重新上传'}}</span>
                       </van-uploader>
                       <div class="uploaded_img" v-show="upload_mechanism.length">
-                        <span class="iconfont icon-cuo" @click="deleteImg('upload_mechanism')"></span>
+                        <span class="icon-cuos" @click="deleteImg('upload_mechanism')">
+                          <img src="../../assets/img/icon/cuo.png">
+                        </span>
                         <img :src="[upload_mechanism[0] ? upload_mechanism[0].src:'']" @click="previewImg(upload_mechanism[0].src)" alt="" >
                       </div>
                     </div>
@@ -108,7 +112,9 @@
                         <span  class="file_mk">{{!upload_revenue.length?'上传图片':'重新上传'}}</span>
                       </van-uploader>
                       <div class="uploaded_img" v-show="upload_revenue.length">
-                        <span class="iconfont icon-cuo" @click="deleteImg('upload_revenue')"></span>
+                        <span class="icon-cuos" @click="deleteImg('upload_revenue')">
+                          <img src="../../assets/img/icon/cuo.png">
+                        </span>
                         <img :src="[upload_revenue.length ? upload_revenue[0].src:'']" @click="previewImg(upload_revenue[0].src)" alt="" >
                       </div>
                     </div>
@@ -125,7 +131,9 @@
                       </div>
                     </van-uploader>
                     <div class="uploaded_img" v-show="upload_id_card.length">
-                      <span class="iconfont icon-cuo" @click="deleteImg('upload_id_card')"></span>
+                      <span class="icon-cuos" @click="deleteImg('upload_id_card')">
+                        <img src="../../assets/img/icon/cuo.png">
+                      </span>
                       <img :src="[upload_id_card[0] ? upload_id_card[0].src:'']" @click="previewImg(upload_id_card[0].src)" alt="">
                     </div>
                     <!-- <div class="wxMask02" v-if="wx" @click="upLoadImage('upload_hand_card')"></div> -->
@@ -136,7 +144,9 @@
                       </div>
                     </van-uploader>
                     <div class="uploaded_img" v-show="upload_hand_card.length" >
-                      <span class="iconfont icon-cuo" @click="deleteImg('upload_hand_card')"></span>
+                      <span class="icon-cuos" @click="deleteImg('upload_hand_card')">
+                        <img src="../../assets/img/icon/cuo.png">
+                      </span>
                       <img :src="[upload_hand_card[0] ? upload_hand_card[0].src:'']" @click="previewImg(upload_hand_card[0].src)" alt="" >
                     </div>
                  </div>
