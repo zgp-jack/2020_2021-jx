@@ -462,3 +462,70 @@ export function __UPLOADIMAGE__(page,files) {
         Toast('上传失败')
     })
 }
+
+
+export function Wx_Read() {
+    wx.ready(function () {
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: window.shareObj.title, // 分享标题 此处$title可在控制器端传递也可在页面传递 页面传递讲解在下面哦
+            desc: window.shareObj.desc, //分享描述
+            link: window.shareObj.link, // 分享链接
+            imgUrl: window.shareObj.imgUrl, // 分享图标
+            success: function () {
+                userShare(1);
+            }
+        });
+        //分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: window.shareObj.title, // 分享标题 此处$title可在控制器端传递也可在页面传递 页面传递讲解在下面哦
+            desc: window.shareObj.desc, //分享描述
+            link: window.shareObj.link, // 分享链接
+            imgUrl: window.shareObj.imgUrl, // 分享图标
+            success: function () {
+                userShare(2);
+            }
+        });
+        //分享到QQ
+        wx.onMenuShareQQ({
+            title: window.shareObj.title, // 分享标题 此处$title可在控制器端传递也可在页面传递 页面传递讲解在下面哦
+            desc: window.shareObj.desc, //分享描述
+            link: window.shareObj.link, // 分享链接
+            imgUrl: window.shareObj.imgUrl, // 分享图标
+            success: function () {
+                userShare(3);
+            }
+        });
+        //分享到QQ空间
+        wx.onMenuShareQZone({
+            title: window.shareObj.title, // 分享标题 此处$title可在控制器端传递也可在页面传递 页面传递讲解在下面哦
+            desc: window.shareObj.desc, //分享描述
+            link: window.shareObj.link, // 分享链接
+            imgUrl: window.shareObj.imgUrl, // 分享图标
+            success: function () {
+                userShare(4);
+            }
+        });
+
+        //自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容
+        // wx.updateTimelineShareData({
+        //     title: shareObj.title, // 分享标题 此处$title可在控制器端传递也可在页面传递 页面传递讲解在下面哦
+        //     desc: shareObj.desc, //分享描述
+        //     link: shareObj.link, // 分享链接
+        //     imgUrl:shareObj.imgUrl, // 分享图标
+        //     success:function () {
+        //         userShare(3);
+        //     }
+        // });
+        // //自定义“分享给朋友”及“分享到QQ”按钮的分享内容
+        // wx.updateAppMessageShareData({ 
+        //     title: shareObj.title, // 分享标题 此处$title可在控制器端传递也可在页面传递 页面传递讲解在下面哦
+        //     desc: shareObj.desc, //分享描述
+        //     link: shareObj.link, // 分享链接
+        //     imgUrl:shareObj.imgUrl, // 分享图标
+        //     success: function () {
+        //         userShare(2);
+        //     }
+        // })
+    });
+}

@@ -120,8 +120,8 @@ export default {
 
     //微信授权
     authorization(){
-      // let url = encodeURI('http://jxm.kkbbi.com/');
-      let url = encodeURI('http://m.zhaogongdi.com');
+      let url = encodeURI('http://jxm.kkbbi.com/');
+      // let url = encodeURI('http://m.zhaogongdi.com/');
       window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97877fe3b35187a7&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=${url}#wechat_redirect`;
     },
   },
