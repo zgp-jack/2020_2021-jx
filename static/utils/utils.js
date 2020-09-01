@@ -478,7 +478,7 @@ export function WeixinShare(page,callback){
                     signature,// 必填，签名，见附录1
                     jsApiList: ['chooseImage', 'uploadImage', 'onMenuShareAppMessage', 'onMenuShareTimeline', 'onMenuShareQQ', 'onMenuShareQZone','ready'] // 必填
                 })
-                callback && callback()
+                callback && callback(wx)
             }
         }else{
             Toast("微信获取参数失败")
@@ -489,14 +489,12 @@ export function WeixinShare(page,callback){
 export function Wx_Read(wx) {
     wx.ready(function () {
         //分享给朋友
+        // alert(window.shareObj.title)
         wx.onMenuShareAppMessage({
             title: window.shareObj.title, // 分享标题 此处$title可在控制器端传递也可在页面传递 页面传递讲解在下面哦
             desc: window.shareObj.desc, //分享描述
             link: window.shareObj.link, // 分享链接
             imgUrl: window.shareObj.imgUrl, // 分享图标
-            // success: function () {
-            //     userShare(1);
-            // }
         });
         //分享到朋友圈
         wx.onMenuShareTimeline({

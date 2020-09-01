@@ -36,6 +36,17 @@ export default {
       that.int()
     }
   },
+  watch: {
+    $route (to, from) {
+      // console.log(to,from)
+      const weixin = isWeixin();
+      if(weixin){
+        setTimeout(()=>{
+          this.setshareObj()
+        },1000)
+      }
+    }
+  },
   methods:{
     //初始化
     int(){
@@ -55,20 +66,34 @@ export default {
         //获取默认头像、地区
         that.getDefaultData()
         that.getUser()
-
         if(weixin){
-          function callback(wx){
-          Wx_Read(wx)
-          that.numberServers+=1
-        }
-          WeixinShare(this,callback)
+          setTimeout(()=>{
+            that.setshareObj()
+          },1000)
+          // that.setshareObj()
+          WeixinShare(this,function(wx){
+            Wx_Read(wx)
+            that.numberServers+=1
+          })
         }else{
           that.numberServers+=1
         }
         
       }
     },
-
+    setshareObj(){
+      let url = window.$nuxt.$route.fullPath;
+      //http://m.zhaodongdi.com/  http://jxm.kkbbi.com/
+      let path = "http://m.zhaodongdi.com/"
+      var shareObj = {
+              title:!url.includes('view')?"工程找机械":document.title,
+              desc :"每天发布上万条全国工程找机械信息！",
+              link :!url.includes("invitation")?path+window.$nuxt.$route.fullPath : path+"qiuzu/",
+              imgUrl:"http://statics.zhaogongdi.com/common/jixie_app_logo.png",
+          }
+          window.shareObj = shareObj;
+          
+    },
     //获取机械类型
     getMechanics(){
       const that = this;
@@ -81,6 +106,7 @@ export default {
         }
       })
     },
+
     //获取默认头像、地区
     getDefaultData(){
       let weixin = isWeixin();

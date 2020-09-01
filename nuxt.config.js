@@ -108,6 +108,7 @@ export default {
   */
   build: {
   },
+  
   router: {
     base: env === "development" ?'/dist':'/',
   },
