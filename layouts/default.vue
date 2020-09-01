@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class='layout'>
-      <Loading v-if="numberServers!=3" :show='true'/>
+      <Loading v-if="numberServers!=4" :show='true'/>
       <nuxt keep-alive :keep-alive-props="{ include: includeArr }"/>
     </div>
   </div>
@@ -11,7 +11,7 @@
 <script>
 import Loading from "../components/loading";
 import {StorageType} from '../static/exports/area_type.js';
-import {GetUser,isWeixin} from '../static/utils/utils.js';
+import {GetUser,isWeixin,WeixinShare,Wx_Read} from '../static/utils/utils.js';
 import area from '../static/exports/area_type';
 
 export default {
@@ -50,13 +50,22 @@ export default {
       }else{
 
         that.getArea()
-
         //获取机械类型
         that.getMechanics()
         //获取默认头像、地区
         that.getDefaultData()
-
         that.getUser()
+
+        if(weixin){
+          function callback(wx){
+          Wx_Read(wx)
+          that.numberServers+=1
+        }
+          WeixinShare(this,callback)
+        }else{
+          that.numberServers+=1
+        }
+        
       }
     },
 

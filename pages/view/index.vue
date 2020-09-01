@@ -129,25 +129,16 @@
         ]
       }
     },
-    async asyncData ({$axios,query}) {
-      return await $axios.post('/index/new-view?source=M&' + getRequestQuery(query)).then(res=>{
-        if(res.code == 200){
-            return {
-              detail_info:{...res.content}
-            }
-        }
-        // else if(res.code == 500){
-        //   Dialog.alert({
-        //     title:"提示",
-        //     message:res.msg,
-        //   }).then(res=>{
-        //     this.$router.go(-1)
-        //   })
-        // }
-      })
-    },
+    // async asyncData ({$axios,query}) {
+    //   return await $axios.post('/index/new-view?source=M&' + getRequestQuery(query)).then(res=>{
+    //     if(res.code == 200){
+    //         return {
+    //           detail_info:{...res.content}
+    //         }
+    //     }
+    //   })
+    // },
     created(){
-        let params = {...this.$route.query};
         this.mode = this.$route.query.mode;
         this.changeTitle(this.mode);// 改变标题
     },
@@ -158,6 +149,7 @@
       pageView
     },
     mounted(){
+      let params = {...this.$route.query};
       let guide = getNovicePoint();
       if(!guide.detail) this.novice_point_alert = false
 
@@ -166,24 +158,22 @@
         // window.location.replace('/dist/home')
         this.$router.replace('/home')
       }else{
-        // this.$axios.post('/index/new-view?' + getRequestQuery(params)).then(res=>{
-        //   if(res.code == 200){
-        //       this.$set(this,'detail_info',{...res.content})
-        //       // 状态的显示
-        //       this.allState(res.content);
-        //       //获取详情的高度
-        //       this.detailContnetHeight()
-        //   }else if(res.code == 500){
-        //     Dialog.alert({
-        //       title:"提示",
-        //       message:res.msg,
-        //     }).then(res=>{
-        //       this.$router.go(-1)
-        //     })
-        //   }
-        // })
-        this.allState(this.detail_info);
-        this.detailContnetHeight()
+        this.$axios.post('/index/new-view?' + getRequestQuery(params)).then(res=>{
+          if(res.code == 200){
+              this.$set(this,'detail_info',{...res.content})
+              // 状态的显示
+              this.allState(res.content);
+              //获取详情的高度
+              this.detailContnetHeight()
+          }else if(res.code == 500){
+            Dialog.alert({
+              title:"提示",
+              message:res.msg,
+            }).then(res=>{
+              this.$router.go(-1)
+            })
+          }
+        })
       }
     },
     methods:{

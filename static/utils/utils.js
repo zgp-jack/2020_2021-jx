@@ -463,8 +463,30 @@ export function __UPLOADIMAGE__(page,files) {
     })
 }
 
+//微信分享配置
+export function WeixinShare(page,callback){
+    page.$axios.post('upload/get-wx-upload-params?url='+location.href.split('#')[0]).then(res=>{
+        if(res.code == 200){
+            const {appId,nonceStr,rawString,signature,timestamp,url} = res.content;
+            if(process.client){
+                let wx = require('weixin-js-sdk')
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId, // 必填，公众号的唯一标识
+                    timestamp, // 必填，生成签名的时间戳
+                    nonceStr, // 必填，生成签名的随机串
+                    signature,// 必填，签名，见附录1
+                    jsApiList: ['chooseImage', 'uploadImage', 'onMenuShareAppMessage', 'onMenuShareTimeline', 'onMenuShareQQ', 'onMenuShareQZone','ready'] // 必填
+                })
+                callback && callback()
+            }
+        }else{
+            Toast("微信获取参数失败")
+        }
+     })
+}
 
-export function Wx_Read() {
+export function Wx_Read(wx) {
     wx.ready(function () {
         //分享给朋友
         wx.onMenuShareAppMessage({
@@ -472,9 +494,9 @@ export function Wx_Read() {
             desc: window.shareObj.desc, //分享描述
             link: window.shareObj.link, // 分享链接
             imgUrl: window.shareObj.imgUrl, // 分享图标
-            success: function () {
-                userShare(1);
-            }
+            // success: function () {
+            //     userShare(1);
+            // }
         });
         //分享到朋友圈
         wx.onMenuShareTimeline({
@@ -482,9 +504,9 @@ export function Wx_Read() {
             desc: window.shareObj.desc, //分享描述
             link: window.shareObj.link, // 分享链接
             imgUrl: window.shareObj.imgUrl, // 分享图标
-            success: function () {
-                userShare(2);
-            }
+            // success: function () {
+            //     userShare(2);
+            // }
         });
         //分享到QQ
         wx.onMenuShareQQ({
@@ -492,9 +514,9 @@ export function Wx_Read() {
             desc: window.shareObj.desc, //分享描述
             link: window.shareObj.link, // 分享链接
             imgUrl: window.shareObj.imgUrl, // 分享图标
-            success: function () {
-                userShare(3);
-            }
+            // success: function () {
+            //     userShare(3);
+            // }
         });
         //分享到QQ空间
         wx.onMenuShareQZone({
@@ -502,9 +524,9 @@ export function Wx_Read() {
             desc: window.shareObj.desc, //分享描述
             link: window.shareObj.link, // 分享链接
             imgUrl: window.shareObj.imgUrl, // 分享图标
-            success: function () {
-                userShare(4);
-            }
+            // success: function () {
+            //     userShare(4);
+            // }
         });
 
         //自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容
