@@ -161,6 +161,10 @@
     .closeCreate {
         color: #fff;
         position: absolute;
+        width: 0.6rem;
+        height: 0.6rem;
+        background-image: url("../../../assets/img/fabuclose.png");
+        background-size: 100% 100%;
         font-size: 0.6rem;
         left: calc(50% - 0.3rem);
         bottom: calc(12% - 0.3rem);

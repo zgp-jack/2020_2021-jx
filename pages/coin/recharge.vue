@@ -90,33 +90,68 @@ export default {
         //     headers:{'Content-Type':'application/x-www-form-urlencoded'},
         // };
         let isweixins = isWeixin()?'wx':'M';
+
         that.$axios.post('/coin/create-recharge?amount='+math_num_list[liIndex]+'&source='+ isweixins).then(res=>{
            if(res.code == 200){
              const {type,url,no} = res.content;
-             if(type == 'h5'){
-               let num = 0;
-               let timer = setInterval(()=>{
-                 that.$axios.post('/coin/check-order',{order:no}).then(res=>{
-                   num += 1;
-                   if(res.code==200 || res.code == 500){
-                     if(res.content.status == 1){
-                       clearInterval(timer)
-                       Toast({
-                         message: res.code==200?'支付成功':'支付失败',
-                         duration:1000,
-                         onClose:()=>{
-                           window.history.back(-1)
-                         }
-                       })
-                     }
-                   }
-                   if(num == 200){
-                      clearInterval(timer)
-                   }
-                 })
-               },3000)
+             if(type == 'h5') check_order_status(50,no,that);
+             location.href = url
+           }else {
+            Toast({
+              message:res.msg
+            })
+           }
+        })
+            //  {
+            //   return false
+            //    debugger
+            //    let num = 0;
+            //    let timer = setInterval(()=>{
+            //      that.$axios.post('/coin/check-order',{order:no}).then(res=>{
+            //        console.log(res)
+                 
+            //        num += 1;
+            //        if(res.code==200 || res.code == 500){
+            //          if(res.content.status == 1){
+            //            clearInterval(timer)
+            //            Toast({
+            //              message: res.code==200?'支付成功':'支付失败',
+            //              duration:1000,
+            //              onClose:()=>{
+            //                window.history.back(-1)
+            //              }
+            //            })
+            //          }
+            //        }
+            //        if(num == 200){
+            //           clearInterval(timer)
+            //        }
+            //      })
+            //    },3000)
+            //  }
+            //  window.location.href = url
+             function check_order_status(times,no,that){
+               
+                if(times>0){
+                    times--
+                    that.$axios.post('/coin/check-order',{order:no}).then(res => {
+                      debugger
+                      if(res.code ==200 || res.code == 500){
+                        if(res.content.status == 1){
+                          times = 0;
+                          Toast({
+                            message: res.code==200?'支付成功':'支付失败',
+                            duration:1000,
+                            onClose:()=>{
+                              window.history.back(-1)
+                            }
+                          })
+                        }
+                      }
+                    })
+                    setTimeout(function(){check_order_status(times,no)},3000);
+                }
              }
-             window.location.href = url
             //  debugger
             //  let {appid,noncestr,orderid,partnerid,prepayid,sign,timestamp} = res.content;
             //暂时做不了后端接口需要写m端的
@@ -163,8 +198,7 @@ export default {
             //     debugger
             //   }
             // })
-          }
-        })
+        
       },
     },
     filters: {

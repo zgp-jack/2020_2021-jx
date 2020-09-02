@@ -24,7 +24,7 @@
                   <img src="../../../assets/img/top.png">
               </div>
             </div>
-            <div class="iconfont icon-cuo closeCreate"></div>
+            <div class="closeCreate"></div>
         </div>
         <div class="fathersss">
           <van-pull-refresh v-model="loading" @refresh="onrefresh">
