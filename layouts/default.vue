@@ -84,7 +84,8 @@ export default {
     setshareObj(){
       let url = window.$nuxt.$route.fullPath;
       //http://m.zhaodongdi.com/  http://jxm.kkbbi.com/
-      let path = "http://m.zhaodongdi.com/"
+      let path = "http://jxm.kkbbi.com/"
+      // let path = "http://m.zhaodongdi.com/"
       var shareObj = {
               title:!url.includes('view')?"工程找机械":document.title,
               desc :"每天发布上万条全国工程找机械信息！",

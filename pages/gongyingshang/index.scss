@@ -1,4 +1,4 @@
-@import '../../../assets/css/style.scss';
+@import '../../assets/css/style.scss';
 .select_head {
     position: fixed;
     top: 1.01rem;
@@ -24,7 +24,7 @@
             width: .4rem;
             height: .4rem;
             margin-top: 0.1rem;
-            background: url(../../../assets/img/icon/down.png);
+            background: url(../../assets/img/icon/down.png);
             background-size: 100% 100%;
             margin-right: 0.5rem;
             display: inline-block;
@@ -148,7 +148,7 @@
     left: calc(50% - 1rem);
     opacity: 1;
     transition: all 500ms;
-    background: url('../../../assets/img/gongzhao.png') no-repeat;
+    background: url('../../assets/img/gongzhao.png') no-repeat;
     background-size: 90% 90%;
     z-index: 10;
 }

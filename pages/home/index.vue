@@ -52,7 +52,7 @@
          <img src="http://statics.zhaogongdi.com/xcx/index_invitation.png" alt="">
          <span> 邀请好友</span>
       </router-link>
-      <router-link  to="/company/index" >
+      <router-link  to="/gongyingshang" >
          <img src="../../assets/img/home-images/supplier.png" alt="">
          <span> 供应商</span>
       </router-link>

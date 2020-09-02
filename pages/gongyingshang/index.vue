@@ -19,8 +19,8 @@
                 <div class="info">
                     <div class="name">{{item.name}}</div>
                     <div class="gong-img">
-                      <img src="../../../assets/img/icon/gongying.png" class="gongying">
-                      <img src="../../../assets/img/icon/VIP.png" class="vip" v-if="item.authenticate==2">
+                      <img src="../../assets/img/icon/gongying.png" class="gongying">
+                      <img src="../../assets/img/icon/VIP.png" class="vip" v-if="item.authenticate==2">
                     </div>
                     <div class="area">{{item.area}}</div>
                 </div>
@@ -45,12 +45,12 @@
 </template>
 
 <script>
-import Header from '../../../components/header';
-import emptyMsg from '../../../components/emptyMsg/index';
+import Header from '../../components/header';
+import emptyMsg from '../../components/emptyMsg/index';
 import {List,PullRefresh} from 'vant';
-import CustomArea from '../../../components/customArea';
-import CustomMechanicalType from '../../../components/customMechanicalType';
-import {getRequestQuery} from '../../../static/utils/utils';
+import CustomArea from '../../components/customArea';
+import CustomMechanicalType from '../../components/customMechanicalType';
+import {getRequestQuery} from '../../static/utils/utils';
 export default {
     created(){
       let that = this
