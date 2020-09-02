@@ -13,6 +13,7 @@
   import { Swipe , SwipeItem } from 'vant'
   import {whetherLogin} from '../../static/utils/utils'
   import BottomTop from '../../components/bottom-topbar/index';
+  import {SEO_VIEW_KEYWORDS,MechanicalNum_link} from '../../static/utils/link.js';
   export default{
     data(){
       return{
@@ -36,7 +37,9 @@
       },
       go_set_top(){
         if(whetherLogin(this) == false) return false;
-        this.$router.push({path:'/user/release/',query:{mode:this.$route.query.mode}})
+        let path = this.$route.path.split("/")[1]
+        let mode = MechanicalNum_link[path]
+        this.$router.push({path:'/user/release/',query:{mode}})
       }
     },
     props:['type','go_release','go_settop']

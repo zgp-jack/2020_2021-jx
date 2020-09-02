@@ -158,33 +158,11 @@
       let params = {...this.$route.query};
       let guide = getNovicePoint();
       if(!guide.detail) this.novice_point_alert = false
-
-      //参数不完整跳转首页
-      if(!(this.$route.query.info && this.$route.query.mode)){
-        // window.location.replace('/dist/home')
-        // this.$router.replace('/home')
-      }else{
-        // this.$axios.post('/index/new-view?' + getRequestQuery(params)).then(res=>{
-        //   if(res.code == 200){
-        //       this.$set(this,'detail_info',{...res.content})
-        //       // 状态的显示
-        //       this.allState(res.content);
-        //       //获取详情的高度
-        //       this.detailContnetHeight()
-        //   }else if(res.code == 500){
-        //     Dialog.alert({
-        //       title:"提示",
-        //       message:res.msg,
-        //     }).then(res=>{
-        //       this.$router.go(-1)
-        //     })
-        //   }
-        // })
         // 状态的显示
         this.allState(this.detail_info);
         //获取详情的高度
         this.detailContnetHeight()
-      }
+      
     },
     methods:{
       // 关闭弹窗
@@ -305,7 +283,7 @@
       cellectFn(id){ //收藏
         if(whetherLogin(this) == false) return;
         let that = this;
-        let data = {id, mode:this.$route.query.mode, type:(this.is_collection ? "2" : "1")}
+        let data = {id, mode:this.mode, type:(this.is_collection ? "2" : "1")}
          //发起ajax请求
          this.$axios.post('/index/collection',{data:JSON.stringify(data)}).then(res=>{
            if(res.code == 200){
