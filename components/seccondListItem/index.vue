@@ -1,6 +1,6 @@
 <template>
   <div class="list-item">
-    <nuxt-link :to="{path:'/view/',query:{info:data.item.uu,mode:data.item.mode}}">
+    <nuxt-link :to="{path:'/'+(data.item.mode==2?'chuzu/':'ershou/')+data.item.uu+'.html'}">
       <div class="left-img fl" :style="'background-image:url('+(data.item.cover && data.item.cover!=''?data.item.cover:default_img)+')'">
         <span></span>
       </div>

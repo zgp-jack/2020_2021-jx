@@ -74,9 +74,13 @@ export default function({ $axios, redirect, app }) {
                     app.$cookies.remove('token')
                     app.$cookies.remove('id')
                 }
-                redirect({
-                    path: '/login',
-                })
+                if (process.browser) {
+                    if(isWeixin()){
+                        redirect({
+                            path: '/login',
+                        })
+                    }
+                }
             }
         } else {
             Toast('网络请求失败')

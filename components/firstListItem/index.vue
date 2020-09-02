@@ -1,6 +1,7 @@
 <template>
   <div class="list-item">
-    <nuxt-link :to="{path:'/view/',query:{info:data.item.uu,mode:data.item.mode}}">
+    <!-- {{MechanicalType_link[data.item.mode]}} -->
+    <nuxt-link :to="{path:`/${(data.item.mode==1?'qiuzu/':'qiugou/')+data.item.uu}.html`}">
       <div class="title">
         <b class="seting-top" v-if="data.item.top"></b>
         <h1>{{data.item.title}}</h1>
@@ -41,6 +42,7 @@
   import { Dialog,Toast } from 'vant';
   import call_confirm from '../call_confirm/call_confirm';
   import {callPhoneFn,showPhoneFn,whetherLogin} from '../../static/utils/utils.js';
+  import {MechanicalType_link} from '../../static/utils/link.js'
   export default{
    props:['data'],
    components:{
@@ -59,6 +61,8 @@
       }
     },
     beforeMount(){
+      // let aa = MechanicalType_link
+      // debugger
       this.stateImage();
     },
     computed: {

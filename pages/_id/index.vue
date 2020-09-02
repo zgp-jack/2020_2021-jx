@@ -162,7 +162,7 @@ export default {
     }
   },
   beforeMount(){
-
+    
   },
   mounted() {
     if(this.$route.query['keep-alive'] !== false){
@@ -191,7 +191,6 @@ export default {
         if(document.getElementsByClassName("list_data")[0]){
           document.getElementsByClassName("list_data")[0].style.position="static"
         }
-        
       }
       this.$set(this, type, flag);
       //关闭弹框请求接口

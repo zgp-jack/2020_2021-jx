@@ -65,19 +65,19 @@
          <div class="cellcot-share">
            <p class="cellect" @click="cellectFn(detail_info.uu)">
              <span>
-               <img :src="[is_collection ? require('../../assets/img/detail/collect_active.png') : require('../../assets/img/detail/collect.png')]" alt="">
+               <img :src="[is_collection ? require('../../../assets/img/detail/collect_active.png') : require('../../../assets/img/detail/collect.png')]" alt="">
              </span>
              <b>{{is_collection ? "已收藏" : "收藏"}}</b>
            </p>
            <p class="share" @click="shareFn">
              <span>
-               <img src="../../assets/img/detail/share.png" alt="">
+               <img src="../../../assets/img/detail/share.png" alt="">
              </span>
              <b>分享</b>
            </p>
            <p class="report" @click="reportFn(detail_info.phone)">
              <span>
-               <img src="../../assets/img/detail/report.png" alt="">
+               <img src="../../../assets/img/detail/report.png" alt="">
              </span>
              <b>举报</b>
            </p>
@@ -95,11 +95,11 @@
 </template>
 
 <script>
-  import VerticalBanner from "../../components/vertical_banner";
-  import pageView from "../../components/page-view";
+  import VerticalBanner from "../../../components/vertical_banner";
+  import pageView from "../../../components/page-view";
   import { Dialog, ImagePreview,Toast } from 'vant';
-  import {showPhoneFn, callPhoneFn, whetherLogin, getNovicePoint, setNovicePoint,getRequestQuery} from '../../static/utils/utils.js';
-  import {SEO_VIEW_KEYWORDS} from '../../static/utils/link.js';
+  import {showPhoneFn, callPhoneFn, whetherLogin, getNovicePoint, setNovicePoint,getRequestQuery} from '../../../static/utils/utils.js';
+  import {SEO_VIEW_KEYWORDS} from '../../../static/utils/link.js';
   export default{
     data(){
       return{
@@ -130,6 +130,7 @@
       }
     },
     async asyncData ({$axios,query}) {
+      
       return await $axios.post('/index/new-view?source=M&' + getRequestQuery(query)).then(res=>{
         if(res.code == 200){
             return {

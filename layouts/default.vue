@@ -13,6 +13,7 @@ import Loading from "../components/loading";
 import {StorageType} from '../static/exports/area_type.js';
 import {GetUser,isWeixin,WeixinShare,Wx_Read} from '../static/utils/utils.js';
 import area from '../static/exports/area_type';
+import {domianUrl} from '../static/utils/url';
 
 export default {
   layout: 'index',
@@ -83,11 +84,10 @@ export default {
     },
     setshareObj(){
       let url = window.$nuxt.$route.fullPath;
-      //http://m.zhaodongdi.com/  http://jxm.kkbbi.com/
-      let path = "http://jxm.kkbbi.com/"
-      // let path = "http://m.zhaodongdi.com/"
+
+      let path = domianUrl
       var shareObj = {
-              title:!url.includes('view')?"工程找机械":document.title,
+              title:!url.includes('html')?"工程找机械":document.title,
               desc :"每天发布上万条全国工程找机械信息！",
               link :!url.includes("invitation")?path+window.$nuxt.$route.fullPath : path+"qiuzu/",
               imgUrl:"http://statics.zhaogongdi.com/common/jixie_app_logo.png",
@@ -156,8 +156,7 @@ export default {
 
     //微信授权
     authorization(){
-      let url = encodeURI('http://jxm.kkbbi.com/');
-      // let url = encodeURI('http://m.zhaogongdi.com/');
+      let url = domianUrl
       window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx97877fe3b35187a7&redirect_uri=${url}&response_type=code&scope=snsapi_userinfo&state=${url}#wechat_redirect`;
     },
   },
