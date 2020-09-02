@@ -4,4 +4,4 @@
 //http://m.zhaogongdi.com/
 export const serverUrl = 'https://api.zhaogongdi.com';
 
-export const domianUrl = 'http://m.zhaogongdi.com/'
+export const domianUrl = 'http://jxm.kkbbi.com/'
