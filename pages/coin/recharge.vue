@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import {Toast} from 'vant';
+import {Toast,Dialog} from 'vant';
 import { isWeixin } from '../../static/utils/utils';
 export default {
     components:{
@@ -101,10 +101,16 @@ export default {
              console.log(res.content)
              console.log(type,url,no)
              
-             if(type == 'h5') that.check_order_status();
-             setTimeout(()=>{
-               location.href = url
-             },10)
+             that.ordernum = no;
+             
+             Dialog.confirm({
+                title: '温馨提示',
+                message: '您是否支付成功？',
+              }).then(()=>{
+                that.check_order_status()
+              })
+              
+              location.href = url
              //window.open(url,'_blank');
            }else {
             Toast({
