@@ -57,6 +57,7 @@ export default {
     components:{
     },
     mounted(){
+      console.log(this.ordernum)
       this.recharge()
     },
     data(){
@@ -66,7 +67,9 @@ export default {
           recharge_given:[],
           liIndex:0,
           rehIndex:0,
-          coin_users:''
+          coin_users:'',
+          ordernum: '',
+          timer: null
       }
     },
     methods:{
@@ -92,114 +95,56 @@ export default {
         let isweixins = isWeixin()?'wx':'M';
 
         that.$axios.post('/coin/create-recharge?amount='+math_num_list[liIndex]+'&source='+ isweixins).then(res=>{
+          console.log(res)
            if(res.code == 200){
              const {type,url,no} = res.content;
-             if(type == 'h5') check_order_status(50,no,that);
-             location.href = url
+             console.log(res.content)
+             console.log(type,url,no)
+             
+             if(type == 'h5') that.check_order_status();
+             setTimeout(()=>{
+               location.href = url
+             },10)
+             //window.open(url,'_blank');
            }else {
             Toast({
               message:res.msg
             })
            }
         })
-            //  {
-            //   return false
-            //    debugger
-            //    let num = 0;
-            //    let timer = setInterval(()=>{
-            //      that.$axios.post('/coin/check-order',{order:no}).then(res=>{
-            //        console.log(res)
-                 
-            //        num += 1;
-            //        if(res.code==200 || res.code == 500){
-            //          if(res.content.status == 1){
-            //            clearInterval(timer)
-            //            Toast({
-            //              message: res.code==200?'支付成功':'支付失败',
-            //              duration:1000,
-            //              onClose:()=>{
-            //                window.history.back(-1)
-            //              }
-            //            })
-            //          }
-            //        }
-            //        if(num == 200){
-            //           clearInterval(timer)
-            //        }
-            //      })
-            //    },3000)
-            //  }
-            //  window.location.href = url
-             function check_order_status(times,no,that){
-               
-                if(times>0){
-                    times--
-                    that.$axios.post('/coin/check-order',{order:no}).then(res => {
-                      debugger
-                      if(res.code ==200 || res.code == 500){
-                        if(res.content.status == 1){
-                          times = 0;
-                          Toast({
-                            message: res.code==200?'支付成功':'支付失败',
-                            duration:1000,
-                            onClose:()=>{
-                              window.history.back(-1)
-                            }
-                          })
-                        }
-                      }
-                    })
-                    setTimeout(function(){check_order_status(times,no)},3000);
-                }
-             }
-            //  debugger
-            //  let {appid,noncestr,orderid,partnerid,prepayid,sign,timestamp} = res.content;
-            //暂时做不了后端接口需要写m端的
-            // window.location.href = `https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=${prepayid}&package=${res.content.package}&redirect_url=http://192.168.1.98:3000/dist/coin/recharge`
-            // let wx = {}
-            // if (process.client) {
-            //   wx = require('weixin-js-sdk')
-            //   debugger
-            //   wx.config({
-            //     debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            //     appId: appid, // 必填，公众号的唯一标识
-            //     timestamp, // 必填，生成签名的时间戳
-            //     nonceStr:noncestr, // 必填，生成签名的随机串
-            //     signature: sign,// 必填，签名
-            //     jsApiList: ['chooseWXPay','ready'] // 必填，需要使用的JS接口列表
-            //   });
-            //   wx.ready(function(){
-            //   debugger
-            //     wx.chooseWXPay({
-            //       timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-            //       nonceStr: noncestr, // 支付签名随机串，不长于 32 位
-            //       package: res.content.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
-            //       signType: 'SHA1', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-            //       paySign: sign, // 支付签名
-            //       success: function (res) {
-            //         debugger
-            //           //跳转到支付成功页面有这个页面
-            //           $this.$router.push({
-            //               path: "/success_page",
-            //               name:"success_page"
-            //           })
-            //       },
-            //       cancel: function (res) {
-            //           Toast('已取消支付');
-            //       },
-            //       fail: function (res) {
-            //           Toast('支付失败，请重试');
-            //       }
-            //     })
-            //   })
-            // }
-            //  this.$axios.post('/coin/check-order?order='+res.content.orderid,config).then(response=>{
-            //   if(response.code == 200){
-            //     debugger
-            //   }
-            // })
         
       },
+      check_order_status(){
+        //console.log(this.$data)
+        let that = this
+        console.log(this.ordernum)
+        if(this.timer){
+          try{
+            clearInterval(this.timer)
+          }catch(err){
+            console.log(err)
+          }
+        }
+        if(!this.ordernum) return false;
+        this.$data.timer = clearInterval(()=>{
+          this.$axios.post('/coin/check-order',{order:this.ordernum}).then(res => {
+            console.log(res)
+            //debugger
+            if(res.code ==200 || res.code == 500){
+              if(res.content.status == 1){
+                clearInterval(that.timer)
+                Toast({
+                  message: res.code==200?'支付成功':'支付失败',
+                  duration:1000,
+                  onClose:()=>{
+                    window.history.back(-1)
+                  }
+                })
+              }
+            }
+          })
+        },3000)
+      }
     },
     filters: {
       capitalize: function (value) {
