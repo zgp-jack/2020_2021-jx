@@ -72,6 +72,19 @@ export default {
           timer: null
       }
     },
+    beforeMount(){
+      const ordernum = this.$cookies.get('ordernum');
+      this.ordernum = ordernum;
+      if(ordernum){
+        Dialog.confirm({
+          title: '温馨提示',
+          message: '您是否支付成功？',
+        }).then(()=>{
+          this.check_order_status()
+        })
+        this.$cookies.remove('ordernum')
+      }
+    },
     methods:{
       choses(index){
         this.liIndex = index
@@ -100,15 +113,8 @@ export default {
              const {type,url,no} = res.content;
              console.log(res.content)
              console.log(type,url,no)
-             
-             that.ordernum = no;
-             
-             Dialog.confirm({
-                title: '温馨提示',
-                message: '您是否支付成功？',
-              }).then(()=>{
-                that.check_order_status()
-              })
+
+             this.$cookies.set('ordernum',no);
               
               location.href = url
              //window.open(url,'_blank');
@@ -132,10 +138,9 @@ export default {
           }
         }
         if(!this.ordernum) return false;
-        this.$data.timer = clearInterval(()=>{
+        this.$data.timer = setInterval(()=>{
           this.$axios.post('/coin/check-order',{order:this.ordernum}).then(res => {
             console.log(res)
-            //debugger
             if(res.code ==200 || res.code == 500){
               if(res.content.status == 1){
                 clearInterval(that.timer)
