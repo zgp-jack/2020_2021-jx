@@ -57,8 +57,18 @@ export default {
     components:{
     },
     mounted(){
-      console.log(this.ordernum)
+      let {ok = 0}  = this.$route.query
+      if(ok){
+        // 获取本地订单号
+        let orderNo = localStorage.getItem('orderNo') || '';
+        this.$nuxt.$store.commit('setOrderNo',orderNo)
+        //console.log(orderNo)
+        this.$router.replace('/coin/recharge')
+      }
+      console.log(ok)
+      console.log(this.$route)
       this.recharge()
+      this.check_order_status()
     },
     data(){
       return{
@@ -68,7 +78,6 @@ export default {
           liIndex:0,
           rehIndex:0,
           coin_users:'',
-          ordernum: '',
           timer: null
       }
     },
@@ -94,24 +103,22 @@ export default {
         // };
         let isweixins = isWeixin()?'wx':'M';
 
-        that.$axios.post('/coin/create-recharge?amount='+math_num_list[liIndex]+'&source='+ isweixins).then(res=>{
-          console.log(res)
+        that.$axios.post('/coin/create-recharge?type=new&amount='+math_num_list[liIndex]+'&source='+ isweixins).then(res=>{
+          
            if(res.code == 200){
              const {type,url,no} = res.content;
-             console.log(res.content)
-             console.log(type,url,no)
+             // 将订单号存入本地 方便回调之后使用
+             window.localStorage.setItem("orderNo", no)
              
-             that.ordernum = no;
-             
-             Dialog.confirm({
-                title: '温馨提示',
-                message: '您是否支付成功？',
-              }).then(()=>{
-                that.check_order_status()
-              })
+            //  Dialog.confirm({
+            //     title: '温馨提示',
+            //     message: '您是否支付成功？',
+            //   }).then(()=>{
+            //     that.check_order_status()
+            //   })
               
-              location.href = url
-             //window.open(url,'_blank');
+            location.href = url
+             //window.open(url);
            }else {
             Toast({
               message:res.msg
@@ -123,7 +130,8 @@ export default {
       check_order_status(){
         //console.log(this.$data)
         let that = this
-        console.log(this.ordernum)
+        let orderNo = this.$nuxt.$store.state.orderNo
+        console.log(orderNo)
         if(this.timer){
           try{
             clearInterval(this.timer)
@@ -131,21 +139,28 @@ export default {
             console.log(err)
           }
         }
-        if(!this.ordernum) return false;
-        this.$data.timer = clearInterval(()=>{
-          this.$axios.post('/coin/check-order',{order:this.ordernum}).then(res => {
+        if(!orderNo) return false;
+        this.timer = setInterval(()=>{
+          this.$axios.post(`/coin/check-order?order=${orderNo}`,{
+            globalLoading: false
+          }).then(res => {
             console.log(res)
             //debugger
             if(res.code ==200 || res.code == 500){
+              
               if(res.content.status == 1){
                 clearInterval(that.timer)
-                Toast({
-                  message: res.code==200?'支付成功':'支付失败',
-                  duration:1000,
-                  onClose:()=>{
-                    window.history.back(-1)
-                  }
+                that.$nuxt.$store.commit('setOrderNo','')
+                if(res.code == 200){
+                Dialog.confirm({
+                  title: '温馨提示',
+                  message: '支付成功，您是否还需要继续充值？',
+                  cancelButtonText: '继续充值',
+                  confirmButtonText: '会员中心'
+                }).then(()=>{
+                  that.$router.replace('/user')
                 })
+                }
               }
             }
           })

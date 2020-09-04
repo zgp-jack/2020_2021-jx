@@ -23,6 +23,8 @@ const store =()=>new Vuex.Store({
 
         //联系方式
         contact:'',
+        // 支付订单号
+        orderNo: ''
 
     },
     mutations:{
@@ -56,6 +58,10 @@ const store =()=>new Vuex.Store({
         setArea(state,obj){
             state.city = [...obj.city];
             state.area = [...obj.area];
+        },
+        // 设置订单编号
+        setOrderNo(state,num){
+          state.orderNo = num
         }
     },
   })
