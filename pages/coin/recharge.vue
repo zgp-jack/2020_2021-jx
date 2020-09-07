@@ -120,7 +120,7 @@ export default {
           
            if(res.code == 200){
              const {type,url,no} = res.content;
-<<<<<<< HEAD
+
              // 将订单号存入本地 方便回调之后使用
              window.localStorage.setItem("orderNo", no)
              
@@ -130,12 +130,11 @@ export default {
             //   }).then(()=>{
             //     that.check_order_status()
             //   })
-=======
+
              console.log(res.content)
              console.log(type,url,no)
 
              this.$cookies.set('ordernum',no);
->>>>>>> 3d00793ac3578982e591076b71833be3b7141994
               
             location.href = url
              //window.open(url);
