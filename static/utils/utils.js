@@ -273,7 +273,6 @@ function requestImage(id){
     mycallback = callback;
     console.log(mycallback)
     return self.$axios.post('upload/get-wx-upload-params?url='+location.href.split('#')[0]).then(res=>{
-
        if(res.code == 200){
            weixinConfig(res.content)
            return res;

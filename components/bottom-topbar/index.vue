@@ -75,7 +75,6 @@ export default {
   },
   beforeMount() {
     this.iswx=isWeixin()
-    console.log(this.iswx)
     if(this.$props.qiuzu=="true"){
 
     }else{

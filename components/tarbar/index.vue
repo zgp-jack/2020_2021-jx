@@ -3,7 +3,7 @@
 <template>
     <div class="tarbar">
         <div v-for="(item,index) in list" :to="item.path" :key="index" :class="path==item.path?'nuxt-link-active':''" @click="onskip(item.path)">
-          <img :src="path==item.path?item.img:item.img_hui">{{item.name}}
+          <img :src="path.includes(item.path)?item.img:item.img_hui">{{item.name}}
         </div>
     </div>
 </template>

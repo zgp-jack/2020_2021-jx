@@ -64,9 +64,9 @@
     </div>
     <div class="list_content" :style="whether_fixed?'margin-top: 1.2rem':''">
       <div v-for="(item,index) in title_data" :data-type="item.type" v-if="title_active == index" :key="index">
+        <div style="font-size:0.3rem ;text-align: center;color: #666;" v-if="list[title_data[title_active].key].length<=0">加载中...</div>
         <div v-if="(item.type == 1 || item.type == 4) && list[title_data[title_active].key].length>0">
           <firstListItem @giveParent="getObj" v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="{item,index}"/>
-
         </div>
         <div v-if="(item.type == 2 || item.type == 3) && list[title_data[title_active].key].length>0">
           <seccondListItem @giveParent="getObj" v-for="(item,index) in list[title_data[title_active].key]" :key="index" :data="{item,index}"/>
@@ -87,7 +87,7 @@
 import Tarbar from '../../components/tarbar'
 import firstListItem from '../../components/firstListItem/index.vue'
 import seccondListItem from '../../components/seccondListItem/index.vue'
-import { Swipe , SwipeItem , Popup ,Dialog } from 'vant';
+import { Swipe , SwipeItem , Popup ,Dialog ,Toast} from 'vant';
 import Banner from '../../components/banner/banner.vue'
 import chooseArea from '../../components/customArea/index.vue'
 import call_confirm from '../../components/call_confirm/call_confirm'
@@ -142,7 +142,10 @@ export default {
   },
   created(){
     this.titleData()
-    this.getBanner()
+    setTimeout(()=>{
+      this.getBanner()
+
+    },1500)
   },
   beforeMount(){
     this.novice_point = getNovicePoint();

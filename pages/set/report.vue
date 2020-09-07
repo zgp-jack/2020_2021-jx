@@ -112,6 +112,7 @@ export default {
               desc:this.texts ? this.texts : null,
               reason:''
           }
+
           let keys = Object.keys(this.report_reason)
           if(this.orther){
             let arr = this.report_reason.reason;
@@ -124,6 +125,7 @@ export default {
             data.reason = keys[0];
           }
           //请求
+          
           this.$axios.post('/us/report',{data:JSON.stringify(data)}).then(res=>{
             if(res.code == 200){
               Dialog.alert({

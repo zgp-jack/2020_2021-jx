@@ -158,17 +158,11 @@ export default {
             console.log(err)
           }
         }
-<<<<<<< HEAD
         if(!orderNo) return false;
         this.timer = setInterval(()=>{
           this.$axios.post(`/coin/check-order?order=${orderNo}`,{
             globalLoading: false
           }).then(res => {
-=======
-        if(!this.ordernum) return false;
-        this.$data.timer = setInterval(()=>{
-          this.$axios.post('/coin/check-order',{order:this.ordernum}).then(res => {
->>>>>>> 3d00793ac3578982e591076b71833be3b7141994
             console.log(res)
             if(res.code ==200 || res.code == 500){
               

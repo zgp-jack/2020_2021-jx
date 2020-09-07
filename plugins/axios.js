@@ -10,9 +10,13 @@ import { isWeixin, callPhoneFn } from '../static/utils/utils';
 export default function({ $axios, redirect, app }) {
     // request拦截器
     let globalLoading;
+
     $axios.onRequest(config => {
+        console.log()
+
         globalLoading = true;
         let { params, data = {}, method } = config;
+        // debugger
         let source;
         if (process.browser) {
             source = isWeixin() ? 'wx' : 'M';
@@ -46,6 +50,7 @@ export default function({ $axios, redirect, app }) {
         globalLoading && Toast.loading({
             message: '加载中...',
             duration: 0,
+            forbidClick:true,
             loadingType: 'spinner',
         });
         // let ssoToken = app.$cookies.get('ssoToken');
@@ -75,7 +80,7 @@ export default function({ $axios, redirect, app }) {
                     app.$cookies.remove('id')
                 }
                 if (process.browser) {
-                    if(isWeixin()){
+                    if(!isWeixin()){
                         redirect({
                             path: '/login',
                         })

@@ -117,7 +117,8 @@
         go_release:false, //去发布
         go_settop:false,  //去置顶
         show_wath_all:false,
-        novice_point_alert:true
+        novice_point_alert:true,
+        info:'',
       }
     },
     head(){
@@ -130,10 +131,9 @@
       }
     },
     async asyncData ({$axios,route}) {
-
       let parmesArr = route.path.split('/');
       let mode = MechanicalNum_link[parmesArr[1]];
-      let info = parmesArr[2].split('.')[0]
+      let info = parmesArr[2].split('.')[0];
       return await $axios.post('/index/new-view?source=M&' + getRequestQuery({mode,info})).then(res=>{
         if(res.code == 200){
             return {
@@ -144,7 +144,9 @@
     },
     created(){
       let parmesArr = this.$route.path.split('/');
+      this.info = parmesArr[2].split('.')[0];
       this.mode = MechanicalNum_link[parmesArr[1]];
+
       let list_id = parmesArr[2].split('.')[0]
       this.changeTitle(this.mode);// 改变标题
     },
@@ -265,7 +267,7 @@
           }).catch(()=>{})
         }else{
           //跳转到投诉页面
-          this.$router.push({path:'/set/report', query:this.$route.query})
+          this.$router.push({path:'/set/report', query:{mode:this.mode,info:this.info}})
         }
       },
       //查看全部

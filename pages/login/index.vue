@@ -34,7 +34,7 @@
 
 <script>
 import md5 from 'js-md5';
-import {setCookie,GetUser,whetherLogin} from '../../static/utils/utils.js';
+import {setCookie,GetUser,whetherLogin ,isWeixin} from '../../static/utils/utils.js';
 import {Toast} from 'vant';
 import {CellphoneCheck,nopass} from '../../static/utils/validator';
 export default {
@@ -50,7 +50,8 @@ export default {
         }
     },
     beforeMount() {
-      if(document.cookie.includes("token")) this.$router.replace('/user') 
+      if(document.cookie.includes("token")) this.$router.replace('/user');
+
     },      
     created() {
       this.go_home_page = this.$route.query.signout;
