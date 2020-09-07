@@ -162,7 +162,11 @@ export default {
     }
   },
   beforeMount(){
-    
+    let isLoad = window.localStorage.getItem('isLoad');
+    if(isLoad){
+      window.localStorage.setItem('isLoad','')
+      this.$router.go(-1)
+    }
   },
   mounted() {
     if(this.$route.query['keep-alive'] !== false){

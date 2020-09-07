@@ -1,53 +1,60 @@
 <template>
-    <div>
-       <Header :title="title"/>
-       <div class="father">
-         <div class="title">余额充值</div>
-         <div class="chose_box" >
-           请选择充值数额
-           <ul class="num_list">
-              <li v-for="(item,i) in math_num_list" :key="i" :class="[i == liIndex?'cur':'']" @click="choses(i)">
-                <p class="colors">{{item}}元</p>
-                <p>{{item+recharge_given[i]}}鱼泡币</p>
-              </li>
-           </ul>
-         </div>
-         <div class="title">充值明细</div>
-        <div v-for="(item,i) in math_num_list" :key="i" v-if='i==liIndex'>
-         <div class="recharge-details">
-            <p>
-               充值金额：
-              <span class="colors">{{item}}元</span>
-            </p>
-            <p>
-               充值鱼泡币：
-              <span class="colors">{{item+recharge_given[i]}}鱼泡币</span>
-            </p>
-            <p>
-               鱼泡币单价：
-              <span class="colors">{{item/(item+recharge_given[i]) | capitalize}}元 /个</span>
-            </p>
-            <p>
-               充值后总鱼泡币：
-              <span class="colors">{{coin_users+item+recharge_given[i]}}鱼泡币(可查看个{{(coin_users+item+recharge_given[i])/3 | tel}}电话)</span>
-            </p>
-         </div>
-       </div>
-         <div class="pay-type">
-           <div class="left">
-             <img src="../../assets/img/wx-icon.png">
-           </div>
-           <div class="center">
-             <p>微信支付</p>
-             <p>微信安全支付</p>
-           </div>
-           <div class="right">
-             <img src="../../assets/img/wx-right.png">
-           </div>
-         </div>
-         <div class="recharge" @click="submit">确认付款</div>
-       </div>
+  <div>
+    <Header :title="title" />
+    <div class="father">
+      <div class="title">余额充值</div>
+      <div class="chose_box">
+        请选择充值数额
+        <ul class="num_list">
+          <li
+            v-for="(item,i) in math_num_list"
+            :key="i"
+            :class="[i == liIndex?'cur':'']"
+            @click="choses(i)"
+          >
+            <p class="colors">{{item}}元</p>
+            <p>{{item+recharge_given[i]}}鱼泡币</p>
+          </li>
+        </ul>
+      </div>
+      <div class="title">充值明细</div>
+      <div v-for="(item,i) in math_num_list" :key="i" v-if="i==liIndex">
+        <div class="recharge-details">
+          <p>
+            充值金额：
+            <span class="colors">{{item}}元</span>
+          </p>
+          <p>
+            充值鱼泡币：
+            <span class="colors">{{item+recharge_given[i]}}鱼泡币</span>
+          </p>
+          <p>
+            鱼泡币单价：
+            <span class="colors">{{item/(item+recharge_given[i]) | capitalize}}元 /个</span>
+          </p>
+          <p>
+            充值后总鱼泡币：
+            <span
+              class="colors"
+            >{{coin_users+item+recharge_given[i]}}鱼泡币(可查看个{{(coin_users+item+recharge_given[i])/3 | tel}}电话)</span>
+          </p>
+        </div>
+      </div>
+      <div class="pay-type">
+        <div class="left">
+          <img src="../../assets/img/wx-icon.png" />
+        </div>
+        <div class="center">
+          <p>微信支付</p>
+          <p>微信安全支付</p>
+        </div>
+        <div class="right">
+          <img src="../../assets/img/wx-right.png" />
+        </div>
+      </div>
+      <div class="recharge" @click="submit">确认付款</div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -131,11 +138,6 @@ export default {
             //     that.check_order_status()
             //   })
 
-             console.log(res.content)
-             console.log(type,url,no)
-
-             this.$cookies.set('ordernum',no);
-              
             location.href = url
              //window.open(url);
            }else {
@@ -197,5 +199,5 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import './recharge.scss'
+@import "./recharge.scss";
 </style>

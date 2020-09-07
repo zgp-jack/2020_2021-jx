@@ -25,6 +25,7 @@ export default {
           if(res.code == 200){
             that.$cookies.set('token',res.content.token)
             that.$cookies.set('id',res.content.id)
+            window.localStorage.setItem('isLoad','true');
             history.go(-2)
           }
         })
